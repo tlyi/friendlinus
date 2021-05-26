@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:friendlinus/register_page1.dart';
+import 'register_page1.dart';
 
 class LogInPage extends StatelessWidget {
   @override
