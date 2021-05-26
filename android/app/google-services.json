@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "381622009023",
+    "project_id": "friendlinus",
+    "storage_bucket": "friendlinus.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:381622009023:android:20d8edc6f2f82ed466da0a",
+        "android_client_info": {
+          "package_name": "com.example.friendlinus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "381622009023-0hkmeh45844vl4s8ovsfba4ddder4dhg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGIsSMZ4QdDovmiSwiCPERZNeLUjBpUGQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "381622009023-0hkmeh45844vl4s8ovsfba4ddder4dhg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
