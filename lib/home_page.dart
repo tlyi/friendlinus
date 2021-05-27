@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'login_page.dart';
 
-class Home_Page extends StatelessWidget {
+class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -10,17 +10,19 @@ class Home_Page extends StatelessWidget {
           alignment: Alignment.center,
           child: SingleChildScrollView(
             child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Text("Home", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                  SizedBox(height: 30),
-                  Image.asset(
-                'images/logo.png',
-                width: MediaQuery.of(context).size.width * 0.6,
-                height: MediaQuery.of(context).size.width * 0.6,
-              ),
-              _buildSignOutButton(context)
-            ],
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text("Home",
+                    style:
+                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                SizedBox(height: 30),
+                Image.asset(
+                  'images/logo.png',
+                  width: MediaQuery.of(context).size.width * 0.6,
+                  height: MediaQuery.of(context).size.width * 0.6,
+                ),
+                _buildSignOutButton(context)
+              ],
             ),
           ),
         ),
