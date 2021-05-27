@@ -1,19 +1,28 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:friendlinus/locator.dart';
+import 'package:friendlinus/services/authentication_service.dart';
 import 'home_page.dart';
 
 class RegisterPage2 extends StatelessWidget {
+  final AuthenticationService _authenticationService =
+      locator<AuthenticationService>();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: Scaffold(
-            body: Align(
-      alignment: Alignment.topCenter,
-      child: SafeArea(
-        minimum: EdgeInsets.all(30.0),
-        child: RegisterForm(),
+      home: Scaffold(
+        body: Align(
+          alignment: Alignment.topCenter,
+          child: SingleChildScrollView(
+            child: SafeArea(
+              minimum: EdgeInsets.all(30.0),
+              child: RegisterForm(),
+            ),
+          ),
+        ),
       ),
-    )));
+    );
   }
 }
 
@@ -169,7 +178,7 @@ class _RegisterFormState extends State<RegisterForm> {
                   .showSnackBar(SnackBar(content: Text('Processing Data')));
             }
             Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => Home_Page()));
+                .push(MaterialPageRoute(builder: (context) => HomePage()));
           }),
     );
   }
