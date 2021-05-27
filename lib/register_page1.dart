@@ -1,20 +1,21 @@
-//import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-//import 'package:firebase_auth/firebase_auth.dart';
 import 'register_page2.dart';
 
-class RegisterPage1 extends StatelessWidget {
-  /*
-  Future<FirebaseApp> _initializeFirebase() async {
-    FirebaseApp firebaseApp = await Firebase.initializeApp();
-    return firebaseApp;
-  }
-   */
+class RegisterPage1 extends StatefulWidget {
+  @override
+  _RegisterPage1State createState() => _RegisterPage1State();
+}
+
+class _RegisterPage1State extends State<RegisterPage1> {
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return Form(
+      key: _formKey,
+      child: Scaffold(
         body: Container(
           margin: const EdgeInsets.all(30.0),
           alignment: Alignment.center,
@@ -43,8 +44,7 @@ class RegisterPage1 extends StatelessWidget {
                 ),
               ),
             ),
-            Text(
-                "An authentication link will be sent to your NUS Email."),
+            Text("An authentication link will be sent to your NUS Email."),
           ],
         ));
   }
@@ -71,8 +71,12 @@ class RegisterPage1 extends StatelessWidget {
               backgroundColor: MaterialStateProperty.all(Color(0xFF7BA5BB))),
           child: const Text("Verify Now"),
           onPressed: () {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => RegisterPage2())); //temporary
+            if (_formKey.currentState!.validate()) {
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text('Processing Data')));
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => RegisterPage2())); //temporary
+            }
           }),
     );
   }
