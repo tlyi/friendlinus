@@ -37,6 +37,8 @@ class LogInForm extends StatefulWidget {
 
 class _LogInFormState extends State<LogInForm> {
   final _formKey = GlobalKey<FormState>();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +59,7 @@ class _LogInFormState extends State<LogInForm> {
 
   Widget _buildEmail() {
     return TextFormField(
+      controller: emailController,
       validator: (value) =>
           (value == null || value.isEmpty) ? "Please input email" : null,
       decoration: InputDecoration(
@@ -71,6 +74,7 @@ class _LogInFormState extends State<LogInForm> {
   Widget _buildPassword() {
     return TextFormField(
       obscureText: true,
+      controller: passwordController,
       validator: (value) =>
           (value == null || value.isEmpty) ? "Please input password" : null,
       decoration: InputDecoration(

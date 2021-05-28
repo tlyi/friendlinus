@@ -10,6 +10,7 @@ class RegisterPage1 extends StatefulWidget {
 
 class _RegisterPage1State extends State<RegisterPage1> {
   final _formKey = GlobalKey<FormState>();
+  TextEditingController idController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +52,7 @@ class _RegisterPage1State extends State<RegisterPage1> {
 
   Widget _buildIDField() {
     return TextFormField(
+      controller: idController,
       validator: (value) =>
           (value == null || value.isEmpty) ? "Please input NUSNET ID" : null,
       decoration: InputDecoration(
