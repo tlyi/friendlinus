@@ -4,7 +4,7 @@ import 'pages/login_page.dart';
 import 'locator.dart';
 
 Future<void> main() async {
-  setupServices();
+  //setupServices();
   runApp(OurApp());
 }
 
