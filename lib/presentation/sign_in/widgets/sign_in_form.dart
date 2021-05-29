@@ -8,34 +8,31 @@ import 'package:another_flushbar/flushbar_route.dart';
 
 import '../../register_page1.dart';
 
-
 class SignInForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SignInFormBloc, SignInFormState>(
       listener: (context, state) {
         state.authFailureOrSuccessOption.fold(
-                () {},
-                (either) =>
-                either.fold(
-                      (failure) {
-                    FlushbarHelper.createError(
-                      message: failure.map(
-                        serverError: (_) => 'Server error',
-                        emailAlreadyInUse: (_) => 'Email already in use',
-                        invalidEmailAndPasswordCombi: (_) =>
-                        'Invalid email and password combination',
-                      ),
-                    ).show(context);
-                  },
-                      (_) {
-                        Navigator.of(context)
-                            .push(MaterialPageRoute(builder: (context) => HomePage()));
-                  },
+          () {},
+          (either) => either.fold(
+            (failure) {
+              FlushbarHelper.createError(
+                message: failure.map(
+                  serverError: (_) => 'Server error',
+                  emailAlreadyInUse: (_) => 'Email already in use',
+                  invalidEmailAndPasswordCombi: (_) =>
+                      'Invalid email and password combination',
                 ),
-                );
+              ).show(context);
+            },
+            (_) {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => HomePage()));
+            },
+          ),
+        );
       },
-
       builder: (context, state) {
         return Form(
           autovalidateMode: state.showErrorMessages
@@ -65,22 +62,17 @@ class SignInForm extends StatelessWidget {
         labelText: 'Email',
       ),
       autocorrect: false,
-      onChanged: (value) =>
-          context
-              .read<SignInFormBloc>()
-              .add(SignInFormEvent.emailChanged(value)),
+      onChanged: (value) => context
+          .read<SignInFormBloc>()
+          .add(SignInFormEvent.emailChanged(value)),
       validator: (_) =>
-          context
-              .read<SignInFormBloc>()
-              .state
-              .emailAddress
-              .value
-              .fold(
-                (f) =>
-                f.maybeMap(
-                  invalidEmail: (_) => 'Invalid Email', orElse: () => null,),
+          context.read<SignInFormBloc>().state.emailAddress.value.fold(
+                (f) => f.maybeMap(
+                  invalidEmail: (_) => 'Invalid Email',
+                  orElse: () => null,
+                ),
                 (r) => null,
-          ),
+              ),
     );
   }
 
@@ -94,40 +86,32 @@ class SignInForm extends StatelessWidget {
       ),
       obscureText: true,
       autocorrect: false,
-      onChanged: (value) =>
-          context
-              .read<SignInFormBloc>()
-              .add(SignInFormEvent.passwordChanged(value)),
+      onChanged: (value) => context
+          .read<SignInFormBloc>()
+          .add(SignInFormEvent.passwordChanged(value)),
       validator: (_) =>
-          context
-              .read<SignInFormBloc>()
-              .state
-              .password
-              .value
-              .fold(
-                (f) =>
-                f.maybeMap(
-                  shortPassword: (_) => 'Short Password', orElse: () => null,),
+          context.read<SignInFormBloc>().state.password.value.fold(
+                (f) => f.maybeMap(
+                  shortPassword: (_) => 'Short Password',
+                  orElse: () => null,
+                ),
                 (r) => null,
-          ),
+              ),
     );
   }
 
   Widget _buildLogInButton(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(top: 20.0),
-      width: MediaQuery
-          .of(context)
-          .size
-          .width * 0.62,
+      width: MediaQuery.of(context).size.width * 0.62,
       child: ElevatedButton(
           style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(Color(0xFF7BA5BB))),
           child: const Text("Sign In"),
           onPressed: () {
             context.read<SignInFormBloc>().add(
-              const SignInFormEvent.signInWithEmailAndPasswordPressed(),
-            );
+                  const SignInFormEvent.signInWithEmailAndPasswordPressed(),
+                );
           }),
     );
   }

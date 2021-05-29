@@ -1,7 +1,4 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'register_page2.dart';
 
 class RegisterPage1 extends StatefulWidget {
   @override
@@ -76,8 +73,6 @@ class _RegisterPage1State extends State<RegisterPage1> {
             if (_formKey.currentState!.validate()) {
               ScaffoldMessenger.of(context)
                   .showSnackBar(SnackBar(content: Text('Processing Data')));
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => RegisterPage2())); //temporary
             }
           }),
     );
