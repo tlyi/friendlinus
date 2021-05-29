@@ -35,6 +35,7 @@ dependencies:
   flutter_bloc: ^7.0.0
   flutter_launcher_icons: ^0.9.0
   injectable: ^1.4.1
+  another_flushbar: ^1.10.22
 
 #Stuff that you need during development
 dev_dependencies:

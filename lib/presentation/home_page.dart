@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'login_page.dart';
+import 'sign_in/sign_in_page.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -40,7 +40,7 @@ class HomePage extends StatelessWidget {
             child: const Text("Sign Out"),
             onPressed: () {
               Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => LogInPage()));
+                  .push(MaterialPageRoute(builder: (context) => SignInPage()));
             }));
   }
 }

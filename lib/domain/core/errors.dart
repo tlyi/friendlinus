@@ -1,9 +1,6 @@
-//errors should crash the app
-
-import 'dart:html';
-
 import 'package:friendlinus/domain/core/failures.dart';
 
+//errors should crash the app
 class UnexpectedValueError extends Error {
   final ValueFailure valueFailure;
 
