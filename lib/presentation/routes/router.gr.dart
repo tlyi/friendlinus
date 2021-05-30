@@ -7,6 +7,7 @@
 import 'package:auto_route/auto_route.dart' as _i1;
 import 'package:flutter/material.dart' as _i2;
 import 'package:friendlinus/presentation/home_page.dart' as _i5;
+import 'package:friendlinus/presentation/register_page1.dart' as _i6;
 import 'package:friendlinus/presentation/sign_in/sign_in_page.dart' as _i4;
 import 'package:friendlinus/presentation/splash/splash_page.dart' as _i3;
 
@@ -30,6 +31,11 @@ class AppRouter extends _i1.RootStackRouter {
         routeData: routeData,
         builder: (_) {
           return _i5.HomePage();
+        }),
+    RegisterRoute1.name: (routeData) => _i1.AdaptivePage<dynamic>(
+        routeData: routeData,
+        builder: (_) {
+          return _i6.RegisterPage1();
         })
   };
 
@@ -37,7 +43,8 @@ class AppRouter extends _i1.RootStackRouter {
   List<_i1.RouteConfig> get routes => [
         _i1.RouteConfig(SplashRoute.name, path: '/'),
         _i1.RouteConfig(SignInRoute.name, path: '/sign-in-page'),
-        _i1.RouteConfig(HomeRoute.name, path: '/home-page')
+        _i1.RouteConfig(HomeRoute.name, path: '/home-page'),
+        _i1.RouteConfig(RegisterRoute1.name, path: '/register-page1')
       ];
 }
 
@@ -57,4 +64,10 @@ class HomeRoute extends _i1.PageRouteInfo {
   const HomeRoute() : super(name, path: '/home-page');
 
   static const String name = 'HomeRoute';
+}
+
+class RegisterRoute1 extends _i1.PageRouteInfo {
+  const RegisterRoute1() : super(name, path: '/register-page1');
+
+  static const String name = 'RegisterRoute1';
 }

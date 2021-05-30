@@ -1,30 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:friendlinus/application/auth/sign_in_form/sign_in_form_bloc.dart';
 
-class RegisterPage1 extends StatefulWidget {
-  @override
-  _RegisterPage1State createState() => _RegisterPage1State();
-}
-
-class _RegisterPage1State extends State<RegisterPage1> {
-  final _formKey = GlobalKey<FormState>();
-  TextEditingController idController = TextEditingController();
-
+class RegisterPage1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: Scaffold(
-        body: Container(
-          margin: const EdgeInsets.all(30.0),
-          alignment: Alignment.center,
-          child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-            _buildVerifyMessage(),
-            _buildIDField(),
-            _buildVerifyButton(context)
-          ]),
-        ),
-      ),
-    );
+    return BlocConsumer<SignInFormBloc, SignInFormState>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          return Form(
+            child: Scaffold(
+              body: Container(
+                margin: const EdgeInsets.all(30.0),
+                alignment: Alignment.center,
+                child:
+                    Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                  _buildVerifyMessage(),
+                  _buildIDField(context),
+                  SizedBox(height: 15),
+                  _buildPasswordField(context),
+                  _buildVerifyButton(context)
+                ]),
+              ),
+            ),
+          );
+        });
   }
 
   Widget _buildVerifyMessage() {
@@ -35,7 +36,7 @@ class _RegisterPage1State extends State<RegisterPage1> {
             Padding(
               padding: EdgeInsets.all(15.0),
               child: Text(
-                "Verify your NUSNET ID",
+                "Sign up now with your NUSNET ID!",
                 style: new TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
@@ -47,17 +48,45 @@ class _RegisterPage1State extends State<RegisterPage1> {
         ));
   }
 
-  Widget _buildIDField() {
+  Widget _buildIDField(BuildContext context) {
     return TextFormField(
-      controller: idController,
-      validator: (value) =>
-          (value == null || value.isEmpty) ? "Please input NUSNET ID" : null,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
         labelText: 'NUSNET ID',
       ),
+      inputFormatters: [
+        FilteringTextInputFormatter.deny(
+            RegExp(r"\s\b|\b\s")) //Prevents whitespace
+      ],
+    );
+  }
+
+  Widget _buildPasswordField(BuildContext context) {
+    return TextFormField(
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        labelText: 'Password',
+      ),
+      obscureText: true,
+      autocorrect: false,
+      onChanged: (value) => context
+          .read<SignInFormBloc>()
+          .add(SignInFormEvent.passwordChanged(value)),
+      validator: (_) =>
+          context.read<SignInFormBloc>().state.password.value.fold(
+                (f) => f.maybeMap(
+                    shortPassword: (_) => 'Password too short',
+                    orElse: () => null),
+                (_) => null,
+              ),
+      inputFormatters: [
+        FilteringTextInputFormatter.deny(
+            RegExp(r"\s\b|\b\s")) //Prevents whitespace
+      ],
     );
   }
 
@@ -68,13 +97,8 @@ class _RegisterPage1State extends State<RegisterPage1> {
       child: ElevatedButton(
           style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(Color(0xFF7BA5BB))),
-          child: const Text("Verify Now"),
-          onPressed: () {
-            if (_formKey.currentState!.validate()) {
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(SnackBar(content: Text('Processing Data')));
-            }
-          }),
+          child: const Text("Sign Up Now"),
+          onPressed: () {}),
     );
   }
 }

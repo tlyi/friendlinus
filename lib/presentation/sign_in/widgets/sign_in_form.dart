@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:friendlinus/application/auth/auth_bloc.dart';
 import 'package:friendlinus/application/auth/sign_in_form/sign_in_form_bloc.dart';
@@ -38,11 +39,6 @@ class SignInForm extends StatelessWidget {
           ),
         );
       },
-      /*failure.map(
-                    serverError: (_) => 'Server error',
-                    emailAlreadyInUse: (_) => 'Email already in use',
-                    invalidEmailAndPasswordCombi: (_) =>
-                        'Invalid email and password combination'*/
       builder: (context, state) {
         return Form(
           autovalidateMode: state.showErrorMessages
@@ -65,49 +61,55 @@ class SignInForm extends StatelessWidget {
 
   Widget _buildEmail(BuildContext context) {
     return TextFormField(
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
+        decoration: InputDecoration(
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          labelText: 'Email',
         ),
-        labelText: 'Email',
-      ),
-      autocorrect: false,
-      onChanged: (value) => context
-          .read<SignInFormBloc>()
-          .add(SignInFormEvent.emailChanged(value)),
-      validator: (_) =>
-          context.read<SignInFormBloc>().state.emailAddress.value.fold(
-                (f) => f.maybeMap(
-                  invalidEmail: (_) => 'Invalid Email',
-                  orElse: () => null,
+        autocorrect: false,
+        onChanged: (value) => context
+            .read<SignInFormBloc>()
+            .add(SignInFormEvent.emailChanged(value)),
+        validator: (_) =>
+            context.read<SignInFormBloc>().state.emailAddress.value.fold(
+                  (f) => f.maybeMap(
+                    invalidEmail: (_) => 'Invalid Email',
+                    orElse: () => null,
+                  ),
+                  (_) => null,
                 ),
-                (_) => null,
-              ),
-    );
+        inputFormatters: [
+          FilteringTextInputFormatter.deny(
+              RegExp(r"\s\b|\b\s")) //Prevents whitespace
+        ]);
   }
 
   Widget _buildPassword(BuildContext context) {
     return TextFormField(
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
+        decoration: InputDecoration(
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          labelText: "Password",
         ),
-        labelText: "Password",
-      ),
-      obscureText: true,
-      autocorrect: false,
-      onChanged: (value) => context
-          .read<SignInFormBloc>()
-          .add(SignInFormEvent.passwordChanged(value)),
-      validator: (_) =>
-          context.read<SignInFormBloc>().state.password.value.fold(
-                (f) => f.maybeMap(
-                  shortPassword: (_) => 'Short Password',
-                  orElse: () => null,
+        obscureText: true,
+        autocorrect: false,
+        onChanged: (value) => context
+            .read<SignInFormBloc>()
+            .add(SignInFormEvent.passwordChanged(value)),
+        validator: (_) =>
+            context.read<SignInFormBloc>().state.password.value.fold(
+                  (f) => f.maybeMap(
+                    shortPassword: (_) => 'Short Password',
+                    orElse: () => null,
+                  ),
+                  (_) => null,
                 ),
-                (_) => null,
-              ),
-    );
+        inputFormatters: [
+          FilteringTextInputFormatter.deny(
+              RegExp(r"\s\b|\b\s")) //Prevents whitespace
+        ]);
   }
 
   Widget _buildLogInButton(BuildContext context) {
@@ -132,8 +134,7 @@ class SignInForm extends StatelessWidget {
       child: TextButton(
           child: const Text('No account yet? Register Now'),
           onPressed: () {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => RegisterPage1()));
+            context.replaceRoute(const RegisterRoute1());
           }),
     );
   }

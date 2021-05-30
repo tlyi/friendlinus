@@ -18,3 +18,12 @@ Either<ValueFailure<String>, String> validatePassword(String input) {
     return left(ValueFailure.shortPassword(failedValue: input));
   }
 }
+
+Either<ValueFailure<String>, String> validateID(String input) {
+  const idRegex = r'^e\d{7}$';
+  if (RegExp(idRegex).hasMatch(input)) {
+    return right(input);
+  } else {
+    return left(ValueFailure.invalidID(failedValue: input));
+  }
+}
