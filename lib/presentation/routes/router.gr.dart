@@ -7,7 +7,7 @@
 import 'package:auto_route/auto_route.dart' as _i1;
 import 'package:flutter/material.dart' as _i2;
 import 'package:friendlinus/presentation/home_page.dart' as _i5;
-import 'package:friendlinus/presentation/register_page1.dart' as _i6;
+import 'package:friendlinus/presentation/register/register_page1.dart' as _i6;
 import 'package:friendlinus/presentation/sign_in/sign_in_page.dart' as _i4;
 import 'package:friendlinus/presentation/splash/splash_page.dart' as _i3;
 

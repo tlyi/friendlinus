@@ -49,7 +49,7 @@ class HomePage extends StatelessWidget {
               context.read<AuthBloc>().add(
                     const AuthEvent.signedOut(),
                   );
-              context.replaceRoute(SignInRoute());
+              context.replaceRoute(SplashRoute());
             }));
   }
 }

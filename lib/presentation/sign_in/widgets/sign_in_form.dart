@@ -10,7 +10,7 @@ import 'package:another_flushbar/flushbar_route.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
 
-import '../../register_page1.dart';
+import '../../register/register_page1.dart';
 
 class SignInForm extends StatelessWidget {
   @override
@@ -47,7 +47,7 @@ class SignInForm extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              _buildEmail(context),
+              _buildID(context),
               const SizedBox(height: 20),
               _buildPassword(context),
               _buildLogInButton(context),
@@ -59,22 +59,25 @@ class SignInForm extends StatelessWidget {
     );
   }
 
-  Widget _buildEmail(BuildContext context) {
+  Widget _buildID(BuildContext context) {
     return TextFormField(
         decoration: InputDecoration(
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
           ),
-          labelText: 'Email',
+          labelText: 'NUSNET ID',
         ),
         autocorrect: false,
-        onChanged: (value) => context
-            .read<SignInFormBloc>()
-            .add(SignInFormEvent.emailChanged(value)),
+        onChanged: (value) {
+          final String emailString = '$value@u.nus.edu';
+          context
+              .read<SignInFormBloc>()
+              .add(SignInFormEvent.emailChanged(emailString));
+        },
         validator: (_) =>
             context.read<SignInFormBloc>().state.emailAddress.value.fold(
                   (f) => f.maybeMap(
-                    invalidEmail: (_) => 'Invalid Email',
+                    invalidEmail: (_) => 'Invalid NUSNET ID',
                     orElse: () => null,
                   ),
                   (_) => null,
@@ -134,7 +137,7 @@ class SignInForm extends StatelessWidget {
       child: TextButton(
           child: const Text('No account yet? Register Now'),
           onPressed: () {
-            context.replaceRoute(const RegisterRoute1());
+            context.pushRoute(const RegisterRoute1());
           }),
     );
   }

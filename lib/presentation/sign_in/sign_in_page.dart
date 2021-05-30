@@ -4,7 +4,7 @@ import 'package:friendlinus/application/auth/sign_in_form/sign_in_form_bloc.dart
 import 'package:friendlinus/presentation/sign_in/widgets/sign_in_form.dart';
 import 'package:get_it/get_it.dart';
 import '../../injection.dart';
-import '../register_page1.dart';
+import '../register/register_page1.dart';
 
 class SignInPage extends StatelessWidget {
   @override

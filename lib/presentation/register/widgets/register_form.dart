@@ -1,31 +1,54 @@
+import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:friendlinus/application/auth/auth_bloc.dart';
 import 'package:friendlinus/application/auth/sign_in_form/sign_in_form_bloc.dart';
+import 'package:friendlinus/presentation/routes/router.gr.dart';
+import 'package:auto_route/auto_route.dart';
 
-class RegisterPage1 extends StatelessWidget {
+class RegisterForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SignInFormBloc, SignInFormState>(
-        listener: (context, state) {},
-        builder: (context, state) {
-          return Form(
-            child: Scaffold(
-              body: Container(
-                margin: const EdgeInsets.all(30.0),
-                alignment: Alignment.center,
-                child:
-                    Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                  _buildVerifyMessage(),
-                  _buildIDField(context),
-                  SizedBox(height: 15),
-                  _buildPasswordField(context),
-                  _buildVerifyButton(context)
-                ]),
+        listener: (context, state) {
+      state.authFailureOrSuccessOption.fold(
+        () {},
+        (either) => either.fold(
+          (failure) {
+            FlushbarHelper.createError(
+              message: failure.map(
+                serverError: (_) => 'Server error',
+                emailAlreadyInUse: (_) => 'Email already in use',
+                invalidEmailAndPasswordCombi: (_) =>
+                    'Invalid email and password combination',
               ),
-            ),
-          );
-        });
+            ).show(context);
+          },
+          (_) {
+            context.read<AuthBloc>().add(const AuthEvent.authCheckRequested());
+            context.replaceRoute(const HomeRoute());
+          },
+        ),
+      );
+    }, builder: (context, state) {
+      return Form(
+        autovalidateMode: AutovalidateMode.always,
+        child: Scaffold(
+          body: Container(
+            margin: const EdgeInsets.all(30.0),
+            alignment: Alignment.center,
+            child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+              _buildVerifyMessage(),
+              _buildIDField(context),
+              SizedBox(height: 15),
+              _buildPasswordField(context),
+              _buildRegisterButton(context)
+            ]),
+          ),
+        ),
+      );
+    });
   }
 
   Widget _buildVerifyMessage() {
@@ -56,6 +79,23 @@ class RegisterPage1 extends StatelessWidget {
         ),
         labelText: 'NUSNET ID',
       ),
+      autocorrect: false,
+      onChanged: (value) {
+        final String emailString = '$value@u.nus.edu';
+        context
+            .read<SignInFormBloc>()
+            .add(SignInFormEvent.emailChanged(emailString));
+        print(emailString);
+      },
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      validator: (_) =>
+          context.read<SignInFormBloc>().state.emailAddress.value.fold(
+                (f) => f.maybeMap(
+                  invalidEmail: (_) => 'Invalid NUSNET ID',
+                  orElse: () => null,
+                ),
+                (_) => null,
+              ),
       inputFormatters: [
         FilteringTextInputFormatter.deny(
             RegExp(r"\s\b|\b\s")) //Prevents whitespace
@@ -76,6 +116,7 @@ class RegisterPage1 extends StatelessWidget {
       onChanged: (value) => context
           .read<SignInFormBloc>()
           .add(SignInFormEvent.passwordChanged(value)),
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: (_) =>
           context.read<SignInFormBloc>().state.password.value.fold(
                 (f) => f.maybeMap(
@@ -90,7 +131,7 @@ class RegisterPage1 extends StatelessWidget {
     );
   }
 
-  Widget _buildVerifyButton(BuildContext context) {
+  Widget _buildRegisterButton(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(top: 20.0),
       width: MediaQuery.of(context).size.width * 0.62,
@@ -98,7 +139,11 @@ class RegisterPage1 extends StatelessWidget {
           style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(Color(0xFF7BA5BB))),
           child: const Text("Sign Up Now"),
-          onPressed: () {}),
+          onPressed: () {
+            context.read<SignInFormBloc>().add(
+                  const SignInFormEvent.registerWithEmailAndPasswordPressed(),
+                );
+          }),
     );
   }
 }
