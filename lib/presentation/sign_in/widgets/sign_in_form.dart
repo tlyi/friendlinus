@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:friendlinus/application/auth/auth_bloc.dart';
 import 'package:friendlinus/application/auth/sign_in_form/sign_in_form_bloc.dart';
 import 'package:friendlinus/presentation/home_page.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:another_flushbar/flushbar_route.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:friendlinus/presentation/routes/router.gr.dart';
 
 import '../../register_page1.dart';
 
@@ -27,12 +30,19 @@ class SignInForm extends StatelessWidget {
               ).show(context);
             },
             (_) {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => HomePage()));
+              context
+                  .read<AuthBloc>()
+                  .add(const AuthEvent.authCheckRequested());
+              context.replaceRoute(const HomeRoute());
             },
           ),
         );
       },
+      /*failure.map(
+                    serverError: (_) => 'Server error',
+                    emailAlreadyInUse: (_) => 'Email already in use',
+                    invalidEmailAndPasswordCombi: (_) =>
+                        'Invalid email and password combination'*/
       builder: (context, state) {
         return Form(
           autovalidateMode: state.showErrorMessages
@@ -71,7 +81,7 @@ class SignInForm extends StatelessWidget {
                   invalidEmail: (_) => 'Invalid Email',
                   orElse: () => null,
                 ),
-                (r) => null,
+                (_) => null,
               ),
     );
   }
@@ -95,7 +105,7 @@ class SignInForm extends StatelessWidget {
                   shortPassword: (_) => 'Short Password',
                   orElse: () => null,
                 ),
-                (r) => null,
+                (_) => null,
               ),
     );
   }

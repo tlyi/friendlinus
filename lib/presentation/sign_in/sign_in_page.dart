@@ -25,9 +25,9 @@ class SignInPage extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.all(30.0),
                   child: BlocProvider(
-                      create: (context) => getIt<SignInFormBloc>(),
-                      child: SignInForm(),
-                ),
+                    create: (context) => getIt<SignInFormBloc>(),
+                    child: SignInForm(),
+                  ),
                 )
               ],
             ),
@@ -37,4 +37,3 @@ class SignInPage extends StatelessWidget {
     );
   }
 }
-
