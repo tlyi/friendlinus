@@ -16,6 +16,7 @@ class SplashPage extends StatelessWidget {
             print('boohoo');
           },
           unauthenticated: (_) {
+            print('hooboo');
             context.replaceRoute(const SignInRoute());
           },
         );
