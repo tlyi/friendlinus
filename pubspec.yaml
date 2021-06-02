@@ -38,6 +38,7 @@ dependencies:
   another_flushbar: ^1.10.22
   uuid: ^3.0.4
   auto_route: ^2.2.0
+  equatable: ^2.0.2
 
 #Stuff that you need during development
 dev_dependencies:

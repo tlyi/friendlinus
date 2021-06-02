@@ -10,25 +10,33 @@ import 'package:friendlinus/presentation/splash/splash_page.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: Container(
-          alignment: Alignment.center,
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Text("Home",
-                    style:
-                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                SizedBox(height: 30),
-                Image.asset(
-                  'images/logo.png',
-                  width: MediaQuery.of(context).size.width * 0.6,
-                  height: MediaQuery.of(context).size.width * 0.6,
-                ),
-                _buildSignOutButton(context),
-              ],
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) {
+        state.maybeMap(
+          unauthenticated: (_) => context.replaceRoute(SignInRoute()),
+          orElse: () {},
+        );
+      },
+      child: MaterialApp(
+        home: Scaffold(
+          body: Container(
+            alignment: Alignment.center,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text("Home",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                  SizedBox(height: 30),
+                  Image.asset(
+                    'images/logo.png',
+                    width: MediaQuery.of(context).size.width * 0.6,
+                    height: MediaQuery.of(context).size.width * 0.6,
+                  ),
+                  _buildSignOutButton(context),
+                ],
+              ),
             ),
           ),
         ),
@@ -37,26 +45,18 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _buildSignOutButton(BuildContext context) {
-    return BlocListener<AuthBloc, AuthState>(
-      listener: (context, state) {
-        state.maybeMap(
-          unauthenticated: (_) => context.replaceRoute(SignInRoute()),
-          orElse: () {},
-        );
-      },
-      child: Container(
-        margin: const EdgeInsets.only(top: 20.0),
-        width: MediaQuery.of(context).size.width * 0.62,
-        child: ElevatedButton(
-          style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Color(0xFF7BA5BB))),
-          child: const Text("Sign Out"),
-          onPressed: () {
-            context.read<AuthBloc>().add(
-                  const AuthEvent.signedOut(),
-                );
-          },
-        ),
+    return Container(
+      margin: const EdgeInsets.only(top: 20.0),
+      width: MediaQuery.of(context).size.width * 0.62,
+      child: ElevatedButton(
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Color(0xFF7BA5BB))),
+        child: const Text("Sign Out"),
+        onPressed: () {
+          context.read<AuthBloc>().add(
+                const AuthEvent.signedOut(),
+              );
+        },
       ),
     );
   }

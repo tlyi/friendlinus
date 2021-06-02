@@ -19,9 +19,11 @@ class AppWidget extends StatelessWidget {
                 .authCheckRequested()), //Request for auth check on start up
         )
       ],
-      child: MaterialApp.router(
-        routerDelegate: _appRouter.delegate(),
-        routeInformationParser: _appRouter.defaultRouteParser(),
+      child: MaterialApp(
+        home: MaterialApp.router(
+          routerDelegate: _appRouter.delegate(),
+          routeInformationParser: _appRouter.defaultRouteParser(),
+        ),
       ),
     );
   }

@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:equatable/equatable.dart';
 
 import 'package:friendlinus/domain/auth/auth_failures.dart';
 import 'package:friendlinus/domain/auth/i_auth_facade.dart';
