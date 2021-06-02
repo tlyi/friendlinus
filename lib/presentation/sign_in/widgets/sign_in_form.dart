@@ -47,99 +47,128 @@ class SignInForm extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              _buildID(context),
+              _BuildID(),
               const SizedBox(height: 20),
-              _buildPassword(context),
-              _buildLogInButton(context),
-              _buildRegisterButton(context),
+              _BuildPassword(),
+              _BuildLogInButton(),
+              _BuildRegisterButton(),
             ],
           ),
         );
       },
     );
   }
+}
 
-  Widget _buildID(BuildContext context) {
-    return TextFormField(
-        decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          labelText: 'NUSNET ID',
-        ),
-        autocorrect: false,
-        onChanged: (value) {
-          final String emailString = '$value@u.nus.edu';
-          context
-              .read<SignInFormBloc>()
-              .add(SignInFormEvent.emailChanged(emailString));
-          print(context.read<SignInFormBloc>().state.emailAddress.value);
-        },
-        validator: (_) =>
-            context.read<SignInFormBloc>().state.emailAddress.value.fold(
-                  (f) => f.maybeMap(
-                    invalidEmail: (_) => 'Invalid NUSNET ID',
-                    orElse: () => null,
-                  ),
-                  (_) => null,
-                ),
-        inputFormatters: [
-          FilteringTextInputFormatter.deny(
-              RegExp(r"\s\b|\b\s")) //Prevents whitespace
-        ]);
-  }
-
-  Widget _buildPassword(BuildContext context) {
-    return TextFormField(
-        decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          labelText: "Password",
-        ),
-        obscureText: true,
-        autocorrect: false,
-        onChanged: (value) => context
-            .read<SignInFormBloc>()
-            .add(SignInFormEvent.passwordChanged(value)),
-        validator: (_) =>
-            context.read<SignInFormBloc>().state.password.value.fold(
-                  (f) => f.maybeMap(
-                    shortPassword: (_) => 'Short Password',
-                    orElse: () => null,
-                  ),
-                  (_) => null,
-                ),
-        inputFormatters: [
-          FilteringTextInputFormatter.deny(
-              RegExp(r"\s\b|\b\s")) //Prevents whitespace
-        ]);
-  }
-
-  Widget _buildLogInButton(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: 20.0),
-      width: MediaQuery.of(context).size.width * 0.62,
-      child: ElevatedButton(
-          style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Color(0xFF7BA5BB))),
-          child: const Text("Sign In"),
-          onPressed: () {
-            context.read<SignInFormBloc>().add(
-                  const SignInFormEvent.signInWithEmailAndPasswordPressed(),
-                );
-          }),
+class _BuildID extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<SignInFormBloc, SignInFormState>(
+      builder: (context, state) {
+        return TextFormField(
+            decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              labelText: 'NUSNET ID',
+            ),
+            autocorrect: false,
+            onChanged: (value) {
+              final String emailString = '$value@u.nus.edu';
+              context
+                  .read<SignInFormBloc>()
+                  .add(SignInFormEvent.emailChanged(emailString));
+              print(context.read<SignInFormBloc>().state.emailAddress.value);
+            },
+            validator: (_) =>
+                context.read<SignInFormBloc>().state.emailAddress.value.fold(
+                      (f) => f.maybeMap(
+                        invalidEmail: (_) => 'Invalid NUSNET ID',
+                        orElse: () => null,
+                      ),
+                      (_) => null,
+                    ),
+            inputFormatters: [
+              FilteringTextInputFormatter.deny(
+                  RegExp(r"\s\b|\b\s")) //Prevents whitespace
+            ]);
+      },
     );
   }
+}
 
-  Widget _buildRegisterButton(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: 10.0),
-      child: TextButton(
-          child: const Text('No account yet? Register Now'),
-          onPressed: () {
-            context.pushRoute(const RegisterRoute1());
-          }),
+class _BuildPassword extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<SignInFormBloc, SignInFormState>(
+      builder: (context, state) {
+        return TextFormField(
+            decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              labelText: "Password",
+            ),
+            obscureText: true,
+            autocorrect: false,
+            onChanged: (value) => context
+                .read<SignInFormBloc>()
+                .add(SignInFormEvent.passwordChanged(value)),
+            validator: (_) =>
+                context.read<SignInFormBloc>().state.password.value.fold(
+                      (f) => f.maybeMap(
+                        shortPassword: (_) => 'Short Password',
+                        orElse: () => null,
+                      ),
+                      (_) => null,
+                    ),
+            inputFormatters: [
+              FilteringTextInputFormatter.deny(
+                  RegExp(r"\s\b|\b\s")) //Prevents whitespace
+            ]);
+      },
+    );
+  }
+}
+
+class _BuildLogInButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<SignInFormBloc, SignInFormState>(
+      builder: (context, state) {
+        return Container(
+          margin: const EdgeInsets.only(top: 20.0),
+          width: MediaQuery.of(context).size.width * 0.62,
+          child: ElevatedButton(
+              style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all(Color(0xFF7BA5BB))),
+              child: const Text("Sign In"),
+              onPressed: () {
+                context.read<SignInFormBloc>().add(
+                      const SignInFormEvent.signInWithEmailAndPasswordPressed(),
+                    );
+              }),
+        );
+      },
+    );
+  }
+}
+
+class _BuildRegisterButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<SignInFormBloc, SignInFormState>(
+      builder: (context, state) {
+        return Container(
+          margin: const EdgeInsets.only(top: 10.0),
+          child: TextButton(
+              child: const Text('No account yet? Register Now'),
+              onPressed: () {
+                context.pushRoute(const RegisterRoute1());
+              }),
+        );
+      },
     );
   }
 }

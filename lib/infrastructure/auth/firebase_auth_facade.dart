@@ -68,6 +68,5 @@ class FirebaseAuthFacade implements IAuthFacade {
   @override
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
-    print("Actually signed out?");
   }
 }
