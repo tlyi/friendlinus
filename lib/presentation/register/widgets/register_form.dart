@@ -26,8 +26,14 @@ class RegisterForm extends StatelessWidget {
             ).show(context);
           },
           (_) {
-            context.read<AuthBloc>().add(const AuthEvent.authCheckRequested());
-            context.replaceRoute(const HomeRoute());
+            context
+                .read<AuthBloc>()
+                .add(const AuthEvent.sentEmailVerification());
+            context
+                .read<AuthBloc>()
+                .add(const AuthEvent.verifiedCheckRequested());
+            print('First verification check');
+            context.replaceRoute(const VerifyEmailRoute());
           },
         ),
       );

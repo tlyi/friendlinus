@@ -22,6 +22,19 @@ class FirebaseAuthFacade implements IAuthFacade {
   }
 
   @override
+  Future sendEmailVerification() async {
+    final user = _firebaseAuth.currentUser;
+    await user!.sendEmailVerification();
+  }
+
+  @override
+  Future<bool> isUserVerified() async {
+    final user = _firebaseAuth.currentUser;
+    await user!.reload();
+    return user.emailVerified;
+  }
+
+  @override
   Future<Either<AuthFailure, Unit>> registerWithEmailAndPassword({
     required EmailAddress emailAddress,
     required Password password,

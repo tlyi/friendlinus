@@ -6,4 +6,6 @@ class AuthState with _$AuthState {
       Initial; //Not sure if user is authenticated or not, need to check
   const factory AuthState.authenticated() = Authenticated;
   const factory AuthState.unauthenticated() = Unauthenticated;
+  const factory AuthState.unverified() = Unverified;
+  const factory AuthState.verifying() = Verifying;
 }

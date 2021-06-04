@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:friendlinus/domain/auth/i_auth_facade.dart';
+import 'package:friendlinus/domain/core/errors.dart';
 import 'package:injectable/injectable.dart';
 
 part 'auth_event.dart';
@@ -31,6 +32,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       signedOut: (e) async* {
         await _authFacade.signOut();
         yield const AuthState.unauthenticated();
+      },
+      sentEmailVerification: (e) async* {
+        yield const AuthState.unverified();
+        await _authFacade.sendEmailVerification();
+      },
+      verifiedCheckRequested: (e) async* {
+        yield const AuthState.verifying();
+        final userVerified = await _authFacade.isUserVerified();
+        if (userVerified) {
+          yield const AuthState.authenticated();
+        } else {
+          yield const AuthState.unverified();
+        }
       },
     );
   }

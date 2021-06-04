@@ -12,6 +12,7 @@ import 'package:friendlinus/presentation/routes/router.gr.dart';
 
 import '../../register/register_page1.dart';
 
+//on log in: check if user is verified, if is not go to verify email page
 class SignInForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

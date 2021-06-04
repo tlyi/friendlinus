@@ -19,6 +19,10 @@ class SplashPage extends StatelessWidget {
             print('hooboo');
             context.replaceRoute(const SignInRoute());
           },
+          unverified: (_) {
+            context.replaceRoute(const VerifyEmailRoute());
+          },
+          verifying: (_) {},
         );
       },
       child: const Scaffold(

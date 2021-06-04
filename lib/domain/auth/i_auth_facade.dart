@@ -7,6 +7,10 @@ import 'package:injectable/injectable.dart';
 abstract class IAuthFacade {
   Future<Option<User>> getSignedInUser();
 
+  Future sendEmailVerification();
+
+  Future<bool> isUserVerified();
+
   Future<Either<AuthFailure, Unit>> registerWithEmailAndPassword({
     required EmailAddress emailAddress,
     required Password password,

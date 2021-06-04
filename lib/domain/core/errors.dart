@@ -1,6 +1,8 @@
 import 'package:friendlinus/domain/core/failures.dart';
 
 //errors should crash the app
+class NotAuthenticatedError extends Error {}
+
 class UnexpectedValueError extends Error {
   final ValueFailure valueFailure;
 
@@ -8,7 +10,8 @@ class UnexpectedValueError extends Error {
 
   @override
   String toString() {
-    const explanation = 'Encountered a ValueFailure at an unrecoverable point. Terminating.';
+    const explanation =
+        'Encountered a ValueFailure at an unrecoverable point. Terminating.';
     return Error.safeToString('$explanation Failure was: $valueFailure');
   }
 }
