@@ -7,29 +7,37 @@ import 'package:auto_route/auto_route.dart';
 class SplashPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthBloc, AuthState>(
-      listener: (context, state) {
-        state.map(
+    return BlocConsumer<AuthBloc, AuthState>(listener: (context, state) {
+      state.map(
           initial: (_) {},
           authenticated: (_) {
-            context.replaceRoute(const HomeRoute());
-            print('boohoo');
+            context.read<AuthBloc>().add(AuthEvent.verifiedCheckRequested());
+            print('SPLASH: user is logged in but verifying');
           },
           unauthenticated: (_) {
-            print('hooboo');
+            print('SPLASH: hooboo');
             context.replaceRoute(const SignInRoute());
           },
           unverified: (_) {
+            print(
+                'SPLASH: user is logged in but unverified, gg to verify email page');
             context.replaceRoute(const VerifyEmailRoute());
           },
           verifying: (_) {},
-        );
-      },
-      child: const Scaffold(
+          verified: (_) {
+            print('SPLASH: user is logged in and verified, going to home page');
+            context.replaceRoute(const HomeRoute());
+          });
+    }, builder: (context, state) {
+      if (state is Authenticated) {
+        context.read<AuthBloc>().add(AuthEvent.verifiedCheckRequested());
+        print('SPLASH BUILD: user is logged in but verifying');
+      }
+      return Scaffold(
         body: Center(
           child: CircularProgressIndicator(),
         ),
-      ),
-    );
+      );
+    });
   }
 }
