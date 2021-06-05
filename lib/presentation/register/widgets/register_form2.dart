@@ -1,38 +1,36 @@
-/* import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:friendlinus/locator.dart';
-import 'package:friendlinus/services/authentication_service.dart';
-import 'home_page.dart';
+import 'package:friendlinus/application/auth/auth_bloc.dart';
+import 'package:friendlinus/domain/auth/user_profile.dart';
+import 'package:friendlinus/infrastructure/profile/user_firestore.dart';
 
-class RegisterPage2 extends StatelessWidget {
-  final AuthenticationService _authenticationService =
-      locator<AuthenticationService>();
+class RegisterForm2 extends StatelessWidget {
+  const RegisterForm2({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: Align(
-          alignment: Alignment.topCenter,
-          child: SingleChildScrollView(
-            child: SafeArea(
-              minimum: EdgeInsets.all(30.0),
-              child: RegisterForm(),
+    return Container(
+        margin: const EdgeInsets.all(30.0),
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            ElevatedButton(
+              onPressed: () async {
+                await UserFirestore.createUser(UserProfile(
+                    username: 'username',
+                    course: 'course',
+                    bio: 'bio',
+                    module: 'module'));
+              },
+              child: const Text('Register Profile'),
             ),
-          ),
-        ),
-      ),
-    );
+          ],
+        ));
   }
 }
 
-class RegisterForm extends StatefulWidget {
-  @override
-  _RegisterFormState createState() => _RegisterFormState();
-}
-
-class _RegisterFormState extends State<RegisterForm> {
-  final _formKey = GlobalKey<FormState>();
+/*
+class RegisterForm2 extends StatelessWidget {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController courseController = TextEditingController();
@@ -42,7 +40,6 @@ class _RegisterFormState extends State<RegisterForm> {
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: _formKey,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
@@ -173,12 +170,14 @@ class _RegisterFormState extends State<RegisterForm> {
               backgroundColor: MaterialStateProperty.all(Color(0xFF7BA5BB))),
           child: const Text("Register"),
           onPressed: () {
-            if (_formKey.currentState!.validate()) {
+            /*if (_formKey.currentState!.validate()) {
               ScaffoldMessenger.of(context)
                   .showSnackBar(SnackBar(content: Text('Processing Data')));
             }
             Navigator.of(context)
                 .push(MaterialPageRoute(builder: (context) => HomePage()));
+                */
+              
           }),
     );
   }

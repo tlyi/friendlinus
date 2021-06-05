@@ -4,15 +4,17 @@
 // InjectableConfigGenerator
 // **************************************************************************
 
+import 'package:cloud_firestore/cloud_firestore.dart' as _i4;
 import 'package:firebase_auth/firebase_auth.dart' as _i3;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
-import 'application/auth/auth_bloc.dart' as _i7;
-import 'application/auth/sign_in_form/sign_in_form_bloc.dart' as _i6;
-import 'domain/auth/i_auth_facade.dart' as _i4;
-import 'infrastructure/auth/firebase_auth_facade.dart' as _i5;
-import 'infrastructure/core/firebase_injectable_module.dart'
+import 'application/auth/auth_bloc.dart' as _i9;
+import 'application/auth/sign_in_form/sign_in_form_bloc.dart' as _i7;
+import 'domain/auth/i_auth_facade.dart' as _i5;
+import 'infrastructure/auth/firebase_auth_facade.dart' as _i6;
+import 'infrastructure/core/firebase_injectable_module.dart' as _i10;
+import 'infrastructure/profile/user_firestore.dart'
     as _i8; // ignore_for_file: unnecessary_lambdas
 
 // ignore_for_file: lines_longer_than_80_chars
@@ -23,12 +25,16 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
   final firebaseInjectableModule = _$FirebaseInjectableModule();
   gh.lazySingleton<_i3.FirebaseAuth>(
       () => firebaseInjectableModule.firebaseAuth);
-  gh.lazySingleton<_i4.IAuthFacade>(
-      () => _i5.FirebaseAuthFacade(get<_i3.FirebaseAuth>()));
-  gh.factory<_i6.SignInFormBloc>(
-      () => _i6.SignInFormBloc(get<_i4.IAuthFacade>()));
-  gh.factory<_i7.AuthBloc>(() => _i7.AuthBloc(get<_i4.IAuthFacade>()));
+  gh.lazySingleton<_i4.FirebaseFirestore>(
+      () => firebaseInjectableModule.firestore);
+  gh.lazySingleton<_i5.IAuthFacade>(
+      () => _i6.FirebaseAuthFacade(get<_i3.FirebaseAuth>()));
+  gh.factory<_i7.SignInFormBloc>(
+      () => _i7.SignInFormBloc(get<_i5.IAuthFacade>()));
+  gh.lazySingleton<_i8.UserFirestore>(
+      () => _i8.UserFirestore(get<_i4.FirebaseFirestore>()));
+  gh.factory<_i9.AuthBloc>(() => _i9.AuthBloc(get<_i5.IAuthFacade>()));
   return get;
 }
 
-class _$FirebaseInjectableModule extends _i8.FirebaseInjectableModule {}
+class _$FirebaseInjectableModule extends _i10.FirebaseInjectableModule {}
