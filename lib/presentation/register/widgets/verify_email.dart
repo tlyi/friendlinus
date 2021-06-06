@@ -11,8 +11,8 @@ class VerifyEmail extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<AuthBloc, AuthState>(listener: (context, state) {
       if (state is Verified) {
-        context.replaceRoute(const HomeRoute());
-        print('VERIFY: Supposed to be second register page');
+        context.replaceRoute(const RegisterProfileRoute());
+        print('VERIFY: GG to register profile');
       } else if (state is Unverified) {
         context.read<AuthBloc>().add(const AuthEvent.verifiedCheckRequested());
         print('VERIFY: Rechecking verification');

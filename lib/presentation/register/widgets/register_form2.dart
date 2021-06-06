@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/* import 'package:flutter/material.dart';
 import 'package:friendlinus/application/auth/auth_bloc.dart';
 import 'package:friendlinus/domain/auth/user_profile.dart';
 import 'package:friendlinus/infrastructure/profile/user_firestore.dart';
@@ -29,7 +29,7 @@ class RegisterForm2 extends StatelessWidget {
   }
 }
 
-/*
+
 class RegisterForm2 extends StatelessWidget {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();

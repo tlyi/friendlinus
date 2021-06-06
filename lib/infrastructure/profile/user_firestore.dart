@@ -1,4 +1,4 @@
-import 'dart:html';
+/* import 'dart:html';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:friendlinus/domain/auth/user_profile.dart';
@@ -11,8 +11,8 @@ class UserFirestore {
   UserFirestore(this._firestore);
 
   Future<void> createUser(UserProfile userProfile) async {
-    final DocumentReference usersDoc =
-        await _firestore.usersDocument();
+    final DocumentReference usersDoc = await _firestore.userDocument();
     usersDoc.set(userProfile.toJson());
   }
 }
+*/
