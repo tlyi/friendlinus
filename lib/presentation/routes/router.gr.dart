@@ -12,6 +12,8 @@ import 'package:friendlinus/presentation/register/register_profile_page.dart'
     as _i8;
 import 'package:friendlinus/presentation/register/verify_email_page.dart'
     as _i7;
+import 'package:friendlinus/presentation/sign_in/reset_password_page.dart'
+    as _i9;
 import 'package:friendlinus/presentation/sign_in/sign_in_page.dart' as _i4;
 import 'package:friendlinus/presentation/splash/splash_page.dart' as _i3;
 
@@ -50,6 +52,11 @@ class AppRouter extends _i1.RootStackRouter {
         routeData: routeData,
         builder: (_) {
           return _i8.RegisterProfilePage();
+        }),
+    ResetPasswordRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
+        routeData: routeData,
+        builder: (_) {
+          return _i9.ResetPasswordPage();
         })
   };
 
@@ -61,7 +68,8 @@ class AppRouter extends _i1.RootStackRouter {
         _i1.RouteConfig(RegisterRoute1.name, path: '/register-page1'),
         _i1.RouteConfig(VerifyEmailRoute.name, path: '/verify-email-page'),
         _i1.RouteConfig(RegisterProfileRoute.name,
-            path: '/register-profile-page')
+            path: '/register-profile-page'),
+        _i1.RouteConfig(ResetPasswordRoute.name, path: '/reset-password-page')
       ];
 }
 
@@ -99,4 +107,10 @@ class RegisterProfileRoute extends _i1.PageRouteInfo {
   const RegisterProfileRoute() : super(name, path: '/register-profile-page');
 
   static const String name = 'RegisterProfileRoute';
+}
+
+class ResetPasswordRoute extends _i1.PageRouteInfo {
+  const ResetPasswordRoute() : super(name, path: '/reset-password-page');
+
+  static const String name = 'ResetPasswordRoute';
 }

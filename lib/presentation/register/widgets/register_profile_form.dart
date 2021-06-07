@@ -170,7 +170,7 @@ class _BuildSaveButton extends StatelessWidget {
           child: ElevatedButton(
               style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all(Color(0xFF7BA5BB))),
+                      MaterialStateProperty.all(const Color(0xFF7BA5BB))),
               child: const Text("Save Info"),
               onPressed: () {
                 context.read<ProfileFormBloc>().add(

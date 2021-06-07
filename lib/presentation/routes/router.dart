@@ -4,6 +4,7 @@ import 'package:friendlinus/presentation/home_page.dart';
 import 'package:friendlinus/presentation/register/register_page1.dart';
 import 'package:friendlinus/presentation/register/register_profile_page.dart';
 import 'package:friendlinus/presentation/register/verify_email_page.dart';
+import 'package:friendlinus/presentation/sign_in/reset_password_page.dart';
 import 'package:friendlinus/presentation/sign_in/sign_in_page.dart';
 import 'package:friendlinus/presentation/splash/splash_page.dart';
 
@@ -16,6 +17,7 @@ import 'package:friendlinus/presentation/splash/splash_page.dart';
     AutoRoute(page: RegisterPage1),
     AutoRoute(page: VerifyEmailPage),
     AutoRoute(page: RegisterProfilePage),
+    AutoRoute(page: ResetPasswordPage),
   ],
 )
 class $AppRouter {}

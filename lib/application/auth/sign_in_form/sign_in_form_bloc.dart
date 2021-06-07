@@ -45,6 +45,19 @@ class SignInFormBloc extends Bloc<SignInFormEvent, SignInFormState> {
         yield* _performActionOnAuthFacadeWithEmailAndPassword(
             _authFacade.signInWithEmailAndPassword);
       },
+      resetPasswordPressed: (e) async* {
+        Either<AuthFailure, Unit>? failureOrSuccess;
+        failureOrSuccess = await _authFacade.sendPasswordReset(
+            emailAddress: state.emailAddress);
+        yield state.copyWith(
+            showErrorMessages: true,
+            authFailureOrSuccessOption: optionOf(failureOrSuccess));
+      },
+      passwordReChanged: (e) async* {
+        yield state.copyWith(
+          passwordRe: Password(e.passwordStr),
+        );
+      },
     );
   }
 

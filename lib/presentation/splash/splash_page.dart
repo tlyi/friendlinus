@@ -11,7 +11,9 @@ class SplashPage extends StatelessWidget {
       state.map(
           initial: (_) {},
           authenticated: (_) {
-            context.read<AuthBloc>().add(AuthEvent.verifiedCheckRequested());
+            context
+                .read<AuthBloc>()
+                .add(const AuthEvent.verifiedCheckRequested());
             print('SPLASH: user is logged in but verifying');
           },
           unauthenticated: (_) {
@@ -30,10 +32,10 @@ class SplashPage extends StatelessWidget {
           });
     }, builder: (context, state) {
       if (state is Authenticated) {
-        context.read<AuthBloc>().add(AuthEvent.verifiedCheckRequested());
+        context.read<AuthBloc>().add(const AuthEvent.verifiedCheckRequested());
         print('SPLASH BUILD: user is logged in but verifying');
       }
-      return Scaffold(
+      return const Scaffold(
         body: Center(
           child: CircularProgressIndicator(),
         ),

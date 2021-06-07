@@ -9,10 +9,10 @@ import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:another_flushbar/flushbar_route.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
+import 'package:friendlinus/presentation/sign_in/reset_password_page.dart';
 
 import '../../register/register_page1.dart';
 
-//on log in: check if user is verified, if is not go to verify email page
 class SignInForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -52,7 +52,9 @@ class SignInForm extends StatelessWidget {
               const SizedBox(height: 20),
               _BuildPassword(),
               _BuildLogInButton(),
+              _BuildForgotPassword(),
               _BuildRegisterButton(),
+              if (state.isSubmitting) const LinearProgressIndicator(),
             ],
           ),
         );
@@ -156,7 +158,7 @@ class _BuildLogInButton extends StatelessWidget {
   }
 }
 
-class _BuildRegisterButton extends StatelessWidget {
+class _BuildForgotPassword extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SignInFormBloc, SignInFormState>(
@@ -164,11 +166,26 @@ class _BuildRegisterButton extends StatelessWidget {
         return Container(
           margin: const EdgeInsets.only(top: 10.0),
           child: TextButton(
-              child: const Text('No account yet? Register Now'),
+              child: const Text('Forgot Password'),
               onPressed: () {
-                context.pushRoute(const RegisterRoute1());
+                context.pushRoute(const ResetPasswordRoute());
               }),
         );
+      },
+    );
+  }
+}
+
+class _BuildRegisterButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<SignInFormBloc, SignInFormState>(
+      builder: (context, state) {
+        return TextButton(
+            child: const Text('No account yet? Register Now'),
+            onPressed: () {
+              context.pushRoute(const RegisterRoute1());
+            });
       },
     );
   }

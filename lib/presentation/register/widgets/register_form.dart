@@ -45,39 +45,48 @@ class RegisterForm extends StatelessWidget {
             margin: const EdgeInsets.all(30.0),
             alignment: Alignment.center,
             child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-              _buildVerifyMessage(),
-              _buildIDField(context),
-              SizedBox(height: 15),
-              _buildPasswordField(context),
-              _buildRegisterButton(context)
+              _BuildVerifyMessage(),
+              _BuildIDField(),
+              const SizedBox(height: 15),
+              _BuildPasswordField(),
+              const SizedBox(height: 15),
+              _BuildReEnterPasswordField(),
+              _BuildRegisterButton()
             ]),
           ),
         ),
       );
     });
   }
+}
 
-  Widget _buildVerifyMessage() {
+class _BuildVerifyMessage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.all(20.0),
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.all(15.0),
-              child: Text(
-                "Sign up now with your NUSNET ID!",
-                style: new TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ),
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        children: <Widget>[
+          const Padding(
+            padding: EdgeInsets.all(15.0),
+            child: const Text(
+              "Sign up now with your NUSNET ID!",
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
               ),
             ),
-            Text("An authentication link will be sent to your NUS Email."),
-          ],
-        ));
+          ),
+          const Text("An authentication link will be sent to your NUS Email."),
+        ],
+      ),
+    );
   }
+}
 
-  Widget _buildIDField(BuildContext context) {
+class _BuildIDField extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     return TextFormField(
       decoration: InputDecoration(
         border: OutlineInputBorder(
@@ -108,8 +117,11 @@ class RegisterForm extends StatelessWidget {
       ],
     );
   }
+}
 
-  Widget _buildPasswordField(BuildContext context) {
+class _BuildPasswordField extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     return TextFormField(
       decoration: InputDecoration(
         border: OutlineInputBorder(
@@ -136,19 +148,60 @@ class RegisterForm extends StatelessWidget {
       ],
     );
   }
+}
 
-  Widget _buildRegisterButton(BuildContext context) {
+class _BuildReEnterPasswordField extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        labelText: 'Re-enter Password',
+      ),
+      obscureText: true,
+      autocorrect: false,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      onChanged: (value) => context
+          .read<SignInFormBloc>()
+          .add(SignInFormEvent.passwordReChanged(value)),
+      validator: (_) {
+        if (context.read<SignInFormBloc>().state.password.value !=
+            context.read<SignInFormBloc>().state.passwordRe.value) {
+          return 'Passwords do not match';
+        } else {
+          return null;
+        }
+      },
+      inputFormatters: [
+        FilteringTextInputFormatter.deny(
+            RegExp(r"\s\b|\b\s")) //Prevents whitespace
+      ],
+    );
+  }
+}
+
+class _BuildRegisterButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(top: 20.0),
       width: MediaQuery.of(context).size.width * 0.62,
       child: ElevatedButton(
           style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Color(0xFF7BA5BB))),
-          child: const Text("Sign Up Now"),
+              backgroundColor:
+                  MaterialStateProperty.all(const Color(0xFF7BA5BB))),
+          child: const Text('Sign Up Now'),
           onPressed: () {
-            context.read<SignInFormBloc>().add(
-                  const SignInFormEvent.registerWithEmailAndPasswordPressed(),
-                );
+            if (context.read<SignInFormBloc>().state.password.value ==
+                context.read<SignInFormBloc>().state.passwordRe.value) {
+              context.read<SignInFormBloc>().add(
+                    const SignInFormEvent.registerWithEmailAndPasswordPressed(),
+                  );
+            } else {
+              return null;
+            }
           }),
     );
   }

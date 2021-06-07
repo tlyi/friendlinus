@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:friendlinus/application/auth/auth_bloc.dart';
-import 'package:friendlinus/application/auth/sign_in_form/sign_in_form_bloc.dart';
-import 'package:friendlinus/injection.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
-import 'package:friendlinus/presentation/splash/splash_page.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -13,7 +10,7 @@ class HomePage extends StatelessWidget {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         state.maybeMap(
-          unauthenticated: (_) => context.replaceRoute(SignInRoute()),
+          unauthenticated: (_) => context.replaceRoute(const SignInRoute()),
           orElse: () {},
         );
       },

@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart' hide User;
-import 'package:flutter/services.dart';
 import 'package:friendlinus/domain/auth/auth_failures.dart';
 import 'package:friendlinus/domain/auth/i_auth_facade.dart';
 import 'package:friendlinus/domain/auth/value_objects.dart';
@@ -75,6 +74,19 @@ class FirebaseAuthFacade implements IAuthFacade {
       } else {
         return left(const AuthFailure.serverError());
       }
+    }
+  }
+
+  @override
+  Future<Either<AuthFailure, Unit>> sendPasswordReset(
+      {required EmailAddress emailAddress}) async {
+    final emailAddressStr = emailAddress.getOrCrash();
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: emailAddressStr);
+      return right(unit);
+    } on FirebaseAuthException catch (e) {
+      print(e.code);
+      return left(const AuthFailure.serverError());
     }
   }
 
