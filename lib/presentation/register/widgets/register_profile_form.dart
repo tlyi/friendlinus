@@ -33,6 +33,8 @@ class RegisterProfileForm extends StatelessWidget {
               margin: const EdgeInsets.all(30.0),
               alignment: Alignment.center,
               child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                _BuildProfilePicButton(),
+                const SizedBox(height: 15),
                 _BuildUsername(),
                 const SizedBox(height: 15),
                 _BuildCourse(),
@@ -47,6 +49,34 @@ class RegisterProfileForm extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class _BuildProfilePicButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        const Icon(
+          Icons.account_circle,
+          color: Colors.grey,
+          size: 50,
+        ),
+        Positioned(
+          bottom: 1,
+          right: 1,
+          child: Container(
+            child: ElevatedButton(
+              child: Text('+'),
+              onPressed: () {},
+            ),
+            decoration: BoxDecoration(
+              color: Color(0xFF7BA5BB),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
