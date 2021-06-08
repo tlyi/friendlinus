@@ -6,6 +6,8 @@
 
 import 'package:auto_route/auto_route.dart' as _i1;
 import 'package:flutter/material.dart' as _i2;
+import 'package:friendlinus/presentation/forum/forum_overview/forum_overview_page.dart'
+    as _i10;
 import 'package:friendlinus/presentation/home_page.dart' as _i5;
 import 'package:friendlinus/presentation/register/register_page1.dart' as _i6;
 import 'package:friendlinus/presentation/register/register_profile_page.dart'
@@ -57,6 +59,11 @@ class AppRouter extends _i1.RootStackRouter {
         routeData: routeData,
         builder: (_) {
           return _i9.ResetPasswordPage();
+        }),
+    ForumOverviewRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
+        routeData: routeData,
+        builder: (_) {
+          return _i10.ForumOverviewPage();
         })
   };
 
@@ -69,7 +76,8 @@ class AppRouter extends _i1.RootStackRouter {
         _i1.RouteConfig(VerifyEmailRoute.name, path: '/verify-email-page'),
         _i1.RouteConfig(RegisterProfileRoute.name,
             path: '/register-profile-page'),
-        _i1.RouteConfig(ResetPasswordRoute.name, path: '/reset-password-page')
+        _i1.RouteConfig(ResetPasswordRoute.name, path: '/reset-password-page'),
+        _i1.RouteConfig(ForumOverviewRoute.name, path: '/forum-overview-page')
       ];
 }
 
@@ -113,4 +121,10 @@ class ResetPasswordRoute extends _i1.PageRouteInfo {
   const ResetPasswordRoute() : super(name, path: '/reset-password-page');
 
   static const String name = 'ResetPasswordRoute';
+}
+
+class ForumOverviewRoute extends _i1.PageRouteInfo {
+  const ForumOverviewRoute() : super(name, path: '/forum-overview-page');
+
+  static const String name = 'ForumOverviewRoute';
 }

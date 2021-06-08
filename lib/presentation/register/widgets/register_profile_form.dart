@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -5,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:friendlinus/application/profile/profile_form/bloc/profile_form_bloc.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:image_picker/image_picker.dart';
 
 class RegisterProfileForm extends StatelessWidget {
   @override
@@ -24,6 +27,10 @@ class RegisterProfileForm extends StatelessWidget {
                 }, (_) {
                   context.replaceRoute(const HomeRoute());
                 }));
+        state.photoUrl.fold(
+            (f) => FlushbarHelper.createError(
+                message: 'Error uploading photo to database, try again'),
+            (r) => null);
       },
       builder: (context, state) {
         return Form(
@@ -56,23 +63,64 @@ class RegisterProfileForm extends StatelessWidget {
 class _BuildProfilePicButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
+    String dbPhotoUrl =
+        context.read<ProfileFormBloc>().state.photoUrl.getOrElse(() => '');
+    return Stack(
       children: <Widget>[
-        const Icon(
-          Icons.account_circle,
-          color: Colors.grey,
-          size: 50,
+        CircleAvatar(
+          radius: 55,
+          backgroundColor: Colors.transparent,
+          child: dbPhotoUrl == ''
+              ? ClipRRect(
+                  borderRadius: BorderRadius.circular(50),
+                  child: Image.asset(
+                    'images/placeholder_dp.png',
+                    width: 100,
+                    height: 100,
+                    fit: BoxFit.fitHeight,
+                  ),
+                )
+              : ClipRRect(
+                  borderRadius: BorderRadius.circular(50),
+                  child: Image.network(
+                    dbPhotoUrl,
+                    width: 100,
+                    height: 100,
+                    fit: BoxFit.fitHeight,
+                  ),
+                ),
         ),
         Positioned(
           bottom: 1,
           right: 1,
           child: Container(
+            decoration: const BoxDecoration(shape: BoxShape.circle),
             child: ElevatedButton(
-              child: Text('+'),
-              onPressed: () {},
-            ),
-            decoration: BoxDecoration(
-              color: Color(0xFF7BA5BB),
+              child: Text(
+                '+',
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              style: ElevatedButton.styleFrom(
+                primary: const Color(0xFF7BA5BB),
+                shape: CircleBorder(),
+              ),
+              onPressed: () async {
+                final picker = ImagePicker();
+                File? pickedImage;
+                final pickedFile =
+                    await picker.getImage(source: ImageSource.gallery);
+                if (pickedFile == null) {
+                  FlushbarHelper.createError(message: 'No image picked')
+                      .show(context);
+                } else {
+                  pickedImage = File(pickedFile.path);
+                  context
+                      .read<ProfileFormBloc>()
+                      .add(ProfileFormEvent.photoChanged(pickedImage));
+                }
+              },
             ),
           ),
         ),

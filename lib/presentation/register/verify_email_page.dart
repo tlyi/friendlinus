@@ -7,12 +7,10 @@ import 'package:friendlinus/presentation/register/widgets/verify_email.dart';
 class VerifyEmailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: BlocProvider(
-          create: (context) => getIt<SignInFormBloc>(),
-          child: VerifyEmail(),
-        ),
+    return Scaffold(
+      body: BlocProvider(
+        create: (context) => getIt<SignInFormBloc>(),
+        child: VerifyEmail(),
       ),
     );
   }

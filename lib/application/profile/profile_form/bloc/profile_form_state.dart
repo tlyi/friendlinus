@@ -3,6 +3,7 @@ part of 'profile_form_bloc.dart';
 @freezed
 class ProfileFormState with _$ProfileFormState {
   const factory ProfileFormState({
+    required Either<DataFailure, String> photoUrl,
     required String username,
     required String course,
     required String bio,
@@ -12,6 +13,7 @@ class ProfileFormState with _$ProfileFormState {
   }) = _ProfileFormState;
 
   factory ProfileFormState.initial() => ProfileFormState(
+        photoUrl: right(''),
         username: '',
         course: '',
         bio: '',

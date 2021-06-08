@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
@@ -22,6 +23,11 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
     ProfileFormEvent event,
   ) async* {
     yield* event.map(
+      photoChanged: (e) async* {
+        Either<DataFailure, String> failureOrString;
+        failureOrString = await _dataRepository.uploadPhoto(e.photo);
+        yield state.copyWith(photoUrl: failureOrString);
+      },
       usernameChanged: (e) async* {
         yield state.copyWith(
           username: e.username,
@@ -50,10 +56,15 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
           saveFailureOrSuccessOption: none(),
         );
 
+        String url = '';
+        state.photoUrl.fold(
+          (f) => print(f),
+          (s) {
+            url = s;
+          },
+        );
         failureOrSuccess = await _dataRepository.create(
-            state.username, state.course, state.bio, state.module);
-
-        print('Should have updated firestore alr');
+            url, state.username, state.course, state.bio, state.module);
 
         yield state.copyWith(
           isSaving: false,

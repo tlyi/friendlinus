@@ -16,6 +16,12 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$ProfileFormEventTearOff {
   const _$ProfileFormEventTearOff();
 
+  _PhotoChanged photoChanged(File photo) {
+    return _PhotoChanged(
+      photo,
+    );
+  }
+
   _UsernameChanged usernameChanged(String username) {
     return _UsernameChanged(
       username,
@@ -52,6 +58,7 @@ const $ProfileFormEvent = _$ProfileFormEventTearOff();
 mixin _$ProfileFormEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function(File photo) photoChanged,
     required TResult Function(String username) usernameChanged,
     required TResult Function(String course) courseChanged,
     required TResult Function(String bio) bioChanged,
@@ -61,6 +68,7 @@ mixin _$ProfileFormEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function(File photo)? photoChanged,
     TResult Function(String username)? usernameChanged,
     TResult Function(String course)? courseChanged,
     TResult Function(String bio)? bioChanged,
@@ -71,6 +79,7 @@ mixin _$ProfileFormEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_PhotoChanged value) photoChanged,
     required TResult Function(_UsernameChanged value) usernameChanged,
     required TResult Function(_CourseChanged value) courseChanged,
     required TResult Function(_BioChanged value) bioChanged,
@@ -80,6 +89,7 @@ mixin _$ProfileFormEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_PhotoChanged value)? photoChanged,
     TResult Function(_UsernameChanged value)? usernameChanged,
     TResult Function(_CourseChanged value)? courseChanged,
     TResult Function(_BioChanged value)? bioChanged,
@@ -105,6 +115,138 @@ class _$ProfileFormEventCopyWithImpl<$Res>
   final ProfileFormEvent _value;
   // ignore: unused_field
   final $Res Function(ProfileFormEvent) _then;
+}
+
+/// @nodoc
+abstract class _$PhotoChangedCopyWith<$Res> {
+  factory _$PhotoChangedCopyWith(
+          _PhotoChanged value, $Res Function(_PhotoChanged) then) =
+      __$PhotoChangedCopyWithImpl<$Res>;
+  $Res call({File photo});
+}
+
+/// @nodoc
+class __$PhotoChangedCopyWithImpl<$Res>
+    extends _$ProfileFormEventCopyWithImpl<$Res>
+    implements _$PhotoChangedCopyWith<$Res> {
+  __$PhotoChangedCopyWithImpl(
+      _PhotoChanged _value, $Res Function(_PhotoChanged) _then)
+      : super(_value, (v) => _then(v as _PhotoChanged));
+
+  @override
+  _PhotoChanged get _value => super._value as _PhotoChanged;
+
+  @override
+  $Res call({
+    Object? photo = freezed,
+  }) {
+    return _then(_PhotoChanged(
+      photo == freezed
+          ? _value.photo
+          : photo // ignore: cast_nullable_to_non_nullable
+              as File,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_PhotoChanged implements _PhotoChanged {
+  const _$_PhotoChanged(this.photo);
+
+  @override
+  final File photo;
+
+  @override
+  String toString() {
+    return 'ProfileFormEvent.photoChanged(photo: $photo)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _PhotoChanged &&
+            (identical(other.photo, photo) ||
+                const DeepCollectionEquality().equals(other.photo, photo)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(photo);
+
+  @JsonKey(ignore: true)
+  @override
+  _$PhotoChangedCopyWith<_PhotoChanged> get copyWith =>
+      __$PhotoChangedCopyWithImpl<_PhotoChanged>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(File photo) photoChanged,
+    required TResult Function(String username) usernameChanged,
+    required TResult Function(String course) courseChanged,
+    required TResult Function(String bio) bioChanged,
+    required TResult Function(String module) moduleChanged,
+    required TResult Function() saved,
+  }) {
+    return photoChanged(photo);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(File photo)? photoChanged,
+    TResult Function(String username)? usernameChanged,
+    TResult Function(String course)? courseChanged,
+    TResult Function(String bio)? bioChanged,
+    TResult Function(String module)? moduleChanged,
+    TResult Function()? saved,
+    required TResult orElse(),
+  }) {
+    if (photoChanged != null) {
+      return photoChanged(photo);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_PhotoChanged value) photoChanged,
+    required TResult Function(_UsernameChanged value) usernameChanged,
+    required TResult Function(_CourseChanged value) courseChanged,
+    required TResult Function(_BioChanged value) bioChanged,
+    required TResult Function(_ModuleChanged value) moduleChanged,
+    required TResult Function(_Saved value) saved,
+  }) {
+    return photoChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_PhotoChanged value)? photoChanged,
+    TResult Function(_UsernameChanged value)? usernameChanged,
+    TResult Function(_CourseChanged value)? courseChanged,
+    TResult Function(_BioChanged value)? bioChanged,
+    TResult Function(_ModuleChanged value)? moduleChanged,
+    TResult Function(_Saved value)? saved,
+    required TResult orElse(),
+  }) {
+    if (photoChanged != null) {
+      return photoChanged(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _PhotoChanged implements ProfileFormEvent {
+  const factory _PhotoChanged(File photo) = _$_PhotoChanged;
+
+  File get photo => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$PhotoChangedCopyWith<_PhotoChanged> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -173,6 +315,7 @@ class _$_UsernameChanged implements _UsernameChanged {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function(File photo) photoChanged,
     required TResult Function(String username) usernameChanged,
     required TResult Function(String course) courseChanged,
     required TResult Function(String bio) bioChanged,
@@ -185,6 +328,7 @@ class _$_UsernameChanged implements _UsernameChanged {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function(File photo)? photoChanged,
     TResult Function(String username)? usernameChanged,
     TResult Function(String course)? courseChanged,
     TResult Function(String bio)? bioChanged,
@@ -201,6 +345,7 @@ class _$_UsernameChanged implements _UsernameChanged {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_PhotoChanged value) photoChanged,
     required TResult Function(_UsernameChanged value) usernameChanged,
     required TResult Function(_CourseChanged value) courseChanged,
     required TResult Function(_BioChanged value) bioChanged,
@@ -213,6 +358,7 @@ class _$_UsernameChanged implements _UsernameChanged {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_PhotoChanged value)? photoChanged,
     TResult Function(_UsernameChanged value)? usernameChanged,
     TResult Function(_CourseChanged value)? courseChanged,
     TResult Function(_BioChanged value)? bioChanged,
@@ -301,6 +447,7 @@ class _$_CourseChanged implements _CourseChanged {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function(File photo) photoChanged,
     required TResult Function(String username) usernameChanged,
     required TResult Function(String course) courseChanged,
     required TResult Function(String bio) bioChanged,
@@ -313,6 +460,7 @@ class _$_CourseChanged implements _CourseChanged {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function(File photo)? photoChanged,
     TResult Function(String username)? usernameChanged,
     TResult Function(String course)? courseChanged,
     TResult Function(String bio)? bioChanged,
@@ -329,6 +477,7 @@ class _$_CourseChanged implements _CourseChanged {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_PhotoChanged value) photoChanged,
     required TResult Function(_UsernameChanged value) usernameChanged,
     required TResult Function(_CourseChanged value) courseChanged,
     required TResult Function(_BioChanged value) bioChanged,
@@ -341,6 +490,7 @@ class _$_CourseChanged implements _CourseChanged {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_PhotoChanged value)? photoChanged,
     TResult Function(_UsernameChanged value)? usernameChanged,
     TResult Function(_CourseChanged value)? courseChanged,
     TResult Function(_BioChanged value)? bioChanged,
@@ -429,6 +579,7 @@ class _$_BioChanged implements _BioChanged {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function(File photo) photoChanged,
     required TResult Function(String username) usernameChanged,
     required TResult Function(String course) courseChanged,
     required TResult Function(String bio) bioChanged,
@@ -441,6 +592,7 @@ class _$_BioChanged implements _BioChanged {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function(File photo)? photoChanged,
     TResult Function(String username)? usernameChanged,
     TResult Function(String course)? courseChanged,
     TResult Function(String bio)? bioChanged,
@@ -457,6 +609,7 @@ class _$_BioChanged implements _BioChanged {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_PhotoChanged value) photoChanged,
     required TResult Function(_UsernameChanged value) usernameChanged,
     required TResult Function(_CourseChanged value) courseChanged,
     required TResult Function(_BioChanged value) bioChanged,
@@ -469,6 +622,7 @@ class _$_BioChanged implements _BioChanged {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_PhotoChanged value)? photoChanged,
     TResult Function(_UsernameChanged value)? usernameChanged,
     TResult Function(_CourseChanged value)? courseChanged,
     TResult Function(_BioChanged value)? bioChanged,
@@ -557,6 +711,7 @@ class _$_ModuleChanged implements _ModuleChanged {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function(File photo) photoChanged,
     required TResult Function(String username) usernameChanged,
     required TResult Function(String course) courseChanged,
     required TResult Function(String bio) bioChanged,
@@ -569,6 +724,7 @@ class _$_ModuleChanged implements _ModuleChanged {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function(File photo)? photoChanged,
     TResult Function(String username)? usernameChanged,
     TResult Function(String course)? courseChanged,
     TResult Function(String bio)? bioChanged,
@@ -585,6 +741,7 @@ class _$_ModuleChanged implements _ModuleChanged {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_PhotoChanged value) photoChanged,
     required TResult Function(_UsernameChanged value) usernameChanged,
     required TResult Function(_CourseChanged value) courseChanged,
     required TResult Function(_BioChanged value) bioChanged,
@@ -597,6 +754,7 @@ class _$_ModuleChanged implements _ModuleChanged {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_PhotoChanged value)? photoChanged,
     TResult Function(_UsernameChanged value)? usernameChanged,
     TResult Function(_CourseChanged value)? courseChanged,
     TResult Function(_BioChanged value)? bioChanged,
@@ -657,6 +815,7 @@ class _$_Saved implements _Saved {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function(File photo) photoChanged,
     required TResult Function(String username) usernameChanged,
     required TResult Function(String course) courseChanged,
     required TResult Function(String bio) bioChanged,
@@ -669,6 +828,7 @@ class _$_Saved implements _Saved {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function(File photo)? photoChanged,
     TResult Function(String username)? usernameChanged,
     TResult Function(String course)? courseChanged,
     TResult Function(String bio)? bioChanged,
@@ -685,6 +845,7 @@ class _$_Saved implements _Saved {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_PhotoChanged value) photoChanged,
     required TResult Function(_UsernameChanged value) usernameChanged,
     required TResult Function(_CourseChanged value) courseChanged,
     required TResult Function(_BioChanged value) bioChanged,
@@ -697,6 +858,7 @@ class _$_Saved implements _Saved {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_PhotoChanged value)? photoChanged,
     TResult Function(_UsernameChanged value)? usernameChanged,
     TResult Function(_CourseChanged value)? courseChanged,
     TResult Function(_BioChanged value)? bioChanged,
@@ -720,13 +882,15 @@ class _$ProfileFormStateTearOff {
   const _$ProfileFormStateTearOff();
 
   _ProfileFormState call(
-      {required String username,
+      {required Either<DataFailure, String> photoUrl,
+      required String username,
       required String course,
       required String bio,
       required String module,
       required bool isSaving,
       required Option<Either<DataFailure, Unit>> saveFailureOrSuccessOption}) {
     return _ProfileFormState(
+      photoUrl: photoUrl,
       username: username,
       course: course,
       bio: bio,
@@ -742,6 +906,8 @@ const $ProfileFormState = _$ProfileFormStateTearOff();
 
 /// @nodoc
 mixin _$ProfileFormState {
+  Either<DataFailure, String> get photoUrl =>
+      throw _privateConstructorUsedError;
   String get username => throw _privateConstructorUsedError;
   String get course => throw _privateConstructorUsedError;
   String get bio => throw _privateConstructorUsedError;
@@ -761,7 +927,8 @@ abstract class $ProfileFormStateCopyWith<$Res> {
           ProfileFormState value, $Res Function(ProfileFormState) then) =
       _$ProfileFormStateCopyWithImpl<$Res>;
   $Res call(
-      {String username,
+      {Either<DataFailure, String> photoUrl,
+      String username,
       String course,
       String bio,
       String module,
@@ -780,6 +947,7 @@ class _$ProfileFormStateCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? photoUrl = freezed,
     Object? username = freezed,
     Object? course = freezed,
     Object? bio = freezed,
@@ -788,6 +956,10 @@ class _$ProfileFormStateCopyWithImpl<$Res>
     Object? saveFailureOrSuccessOption = freezed,
   }) {
     return _then(_value.copyWith(
+      photoUrl: photoUrl == freezed
+          ? _value.photoUrl
+          : photoUrl // ignore: cast_nullable_to_non_nullable
+              as Either<DataFailure, String>,
       username: username == freezed
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
@@ -824,7 +996,8 @@ abstract class _$ProfileFormStateCopyWith<$Res>
       __$ProfileFormStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String username,
+      {Either<DataFailure, String> photoUrl,
+      String username,
       String course,
       String bio,
       String module,
@@ -845,6 +1018,7 @@ class __$ProfileFormStateCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? photoUrl = freezed,
     Object? username = freezed,
     Object? course = freezed,
     Object? bio = freezed,
@@ -853,6 +1027,10 @@ class __$ProfileFormStateCopyWithImpl<$Res>
     Object? saveFailureOrSuccessOption = freezed,
   }) {
     return _then(_ProfileFormState(
+      photoUrl: photoUrl == freezed
+          ? _value.photoUrl
+          : photoUrl // ignore: cast_nullable_to_non_nullable
+              as Either<DataFailure, String>,
       username: username == freezed
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
@@ -885,13 +1063,16 @@ class __$ProfileFormStateCopyWithImpl<$Res>
 
 class _$_ProfileFormState implements _ProfileFormState {
   const _$_ProfileFormState(
-      {required this.username,
+      {required this.photoUrl,
+      required this.username,
       required this.course,
       required this.bio,
       required this.module,
       required this.isSaving,
       required this.saveFailureOrSuccessOption});
 
+  @override
+  final Either<DataFailure, String> photoUrl;
   @override
   final String username;
   @override
@@ -907,13 +1088,16 @@ class _$_ProfileFormState implements _ProfileFormState {
 
   @override
   String toString() {
-    return 'ProfileFormState(username: $username, course: $course, bio: $bio, module: $module, isSaving: $isSaving, saveFailureOrSuccessOption: $saveFailureOrSuccessOption)';
+    return 'ProfileFormState(photoUrl: $photoUrl, username: $username, course: $course, bio: $bio, module: $module, isSaving: $isSaving, saveFailureOrSuccessOption: $saveFailureOrSuccessOption)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _ProfileFormState &&
+            (identical(other.photoUrl, photoUrl) ||
+                const DeepCollectionEquality()
+                    .equals(other.photoUrl, photoUrl)) &&
             (identical(other.username, username) ||
                 const DeepCollectionEquality()
                     .equals(other.username, username)) &&
@@ -936,6 +1120,7 @@ class _$_ProfileFormState implements _ProfileFormState {
   @override
   int get hashCode =>
       runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(photoUrl) ^
       const DeepCollectionEquality().hash(username) ^
       const DeepCollectionEquality().hash(course) ^
       const DeepCollectionEquality().hash(bio) ^
@@ -951,7 +1136,8 @@ class _$_ProfileFormState implements _ProfileFormState {
 
 abstract class _ProfileFormState implements ProfileFormState {
   const factory _ProfileFormState(
-      {required String username,
+      {required Either<DataFailure, String> photoUrl,
+      required String username,
       required String course,
       required String bio,
       required String module,
@@ -959,6 +1145,9 @@ abstract class _ProfileFormState implements ProfileFormState {
       required Option<Either<DataFailure, Unit>>
           saveFailureOrSuccessOption}) = _$_ProfileFormState;
 
+  @override
+  Either<DataFailure, String> get photoUrl =>
+      throw _privateConstructorUsedError;
   @override
   String get username => throw _privateConstructorUsedError;
   @override
