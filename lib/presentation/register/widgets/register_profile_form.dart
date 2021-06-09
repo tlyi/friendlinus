@@ -80,14 +80,10 @@ class _BuildProfilePicButton extends StatelessWidget {
                     fit: BoxFit.fitHeight,
                   ),
                 )
-              : ClipRRect(
-                  borderRadius: BorderRadius.circular(50),
-                  child: Image.network(
-                    dbPhotoUrl,
-                    width: 100,
-                    height: 100,
-                    fit: BoxFit.fitHeight,
-                  ),
+              : CircleAvatar(
+                  radius: 50,
+                  backgroundImage: NetworkImage(dbPhotoUrl),
+                  backgroundColor: Colors.transparent,
                 ),
         ),
         Positioned(

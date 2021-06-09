@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:friendlinus/application/auth/auth_bloc.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:friendlinus/presentation/core/app_bar.dart';
+import 'package:friendlinus/presentation/core/nav_bar.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
 
 class HomePage extends StatelessWidget {
@@ -16,6 +18,7 @@ class HomePage extends StatelessWidget {
       },
       child: MaterialApp(
         home: Scaffold(
+          appBar: appBar('Welcome'),
           body: Container(
             alignment: Alignment.center,
             child: SingleChildScrollView(
@@ -36,6 +39,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
           ),
+          bottomNavigationBar: const NavigationBar(),
         ),
       ),
     );

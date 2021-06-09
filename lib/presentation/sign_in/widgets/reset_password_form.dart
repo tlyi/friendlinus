@@ -39,14 +39,6 @@ class ResetPasswordForm extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               const Text(
-                "Reset Email",
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ),
-              ),
-              const SizedBox(height: 20),
-              const Text(
                   "A password reset link will be sent to your NUS Email."),
               const SizedBox(height: 20),
               _BuildIDField(),
