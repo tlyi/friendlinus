@@ -9,7 +9,11 @@ class ResetPasswordPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar('Reset Password'),
+      appBar: appBar(
+        context: context,
+        header: 'Reset Password',
+        canGoBack: true,
+      ),
       body: Container(
         margin: const EdgeInsets.all(30.0),
         alignment: Alignment.center,

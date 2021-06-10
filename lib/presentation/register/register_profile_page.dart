@@ -10,7 +10,7 @@ class RegisterProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar('Profile Registration'),
+      appBar: appBar(context: context, header: 'Profile Registration'),
       body: Container(
         alignment: Alignment.center,
         child: SingleChildScrollView(

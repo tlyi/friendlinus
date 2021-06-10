@@ -18,22 +18,13 @@ class HomePage extends StatelessWidget {
       },
       child: MaterialApp(
         home: Scaffold(
-          appBar: appBar('Welcome'),
+          appBar: appBar(context: context, header: 'Welcome'),
           body: Container(
             alignment: Alignment.center,
             child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Text("Home",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                  SizedBox(height: 30),
-                  Image.asset(
-                    'images/logo.png',
-                    width: MediaQuery.of(context).size.width * 0.6,
-                    height: MediaQuery.of(context).size.width * 0.6,
-                  ),
                   _buildSignOutButton(context),
                 ],
               ),

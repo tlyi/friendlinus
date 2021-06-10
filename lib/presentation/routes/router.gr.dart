@@ -10,7 +10,7 @@ import 'package:friendlinus/presentation/forum/forum_overview/forum_overview_pag
     as _i10;
 import 'package:friendlinus/presentation/home_page.dart' as _i5;
 import 'package:friendlinus/presentation/profile/profile_page.dart' as _i11;
-import 'package:friendlinus/presentation/register/register_page1.dart' as _i6;
+import 'package:friendlinus/presentation/register/register_page.dart' as _i6;
 import 'package:friendlinus/presentation/register/register_profile_page.dart'
     as _i8;
 import 'package:friendlinus/presentation/register/verify_email_page.dart'
@@ -41,10 +41,10 @@ class AppRouter extends _i1.RootStackRouter {
         builder: (_) {
           return _i5.HomePage();
         }),
-    RegisterRoute1.name: (routeData) => _i1.AdaptivePage<dynamic>(
+    RegisterRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
         routeData: routeData,
         builder: (_) {
-          return _i6.RegisterPage1();
+          return _i6.RegisterPage();
         }),
     VerifyEmailRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
         routeData: routeData,
@@ -75,10 +75,10 @@ class AppRouter extends _i1.RootStackRouter {
 
   @override
   List<_i1.RouteConfig> get routes => [
-        _i1.RouteConfig(SplashRoute.name, path: '/splash-page'),
+        _i1.RouteConfig(SplashRoute.name, path: '/'),
         _i1.RouteConfig(SignInRoute.name, path: '/sign-in-page'),
-        _i1.RouteConfig(HomeRoute.name, path: '/'),
-        _i1.RouteConfig(RegisterRoute1.name, path: '/register-page1'),
+        _i1.RouteConfig(HomeRoute.name, path: '/home-page'),
+        _i1.RouteConfig(RegisterRoute.name, path: '/register-page'),
         _i1.RouteConfig(VerifyEmailRoute.name, path: '/verify-email-page'),
         _i1.RouteConfig(RegisterProfileRoute.name,
             path: '/register-profile-page'),
@@ -89,7 +89,7 @@ class AppRouter extends _i1.RootStackRouter {
 }
 
 class SplashRoute extends _i1.PageRouteInfo {
-  const SplashRoute() : super(name, path: '/splash-page');
+  const SplashRoute() : super(name, path: '/');
 
   static const String name = 'SplashRoute';
 }
@@ -101,15 +101,15 @@ class SignInRoute extends _i1.PageRouteInfo {
 }
 
 class HomeRoute extends _i1.PageRouteInfo {
-  const HomeRoute() : super(name, path: '/');
+  const HomeRoute() : super(name, path: '/home-page');
 
   static const String name = 'HomeRoute';
 }
 
-class RegisterRoute1 extends _i1.PageRouteInfo {
-  const RegisterRoute1() : super(name, path: '/register-page1');
+class RegisterRoute extends _i1.PageRouteInfo {
+  const RegisterRoute() : super(name, path: '/register-page');
 
-  static const String name = 'RegisterRoute1';
+  static const String name = 'RegisterRoute';
 }
 
 class VerifyEmailRoute extends _i1.PageRouteInfo {

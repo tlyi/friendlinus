@@ -11,4 +11,8 @@ extension FirestoreX on FirebaseFirestore {
         .collection('users')
         .doc(user.id.getOrCrash());
   }
+
+  Future<CollectionReference> usersRef() async {
+    return FirebaseFirestore.instance.collection('users');
+  }
 }
