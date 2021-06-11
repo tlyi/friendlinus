@@ -10,11 +10,14 @@ import 'package:friendlinus/presentation/forum/forum_overview/forum_overview_pag
     as _i10;
 import 'package:friendlinus/presentation/home_page.dart' as _i5;
 import 'package:friendlinus/presentation/profile/profile_page.dart' as _i11;
+import 'package:friendlinus/presentation/profile/update_profile_page.dart'
+    as _i13;
 import 'package:friendlinus/presentation/register/register_page.dart' as _i6;
 import 'package:friendlinus/presentation/register/register_profile_page.dart'
     as _i8;
 import 'package:friendlinus/presentation/register/verify_email_page.dart'
     as _i7;
+import 'package:friendlinus/presentation/search/search_users_page.dart' as _i12;
 import 'package:friendlinus/presentation/sign_in/reset_password_page.dart'
     as _i9;
 import 'package:friendlinus/presentation/sign_in/sign_in_page.dart' as _i4;
@@ -69,7 +72,17 @@ class AppRouter extends _i1.RootStackRouter {
     ProfileRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
         routeData: routeData,
         builder: (_) {
-          return const _i11.ProfilePage();
+          return _i11.ProfilePage();
+        }),
+    SearchUsersRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
+        routeData: routeData,
+        builder: (_) {
+          return _i12.SearchUsersPage();
+        }),
+    UpdateProfileRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
+        routeData: routeData,
+        builder: (_) {
+          return _i13.UpdateProfilePage();
         })
   };
 
@@ -84,7 +97,9 @@ class AppRouter extends _i1.RootStackRouter {
             path: '/register-profile-page'),
         _i1.RouteConfig(ResetPasswordRoute.name, path: '/reset-password-page'),
         _i1.RouteConfig(ForumOverviewRoute.name, path: '/forum-overview-page'),
-        _i1.RouteConfig(ProfileRoute.name, path: '/profile-page')
+        _i1.RouteConfig(ProfileRoute.name, path: '/profile-page'),
+        _i1.RouteConfig(SearchUsersRoute.name, path: '/search-users-page'),
+        _i1.RouteConfig(UpdateProfileRoute.name, path: '/update-profile-page')
       ];
 }
 
@@ -140,4 +155,16 @@ class ProfileRoute extends _i1.PageRouteInfo {
   const ProfileRoute() : super(name, path: '/profile-page');
 
   static const String name = 'ProfileRoute';
+}
+
+class SearchUsersRoute extends _i1.PageRouteInfo {
+  const SearchUsersRoute() : super(name, path: '/search-users-page');
+
+  static const String name = 'SearchUsersRoute';
+}
+
+class UpdateProfileRoute extends _i1.PageRouteInfo {
+  const UpdateProfileRoute() : super(name, path: '/update-profile-page');
+
+  static const String name = 'UpdateProfileRoute';
 }

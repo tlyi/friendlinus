@@ -12,9 +12,9 @@ class Username extends ValueObject<String> {
 
   factory Username(String input) {
     return Username._(validateMaxStringLength(input, maxLength)
+        .flatMap(validateUsernameUnique)
         .flatMap(validateStringNotEmpty)
-        .flatMap(validateUsernameFormat)
-        .flatMap(validateUsernameUnique));
+        .flatMap(validateUsernameFormat));
   }
 
   const Username._(this.value);
@@ -49,15 +49,15 @@ class Bio extends ValueObject<String> {
 }
 
 //module; TO DO: Validate against database of modules (NUSMods API)
-class Module extends ValueObject<String> {
+class Mod extends ValueObject<String> {
   @override
   final Either<ValueFailure<String>, String> value;
 
   static const maxLength = 6;
 
-  factory Module(String input) {
-    return Module._(validateMaxStringLength(input, maxLength));
+  factory Mod(String input) {
+    return Mod._(validateMaxStringLength(input, maxLength));
   }
 
-  const Module._(this.value);
+  const Mod._(this.value);
 }

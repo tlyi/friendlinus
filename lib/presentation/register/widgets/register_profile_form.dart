@@ -4,7 +4,8 @@ import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:friendlinus/application/profile/profile_form/bloc/profile_form_bloc.dart';
+import 'package:friendlinus/application/profile/profile_form/profile_form_bloc.dart';
+import 'package:friendlinus/domain/core/failures.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:image_picker/image_picker.dart';
@@ -105,8 +106,10 @@ class _BuildProfilePicButton extends StatelessWidget {
               onPressed: () async {
                 final picker = ImagePicker();
                 File? pickedImage;
-                final pickedFile =
-                    await picker.getImage(source: ImageSource.gallery);
+                final pickedFile = await picker.getImage(
+                  source: ImageSource.gallery,
+                  imageQuality: 70,
+                );
                 if (pickedFile == null) {
                   FlushbarHelper.createError(message: 'No image picked')
                       .show(context);
@@ -143,6 +146,25 @@ class _BuildUsername extends StatelessWidget {
                   .read<ProfileFormBloc>()
                   .add(ProfileFormEvent.usernameChanged(value));
             },
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            validator: (_) => context
+                .read<ProfileFormBloc>()
+                .state
+                .profile
+                .username
+                .value
+                .fold(
+                  (f) => f.maybeMap(
+                      invalidUsernameFormat: (_) =>
+                          'No special characters except _ and .',
+                      usernameTaken: (_) =>
+                          'Username has been taken, please input another',
+                      emptyString: (_) => 'Username cannot be empty',
+                      exceedingLength: (_) =>
+                          'Username too long, maximum of 12 characters only',
+                      orElse: () => null),
+                  (_) => null,
+                ),
             inputFormatters: [
               FilteringTextInputFormatter.deny(
                   RegExp(r"\s\b|\b\s")) //Prevents whitespace
@@ -158,22 +180,29 @@ class _BuildCourse extends StatelessWidget {
     return BlocBuilder<ProfileFormBloc, ProfileFormState>(
       builder: (context, state) {
         return TextFormField(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              labelText: 'Course',
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
             ),
-            autocorrect: false,
-            onChanged: (value) {
-              context
-                  .read<ProfileFormBloc>()
-                  .add(ProfileFormEvent.courseChanged(value));
-            },
-            inputFormatters: [
-              FilteringTextInputFormatter.deny(
-                  RegExp(r"\s\b|\b\s")) //Prevents whitespace
-            ]);
+            labelText: 'Course',
+          ),
+          autocorrect: false,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          onChanged: (value) {
+            context
+                .read<ProfileFormBloc>()
+                .add(ProfileFormEvent.courseChanged(value));
+          },
+          validator: (_) =>
+              context.read<ProfileFormBloc>().state.profile.course.value.fold(
+                    (f) => f.maybeMap(
+                      emptyString: (_) => 'Please input your course of study',
+                      exceedingLength: (_) => 'Maximum 20 characters only',
+                      orElse: () => null,
+                    ),
+                    (_) => null,
+                  ),
+        );
       },
     );
   }
@@ -185,22 +214,27 @@ class _BuildBio extends StatelessWidget {
     return BlocBuilder<ProfileFormBloc, ProfileFormState>(
       builder: (context, state) {
         return TextFormField(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              labelText: 'Bio',
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
             ),
-            autocorrect: false,
-            onChanged: (value) {
-              context
-                  .read<ProfileFormBloc>()
-                  .add(ProfileFormEvent.bioChanged(value));
-            },
-            inputFormatters: [
-              FilteringTextInputFormatter.deny(
-                  RegExp(r"\s\b|\b\s")) //Prevents whitespace
-            ]);
+            labelText: 'Bio',
+          ),
+          autocorrect: false,
+          onChanged: (value) {
+            context
+                .read<ProfileFormBloc>()
+                .add(ProfileFormEvent.bioChanged(value));
+          },
+          validator: (_) =>
+              context.read<ProfileFormBloc>().state.profile.course.value.fold(
+                    (f) => f.maybeMap(
+                      exceedingLength: (_) => 'Maximum 200 characters only',
+                      orElse: () => null,
+                    ),
+                    (_) => null,
+                  ),
+        );
       },
     );
   }
@@ -224,6 +258,14 @@ class _BuildModule extends StatelessWidget {
                   .read<ProfileFormBloc>()
                   .add(ProfileFormEvent.moduleChanged(value));
             },
+            validator: (_) =>
+                context.read<ProfileFormBloc>().state.profile.module.value.fold(
+                      (f) => f.maybeMap(
+                        exceedingLength: (_) => 'Invalid module',
+                        orElse: () => null,
+                      ),
+                      (_) => null,
+                    ),
             inputFormatters: [
               FilteringTextInputFormatter.deny(
                   RegExp(r"\s\b|\b\s")) //Prevents whitespace

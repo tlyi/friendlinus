@@ -11,8 +11,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:friendlinus/presentation/sign_in/reset_password_page.dart';
 
-import '../../register/register_page.dart';
-
 class SignInForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

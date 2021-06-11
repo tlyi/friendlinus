@@ -41,6 +41,9 @@ dependencies:
   equatable: ^2.0.2
   image_picker: ^0.8.0+1
   firebase_storage: ^8.1.1
+  material_floating_search_bar: ^0.3.4
+  json_serializable: ^4.1.3
+  json_annotation: ^4.0.1
 
 #Stuff that you need during development
 dev_dependencies:

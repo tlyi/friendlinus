@@ -11,7 +11,6 @@ class AppWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      //Wrapping in MultiBlocProvider helps make this Bloc available to everything below
       providers: [
         BlocProvider(
           create: (context) => getIt<AuthBloc>()

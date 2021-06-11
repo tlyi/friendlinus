@@ -16,27 +16,29 @@ class HomePage extends StatelessWidget {
           orElse: () {},
         );
       },
-      child: MaterialApp(
-        home: Scaffold(
-          appBar: appBar(context: context, header: 'Welcome'),
-          body: Container(
-            alignment: Alignment.center,
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  _buildSignOutButton(context),
-                ],
-              ),
+      child: Scaffold(
+        appBar: appBar(context: context, header: 'Welcome'),
+        body: Container(
+          alignment: Alignment.center,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                _BuildSearchUsersButton(),
+                _BuildSignOutButton(),
+              ],
             ),
           ),
-          bottomNavigationBar: const NavigationBar(),
         ),
+        bottomNavigationBar: const NavigationBar(),
       ),
     );
   }
+}
 
-  Widget _buildSignOutButton(BuildContext context) {
+class _BuildSignOutButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(top: 20.0),
       width: MediaQuery.of(context).size.width * 0.62,
@@ -48,6 +50,24 @@ class HomePage extends StatelessWidget {
           context.read<AuthBloc>().add(
                 const AuthEvent.signedOut(),
               );
+        },
+      ),
+    );
+  }
+}
+
+class _BuildSearchUsersButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(top: 20.0),
+      width: MediaQuery.of(context).size.width * 0.62,
+      child: ElevatedButton(
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Color(0xFF7BA5BB))),
+        child: const Text("Search Users"),
+        onPressed: () {
+          context.pushRoute(const SearchUsersRoute());
         },
       ),
     );

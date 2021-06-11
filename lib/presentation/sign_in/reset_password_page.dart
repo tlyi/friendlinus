@@ -17,12 +17,16 @@ class ResetPasswordPage extends StatelessWidget {
       body: Container(
         margin: const EdgeInsets.all(30.0),
         alignment: Alignment.center,
-        child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-          BlocProvider(
-            create: (context) => getIt<SignInFormBloc>(),
-            child: ResetPasswordForm(),
+        child: SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints:
+                BoxConstraints(maxHeight: MediaQuery.of(context).size.height),
+            child: BlocProvider(
+              create: (context) => getIt<SignInFormBloc>(),
+              child: ResetPasswordForm(),
+            ),
           ),
-        ]),
+        ),
       ),
     );
   }

@@ -4,21 +4,21 @@ part of 'profile_form_bloc.dart';
 class ProfileFormState with _$ProfileFormState {
   const factory ProfileFormState({
     required Either<DataFailure, String> photoUrl,
-    required String username,
-    required String course,
-    required String bio,
-    required String module,
+    required Profile profile,
     required bool isSaving,
     required Option<Either<DataFailure, Unit>> saveFailureOrSuccessOption,
+    required bool isLoading,
+    required Either<DataFailure, Profile> currentProfile,
+    required String currentUsername,
   }) = _ProfileFormState;
 
   factory ProfileFormState.initial() => ProfileFormState(
         photoUrl: right(''),
-        username: '',
-        course: '',
-        bio: '',
-        module: '',
+        profile: Profile.empty(),
         isSaving: false,
         saveFailureOrSuccessOption: none(),
+        isLoading: true,
+        currentProfile: right(Profile.empty()),
+        currentUsername: '',
       );
 }
