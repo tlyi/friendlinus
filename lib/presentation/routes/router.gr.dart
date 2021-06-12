@@ -6,9 +6,12 @@
 
 import 'package:auto_route/auto_route.dart' as _i1;
 import 'package:flutter/material.dart' as _i2;
+import 'package:friendlinus/domain/data/profile/profile.dart' as _i15;
 import 'package:friendlinus/presentation/forum/forum_overview/forum_overview_page.dart'
     as _i10;
 import 'package:friendlinus/presentation/home_page.dart' as _i5;
+import 'package:friendlinus/presentation/profile/other_profile_page.dart'
+    as _i14;
 import 'package:friendlinus/presentation/profile/profile_page.dart' as _i11;
 import 'package:friendlinus/presentation/profile/update_profile_page.dart'
     as _i13;
@@ -83,6 +86,13 @@ class AppRouter extends _i1.RootStackRouter {
         routeData: routeData,
         builder: (_) {
           return _i13.UpdateProfilePage();
+        }),
+    OtherProfileRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
+        routeData: routeData,
+        builder: (data) {
+          final args = data.argsAs<OtherProfileRouteArgs>();
+          return _i14.OtherProfilePage(
+              key: args.key, userProfile: args.userProfile);
         })
   };
 
@@ -99,7 +109,8 @@ class AppRouter extends _i1.RootStackRouter {
         _i1.RouteConfig(ForumOverviewRoute.name, path: '/forum-overview-page'),
         _i1.RouteConfig(ProfileRoute.name, path: '/profile-page'),
         _i1.RouteConfig(SearchUsersRoute.name, path: '/search-users-page'),
-        _i1.RouteConfig(UpdateProfileRoute.name, path: '/update-profile-page')
+        _i1.RouteConfig(UpdateProfileRoute.name, path: '/update-profile-page'),
+        _i1.RouteConfig(OtherProfileRoute.name, path: '/other-profile-page')
       ];
 }
 
@@ -167,4 +178,21 @@ class UpdateProfileRoute extends _i1.PageRouteInfo {
   const UpdateProfileRoute() : super(name, path: '/update-profile-page');
 
   static const String name = 'UpdateProfileRoute';
+}
+
+class OtherProfileRoute extends _i1.PageRouteInfo<OtherProfileRouteArgs> {
+  OtherProfileRoute({_i2.Key? key, required _i15.Profile userProfile})
+      : super(name,
+            path: '/other-profile-page',
+            args: OtherProfileRouteArgs(key: key, userProfile: userProfile));
+
+  static const String name = 'OtherProfileRoute';
+}
+
+class OtherProfileRouteArgs {
+  const OtherProfileRouteArgs({this.key, required this.userProfile});
+
+  final _i2.Key? key;
+
+  final _i15.Profile userProfile;
 }

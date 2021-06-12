@@ -24,13 +24,40 @@ class SearchProfileBloc extends Bloc<SearchProfileEvent, SearchProfileState> {
   Stream<SearchProfileState> mapEventToState(
     SearchProfileEvent event,
   ) async* {
-    yield* event.map(
-      searchChanged: (e) async* {
+    yield* event.map(searchChanged: (e) async* {
+      if (e.query == '') {
+        yield state.copyWith(
+          searchProfileResults: right([]),
+          displayResults: false,
+          isLoadedProfile: false,
+        );
+      } else {
+        yield state.copyWith(
+          isSearching: true,
+          displayResults: false,
+          isLoadedProfile: false,
+        );
         final searchResults =
             await _profileRepository.searchProfileByUsername(e.query);
-        print(searchResults.getOrElse(() => <Profile>[]).length);
-        yield state.copyWith(searchProfileResults: searchResults);
-      },
-    );
+        yield state.copyWith(
+          searchProfileResults: searchResults,
+          isSearching: false,
+          displayResults: true,
+          isLoadedProfile: false,
+        );
+      }
+    }, profileSelected: (e) async* {
+      yield state.copyWith(
+          isLoadingProfile: true,
+          isSearching: false,
+          displayResults: false,
+          isLoadedProfile: false);
+      final profile = await _profileRepository.readOtherProfile(e.username);
+      yield state.copyWith(
+        isLoadingProfile: false,
+        isLoadedProfile: true,
+        selectedProfile: profile,
+      );
+    });
   }
 }

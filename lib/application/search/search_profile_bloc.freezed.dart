@@ -21,6 +21,12 @@ class _$SearchProfileEventTearOff {
       query,
     );
   }
+
+  _ProfileSelected profileSelected(String username) {
+    return _ProfileSelected(
+      username,
+    );
+  }
 }
 
 /// @nodoc
@@ -28,33 +34,31 @@ const $SearchProfileEvent = _$SearchProfileEventTearOff();
 
 /// @nodoc
 mixin _$SearchProfileEvent {
-  String get query => throw _privateConstructorUsedError;
-
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String query) searchChanged,
+    required TResult Function(String username) profileSelected,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String query)? searchChanged,
+    TResult Function(String username)? profileSelected,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_SearchChanged value) searchChanged,
+    required TResult Function(_ProfileSelected value) profileSelected,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_SearchChanged value)? searchChanged,
+    TResult Function(_ProfileSelected value)? profileSelected,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $SearchProfileEventCopyWith<SearchProfileEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -63,7 +67,6 @@ abstract class $SearchProfileEventCopyWith<$Res> {
   factory $SearchProfileEventCopyWith(
           SearchProfileEvent value, $Res Function(SearchProfileEvent) then) =
       _$SearchProfileEventCopyWithImpl<$Res>;
-  $Res call({String query});
 }
 
 /// @nodoc
@@ -74,27 +77,13 @@ class _$SearchProfileEventCopyWithImpl<$Res>
   final SearchProfileEvent _value;
   // ignore: unused_field
   final $Res Function(SearchProfileEvent) _then;
-
-  @override
-  $Res call({
-    Object? query = freezed,
-  }) {
-    return _then(_value.copyWith(
-      query: query == freezed
-          ? _value.query
-          : query // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
 }
 
 /// @nodoc
-abstract class _$SearchChangedCopyWith<$Res>
-    implements $SearchProfileEventCopyWith<$Res> {
+abstract class _$SearchChangedCopyWith<$Res> {
   factory _$SearchChangedCopyWith(
           _SearchChanged value, $Res Function(_SearchChanged) then) =
       __$SearchChangedCopyWithImpl<$Res>;
-  @override
   $Res call({String query});
 }
 
@@ -156,6 +145,7 @@ class _$_SearchChanged implements _SearchChanged {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String query) searchChanged,
+    required TResult Function(String username) profileSelected,
   }) {
     return searchChanged(query);
   }
@@ -164,6 +154,7 @@ class _$_SearchChanged implements _SearchChanged {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String query)? searchChanged,
+    TResult Function(String username)? profileSelected,
     required TResult orElse(),
   }) {
     if (searchChanged != null) {
@@ -176,6 +167,7 @@ class _$_SearchChanged implements _SearchChanged {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_SearchChanged value) searchChanged,
+    required TResult Function(_ProfileSelected value) profileSelected,
   }) {
     return searchChanged(this);
   }
@@ -184,6 +176,7 @@ class _$_SearchChanged implements _SearchChanged {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_SearchChanged value)? searchChanged,
+    TResult Function(_ProfileSelected value)? profileSelected,
     required TResult orElse(),
   }) {
     if (searchChanged != null) {
@@ -196,11 +189,126 @@ class _$_SearchChanged implements _SearchChanged {
 abstract class _SearchChanged implements SearchProfileEvent {
   const factory _SearchChanged(String query) = _$_SearchChanged;
 
-  @override
   String get query => throw _privateConstructorUsedError;
-  @override
   @JsonKey(ignore: true)
   _$SearchChangedCopyWith<_SearchChanged> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$ProfileSelectedCopyWith<$Res> {
+  factory _$ProfileSelectedCopyWith(
+          _ProfileSelected value, $Res Function(_ProfileSelected) then) =
+      __$ProfileSelectedCopyWithImpl<$Res>;
+  $Res call({String username});
+}
+
+/// @nodoc
+class __$ProfileSelectedCopyWithImpl<$Res>
+    extends _$SearchProfileEventCopyWithImpl<$Res>
+    implements _$ProfileSelectedCopyWith<$Res> {
+  __$ProfileSelectedCopyWithImpl(
+      _ProfileSelected _value, $Res Function(_ProfileSelected) _then)
+      : super(_value, (v) => _then(v as _ProfileSelected));
+
+  @override
+  _ProfileSelected get _value => super._value as _ProfileSelected;
+
+  @override
+  $Res call({
+    Object? username = freezed,
+  }) {
+    return _then(_ProfileSelected(
+      username == freezed
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_ProfileSelected implements _ProfileSelected {
+  const _$_ProfileSelected(this.username);
+
+  @override
+  final String username;
+
+  @override
+  String toString() {
+    return 'SearchProfileEvent.profileSelected(username: $username)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _ProfileSelected &&
+            (identical(other.username, username) ||
+                const DeepCollectionEquality()
+                    .equals(other.username, username)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(username);
+
+  @JsonKey(ignore: true)
+  @override
+  _$ProfileSelectedCopyWith<_ProfileSelected> get copyWith =>
+      __$ProfileSelectedCopyWithImpl<_ProfileSelected>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String query) searchChanged,
+    required TResult Function(String username) profileSelected,
+  }) {
+    return profileSelected(username);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String query)? searchChanged,
+    TResult Function(String username)? profileSelected,
+    required TResult orElse(),
+  }) {
+    if (profileSelected != null) {
+      return profileSelected(username);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_SearchChanged value) searchChanged,
+    required TResult Function(_ProfileSelected value) profileSelected,
+  }) {
+    return profileSelected(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_SearchChanged value)? searchChanged,
+    TResult Function(_ProfileSelected value)? profileSelected,
+    required TResult orElse(),
+  }) {
+    if (profileSelected != null) {
+      return profileSelected(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _ProfileSelected implements SearchProfileEvent {
+  const factory _ProfileSelected(String username) = _$_ProfileSelected;
+
+  String get username => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$ProfileSelectedCopyWith<_ProfileSelected> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -209,9 +317,19 @@ class _$SearchProfileStateTearOff {
   const _$SearchProfileStateTearOff();
 
   _SearchProfileState call(
-      {required Either<DataFailure, List<Profile>> searchProfileResults}) {
+      {required Either<DataFailure, List<Profile>> searchProfileResults,
+      required bool isSearching,
+      required bool displayResults,
+      required bool isLoadingProfile,
+      required bool isLoadedProfile,
+      required Either<DataFailure, Profile> selectedProfile}) {
     return _SearchProfileState(
       searchProfileResults: searchProfileResults,
+      isSearching: isSearching,
+      displayResults: displayResults,
+      isLoadingProfile: isLoadingProfile,
+      isLoadedProfile: isLoadedProfile,
+      selectedProfile: selectedProfile,
     );
   }
 }
@@ -222,6 +340,12 @@ const $SearchProfileState = _$SearchProfileStateTearOff();
 /// @nodoc
 mixin _$SearchProfileState {
   Either<DataFailure, List<Profile>> get searchProfileResults =>
+      throw _privateConstructorUsedError;
+  bool get isSearching => throw _privateConstructorUsedError;
+  bool get displayResults => throw _privateConstructorUsedError;
+  bool get isLoadingProfile => throw _privateConstructorUsedError;
+  bool get isLoadedProfile => throw _privateConstructorUsedError;
+  Either<DataFailure, Profile> get selectedProfile =>
       throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -234,7 +358,13 @@ abstract class $SearchProfileStateCopyWith<$Res> {
   factory $SearchProfileStateCopyWith(
           SearchProfileState value, $Res Function(SearchProfileState) then) =
       _$SearchProfileStateCopyWithImpl<$Res>;
-  $Res call({Either<DataFailure, List<Profile>> searchProfileResults});
+  $Res call(
+      {Either<DataFailure, List<Profile>> searchProfileResults,
+      bool isSearching,
+      bool displayResults,
+      bool isLoadingProfile,
+      bool isLoadedProfile,
+      Either<DataFailure, Profile> selectedProfile});
 }
 
 /// @nodoc
@@ -249,12 +379,37 @@ class _$SearchProfileStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? searchProfileResults = freezed,
+    Object? isSearching = freezed,
+    Object? displayResults = freezed,
+    Object? isLoadingProfile = freezed,
+    Object? isLoadedProfile = freezed,
+    Object? selectedProfile = freezed,
   }) {
     return _then(_value.copyWith(
       searchProfileResults: searchProfileResults == freezed
           ? _value.searchProfileResults
           : searchProfileResults // ignore: cast_nullable_to_non_nullable
               as Either<DataFailure, List<Profile>>,
+      isSearching: isSearching == freezed
+          ? _value.isSearching
+          : isSearching // ignore: cast_nullable_to_non_nullable
+              as bool,
+      displayResults: displayResults == freezed
+          ? _value.displayResults
+          : displayResults // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isLoadingProfile: isLoadingProfile == freezed
+          ? _value.isLoadingProfile
+          : isLoadingProfile // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isLoadedProfile: isLoadedProfile == freezed
+          ? _value.isLoadedProfile
+          : isLoadedProfile // ignore: cast_nullable_to_non_nullable
+              as bool,
+      selectedProfile: selectedProfile == freezed
+          ? _value.selectedProfile
+          : selectedProfile // ignore: cast_nullable_to_non_nullable
+              as Either<DataFailure, Profile>,
     ));
   }
 }
@@ -266,7 +421,13 @@ abstract class _$SearchProfileStateCopyWith<$Res>
           _SearchProfileState value, $Res Function(_SearchProfileState) then) =
       __$SearchProfileStateCopyWithImpl<$Res>;
   @override
-  $Res call({Either<DataFailure, List<Profile>> searchProfileResults});
+  $Res call(
+      {Either<DataFailure, List<Profile>> searchProfileResults,
+      bool isSearching,
+      bool displayResults,
+      bool isLoadingProfile,
+      bool isLoadedProfile,
+      Either<DataFailure, Profile> selectedProfile});
 }
 
 /// @nodoc
@@ -283,12 +444,37 @@ class __$SearchProfileStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? searchProfileResults = freezed,
+    Object? isSearching = freezed,
+    Object? displayResults = freezed,
+    Object? isLoadingProfile = freezed,
+    Object? isLoadedProfile = freezed,
+    Object? selectedProfile = freezed,
   }) {
     return _then(_SearchProfileState(
       searchProfileResults: searchProfileResults == freezed
           ? _value.searchProfileResults
           : searchProfileResults // ignore: cast_nullable_to_non_nullable
               as Either<DataFailure, List<Profile>>,
+      isSearching: isSearching == freezed
+          ? _value.isSearching
+          : isSearching // ignore: cast_nullable_to_non_nullable
+              as bool,
+      displayResults: displayResults == freezed
+          ? _value.displayResults
+          : displayResults // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isLoadingProfile: isLoadingProfile == freezed
+          ? _value.isLoadingProfile
+          : isLoadingProfile // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isLoadedProfile: isLoadedProfile == freezed
+          ? _value.isLoadedProfile
+          : isLoadedProfile // ignore: cast_nullable_to_non_nullable
+              as bool,
+      selectedProfile: selectedProfile == freezed
+          ? _value.selectedProfile
+          : selectedProfile // ignore: cast_nullable_to_non_nullable
+              as Either<DataFailure, Profile>,
     ));
   }
 }
@@ -296,14 +482,30 @@ class __$SearchProfileStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_SearchProfileState implements _SearchProfileState {
-  const _$_SearchProfileState({required this.searchProfileResults});
+  const _$_SearchProfileState(
+      {required this.searchProfileResults,
+      required this.isSearching,
+      required this.displayResults,
+      required this.isLoadingProfile,
+      required this.isLoadedProfile,
+      required this.selectedProfile});
 
   @override
   final Either<DataFailure, List<Profile>> searchProfileResults;
+  @override
+  final bool isSearching;
+  @override
+  final bool displayResults;
+  @override
+  final bool isLoadingProfile;
+  @override
+  final bool isLoadedProfile;
+  @override
+  final Either<DataFailure, Profile> selectedProfile;
 
   @override
   String toString() {
-    return 'SearchProfileState(searchProfileResults: $searchProfileResults)';
+    return 'SearchProfileState(searchProfileResults: $searchProfileResults, isSearching: $isSearching, displayResults: $displayResults, isLoadingProfile: $isLoadingProfile, isLoadedProfile: $isLoadedProfile, selectedProfile: $selectedProfile)';
   }
 
   @override
@@ -311,14 +513,34 @@ class _$_SearchProfileState implements _SearchProfileState {
     return identical(this, other) ||
         (other is _SearchProfileState &&
             (identical(other.searchProfileResults, searchProfileResults) ||
+                const DeepCollectionEquality().equals(
+                    other.searchProfileResults, searchProfileResults)) &&
+            (identical(other.isSearching, isSearching) ||
                 const DeepCollectionEquality()
-                    .equals(other.searchProfileResults, searchProfileResults)));
+                    .equals(other.isSearching, isSearching)) &&
+            (identical(other.displayResults, displayResults) ||
+                const DeepCollectionEquality()
+                    .equals(other.displayResults, displayResults)) &&
+            (identical(other.isLoadingProfile, isLoadingProfile) ||
+                const DeepCollectionEquality()
+                    .equals(other.isLoadingProfile, isLoadingProfile)) &&
+            (identical(other.isLoadedProfile, isLoadedProfile) ||
+                const DeepCollectionEquality()
+                    .equals(other.isLoadedProfile, isLoadedProfile)) &&
+            (identical(other.selectedProfile, selectedProfile) ||
+                const DeepCollectionEquality()
+                    .equals(other.selectedProfile, selectedProfile)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(searchProfileResults);
+      const DeepCollectionEquality().hash(searchProfileResults) ^
+      const DeepCollectionEquality().hash(isSearching) ^
+      const DeepCollectionEquality().hash(displayResults) ^
+      const DeepCollectionEquality().hash(isLoadingProfile) ^
+      const DeepCollectionEquality().hash(isLoadedProfile) ^
+      const DeepCollectionEquality().hash(selectedProfile);
 
   @JsonKey(ignore: true)
   @override
@@ -328,11 +550,27 @@ class _$_SearchProfileState implements _SearchProfileState {
 
 abstract class _SearchProfileState implements SearchProfileState {
   const factory _SearchProfileState(
-          {required Either<DataFailure, List<Profile>> searchProfileResults}) =
+          {required Either<DataFailure, List<Profile>> searchProfileResults,
+          required bool isSearching,
+          required bool displayResults,
+          required bool isLoadingProfile,
+          required bool isLoadedProfile,
+          required Either<DataFailure, Profile> selectedProfile}) =
       _$_SearchProfileState;
 
   @override
   Either<DataFailure, List<Profile>> get searchProfileResults =>
+      throw _privateConstructorUsedError;
+  @override
+  bool get isSearching => throw _privateConstructorUsedError;
+  @override
+  bool get displayResults => throw _privateConstructorUsedError;
+  @override
+  bool get isLoadingProfile => throw _privateConstructorUsedError;
+  @override
+  bool get isLoadedProfile => throw _privateConstructorUsedError;
+  @override
+  Either<DataFailure, Profile> get selectedProfile =>
       throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)

@@ -12,22 +12,26 @@ class SignInPage extends StatelessWidget {
       body: Container(
         alignment: Alignment.center,
         child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Image.asset(
-                'images/logo.png',
-                width: MediaQuery.of(context).size.width * 0.6,
-                height: MediaQuery.of(context).size.width * 0.6,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(30.0),
-                child: BlocProvider(
-                  create: (context) => getIt<SignInFormBloc>(),
-                  child: SignInForm(),
+          child: ConstrainedBox(
+            constraints:
+                BoxConstraints(maxHeight: MediaQuery.of(context).size.height),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Image.asset(
+                  'images/logo.png',
+                  width: MediaQuery.of(context).size.width * 0.6,
+                  height: MediaQuery.of(context).size.width * 0.6,
                 ),
-              )
-            ],
+                Padding(
+                  padding: const EdgeInsets.all(30.0),
+                  child: BlocProvider(
+                    create: (context) => getIt<SignInFormBloc>(),
+                    child: SignInForm(),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

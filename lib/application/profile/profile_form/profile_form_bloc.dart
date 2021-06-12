@@ -10,6 +10,7 @@ import 'package:friendlinus/domain/data/profile/i_profile_repository.dart';
 import 'package:friendlinus/domain/data/profile/profile.dart';
 import 'package:friendlinus/domain/data/profile/value_objects.dart';
 import 'package:injectable/injectable.dart';
+import 'package:friendlinus/domain/core/constants.dart' as constants;
 
 part 'profile_form_event.dart';
 part 'profile_form_state.dart';
@@ -27,7 +28,7 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
   ) async* {
     yield* event.map(photoChanged: (e) async* {
       final failureOrString = await _profileRepository.uploadPhoto(e.photo);
-      String url = '';
+      String url = constants.DEFAULT_PHOTO_URL;
       failureOrString.fold(
         (f) => print(f),
         (s) {

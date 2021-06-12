@@ -54,20 +54,22 @@ class UpdateProfileForm extends StatelessWidget {
               body: Container(
                 margin: const EdgeInsets.all(30.0),
                 alignment: Alignment.center,
-                child:
-                    Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                  _BuildProfilePicButton(userProfile: userProfile),
-                  const SizedBox(height: 15),
-                  _BuildUsername(userProfile: userProfile),
-                  const SizedBox(height: 15),
-                  _BuildCourse(userProfile: userProfile),
-                  const SizedBox(height: 15),
-                  _BuildBio(userProfile: userProfile),
-                  const SizedBox(height: 15),
-                  _BuildModule(userProfile: userProfile),
-                  const SizedBox(height: 15),
-                  _BuildSaveButton(),
-                ]),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    _BuildProfilePicButton(userProfile: userProfile),
+                    const SizedBox(height: 15),
+                    _BuildUsername(userProfile: userProfile),
+                    const SizedBox(height: 15),
+                    _BuildCourse(userProfile: userProfile),
+                    const SizedBox(height: 15),
+                    _BuildBio(userProfile: userProfile),
+                    const SizedBox(height: 15),
+                    _BuildModule(userProfile: userProfile),
+                    const SizedBox(height: 15),
+                    _BuildSaveButton(),
+                  ],
+                ),
               ),
             ),
           );

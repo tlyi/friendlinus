@@ -13,7 +13,7 @@ class ProfileFormState with _$ProfileFormState {
   }) = _ProfileFormState;
 
   factory ProfileFormState.initial() => ProfileFormState(
-        photoUrl: right(''),
+        photoUrl: right(constants.DEFAULT_PHOTO_URL),
         profile: Profile.empty(),
         isSaving: false,
         saveFailureOrSuccessOption: none(),
