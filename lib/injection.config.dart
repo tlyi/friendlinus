@@ -43,7 +43,8 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       () => _i11.SearchProfileBloc(get<_i8.IProfileRepository>()));
   gh.factory<_i12.SignInFormBloc>(
       () => _i12.SignInFormBloc(get<_i6.IAuthFacade>()));
-  gh.factory<_i13.AuthBloc>(() => _i13.AuthBloc(get<_i6.IAuthFacade>()));
+  gh.factory<_i13.AuthBloc>(() =>
+      _i13.AuthBloc(get<_i6.IAuthFacade>(), get<_i8.IProfileRepository>()));
   return get;
 }
 

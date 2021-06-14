@@ -19,4 +19,7 @@ abstract class IProfileRepository {
       String username);
 
   Future<Either<DataFailure, bool>> verifyUsernameUnique(String username);
+
+  Future<Either<DataFailure, bool>> verifyUserRegistered();
+
 }

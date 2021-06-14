@@ -6,7 +6,7 @@ class ForumOverviewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       itemBuilder: (context, index) {
-        return const ForumCard();
+        return const ForumCard(title: 'Forum Title');
       },
     );
   }

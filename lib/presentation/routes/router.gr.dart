@@ -6,21 +6,23 @@
 
 import 'package:auto_route/auto_route.dart' as _i1;
 import 'package:flutter/material.dart' as _i2;
-import 'package:friendlinus/domain/data/profile/profile.dart' as _i15;
+import 'package:friendlinus/domain/data/profile/profile.dart' as _i16;
+import 'package:friendlinus/presentation/forum/forum_form/forum_form_page.dart'
+    as _i15;
 import 'package:friendlinus/presentation/forum/forum_overview/forum_overview_page.dart'
-    as _i10;
+    as _i14;
 import 'package:friendlinus/presentation/home_page.dart' as _i5;
 import 'package:friendlinus/presentation/profile/other_profile_page.dart'
-    as _i14;
-import 'package:friendlinus/presentation/profile/profile_page.dart' as _i11;
-import 'package:friendlinus/presentation/profile/update_profile_page.dart'
     as _i13;
+import 'package:friendlinus/presentation/profile/profile_page.dart' as _i10;
+import 'package:friendlinus/presentation/profile/update_profile_page.dart'
+    as _i12;
 import 'package:friendlinus/presentation/register/register_page.dart' as _i6;
 import 'package:friendlinus/presentation/register/register_profile_page.dart'
     as _i8;
 import 'package:friendlinus/presentation/register/verify_email_page.dart'
     as _i7;
-import 'package:friendlinus/presentation/search/search_users_page.dart' as _i12;
+import 'package:friendlinus/presentation/search/search_users_page.dart' as _i11;
 import 'package:friendlinus/presentation/sign_in/reset_password_page.dart'
     as _i9;
 import 'package:friendlinus/presentation/sign_in/sign_in_page.dart' as _i4;
@@ -67,32 +69,37 @@ class AppRouter extends _i1.RootStackRouter {
         builder: (_) {
           return _i9.ResetPasswordPage();
         }),
-    ForumOverviewRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
-        routeData: routeData,
-        builder: (_) {
-          return _i10.ForumOverviewPage();
-        }),
     ProfileRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
         routeData: routeData,
         builder: (_) {
-          return _i11.ProfilePage();
+          return _i10.ProfilePage();
         }),
     SearchUsersRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
         routeData: routeData,
         builder: (_) {
-          return _i12.SearchUsersPage();
+          return _i11.SearchUsersPage();
         }),
     UpdateProfileRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
         routeData: routeData,
         builder: (_) {
-          return _i13.UpdateProfilePage();
+          return _i12.UpdateProfilePage();
         }),
     OtherProfileRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
         routeData: routeData,
         builder: (data) {
           final args = data.argsAs<OtherProfileRouteArgs>();
-          return _i14.OtherProfilePage(
+          return _i13.OtherProfilePage(
               key: args.key, userProfile: args.userProfile);
+        }),
+    ForumOverviewRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
+        routeData: routeData,
+        builder: (_) {
+          return const _i14.ForumOverviewPage();
+        }),
+    ForumFormRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
+        routeData: routeData,
+        builder: (_) {
+          return const _i15.ForumFormPage();
         })
   };
 
@@ -106,11 +113,12 @@ class AppRouter extends _i1.RootStackRouter {
         _i1.RouteConfig(RegisterProfileRoute.name,
             path: '/register-profile-page'),
         _i1.RouteConfig(ResetPasswordRoute.name, path: '/reset-password-page'),
-        _i1.RouteConfig(ForumOverviewRoute.name, path: '/forum-overview-page'),
         _i1.RouteConfig(ProfileRoute.name, path: '/profile-page'),
         _i1.RouteConfig(SearchUsersRoute.name, path: '/search-users-page'),
         _i1.RouteConfig(UpdateProfileRoute.name, path: '/update-profile-page'),
-        _i1.RouteConfig(OtherProfileRoute.name, path: '/other-profile-page')
+        _i1.RouteConfig(OtherProfileRoute.name, path: '/other-profile-page'),
+        _i1.RouteConfig(ForumOverviewRoute.name, path: '/forum-overview-page'),
+        _i1.RouteConfig(ForumFormRoute.name, path: '/forum-form-page')
       ];
 }
 
@@ -156,12 +164,6 @@ class ResetPasswordRoute extends _i1.PageRouteInfo {
   static const String name = 'ResetPasswordRoute';
 }
 
-class ForumOverviewRoute extends _i1.PageRouteInfo {
-  const ForumOverviewRoute() : super(name, path: '/forum-overview-page');
-
-  static const String name = 'ForumOverviewRoute';
-}
-
 class ProfileRoute extends _i1.PageRouteInfo {
   const ProfileRoute() : super(name, path: '/profile-page');
 
@@ -181,7 +183,7 @@ class UpdateProfileRoute extends _i1.PageRouteInfo {
 }
 
 class OtherProfileRoute extends _i1.PageRouteInfo<OtherProfileRouteArgs> {
-  OtherProfileRoute({_i2.Key? key, required _i15.Profile userProfile})
+  OtherProfileRoute({_i2.Key? key, required _i16.Profile userProfile})
       : super(name,
             path: '/other-profile-page',
             args: OtherProfileRouteArgs(key: key, userProfile: userProfile));
@@ -194,5 +196,17 @@ class OtherProfileRouteArgs {
 
   final _i2.Key? key;
 
-  final _i15.Profile userProfile;
+  final _i16.Profile userProfile;
+}
+
+class ForumOverviewRoute extends _i1.PageRouteInfo {
+  const ForumOverviewRoute() : super(name, path: '/forum-overview-page');
+
+  static const String name = 'ForumOverviewRoute';
+}
+
+class ForumFormRoute extends _i1.PageRouteInfo {
+  const ForumFormRoute() : super(name, path: '/forum-form-page');
+
+  static const String name = 'ForumFormRoute';
 }

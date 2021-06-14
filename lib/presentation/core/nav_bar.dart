@@ -10,7 +10,7 @@ class NavigationBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 70,
-      padding: EdgeInsets.only(
+      padding: const EdgeInsets.only(
         top: 10,
         bottom: 10,
       ),
@@ -52,6 +52,7 @@ class NavigationBar extends StatelessWidget {
             ),
             onPressed: () {
               print('Nav to forums');
+              context.replaceRoute(const ForumOverviewRoute());
             },
           ),
           IconButton(

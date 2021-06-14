@@ -8,6 +8,8 @@ AppBar appBar({
   required BuildContext context,
   required String header,
   bool canGoBack = false,
+  bool canClose = false,
+  bool notifications = true,
 }) {
   return AppBar(
     leading: canGoBack
@@ -17,19 +19,26 @@ AppBar appBar({
               context.popRoute();
             },
           )
+        : canClose
+        ? IconButton(
+              icon: const Icon(Icons.close, color: Colors.grey),
+            onPressed: () {
+              context.popRoute();
+            },
+          )
         : Container(),
     title: Text(
       header,
-      style: TextStyle(color: Colors.black),
+      style: const TextStyle(color: Colors.black),
     ),
     backgroundColor: Colors.white,
     centerTitle: true,
-    actions: [
-      IconButton(
+    actions: notifications
+      ? [IconButton(
         icon: const Icon(Icons.notifications_none, color: Colors.grey),
         onPressed: () => print('notifs button clicked'),
         padding: const EdgeInsets.only(right: 20),
-      ),
-    ],
+      ),]
+      : [],
   );
 }

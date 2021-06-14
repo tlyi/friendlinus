@@ -91,6 +91,7 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
         currentProfile: failureOrSuccess,
         profile: profile,
         currentUsername: profile.username.getOrCrash(),
+        photoUrl: right(profile.photoUrl),
       );
     });
   }

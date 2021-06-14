@@ -27,7 +27,18 @@ class SplashPage extends StatelessWidget {
           },
           verifying: (_) {},
           verified: (_) {
-            print('SPLASH: user is logged in and verified, going to home page');
+            print(
+                'SPLASH: user is logged in and verified. Checking if registered');
+                context
+                .read<AuthBloc>()
+                .add(const AuthEvent.registeredCheckRequested());
+          },
+          unregistered: (_) {
+            print('SPLASH: user has not registered profile.');
+            context.replaceRoute(const RegisterProfileRoute());
+          },
+          registered: (_) {
+            print('SPLASH: user is registered. Gg home page.');
             context.replaceRoute(const HomeRoute());
           });
     }, builder: (context, state) {

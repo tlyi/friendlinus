@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,6 +8,7 @@ import 'package:friendlinus/domain/data/profile/profile.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:friendlinus/domain/core/constants.dart' as constants;
 
 class UpdateProfileForm extends StatelessWidget {
   @override
@@ -26,7 +26,7 @@ class UpdateProfileForm extends StatelessWidget {
                         unableToUpdate: (_) => 'Unable to update'),
                   ).show(context);
                 }, (_) {
-                  context.replaceRoute(const HomeRoute());
+                  context.replaceRoute(const ProfileRoute());
                 }));
         state.photoUrl.fold(
             (f) => FlushbarHelper.createError(
@@ -50,26 +50,23 @@ class UpdateProfileForm extends StatelessWidget {
           });
           return Form(
             autovalidateMode: AutovalidateMode.always,
-            child: Scaffold(
-              body: Container(
-                margin: const EdgeInsets.all(30.0),
-                alignment: Alignment.center,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    _BuildProfilePicButton(userProfile: userProfile),
-                    const SizedBox(height: 15),
-                    _BuildUsername(userProfile: userProfile),
-                    const SizedBox(height: 15),
-                    _BuildCourse(userProfile: userProfile),
-                    const SizedBox(height: 15),
-                    _BuildBio(userProfile: userProfile),
-                    const SizedBox(height: 15),
-                    _BuildModule(userProfile: userProfile),
-                    const SizedBox(height: 15),
-                    _BuildSaveButton(),
-                  ],
-                ),
+            child: Container(
+              margin: const EdgeInsets.all(30.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  _BuildProfilePicButton(userProfile: userProfile),
+                  const SizedBox(height: 20),
+                  _BuildUsername(userProfile: userProfile),
+                  const SizedBox(height: 15),
+                  _BuildCourse(userProfile: userProfile),
+                  const SizedBox(height: 15),
+                  _BuildBio(userProfile: userProfile),
+                  const SizedBox(height: 15),
+                  _BuildModule(userProfile: userProfile),
+                  const SizedBox(height: 15),
+                  _BuildSaveButton(),
+                ],
               ),
             ),
           );
@@ -87,43 +84,25 @@ class _BuildProfilePicButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String prevPhotoUrl = userProfile.photoUrl;
+    String prevPhotoUrl = context.read<ProfileFormBloc>().state.photoUrl.getOrElse(() => '');
     return Stack(
       children: <Widget>[
         CircleAvatar(
-          radius: 55,
+          maxRadius: 60,
+          backgroundImage: prevPhotoUrl == ''
+              ? const NetworkImage(constants.DEFAULT_PHOTO_URL)
+              : NetworkImage(prevPhotoUrl),
           backgroundColor: Colors.transparent,
-          child: prevPhotoUrl == ''
-              ? ClipRRect(
-                  borderRadius: BorderRadius.circular(50),
-                  child: Image.asset(
-                    'images/placeholder_dp.png',
-                    width: 100,
-                    height: 100,
-                    fit: BoxFit.fitHeight,
-                  ),
-                )
-              : CircleAvatar(
-                  radius: 50,
-                  backgroundImage: NetworkImage(prevPhotoUrl),
-                  backgroundColor: Colors.transparent,
-                ),
         ),
         Positioned(
-          bottom: 1,
-          right: 1,
+          bottom: -5,
+          right: -5,
           child: Container(
             decoration: const BoxDecoration(shape: BoxShape.circle),
             child: ElevatedButton(
-              child: Text(
-                '+',
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
               style: ElevatedButton.styleFrom(
                 primary: const Color(0xFF7BA5BB),
-                shape: CircleBorder(),
+                shape: const CircleBorder(),
               ),
               onPressed: () async {
                 final picker = ImagePicker();
@@ -140,10 +119,14 @@ class _BuildProfilePicButton extends StatelessWidget {
                   context
                       .read<ProfileFormBloc>()
                       .add(ProfileFormEvent.photoChanged(pickedImage));
-                  prevPhotoUrl =
-                      context.read<ProfileFormBloc>().state.profile.photoUrl;
                 }
               },
+              child: const Text(
+                '+',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ),
         ),
@@ -331,12 +314,12 @@ class _BuildSaveButton extends StatelessWidget {
               style: ButtonStyle(
                   backgroundColor:
                       MaterialStateProperty.all(const Color(0xFF7BA5BB))),
-              child: const Text("Save & Update Info"),
               onPressed: () {
                 context.read<ProfileFormBloc>().add(
                       const ProfileFormEvent.saved(),
                     );
-              }),
+              },
+              child: const Text("Save & Update Info")),
         );
       },
     );

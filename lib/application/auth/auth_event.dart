@@ -6,4 +6,6 @@ class AuthEvent with _$AuthEvent {
   const factory AuthEvent.signedOut() = SignedOut;
   const factory AuthEvent.sentEmailVerification() = SentEmailVerification;
   const factory AuthEvent.verifiedCheckRequested() = VerifiedCheckRequested;
+  const factory AuthEvent.registeredCheckRequested() = RegisteredCheckRequested;
+
 }

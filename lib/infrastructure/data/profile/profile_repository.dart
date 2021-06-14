@@ -154,4 +154,18 @@ class ProfileRepository implements IProfileRepository {
       }
     });
   }
+
+  @override
+  Future<Either<DataFailure, bool>> verifyUserRegistered() async {
+    final userDoc = await _firestore.userDocument();
+    try {
+      return userDoc.get().then((docSnapshot) {
+        final bool userRegistered = docSnapshot.exists;
+        return right(userRegistered);
+      });
+    } on FirebaseException catch (e) {
+      print(e);
+      return left(const DataFailure.unexpected());
+    }
+  }
 }

@@ -1,14 +1,14 @@
 import 'dart:io';
-
 import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:friendlinus/application/profile/profile_form/profile_form_bloc.dart';
-import 'package:friendlinus/domain/core/failures.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:friendlinus/domain/core/constants.dart' as constants;
+
 
 class RegisterProfileForm extends StatelessWidget {
   @override
@@ -69,39 +69,21 @@ class _BuildProfilePicButton extends StatelessWidget {
     return Stack(
       children: <Widget>[
         CircleAvatar(
-          radius: 55,
+          maxRadius: 60,
+          backgroundImage: dbPhotoUrl == ''
+              ? const NetworkImage(constants.DEFAULT_PHOTO_URL)
+              : NetworkImage(dbPhotoUrl),
           backgroundColor: Colors.transparent,
-          child: dbPhotoUrl == ''
-              ? ClipRRect(
-                  borderRadius: BorderRadius.circular(50),
-                  child: Image.asset(
-                    'images/placeholder_dp.png',
-                    width: 100,
-                    height: 100,
-                    fit: BoxFit.fitHeight,
-                  ),
-                )
-              : CircleAvatar(
-                  radius: 50,
-                  backgroundImage: NetworkImage(dbPhotoUrl),
-                  backgroundColor: Colors.transparent,
-                ),
         ),
         Positioned(
-          bottom: 1,
-          right: 1,
+          bottom: -5,
+          right: -5,
           child: Container(
             decoration: const BoxDecoration(shape: BoxShape.circle),
             child: ElevatedButton(
-              child: Text(
-                '+',
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
               style: ElevatedButton.styleFrom(
                 primary: const Color(0xFF7BA5BB),
-                shape: CircleBorder(),
+                shape: const CircleBorder(),
               ),
               onPressed: () async {
                 final picker = ImagePicker();
@@ -120,6 +102,12 @@ class _BuildProfilePicButton extends StatelessWidget {
                       .add(ProfileFormEvent.photoChanged(pickedImage));
                 }
               },
+              child: const Text(
+                '+',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ),
         ),
@@ -287,12 +275,12 @@ class _BuildSaveButton extends StatelessWidget {
               style: ButtonStyle(
                   backgroundColor:
                       MaterialStateProperty.all(const Color(0xFF7BA5BB))),
-              child: const Text("Save Info"),
               onPressed: () {
                 context.read<ProfileFormBloc>().add(
                       const ProfileFormEvent.saved(),
                     );
-              }),
+              },
+              child: const Text("Save Info")),
         );
       },
     );

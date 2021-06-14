@@ -1,5 +1,6 @@
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:friendlinus/presentation/forum/forum_form/forum_form_page.dart';
 import 'package:friendlinus/presentation/forum/forum_overview/forum_overview_page.dart';
 import 'package:friendlinus/presentation/home_page.dart';
 import 'package:friendlinus/presentation/profile/other_profile_page.dart';
@@ -23,11 +24,12 @@ import 'package:friendlinus/presentation/splash/splash_page.dart';
     AutoRoute(page: VerifyEmailPage),
     AutoRoute(page: RegisterProfilePage),
     AutoRoute(page: ResetPasswordPage),
-    AutoRoute(page: ForumOverviewPage),
     AutoRoute(page: ProfilePage),
     AutoRoute(page: SearchUsersPage),
     AutoRoute(page: UpdateProfilePage),
-    AutoRoute(page: OtherProfilePage),
+    AutoRoute(page: OtherProfilePage),    
+    AutoRoute(page: ForumOverviewPage),
+    AutoRoute(page: ForumFormPage),
   ],
 )
 class $AppRouter {}

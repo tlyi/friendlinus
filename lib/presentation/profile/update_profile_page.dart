@@ -13,7 +13,7 @@ class UpdateProfilePage extends StatelessWidget {
       appBar:
           appBar(context: context, header: 'Update Profile', canGoBack: true),
       body: Container(
-        alignment: Alignment.center,
+        alignment: Alignment.topCenter,
         child: SingleChildScrollView(
           child: ConstrainedBox(
             constraints:
