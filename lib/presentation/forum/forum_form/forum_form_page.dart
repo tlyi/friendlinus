@@ -10,7 +10,7 @@ class ForumFormPage extends StatelessWidget {
     return Scaffold(
       appBar: appBar(
         context: context,
-        header: 'Create a Post',
+        header: 'Create Post',
         canClose: true,
         notifications: false,
       ),

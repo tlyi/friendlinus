@@ -22,6 +22,7 @@ class NavigationBar extends StatelessWidget {
               image: AssetImage('images/logo.png'),
               color: null,
             ),
+            tooltip: 'Home',
             onPressed: () {
               print('Nav to home');
               context.replaceRoute(const HomeRoute());
@@ -32,6 +33,7 @@ class NavigationBar extends StatelessWidget {
               Icons.forum,
               size: 35,
             ),
+            tooltip: 'Chats',
             onPressed: () {
               print('Nav to chats');
             },
@@ -41,6 +43,7 @@ class NavigationBar extends StatelessWidget {
               Icons.near_me,
               size: 35,
             ),
+            tooltip: 'Location Chats',
             onPressed: () {
               print('Nav to location chats');
             },
@@ -50,6 +53,7 @@ class NavigationBar extends StatelessWidget {
               Icons.view_list_rounded,
               size: 35,
             ),
+            tooltip: 'Forums',
             onPressed: () {
               print('Nav to forums');
               context.replaceRoute(const ForumOverviewRoute());
@@ -60,6 +64,7 @@ class NavigationBar extends StatelessWidget {
               Icons.account_circle,
               size: 35,
             ),
+            tooltip: 'Profile',
             onPressed: () {
               print('Nav to profile');
               context.replaceRoute(const ProfileRoute());
