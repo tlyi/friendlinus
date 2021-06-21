@@ -12,13 +12,23 @@ abstract class ForumPost implements _$ForumPost {
     required Title title,
     required Tag tag,
     required Body body,
+    required int likes,
+    required String posterUserId,
+    required bool isAnon,
     required String photoUrl,
+    required bool photoAdded,
+    required bool pollAdded,
   }) = _ForumPost;
 
   factory ForumPost.empty() => ForumPost(
         title: Title(''),
         tag: Tag(''),
         body: Body(''),
+        likes: 0,
+        posterUserId: '',
+        isAnon: false,
         photoUrl: '',
+        photoAdded: false,
+        pollAdded: false,
       );
 }

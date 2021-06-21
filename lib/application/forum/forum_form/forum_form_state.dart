@@ -3,16 +3,18 @@ part of 'forum_form_bloc.dart';
 @freezed
 class ForumFormState with _$ForumFormState {
   const factory ForumFormState({
+    required String forumId,
     required ForumPost forumPost,
-    required bool addedImage,
     required Either<DataFailure, String> photoUrl,
-    required bool addedPoll,
+   required Option<Either<DataFailure, Unit>> createFailureOrSuccessOption,
+    required bool isLoading,
   }) = _ForumFormState;
 
   factory ForumFormState.initial() => ForumFormState(
+        forumId: UniqueId('').getOrCrash(),
         forumPost: ForumPost.empty(),
-        addedImage: false,
-        addedPoll: false,
         photoUrl: right(''),
+        createFailureOrSuccessOption: none(),
+        isLoading: false,
       );
 }

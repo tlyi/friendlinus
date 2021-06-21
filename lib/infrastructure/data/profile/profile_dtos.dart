@@ -21,6 +21,7 @@ abstract class ProfileDto implements _$ProfileDto {
     required String bio,
     required String module,
     required String uuid,
+    required List<String> forumsPosted,
   }) = _ProfileDto;
 
   factory ProfileDto.fromDomain(Profile profile) {
@@ -31,6 +32,7 @@ abstract class ProfileDto implements _$ProfileDto {
       bio: profile.bio.getOrCrash(),
       module: profile.module.getOrCrash(),
       uuid: profile.uuid,
+      forumsPosted: profile.forumsPosted,
     );
   }
 
@@ -42,6 +44,7 @@ abstract class ProfileDto implements _$ProfileDto {
       bio: Bio(bio),
       module: Mod(module),
       uuid: uuid,
+      forumsPosted: forumsPosted,
     );
   }
 

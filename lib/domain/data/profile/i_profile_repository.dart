@@ -24,4 +24,6 @@ abstract class IProfileRepository {
   Future<Either<DataFailure, bool>> verifyUsernameUnique(String username);
 
   Future<Either<DataFailure, bool>> verifyUserRegistered();
+
+  Future<Either<DataFailure, Unit>> addForum(String forumId);
 }

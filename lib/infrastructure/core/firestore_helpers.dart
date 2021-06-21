@@ -4,6 +4,7 @@ import 'package:friendlinus/domain/core/errors.dart';
 import 'package:friendlinus/injection.dart';
 
 extension FirestoreX on FirebaseFirestore {
+  //For Profiles
   Future<DocumentReference> userDocument() async {
     final userOption = await getIt<IAuthFacade>().getSignedInUser();
     final user = userOption.getOrElse(() => throw NotAuthenticatedError());
@@ -22,5 +23,10 @@ extension FirestoreX on FirebaseFirestore {
 
   Future<CollectionReference> usersRef() async {
     return FirebaseFirestore.instance.collection('users');
+  }
+
+  //For Forums
+  Future<CollectionReference> forumsRef() async {
+    return FirebaseFirestore.instance.collection('forums');
   }
 }

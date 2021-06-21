@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
-part of 'forum_post.dart';
+part of 'forum_post_dtos.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -12,21 +12,25 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-/// @nodoc
-class _$ForumPostTearOff {
-  const _$ForumPostTearOff();
+ForumPostDto _$ForumPostDtoFromJson(Map<String, dynamic> json) {
+  return _ForumPostDto.fromJson(json);
+}
 
-  _ForumPost call(
-      {required Title title,
-      required Tag tag,
-      required Body body,
+/// @nodoc
+class _$ForumPostDtoTearOff {
+  const _$ForumPostDtoTearOff();
+
+  _ForumPostDto call(
+      {required String title,
+      required String tag,
+      required String body,
       required int likes,
       required String posterUserId,
       required bool isAnon,
       required String photoUrl,
       required bool photoAdded,
       required bool pollAdded}) {
-    return _ForumPost(
+    return _ForumPostDto(
       title: title,
       tag: tag,
       body: body,
@@ -38,16 +42,20 @@ class _$ForumPostTearOff {
       pollAdded: pollAdded,
     );
   }
+
+  ForumPostDto fromJson(Map<String, Object> json) {
+    return ForumPostDto.fromJson(json);
+  }
 }
 
 /// @nodoc
-const $ForumPost = _$ForumPostTearOff();
+const $ForumPostDto = _$ForumPostDtoTearOff();
 
 /// @nodoc
-mixin _$ForumPost {
-  Title get title => throw _privateConstructorUsedError;
-  Tag get tag => throw _privateConstructorUsedError;
-  Body get body => throw _privateConstructorUsedError;
+mixin _$ForumPostDto {
+  String get title => throw _privateConstructorUsedError;
+  String get tag => throw _privateConstructorUsedError;
+  String get body => throw _privateConstructorUsedError;
   int get likes => throw _privateConstructorUsedError;
   String get posterUserId => throw _privateConstructorUsedError;
   bool get isAnon => throw _privateConstructorUsedError;
@@ -55,19 +63,21 @@ mixin _$ForumPost {
   bool get photoAdded => throw _privateConstructorUsedError;
   bool get pollAdded => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ForumPostCopyWith<ForumPost> get copyWith =>
+  $ForumPostDtoCopyWith<ForumPostDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ForumPostCopyWith<$Res> {
-  factory $ForumPostCopyWith(ForumPost value, $Res Function(ForumPost) then) =
-      _$ForumPostCopyWithImpl<$Res>;
+abstract class $ForumPostDtoCopyWith<$Res> {
+  factory $ForumPostDtoCopyWith(
+          ForumPostDto value, $Res Function(ForumPostDto) then) =
+      _$ForumPostDtoCopyWithImpl<$Res>;
   $Res call(
-      {Title title,
-      Tag tag,
-      Body body,
+      {String title,
+      String tag,
+      String body,
       int likes,
       String posterUserId,
       bool isAnon,
@@ -77,12 +87,12 @@ abstract class $ForumPostCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ForumPostCopyWithImpl<$Res> implements $ForumPostCopyWith<$Res> {
-  _$ForumPostCopyWithImpl(this._value, this._then);
+class _$ForumPostDtoCopyWithImpl<$Res> implements $ForumPostDtoCopyWith<$Res> {
+  _$ForumPostDtoCopyWithImpl(this._value, this._then);
 
-  final ForumPost _value;
+  final ForumPostDto _value;
   // ignore: unused_field
-  final $Res Function(ForumPost) _then;
+  final $Res Function(ForumPostDto) _then;
 
   @override
   $Res call({
@@ -100,15 +110,15 @@ class _$ForumPostCopyWithImpl<$Res> implements $ForumPostCopyWith<$Res> {
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as Title,
+              as String,
       tag: tag == freezed
           ? _value.tag
           : tag // ignore: cast_nullable_to_non_nullable
-              as Tag,
+              as String,
       body: body == freezed
           ? _value.body
           : body // ignore: cast_nullable_to_non_nullable
-              as Body,
+              as String,
       likes: likes == freezed
           ? _value.likes
           : likes // ignore: cast_nullable_to_non_nullable
@@ -138,15 +148,16 @@ class _$ForumPostCopyWithImpl<$Res> implements $ForumPostCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$ForumPostCopyWith<$Res> implements $ForumPostCopyWith<$Res> {
-  factory _$ForumPostCopyWith(
-          _ForumPost value, $Res Function(_ForumPost) then) =
-      __$ForumPostCopyWithImpl<$Res>;
+abstract class _$ForumPostDtoCopyWith<$Res>
+    implements $ForumPostDtoCopyWith<$Res> {
+  factory _$ForumPostDtoCopyWith(
+          _ForumPostDto value, $Res Function(_ForumPostDto) then) =
+      __$ForumPostDtoCopyWithImpl<$Res>;
   @override
   $Res call(
-      {Title title,
-      Tag tag,
-      Body body,
+      {String title,
+      String tag,
+      String body,
       int likes,
       String posterUserId,
       bool isAnon,
@@ -156,13 +167,14 @@ abstract class _$ForumPostCopyWith<$Res> implements $ForumPostCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$ForumPostCopyWithImpl<$Res> extends _$ForumPostCopyWithImpl<$Res>
-    implements _$ForumPostCopyWith<$Res> {
-  __$ForumPostCopyWithImpl(_ForumPost _value, $Res Function(_ForumPost) _then)
-      : super(_value, (v) => _then(v as _ForumPost));
+class __$ForumPostDtoCopyWithImpl<$Res> extends _$ForumPostDtoCopyWithImpl<$Res>
+    implements _$ForumPostDtoCopyWith<$Res> {
+  __$ForumPostDtoCopyWithImpl(
+      _ForumPostDto _value, $Res Function(_ForumPostDto) _then)
+      : super(_value, (v) => _then(v as _ForumPostDto));
 
   @override
-  _ForumPost get _value => super._value as _ForumPost;
+  _ForumPostDto get _value => super._value as _ForumPostDto;
 
   @override
   $Res call({
@@ -176,19 +188,19 @@ class __$ForumPostCopyWithImpl<$Res> extends _$ForumPostCopyWithImpl<$Res>
     Object? photoAdded = freezed,
     Object? pollAdded = freezed,
   }) {
-    return _then(_ForumPost(
+    return _then(_ForumPostDto(
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as Title,
+              as String,
       tag: tag == freezed
           ? _value.tag
           : tag // ignore: cast_nullable_to_non_nullable
-              as Tag,
+              as String,
       body: body == freezed
           ? _value.body
           : body // ignore: cast_nullable_to_non_nullable
-              as Body,
+              as String,
       likes: likes == freezed
           ? _value.likes
           : likes // ignore: cast_nullable_to_non_nullable
@@ -218,9 +230,9 @@ class __$ForumPostCopyWithImpl<$Res> extends _$ForumPostCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
-class _$_ForumPost extends _ForumPost {
-  const _$_ForumPost(
+@JsonSerializable()
+class _$_ForumPostDto extends _ForumPostDto {
+  const _$_ForumPostDto(
       {required this.title,
       required this.tag,
       required this.body,
@@ -232,12 +244,15 @@ class _$_ForumPost extends _ForumPost {
       required this.pollAdded})
       : super._();
 
+  factory _$_ForumPostDto.fromJson(Map<String, dynamic> json) =>
+      _$_$_ForumPostDtoFromJson(json);
+
   @override
-  final Title title;
+  final String title;
   @override
-  final Tag tag;
+  final String tag;
   @override
-  final Body body;
+  final String body;
   @override
   final int likes;
   @override
@@ -253,13 +268,13 @@ class _$_ForumPost extends _ForumPost {
 
   @override
   String toString() {
-    return 'ForumPost(title: $title, tag: $tag, body: $body, likes: $likes, posterUserId: $posterUserId, isAnon: $isAnon, photoUrl: $photoUrl, photoAdded: $photoAdded, pollAdded: $pollAdded)';
+    return 'ForumPostDto(title: $title, tag: $tag, body: $body, likes: $likes, posterUserId: $posterUserId, isAnon: $isAnon, photoUrl: $photoUrl, photoAdded: $photoAdded, pollAdded: $pollAdded)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _ForumPost &&
+        (other is _ForumPostDto &&
             (identical(other.title, title) ||
                 const DeepCollectionEquality().equals(other.title, title)) &&
             (identical(other.tag, tag) ||
@@ -299,29 +314,37 @@ class _$_ForumPost extends _ForumPost {
 
   @JsonKey(ignore: true)
   @override
-  _$ForumPostCopyWith<_ForumPost> get copyWith =>
-      __$ForumPostCopyWithImpl<_ForumPost>(this, _$identity);
+  _$ForumPostDtoCopyWith<_ForumPostDto> get copyWith =>
+      __$ForumPostDtoCopyWithImpl<_ForumPostDto>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$_$_ForumPostDtoToJson(this);
+  }
 }
 
-abstract class _ForumPost extends ForumPost {
-  const factory _ForumPost(
-      {required Title title,
-      required Tag tag,
-      required Body body,
+abstract class _ForumPostDto extends ForumPostDto {
+  const factory _ForumPostDto(
+      {required String title,
+      required String tag,
+      required String body,
       required int likes,
       required String posterUserId,
       required bool isAnon,
       required String photoUrl,
       required bool photoAdded,
-      required bool pollAdded}) = _$_ForumPost;
-  const _ForumPost._() : super._();
+      required bool pollAdded}) = _$_ForumPostDto;
+  const _ForumPostDto._() : super._();
+
+  factory _ForumPostDto.fromJson(Map<String, dynamic> json) =
+      _$_ForumPostDto.fromJson;
 
   @override
-  Title get title => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
   @override
-  Tag get tag => throw _privateConstructorUsedError;
+  String get tag => throw _privateConstructorUsedError;
   @override
-  Body get body => throw _privateConstructorUsedError;
+  String get body => throw _privateConstructorUsedError;
   @override
   int get likes => throw _privateConstructorUsedError;
   @override
@@ -336,6 +359,6 @@ abstract class _ForumPost extends ForumPost {
   bool get pollAdded => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$ForumPostCopyWith<_ForumPost> get copyWith =>
+  _$ForumPostDtoCopyWith<_ForumPostDto> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -26,6 +26,15 @@ import 'domain/data/profile/i_profile_repository.dart' as _i10;
 import 'infrastructure/auth/firebase_auth_facade.dart' as _i7;
 import 'infrastructure/core/firebase_injectable_module.dart' as _i21;
 import 'infrastructure/data/chats/chat_repository.dart' as _i9;
+import 'application/forum/forum_form/forum_form_bloc.dart' as _i16;
+import 'application/profile/profile_form/profile_form_bloc.dart' as _i12;
+import 'application/search/search_profile_bloc.dart' as _i13;
+import 'domain/auth/i_auth_facade.dart' as _i6;
+import 'domain/data/forum/i_forum_repository.dart' as _i8;
+import 'domain/data/profile/i_profile_repository.dart' as _i10;
+import 'infrastructure/auth/firebase_auth_facade.dart' as _i7;
+import 'infrastructure/core/firebase_injectable_module.dart' as _i17;
+import 'infrastructure/data/forum/forum_repository.dart' as _i9;
 import 'infrastructure/data/profile/profile_repository.dart'
     as _i11; // ignore_for_file: unnecessary_lambdas
 
@@ -47,6 +56,10 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       () => _i9.ChatRepository(get<_i4.FirebaseFirestore>()));
   gh.lazySingleton<_i10.IProfileRepository>(() => _i11.ProfileRepository(
       get<_i4.FirebaseFirestore>(), get<_i5.FirebaseStorage>()));
+  gh.lazySingleton<_i8.IForumRepository>(() => _i9.ForumPostRepository(
+      get<_i4.FirebaseFirestore>(), get<_i5.FirebaseStorage>()));
+  gh.lazySingleton<_i10.IProfileRepository>(() => _i11.ProfileRepository(
+      get<_i4.FirebaseFirestore>(), get<_i5.FirebaseStorage>()));
   gh.factory<_i12.ProfileFormBloc>(
       () => _i12.ProfileFormBloc(get<_i10.IProfileRepository>()));
   gh.factory<_i13.SearchProfileBloc>(
@@ -64,3 +77,9 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
 }
 
 class _$FirebaseInjectableModule extends _i21.FirebaseInjectableModule {}
+  gh.factory<_i16.ForumFormBloc>(() => _i16.ForumFormBloc(
+      get<_i8.IForumRepository>(), get<_i10.IProfileRepository>()));
+  return get;
+}
+
+class _$FirebaseInjectableModule extends _i17.FirebaseInjectableModule {}

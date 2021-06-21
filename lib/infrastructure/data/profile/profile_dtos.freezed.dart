@@ -26,7 +26,8 @@ class _$ProfileDtoTearOff {
       required String course,
       required String bio,
       required String module,
-      required String uuid}) {
+      required String uuid,
+      required List<String> forumsPosted}) {
     return _ProfileDto(
       photoUrl: photoUrl,
       username: username,
@@ -34,6 +35,7 @@ class _$ProfileDtoTearOff {
       bio: bio,
       module: module,
       uuid: uuid,
+      forumsPosted: forumsPosted,
     );
   }
 
@@ -53,6 +55,7 @@ mixin _$ProfileDto {
   String get bio => throw _privateConstructorUsedError;
   String get module => throw _privateConstructorUsedError;
   String get uuid => throw _privateConstructorUsedError;
+  List<String> get forumsPosted => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -71,7 +74,8 @@ abstract class $ProfileDtoCopyWith<$Res> {
       String course,
       String bio,
       String module,
-      String uuid});
+      String uuid,
+      List<String> forumsPosted});
 }
 
 /// @nodoc
@@ -90,6 +94,7 @@ class _$ProfileDtoCopyWithImpl<$Res> implements $ProfileDtoCopyWith<$Res> {
     Object? bio = freezed,
     Object? module = freezed,
     Object? uuid = freezed,
+    Object? forumsPosted = freezed,
   }) {
     return _then(_value.copyWith(
       photoUrl: photoUrl == freezed
@@ -116,6 +121,10 @@ class _$ProfileDtoCopyWithImpl<$Res> implements $ProfileDtoCopyWith<$Res> {
           ? _value.uuid
           : uuid // ignore: cast_nullable_to_non_nullable
               as String,
+      forumsPosted: forumsPosted == freezed
+          ? _value.forumsPosted
+          : forumsPosted // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -132,7 +141,8 @@ abstract class _$ProfileDtoCopyWith<$Res> implements $ProfileDtoCopyWith<$Res> {
       String course,
       String bio,
       String module,
-      String uuid});
+      String uuid,
+      List<String> forumsPosted});
 }
 
 /// @nodoc
@@ -153,6 +163,7 @@ class __$ProfileDtoCopyWithImpl<$Res> extends _$ProfileDtoCopyWithImpl<$Res>
     Object? bio = freezed,
     Object? module = freezed,
     Object? uuid = freezed,
+    Object? forumsPosted = freezed,
   }) {
     return _then(_ProfileDto(
       photoUrl: photoUrl == freezed
@@ -179,6 +190,10 @@ class __$ProfileDtoCopyWithImpl<$Res> extends _$ProfileDtoCopyWithImpl<$Res>
           ? _value.uuid
           : uuid // ignore: cast_nullable_to_non_nullable
               as String,
+      forumsPosted: forumsPosted == freezed
+          ? _value.forumsPosted
+          : forumsPosted // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -192,7 +207,8 @@ class _$_ProfileDto extends _ProfileDto {
       required this.course,
       required this.bio,
       required this.module,
-      required this.uuid})
+      required this.uuid,
+      required this.forumsPosted})
       : super._();
 
   factory _$_ProfileDto.fromJson(Map<String, dynamic> json) =>
@@ -210,10 +226,12 @@ class _$_ProfileDto extends _ProfileDto {
   final String module;
   @override
   final String uuid;
+  @override
+  final List<String> forumsPosted;
 
   @override
   String toString() {
-    return 'ProfileDto(photoUrl: $photoUrl, username: $username, course: $course, bio: $bio, module: $module, uuid: $uuid)';
+    return 'ProfileDto(photoUrl: $photoUrl, username: $username, course: $course, bio: $bio, module: $module, uuid: $uuid, forumsPosted: $forumsPosted)';
   }
 
   @override
@@ -233,7 +251,10 @@ class _$_ProfileDto extends _ProfileDto {
             (identical(other.module, module) ||
                 const DeepCollectionEquality().equals(other.module, module)) &&
             (identical(other.uuid, uuid) ||
-                const DeepCollectionEquality().equals(other.uuid, uuid)));
+                const DeepCollectionEquality().equals(other.uuid, uuid)) &&
+            (identical(other.forumsPosted, forumsPosted) ||
+                const DeepCollectionEquality()
+                    .equals(other.forumsPosted, forumsPosted)));
   }
 
   @override
@@ -244,7 +265,8 @@ class _$_ProfileDto extends _ProfileDto {
       const DeepCollectionEquality().hash(course) ^
       const DeepCollectionEquality().hash(bio) ^
       const DeepCollectionEquality().hash(module) ^
-      const DeepCollectionEquality().hash(uuid);
+      const DeepCollectionEquality().hash(uuid) ^
+      const DeepCollectionEquality().hash(forumsPosted);
 
   @JsonKey(ignore: true)
   @override
@@ -264,7 +286,8 @@ abstract class _ProfileDto extends ProfileDto {
       required String course,
       required String bio,
       required String module,
-      required String uuid}) = _$_ProfileDto;
+      required String uuid,
+      required List<String> forumsPosted}) = _$_ProfileDto;
   const _ProfileDto._() : super._();
 
   factory _ProfileDto.fromJson(Map<String, dynamic> json) =
@@ -282,6 +305,8 @@ abstract class _ProfileDto extends ProfileDto {
   String get module => throw _privateConstructorUsedError;
   @override
   String get uuid => throw _privateConstructorUsedError;
+  @override
+  List<String> get forumsPosted => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$ProfileDtoCopyWith<_ProfileDto> get copyWith =>
