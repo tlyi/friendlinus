@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:friendlinus/application/chats/chat_bloc.dart';
 import 'package:friendlinus/domain/data/profile/profile.dart';
 
 class OtherProfile extends StatelessWidget {
@@ -8,8 +10,21 @@ class OtherProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text(userProfile.username.getOrCrash()),
+    return BlocBuilder<ChatBloc, ChatState>(
+      builder: (context, state) {
+        return Column(
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                context
+                    .read<ChatBloc>()
+                    .add(ChatEvent.chatStarted(userProfile.uuid));
+              }, //navigate to chat page
+              child: Text('Send chat to ${userProfile.username.getOrCrash()}'),
+            )
+          ],
+        );
+      },
     );
   }
 }

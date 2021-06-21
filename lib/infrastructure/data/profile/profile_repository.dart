@@ -3,6 +3,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:friendlinus/domain/auth/i_auth_facade.dart';
 import 'package:friendlinus/domain/core/errors.dart';
+import 'package:friendlinus/domain/core/value_objects.dart';
 import 'package:friendlinus/domain/data/data_failure.dart';
 import 'package:dartz/dartz.dart';
 import 'package:friendlinus/domain/data/profile/i_profile_repository.dart';
@@ -21,6 +22,12 @@ class ProfileRepository implements IProfileRepository {
   final FirebaseStorage _firebaseStorage;
 
   ProfileRepository(this._firestore, this._firebaseStorage);
+
+  @override
+  Future<String> getUserId() async {
+    final userDoc = await _firestore.userDocument();
+    return userDoc.id;
+  }
 
   @override
   Future<Either<DataFailure, Unit>> create(Profile profile) async {
@@ -143,13 +150,12 @@ class ProfileRepository implements IProfileRepository {
   @override
   Future<Either<DataFailure, bool>> verifyUsernameUnique(
       String username) async {
-    final searchResults = await readOtherProfile(username);
-    return searchResults.fold((_) => left(const DataFailure.unexpected()),
+    final otherProfile = await readOtherProfile(username);
+    return otherProfile.fold((_) => left(const DataFailure.unexpected()),
         (profile) {
       if (profile == Profile.empty()) {
         return right(true);
       } else {
-        print('TAKEN');
         return right(false);
       }
     });

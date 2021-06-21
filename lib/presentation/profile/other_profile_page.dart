@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:friendlinus/application/chats/chat_bloc.dart';
 import 'package:friendlinus/application/profile/profile_form/profile_form_bloc.dart';
 import 'package:friendlinus/domain/data/profile/profile.dart';
 import 'package:friendlinus/injection.dart';
@@ -28,9 +29,16 @@ class OtherProfilePage extends StatelessWidget {
           child: ConstrainedBox(
             constraints:
                 BoxConstraints(maxHeight: MediaQuery.of(context).size.height),
-            child: BlocProvider(
-              create: (context) =>
-                  getIt<ProfileFormBloc>(), //to revisit: what bloc to give
+            child: MultiBlocProvider(
+              providers: [
+                BlocProvider(
+                  create: (context) =>
+                      getIt<ProfileFormBloc>(), //to revisit: what bloc to give
+                ),
+                BlocProvider(
+                  create: (context) => getIt<ChatBloc>(),
+                )
+              ],
               child: OtherProfile(userProfile: userProfile),
             ),
           ),

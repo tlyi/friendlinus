@@ -25,13 +25,15 @@ class _$ProfileDtoTearOff {
       required String username,
       required String course,
       required String bio,
-      required String module}) {
+      required String module,
+      required String uuid}) {
     return _ProfileDto(
       photoUrl: photoUrl,
       username: username,
       course: course,
       bio: bio,
       module: module,
+      uuid: uuid,
     );
   }
 
@@ -50,6 +52,7 @@ mixin _$ProfileDto {
   String get course => throw _privateConstructorUsedError;
   String get bio => throw _privateConstructorUsedError;
   String get module => throw _privateConstructorUsedError;
+  String get uuid => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -67,7 +70,8 @@ abstract class $ProfileDtoCopyWith<$Res> {
       String username,
       String course,
       String bio,
-      String module});
+      String module,
+      String uuid});
 }
 
 /// @nodoc
@@ -85,6 +89,7 @@ class _$ProfileDtoCopyWithImpl<$Res> implements $ProfileDtoCopyWith<$Res> {
     Object? course = freezed,
     Object? bio = freezed,
     Object? module = freezed,
+    Object? uuid = freezed,
   }) {
     return _then(_value.copyWith(
       photoUrl: photoUrl == freezed
@@ -107,6 +112,10 @@ class _$ProfileDtoCopyWithImpl<$Res> implements $ProfileDtoCopyWith<$Res> {
           ? _value.module
           : module // ignore: cast_nullable_to_non_nullable
               as String,
+      uuid: uuid == freezed
+          ? _value.uuid
+          : uuid // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -122,7 +131,8 @@ abstract class _$ProfileDtoCopyWith<$Res> implements $ProfileDtoCopyWith<$Res> {
       String username,
       String course,
       String bio,
-      String module});
+      String module,
+      String uuid});
 }
 
 /// @nodoc
@@ -142,6 +152,7 @@ class __$ProfileDtoCopyWithImpl<$Res> extends _$ProfileDtoCopyWithImpl<$Res>
     Object? course = freezed,
     Object? bio = freezed,
     Object? module = freezed,
+    Object? uuid = freezed,
   }) {
     return _then(_ProfileDto(
       photoUrl: photoUrl == freezed
@@ -164,6 +175,10 @@ class __$ProfileDtoCopyWithImpl<$Res> extends _$ProfileDtoCopyWithImpl<$Res>
           ? _value.module
           : module // ignore: cast_nullable_to_non_nullable
               as String,
+      uuid: uuid == freezed
+          ? _value.uuid
+          : uuid // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -176,7 +191,8 @@ class _$_ProfileDto extends _ProfileDto {
       required this.username,
       required this.course,
       required this.bio,
-      required this.module})
+      required this.module,
+      required this.uuid})
       : super._();
 
   factory _$_ProfileDto.fromJson(Map<String, dynamic> json) =>
@@ -192,10 +208,12 @@ class _$_ProfileDto extends _ProfileDto {
   final String bio;
   @override
   final String module;
+  @override
+  final String uuid;
 
   @override
   String toString() {
-    return 'ProfileDto(photoUrl: $photoUrl, username: $username, course: $course, bio: $bio, module: $module)';
+    return 'ProfileDto(photoUrl: $photoUrl, username: $username, course: $course, bio: $bio, module: $module, uuid: $uuid)';
   }
 
   @override
@@ -213,7 +231,9 @@ class _$_ProfileDto extends _ProfileDto {
             (identical(other.bio, bio) ||
                 const DeepCollectionEquality().equals(other.bio, bio)) &&
             (identical(other.module, module) ||
-                const DeepCollectionEquality().equals(other.module, module)));
+                const DeepCollectionEquality().equals(other.module, module)) &&
+            (identical(other.uuid, uuid) ||
+                const DeepCollectionEquality().equals(other.uuid, uuid)));
   }
 
   @override
@@ -223,7 +243,8 @@ class _$_ProfileDto extends _ProfileDto {
       const DeepCollectionEquality().hash(username) ^
       const DeepCollectionEquality().hash(course) ^
       const DeepCollectionEquality().hash(bio) ^
-      const DeepCollectionEquality().hash(module);
+      const DeepCollectionEquality().hash(module) ^
+      const DeepCollectionEquality().hash(uuid);
 
   @JsonKey(ignore: true)
   @override
@@ -242,7 +263,8 @@ abstract class _ProfileDto extends ProfileDto {
       required String username,
       required String course,
       required String bio,
-      required String module}) = _$_ProfileDto;
+      required String module,
+      required String uuid}) = _$_ProfileDto;
   const _ProfileDto._() : super._();
 
   factory _ProfileDto.fromJson(Map<String, dynamic> json) =
@@ -258,6 +280,8 @@ abstract class _ProfileDto extends ProfileDto {
   String get bio => throw _privateConstructorUsedError;
   @override
   String get module => throw _privateConstructorUsedError;
+  @override
+  String get uuid => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$ProfileDtoCopyWith<_ProfileDto> get copyWith =>

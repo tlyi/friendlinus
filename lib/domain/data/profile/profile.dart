@@ -1,6 +1,8 @@
 import 'dart:core';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:friendlinus/domain/core/value_objects.dart';
 import 'package:friendlinus/domain/data/profile/value_objects.dart';
+import 'package:friendlinus/domain/core/constants.dart' as constants;
 
 part 'profile.freezed.dart';
 
@@ -14,13 +16,15 @@ abstract class Profile implements _$Profile {
     required Course course,
     required Bio bio,
     required Mod module,
+    required String uuid,
   }) = _Profile;
 
   factory Profile.empty() => Profile(
-        photoUrl: '',
+        photoUrl: constants.DEFAULT_PHOTO_URL,
         username: Username(''),
         course: Course(''),
         bio: Bio(''),
         module: Mod(''),
+        uuid: '',
       );
 }

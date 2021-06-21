@@ -5,12 +5,14 @@ import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:friendlinus/domain/core/failures.dart';
+import 'package:friendlinus/domain/core/value_objects.dart';
 import 'package:friendlinus/domain/data/data_failure.dart';
 import 'package:friendlinus/domain/data/profile/i_profile_repository.dart';
 import 'package:friendlinus/domain/data/profile/profile.dart';
 import 'package:friendlinus/domain/data/profile/value_objects.dart';
 import 'package:injectable/injectable.dart';
 import 'package:friendlinus/domain/core/constants.dart' as constants;
+import 'package:uuid/uuid.dart';
 
 part 'profile_form_event.dart';
 part 'profile_form_state.dart';
@@ -71,12 +73,15 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
     }, saved: (e) async* {
       Either<DataFailure, Unit> failureOrSuccess;
 
+      final uuid = await _profileRepository.getUserId();
+
       yield state.copyWith(
         isSaving: true,
         saveFailureOrSuccessOption: none(),
       );
 
-      failureOrSuccess = await _profileRepository.create(state.profile);
+      failureOrSuccess =
+          await _profileRepository.create(state.profile.copyWith(uuid: uuid));
 
       yield state.copyWith(
         isSaving: false,

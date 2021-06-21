@@ -12,6 +12,14 @@ extension FirestoreX on FirebaseFirestore {
         .doc(user.id.getOrCrash());
   }
 
+  Future<DocumentReference> userDocumentById(String otherId) async {
+    return FirebaseFirestore.instance.collection('users').doc(otherId);
+  }
+
+  Future<CollectionReference> chatsRef() async {
+    return FirebaseFirestore.instance.collection('chats');
+  }
+
   Future<CollectionReference> usersRef() async {
     return FirebaseFirestore.instance.collection('users');
   }

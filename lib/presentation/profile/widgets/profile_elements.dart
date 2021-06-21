@@ -42,7 +42,6 @@ class UserProfile extends StatelessWidget {
       FlushbarHelper.createError(message: 'Server error').show(context);
       return Profile.empty();
     });
-    String dbPhotoUrl = userProfile.photoUrl;
     return Container(
       padding: const EdgeInsets.all(50),
       child: Row(
@@ -51,9 +50,7 @@ class UserProfile extends StatelessWidget {
             children: <Widget>[
               CircleAvatar(
                 radius: 60,
-                backgroundImage: dbPhotoUrl == ''
-                    ? const NetworkImage(constants.DEFAULT_PHOTO_URL)
-                    : NetworkImage(dbPhotoUrl),
+                backgroundImage: NetworkImage(userProfile.photoUrl),
                 backgroundColor: Colors.transparent,
               ),
               TextButton(
@@ -85,8 +82,7 @@ class UserProfile extends StatelessWidget {
               Text(userProfile.bio.getOrCrash(),
                   style: const TextStyle(
                       fontSize: 15, fontStyle: FontStyle.italic)),
-                                    const SizedBox(height: 60),
-
+              const SizedBox(height: 60),
             ],
           ),
         ],

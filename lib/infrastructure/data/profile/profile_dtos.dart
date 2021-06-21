@@ -20,6 +20,7 @@ abstract class ProfileDto implements _$ProfileDto {
     required String course,
     required String bio,
     required String module,
+    required String uuid,
   }) = _ProfileDto;
 
   factory ProfileDto.fromDomain(Profile profile) {
@@ -29,6 +30,7 @@ abstract class ProfileDto implements _$ProfileDto {
       course: profile.course.getOrCrash(),
       bio: profile.bio.getOrCrash(),
       module: profile.module.getOrCrash(),
+      uuid: profile.uuid,
     );
   }
 
@@ -39,6 +41,7 @@ abstract class ProfileDto implements _$ProfileDto {
       course: Course(course),
       bio: Bio(bio),
       module: Mod(module),
+      uuid: uuid,
     );
   }
 
@@ -48,5 +51,4 @@ abstract class ProfileDto implements _$ProfileDto {
   factory ProfileDto.fromFirestore(DocumentSnapshot doc) {
     return ProfileDto.fromJson(doc.data()! as Map<String, dynamic>);
   }
-
 }
