@@ -35,6 +35,7 @@ class NavigationBar extends StatelessWidget {
             ),
             tooltip: 'Chats',
             onPressed: () {
+              context.replaceRoute(const ChatListRoute());
               print('Nav to chats');
             },
           ),

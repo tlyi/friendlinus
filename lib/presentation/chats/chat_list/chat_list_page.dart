@@ -10,10 +10,11 @@ class ChatListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(context: context, header: 'Search Users', canGoBack: true),
+      appBar: appBar(context: context, header: 'Chats'),
       bottomNavigationBar: const NavigationBar(),
       body: BlocProvider(
-        create: (context) => getIt<ChatBloc>(),
+        create: (context) =>
+            getIt<ChatBloc>()..add(const ChatEvent.retrievedUserChats()),
         child: ChatList(),
       ),
     );

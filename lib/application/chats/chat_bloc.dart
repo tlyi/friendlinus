@@ -16,10 +16,9 @@ part 'chat_bloc.freezed.dart';
 class ChatBloc extends Bloc<ChatEvent, ChatState> {
   final IChatRepository _chatRepository;
 
-  ChatBloc(this._chatRepository, this._userChatsStreamSubscription)
-      : super(ChatState.initial());
+  ChatBloc(this._chatRepository) : super(ChatState.initial());
 
-  StreamSubscription<Either<DataFailure, List<Chat>>>
+  StreamSubscription<Either<DataFailure, List<Chat>>>?
       _userChatsStreamSubscription;
 
   @override
@@ -54,7 +53,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     }, retrievedUserChats: (e) async* {
       final ownId = await _chatRepository.getOwnId();
       yield state.copyWith(isLoading: true);
-      await _userChatsStreamSubscription.cancel();
+      await _userChatsStreamSubscription?.cancel();
       Either<DataFailure, List<Chat>> failureOrChats = right([]);
       _userChatsStreamSubscription = _chatRepository
           .retrieveUserChats(ownId)

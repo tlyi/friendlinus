@@ -10,7 +10,6 @@ import 'package:friendlinus/infrastructure/data/forum/forum_post_dtos.dart';
 import 'package:injectable/injectable.dart';
 import 'package:friendlinus/infrastructure/core/firestore_helpers.dart';
 
-
 @LazySingleton(as: IForumRepository)
 class ForumPostRepository implements IForumRepository {
   final FirebaseFirestore _firestore;
@@ -19,7 +18,8 @@ class ForumPostRepository implements IForumRepository {
   ForumPostRepository(this._firestore, this._firebaseStorage);
 
   @override
-  Future<Either<DataFailure, Unit>> create(ForumPost forumPost, String forumId) async {
+  Future<Either<DataFailure, Unit>> create(
+      ForumPost forumPost, String forumId) async {
     try {
       final forumsRef = await _firestore.forumsRef();
       final forumPostDto = ForumPostDto.fromDomain(forumPost);
@@ -36,7 +36,8 @@ class ForumPostRepository implements IForumRepository {
   }
 
   @override
-  Future<Either<DataFailure, String>> uploadPhoto(File photo, String forumId) async {
+  Future<Either<DataFailure, String>> uploadPhoto(
+      File photo, String forumId) async {
     UploadTask storageUploadTask;
     storageUploadTask = _firebaseStorage
         .ref()
@@ -55,5 +56,4 @@ class ForumPostRepository implements IForumRepository {
       return left(const DataFailure.unexpected());
     }
   }
-
 }

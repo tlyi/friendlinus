@@ -6,7 +6,9 @@
 
 import 'package:auto_route/auto_route.dart' as _i1;
 import 'package:flutter/material.dart' as _i2;
-import 'package:friendlinus/domain/data/profile/profile.dart' as _i16;
+import 'package:friendlinus/domain/data/profile/profile.dart' as _i17;
+import 'package:friendlinus/presentation/chats/chat_list/chat_list_page.dart'
+    as _i16;
 import 'package:friendlinus/presentation/forum/forum_form/forum_form_page.dart'
     as _i15;
 import 'package:friendlinus/presentation/forum/forum_overview/forum_overview_page.dart'
@@ -100,6 +102,11 @@ class AppRouter extends _i1.RootStackRouter {
         routeData: routeData,
         builder: (_) {
           return const _i15.ForumFormPage();
+        }),
+    ChatListRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
+        routeData: routeData,
+        builder: (_) {
+          return _i16.ChatListPage();
         })
   };
 
@@ -118,7 +125,8 @@ class AppRouter extends _i1.RootStackRouter {
         _i1.RouteConfig(UpdateProfileRoute.name, path: '/update-profile-page'),
         _i1.RouteConfig(OtherProfileRoute.name, path: '/other-profile-page'),
         _i1.RouteConfig(ForumOverviewRoute.name, path: '/forum-overview-page'),
-        _i1.RouteConfig(ForumFormRoute.name, path: '/forum-form-page')
+        _i1.RouteConfig(ForumFormRoute.name, path: '/forum-form-page'),
+        _i1.RouteConfig(ChatListRoute.name, path: '/chat-list-page')
       ];
 }
 
@@ -183,7 +191,7 @@ class UpdateProfileRoute extends _i1.PageRouteInfo {
 }
 
 class OtherProfileRoute extends _i1.PageRouteInfo<OtherProfileRouteArgs> {
-  OtherProfileRoute({_i2.Key? key, required _i16.Profile userProfile})
+  OtherProfileRoute({_i2.Key? key, required _i17.Profile userProfile})
       : super(name,
             path: '/other-profile-page',
             args: OtherProfileRouteArgs(key: key, userProfile: userProfile));
@@ -196,7 +204,7 @@ class OtherProfileRouteArgs {
 
   final _i2.Key? key;
 
-  final _i16.Profile userProfile;
+  final _i17.Profile userProfile;
 }
 
 class ForumOverviewRoute extends _i1.PageRouteInfo {
@@ -209,4 +217,10 @@ class ForumFormRoute extends _i1.PageRouteInfo {
   const ForumFormRoute() : super(name, path: '/forum-form-page');
 
   static const String name = 'ForumFormRoute';
+}
+
+class ChatListRoute extends _i1.PageRouteInfo {
+  const ChatListRoute() : super(name, path: '/chat-list-page');
+
+  static const String name = 'ChatListRoute';
 }

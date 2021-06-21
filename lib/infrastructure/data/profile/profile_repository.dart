@@ -179,14 +179,9 @@ class ProfileRepository implements IProfileRepository {
   Future<Either<DataFailure, Unit>> addForum(String forumId) async {
     try {
       final userDoc = await _firestore.userDocument();
-      /*List<String>? docSnapshot = await userDoc.get().then((value) => if (value.document.length > 0) {
-        
+      await userDoc.update({
+        'forumsPosted': FieldValue.arrayUnion([forumId])
       });
-      Object? data = docSnapshot.data();
-      List<String>? currList = List.from(docSnapshot.get('forumsPosted'));
-      currList.add(forumId);
-      await userDoc.update('forumsPosted': currList);
-      */
       return right(unit);
     } on FirebaseException catch (e) {
       print(e);
