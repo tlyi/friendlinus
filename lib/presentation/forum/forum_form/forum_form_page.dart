@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:friendlinus/application/forum/forum_form/forum_form_bloc.dart';
+import 'package:friendlinus/injection.dart';
 import 'package:friendlinus/presentation/core/app_bar.dart';
 import 'package:friendlinus/presentation/forum/forum_form/widgets/forum_form.dart';
 
@@ -20,12 +23,10 @@ class ForumFormPage extends StatelessWidget {
           child: ConstrainedBox(
             constraints:
                 BoxConstraints(maxHeight: MediaQuery.of(context).size.height),
-            child: const ForumForm(),
-            /*child: BlocProvider(
+            child: BlocProvider(
               create: (context) => getIt<ForumFormBloc>(),
               child: ForumForm(),
             ),
-            */
           ),
         ),
       ),

@@ -22,4 +22,6 @@ abstract class IProfileRepository {
 
   Future<Either<DataFailure, bool>> verifyUserRegistered();
 
+  Future<Either<DataFailure, Unit>> addForum(String forumId);
+
 }

@@ -13,6 +13,9 @@ _$_ProfileDto _$_$_ProfileDtoFromJson(Map<String, dynamic> json) {
     course: json['course'] as String,
     bio: json['bio'] as String,
     module: json['module'] as String,
+    forumsPosted: (json['forumsPosted'] as List<dynamic>)
+        .map((e) => e as String)
+        .toList(),
   );
 }
 
@@ -23,4 +26,5 @@ Map<String, dynamic> _$_$_ProfileDtoToJson(_$_ProfileDto instance) =>
       'course': instance.course,
       'bio': instance.bio,
       'module': instance.module,
+      'forumsPosted': instance.forumsPosted,
     };

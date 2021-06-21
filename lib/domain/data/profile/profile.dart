@@ -1,5 +1,6 @@
 import 'dart:core';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:friendlinus/domain/data/forum/forum_post.dart';
 import 'package:friendlinus/domain/data/profile/value_objects.dart';
 
 part 'profile.freezed.dart';
@@ -14,6 +15,7 @@ abstract class Profile implements _$Profile {
     required Course course,
     required Bio bio,
     required Mod module,
+    required List<String> forumsPosted,
   }) = _Profile;
 
   factory Profile.empty() => Profile(
@@ -22,5 +24,6 @@ abstract class Profile implements _$Profile {
         course: Course(''),
         bio: Bio(''),
         module: Mod(''),
+        forumsPosted: [],
       );
 }

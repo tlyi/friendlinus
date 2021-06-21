@@ -21,13 +21,15 @@ class _$ProfileTearOff {
       required Username username,
       required Course course,
       required Bio bio,
-      required Mod module}) {
+      required Mod module,
+      required List<String> forumsPosted}) {
     return _Profile(
       photoUrl: photoUrl,
       username: username,
       course: course,
       bio: bio,
       module: module,
+      forumsPosted: forumsPosted,
     );
   }
 }
@@ -42,6 +44,7 @@ mixin _$Profile {
   Course get course => throw _privateConstructorUsedError;
   Bio get bio => throw _privateConstructorUsedError;
   Mod get module => throw _privateConstructorUsedError;
+  List<String> get forumsPosted => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ProfileCopyWith<Profile> get copyWith => throw _privateConstructorUsedError;
@@ -52,7 +55,12 @@ abstract class $ProfileCopyWith<$Res> {
   factory $ProfileCopyWith(Profile value, $Res Function(Profile) then) =
       _$ProfileCopyWithImpl<$Res>;
   $Res call(
-      {String photoUrl, Username username, Course course, Bio bio, Mod module});
+      {String photoUrl,
+      Username username,
+      Course course,
+      Bio bio,
+      Mod module,
+      List<String> forumsPosted});
 }
 
 /// @nodoc
@@ -70,6 +78,7 @@ class _$ProfileCopyWithImpl<$Res> implements $ProfileCopyWith<$Res> {
     Object? course = freezed,
     Object? bio = freezed,
     Object? module = freezed,
+    Object? forumsPosted = freezed,
   }) {
     return _then(_value.copyWith(
       photoUrl: photoUrl == freezed
@@ -92,6 +101,10 @@ class _$ProfileCopyWithImpl<$Res> implements $ProfileCopyWith<$Res> {
           ? _value.module
           : module // ignore: cast_nullable_to_non_nullable
               as Mod,
+      forumsPosted: forumsPosted == freezed
+          ? _value.forumsPosted
+          : forumsPosted // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -102,7 +115,12 @@ abstract class _$ProfileCopyWith<$Res> implements $ProfileCopyWith<$Res> {
       __$ProfileCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String photoUrl, Username username, Course course, Bio bio, Mod module});
+      {String photoUrl,
+      Username username,
+      Course course,
+      Bio bio,
+      Mod module,
+      List<String> forumsPosted});
 }
 
 /// @nodoc
@@ -121,6 +139,7 @@ class __$ProfileCopyWithImpl<$Res> extends _$ProfileCopyWithImpl<$Res>
     Object? course = freezed,
     Object? bio = freezed,
     Object? module = freezed,
+    Object? forumsPosted = freezed,
   }) {
     return _then(_Profile(
       photoUrl: photoUrl == freezed
@@ -143,6 +162,10 @@ class __$ProfileCopyWithImpl<$Res> extends _$ProfileCopyWithImpl<$Res>
           ? _value.module
           : module // ignore: cast_nullable_to_non_nullable
               as Mod,
+      forumsPosted: forumsPosted == freezed
+          ? _value.forumsPosted
+          : forumsPosted // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -155,7 +178,8 @@ class _$_Profile extends _Profile {
       required this.username,
       required this.course,
       required this.bio,
-      required this.module})
+      required this.module,
+      required this.forumsPosted})
       : super._();
 
   @override
@@ -168,10 +192,12 @@ class _$_Profile extends _Profile {
   final Bio bio;
   @override
   final Mod module;
+  @override
+  final List<String> forumsPosted;
 
   @override
   String toString() {
-    return 'Profile(photoUrl: $photoUrl, username: $username, course: $course, bio: $bio, module: $module)';
+    return 'Profile(photoUrl: $photoUrl, username: $username, course: $course, bio: $bio, module: $module, forumsPosted: $forumsPosted)';
   }
 
   @override
@@ -189,7 +215,10 @@ class _$_Profile extends _Profile {
             (identical(other.bio, bio) ||
                 const DeepCollectionEquality().equals(other.bio, bio)) &&
             (identical(other.module, module) ||
-                const DeepCollectionEquality().equals(other.module, module)));
+                const DeepCollectionEquality().equals(other.module, module)) &&
+            (identical(other.forumsPosted, forumsPosted) ||
+                const DeepCollectionEquality()
+                    .equals(other.forumsPosted, forumsPosted)));
   }
 
   @override
@@ -199,7 +228,8 @@ class _$_Profile extends _Profile {
       const DeepCollectionEquality().hash(username) ^
       const DeepCollectionEquality().hash(course) ^
       const DeepCollectionEquality().hash(bio) ^
-      const DeepCollectionEquality().hash(module);
+      const DeepCollectionEquality().hash(module) ^
+      const DeepCollectionEquality().hash(forumsPosted);
 
   @JsonKey(ignore: true)
   @override
@@ -213,7 +243,8 @@ abstract class _Profile extends Profile {
       required Username username,
       required Course course,
       required Bio bio,
-      required Mod module}) = _$_Profile;
+      required Mod module,
+      required List<String> forumsPosted}) = _$_Profile;
   const _Profile._() : super._();
 
   @override
@@ -226,6 +257,8 @@ abstract class _Profile extends Profile {
   Bio get bio => throw _privateConstructorUsedError;
   @override
   Mod get module => throw _privateConstructorUsedError;
+  @override
+  List<String> get forumsPosted => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$ProfileCopyWith<_Profile> get copyWith =>
