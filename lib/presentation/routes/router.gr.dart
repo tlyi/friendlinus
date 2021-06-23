@@ -6,9 +6,10 @@
 
 import 'package:auto_route/auto_route.dart' as _i1;
 import 'package:flutter/material.dart' as _i2;
-import 'package:friendlinus/domain/data/profile/profile.dart' as _i17;
+import 'package:friendlinus/domain/data/profile/profile.dart' as _i18;
 import 'package:friendlinus/presentation/chats/chat_list/chat_list_page.dart'
     as _i16;
+import 'package:friendlinus/presentation/chats/convos/convo_page.dart' as _i17;
 import 'package:friendlinus/presentation/forum/forum_form/forum_form_page.dart'
     as _i15;
 import 'package:friendlinus/presentation/forum/forum_overview/forum_overview_page.dart'
@@ -107,6 +108,15 @@ class AppRouter extends _i1.RootStackRouter {
         routeData: routeData,
         builder: (_) {
           return _i16.ChatListPage();
+        }),
+    ConvoRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
+        routeData: routeData,
+        builder: (data) {
+          final args = data.argsAs<ConvoRouteArgs>();
+          return _i17.ConvoPage(
+              key: args.key,
+              convoId: args.convoId,
+              senderProfile: args.senderProfile);
         })
   };
 
@@ -126,7 +136,8 @@ class AppRouter extends _i1.RootStackRouter {
         _i1.RouteConfig(OtherProfileRoute.name, path: '/other-profile-page'),
         _i1.RouteConfig(ForumOverviewRoute.name, path: '/forum-overview-page'),
         _i1.RouteConfig(ForumFormRoute.name, path: '/forum-form-page'),
-        _i1.RouteConfig(ChatListRoute.name, path: '/chat-list-page')
+        _i1.RouteConfig(ChatListRoute.name, path: '/chat-list-page'),
+        _i1.RouteConfig(ConvoRoute.name, path: '/convo-page')
       ];
 }
 
@@ -191,7 +202,7 @@ class UpdateProfileRoute extends _i1.PageRouteInfo {
 }
 
 class OtherProfileRoute extends _i1.PageRouteInfo<OtherProfileRouteArgs> {
-  OtherProfileRoute({_i2.Key? key, required _i17.Profile userProfile})
+  OtherProfileRoute({_i2.Key? key, required _i18.Profile userProfile})
       : super(name,
             path: '/other-profile-page',
             args: OtherProfileRouteArgs(key: key, userProfile: userProfile));
@@ -204,7 +215,7 @@ class OtherProfileRouteArgs {
 
   final _i2.Key? key;
 
-  final _i17.Profile userProfile;
+  final _i18.Profile userProfile;
 }
 
 class ForumOverviewRoute extends _i1.PageRouteInfo {
@@ -223,4 +234,28 @@ class ChatListRoute extends _i1.PageRouteInfo {
   const ChatListRoute() : super(name, path: '/chat-list-page');
 
   static const String name = 'ChatListRoute';
+}
+
+class ConvoRoute extends _i1.PageRouteInfo<ConvoRouteArgs> {
+  ConvoRoute(
+      {_i2.Key? key,
+      required String convoId,
+      required _i18.Profile senderProfile})
+      : super(name,
+            path: '/convo-page',
+            args: ConvoRouteArgs(
+                key: key, convoId: convoId, senderProfile: senderProfile));
+
+  static const String name = 'ConvoRoute';
+}
+
+class ConvoRouteArgs {
+  const ConvoRouteArgs(
+      {this.key, required this.convoId, required this.senderProfile});
+
+  final _i2.Key? key;
+
+  final String convoId;
+
+  final _i18.Profile senderProfile;
 }

@@ -10,7 +10,17 @@ abstract class ChatMessage implements _$ChatMessage {
 
   const factory ChatMessage({
     required MessageBody messageBody,
-    required DateTime timeSent,
-    required String senderID,
+    required String timeSent,
+    required String senderId,
+    required String photoUrl,
+    required bool read,
   }) = _ChatMessage;
+
+  factory ChatMessage.empty() => ChatMessage(
+        messageBody: MessageBody(''),
+        timeSent: '',
+        senderId: '',
+        photoUrl: '',
+        read: false,
+      );
 }

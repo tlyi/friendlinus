@@ -8,7 +8,9 @@ part of 'chat_dtos.dart';
 
 _$_ChatDto _$_$_ChatDtoFromJson(Map<String, dynamic> json) {
   return _$_ChatDto(
-    messagePreview: json['messagePreview'] as String,
+    lastMessage: json['lastMessage'] as String,
+    lastSenderId: json['lastSenderId'] as String,
+    lastMessageRead: json['lastMessageRead'] as bool,
     userIdsCombined: json['userIdsCombined'] as String,
     userIds:
         (json['userIds'] as List<dynamic>).map((e) => e as String).toList(),
@@ -18,7 +20,9 @@ _$_ChatDto _$_$_ChatDtoFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$_$_ChatDtoToJson(_$_ChatDto instance) =>
     <String, dynamic>{
-      'messagePreview': instance.messagePreview,
+      'lastMessage': instance.lastMessage,
+      'lastSenderId': instance.lastSenderId,
+      'lastMessageRead': instance.lastMessageRead,
       'userIdsCombined': instance.userIdsCombined,
       'userIds': instance.userIds,
       'timestamp': instance.timestamp,

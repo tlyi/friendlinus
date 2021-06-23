@@ -21,12 +21,16 @@ class _$ChatDtoTearOff {
   const _$ChatDtoTearOff();
 
   _ChatDto call(
-      {required String messagePreview,
+      {required String lastMessage,
+      required String lastSenderId,
+      required bool lastMessageRead,
       required String userIdsCombined,
       required List<String> userIds,
       required String timestamp}) {
     return _ChatDto(
-      messagePreview: messagePreview,
+      lastMessage: lastMessage,
+      lastSenderId: lastSenderId,
+      lastMessageRead: lastMessageRead,
       userIdsCombined: userIdsCombined,
       userIds: userIds,
       timestamp: timestamp,
@@ -43,7 +47,9 @@ const $ChatDto = _$ChatDtoTearOff();
 
 /// @nodoc
 mixin _$ChatDto {
-  String get messagePreview => throw _privateConstructorUsedError;
+  String get lastMessage => throw _privateConstructorUsedError;
+  String get lastSenderId => throw _privateConstructorUsedError;
+  bool get lastMessageRead => throw _privateConstructorUsedError;
   String get userIdsCombined => throw _privateConstructorUsedError;
   List<String> get userIds => throw _privateConstructorUsedError;
   String get timestamp => throw _privateConstructorUsedError;
@@ -58,7 +64,9 @@ abstract class $ChatDtoCopyWith<$Res> {
   factory $ChatDtoCopyWith(ChatDto value, $Res Function(ChatDto) then) =
       _$ChatDtoCopyWithImpl<$Res>;
   $Res call(
-      {String messagePreview,
+      {String lastMessage,
+      String lastSenderId,
+      bool lastMessageRead,
       String userIdsCombined,
       List<String> userIds,
       String timestamp});
@@ -74,16 +82,26 @@ class _$ChatDtoCopyWithImpl<$Res> implements $ChatDtoCopyWith<$Res> {
 
   @override
   $Res call({
-    Object? messagePreview = freezed,
+    Object? lastMessage = freezed,
+    Object? lastSenderId = freezed,
+    Object? lastMessageRead = freezed,
     Object? userIdsCombined = freezed,
     Object? userIds = freezed,
     Object? timestamp = freezed,
   }) {
     return _then(_value.copyWith(
-      messagePreview: messagePreview == freezed
-          ? _value.messagePreview
-          : messagePreview // ignore: cast_nullable_to_non_nullable
+      lastMessage: lastMessage == freezed
+          ? _value.lastMessage
+          : lastMessage // ignore: cast_nullable_to_non_nullable
               as String,
+      lastSenderId: lastSenderId == freezed
+          ? _value.lastSenderId
+          : lastSenderId // ignore: cast_nullable_to_non_nullable
+              as String,
+      lastMessageRead: lastMessageRead == freezed
+          ? _value.lastMessageRead
+          : lastMessageRead // ignore: cast_nullable_to_non_nullable
+              as bool,
       userIdsCombined: userIdsCombined == freezed
           ? _value.userIdsCombined
           : userIdsCombined // ignore: cast_nullable_to_non_nullable
@@ -106,7 +124,9 @@ abstract class _$ChatDtoCopyWith<$Res> implements $ChatDtoCopyWith<$Res> {
       __$ChatDtoCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String messagePreview,
+      {String lastMessage,
+      String lastSenderId,
+      bool lastMessageRead,
       String userIdsCombined,
       List<String> userIds,
       String timestamp});
@@ -123,16 +143,26 @@ class __$ChatDtoCopyWithImpl<$Res> extends _$ChatDtoCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? messagePreview = freezed,
+    Object? lastMessage = freezed,
+    Object? lastSenderId = freezed,
+    Object? lastMessageRead = freezed,
     Object? userIdsCombined = freezed,
     Object? userIds = freezed,
     Object? timestamp = freezed,
   }) {
     return _then(_ChatDto(
-      messagePreview: messagePreview == freezed
-          ? _value.messagePreview
-          : messagePreview // ignore: cast_nullable_to_non_nullable
+      lastMessage: lastMessage == freezed
+          ? _value.lastMessage
+          : lastMessage // ignore: cast_nullable_to_non_nullable
               as String,
+      lastSenderId: lastSenderId == freezed
+          ? _value.lastSenderId
+          : lastSenderId // ignore: cast_nullable_to_non_nullable
+              as String,
+      lastMessageRead: lastMessageRead == freezed
+          ? _value.lastMessageRead
+          : lastMessageRead // ignore: cast_nullable_to_non_nullable
+              as bool,
       userIdsCombined: userIdsCombined == freezed
           ? _value.userIdsCombined
           : userIdsCombined // ignore: cast_nullable_to_non_nullable
@@ -153,7 +183,9 @@ class __$ChatDtoCopyWithImpl<$Res> extends _$ChatDtoCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_ChatDto extends _ChatDto {
   const _$_ChatDto(
-      {required this.messagePreview,
+      {required this.lastMessage,
+      required this.lastSenderId,
+      required this.lastMessageRead,
       required this.userIdsCombined,
       required this.userIds,
       required this.timestamp})
@@ -163,7 +195,11 @@ class _$_ChatDto extends _ChatDto {
       _$_$_ChatDtoFromJson(json);
 
   @override
-  final String messagePreview;
+  final String lastMessage;
+  @override
+  final String lastSenderId;
+  @override
+  final bool lastMessageRead;
   @override
   final String userIdsCombined;
   @override
@@ -173,16 +209,22 @@ class _$_ChatDto extends _ChatDto {
 
   @override
   String toString() {
-    return 'ChatDto(messagePreview: $messagePreview, userIdsCombined: $userIdsCombined, userIds: $userIds, timestamp: $timestamp)';
+    return 'ChatDto(lastMessage: $lastMessage, lastSenderId: $lastSenderId, lastMessageRead: $lastMessageRead, userIdsCombined: $userIdsCombined, userIds: $userIds, timestamp: $timestamp)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _ChatDto &&
-            (identical(other.messagePreview, messagePreview) ||
+            (identical(other.lastMessage, lastMessage) ||
                 const DeepCollectionEquality()
-                    .equals(other.messagePreview, messagePreview)) &&
+                    .equals(other.lastMessage, lastMessage)) &&
+            (identical(other.lastSenderId, lastSenderId) ||
+                const DeepCollectionEquality()
+                    .equals(other.lastSenderId, lastSenderId)) &&
+            (identical(other.lastMessageRead, lastMessageRead) ||
+                const DeepCollectionEquality()
+                    .equals(other.lastMessageRead, lastMessageRead)) &&
             (identical(other.userIdsCombined, userIdsCombined) ||
                 const DeepCollectionEquality()
                     .equals(other.userIdsCombined, userIdsCombined)) &&
@@ -197,7 +239,9 @@ class _$_ChatDto extends _ChatDto {
   @override
   int get hashCode =>
       runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(messagePreview) ^
+      const DeepCollectionEquality().hash(lastMessage) ^
+      const DeepCollectionEquality().hash(lastSenderId) ^
+      const DeepCollectionEquality().hash(lastMessageRead) ^
       const DeepCollectionEquality().hash(userIdsCombined) ^
       const DeepCollectionEquality().hash(userIds) ^
       const DeepCollectionEquality().hash(timestamp);
@@ -215,7 +259,9 @@ class _$_ChatDto extends _ChatDto {
 
 abstract class _ChatDto extends ChatDto {
   const factory _ChatDto(
-      {required String messagePreview,
+      {required String lastMessage,
+      required String lastSenderId,
+      required bool lastMessageRead,
       required String userIdsCombined,
       required List<String> userIds,
       required String timestamp}) = _$_ChatDto;
@@ -224,7 +270,11 @@ abstract class _ChatDto extends ChatDto {
   factory _ChatDto.fromJson(Map<String, dynamic> json) = _$_ChatDto.fromJson;
 
   @override
-  String get messagePreview => throw _privateConstructorUsedError;
+  String get lastMessage => throw _privateConstructorUsedError;
+  @override
+  String get lastSenderId => throw _privateConstructorUsedError;
+  @override
+  bool get lastMessageRead => throw _privateConstructorUsedError;
   @override
   String get userIdsCombined => throw _privateConstructorUsedError;
   @override

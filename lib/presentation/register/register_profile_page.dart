@@ -15,8 +15,10 @@ class RegisterProfilePage extends StatelessWidget {
         alignment: Alignment.center,
         child: SingleChildScrollView(
           child: ConstrainedBox(
-            constraints:
-                BoxConstraints(maxHeight: MediaQuery.of(context).size.height),
+            constraints: BoxConstraints(
+              maxHeight: MediaQuery.of(context).size.height -
+                  (MediaQuery.of(context).padding.top + kToolbarHeight),
+            ),
             child: BlocProvider(
               create: (context) => getIt<ProfileFormBloc>(),
               child: RegisterProfileForm(),

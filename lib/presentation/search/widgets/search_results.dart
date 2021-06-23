@@ -49,9 +49,7 @@ class SearchResults extends StatelessWidget {
                   child: ListTile(
                     leading: CircleAvatar(
                       radius: 20,
-                      backgroundImage: user.photoUrl == ''
-                          ? NetworkImage(constants.DEFAULT_PHOTO_URL)
-                          : NetworkImage(user.photoUrl),
+                      backgroundImage: NetworkImage(user.photoUrl),
                     ),
                     title: Text(user.username.getOrCrash()),
                     onTap: () {
