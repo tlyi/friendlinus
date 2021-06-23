@@ -11,6 +11,7 @@ import 'package:friendlinus/domain/core/value_objects.dart';
 import 'package:friendlinus/domain/data/data_failure.dart';
 import 'package:friendlinus/domain/data/forum/forum_post.dart';
 import 'package:friendlinus/domain/data/forum/i_forum_repository.dart';
+import 'package:friendlinus/domain/data/forum/poll.dart';
 import 'package:friendlinus/domain/data/forum/value_objects.dart';
 import 'package:friendlinus/domain/data/profile/i_profile_repository.dart';
 import 'package:friendlinus/injection.dart';
@@ -61,26 +62,6 @@ class ForumFormBloc extends Bloc<ForumFormEvent, ForumFormState> {
               forumPost: state.forumPost.copyWith(isAnon: true));
         }
       },
-      createdPost: (e) async* {
-        Either<DataFailure, Unit> failureOrSuccess;
-        final userOption = await getIt<IAuthFacade>().getSignedInUser();
-        final user = userOption.getOrElse(() => throw NotAuthenticatedError());
-        final String userID = user.id.getOrCrash();
-        yield state.copyWith(
-          isLoading: true,
-          forumPost: state.forumPost.copyWith(posterUserId: userID),
-        );
-        _profileRepository.addForum(state.forumId);
-        //TODO: Add to userID's forum list here
-
-        failureOrSuccess =
-            await _forumRepository.create(state.forumPost, state.forumId);
-
-        yield state.copyWith(
-          isLoading: false,
-          createFailureOrSuccessOption: optionOf(failureOrSuccess),
-        );
-      },
       photoAdded: (e) async* {
         final failureOrString =
             await _forumRepository.uploadPhoto(e.photo, state.forumId);
@@ -103,7 +84,57 @@ class ForumFormBloc extends Bloc<ForumFormEvent, ForumFormState> {
         yield state.copyWith(
             forumPost: state.forumPost.copyWith(
           pollAdded: true,
+          photoAdded: false,
         ));
+      },
+      pollNumOptionsChanged: (e) async* {
+        yield state.copyWith(
+            poll: state.poll.copyWith(
+          numOptions: e.numOptions,
+          optionList: List.filled(e.numOptions, PollOption('')),
+          voteList: List.filled(e.numOptions, 0),
+        ));
+      },
+      pollOptionChanged: (e) async* {
+        List<PollOption> currOptionList = List.from(state.poll.optionList);
+        currOptionList[e.index] = PollOption(e.optionStr);
+        yield state.copyWith(
+            poll: state.poll.copyWith(optionList: currOptionList));
+      },
+      photoRemoved: (e) async* {
+        yield state.copyWith(
+            forumPost: state.forumPost.copyWith(photoAdded: false));
+      },
+      pollRemoved: (e) async* {
+        yield state.copyWith(
+            forumPost: state.forumPost.copyWith(pollAdded: false));
+      },
+      createdPost: (e) async* {
+        Either<DataFailure, Unit> failureOrSuccess;
+
+        final userOption = await getIt<IAuthFacade>().getSignedInUser();
+        final user = userOption.getOrElse(() => throw NotAuthenticatedError());
+        final String userID = user.id.getOrCrash();
+        yield state.copyWith(
+          isLoading: true,
+          forumPost: state.forumPost.copyWith(posterUserId: userID),
+        );
+
+        if (state.forumPost.pollAdded) {
+          Either<DataFailure, Unit> pollFailureOrSuccess;
+          pollFailureOrSuccess =
+              await _forumRepository.createPoll(state.poll, state.forumId);
+          yield state.copyWith(createPollFailureOrSuccessOption: optionOf(pollFailureOrSuccess));
+        }
+        _profileRepository.addForum(state.forumId);
+
+        failureOrSuccess =
+            await _forumRepository.create(state.forumPost, state.forumId);
+
+        yield state.copyWith(
+          isLoading: false,
+          createFailureOrSuccessOption: optionOf(failureOrSuccess),
+        );
       },
     );
   }

@@ -9,6 +9,13 @@ class ForumFormEvent with _$ForumFormEvent {
   const factory ForumFormEvent.photoAdded(File photo, String forumId) =
       _PhotoAdded;
   const factory ForumFormEvent.pollAdded() = _PollAdded;
+  const factory ForumFormEvent.pollNumOptionsChanged(int numOptions) =
+      _PollNumOptionsChanged;
+  const factory ForumFormEvent.pollOptionChanged(int index, String optionStr) =
+      _PollOptionChanged;
+  const factory ForumFormEvent.photoRemoved() = _PhotoRemoved;
+  const factory ForumFormEvent.pollRemoved() = _PollRemoved;
 
   const factory ForumFormEvent.createdPost() = _CreatedPost;
+  //Implement delete forum/picture/poll
 }

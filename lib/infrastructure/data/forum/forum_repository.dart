@@ -6,7 +6,9 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:friendlinus/domain/data/forum/forum_post.dart';
 import 'package:friendlinus/domain/data/data_failure.dart';
 import 'package:friendlinus/domain/data/forum/i_forum_repository.dart';
+import 'package:friendlinus/domain/data/forum/poll.dart';
 import 'package:friendlinus/infrastructure/data/forum/forum_post_dtos.dart';
+import 'package:friendlinus/infrastructure/data/forum/poll_dtos.dart';
 import 'package:injectable/injectable.dart';
 import 'package:friendlinus/infrastructure/core/firestore_helpers.dart';
 
@@ -54,6 +56,25 @@ class ForumPostRepository implements IForumRepository {
     } on FirebaseException catch (e) {
       print(e.code);
       return left(const DataFailure.unexpected());
+    }
+  }
+
+  @override
+  Future<Either<DataFailure, Unit>> createPoll(
+      Poll poll, String forumId) async {
+    try {
+      final pollDoc = await _firestore.pollDocument(forumId);
+      final pollDto = PollDto.fromDomain(poll);
+
+      await pollDoc.set(pollDto.toJson());
+      
+      return right(unit);
+    } on FirebaseException catch (e) {
+      if (e.message!.contains('PERMISSION_DENIED')) {
+        return left(const DataFailure.insufficientPermission());
+      } else {
+        return left(const DataFailure.unexpected());
+      }
     }
   }
 }
