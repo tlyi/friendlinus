@@ -18,50 +18,39 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
   ChatBloc(this._chatRepository) : super(ChatState.initial());
 
-  StreamSubscription<Either<DataFailure, List<Chat>>>?
-      _userChatsStreamSubscription;
-
   @override
   Stream<ChatState> mapEventToState(
     ChatEvent event,
   ) async* {
-    yield* event.map(chatStarted: (e) async* {
-      final ownId = await _chatRepository.getOwnId();
+    yield* event.map(
+      chatStarted: (e) async* {
+        final ownId = await _chatRepository.getOwnId();
 
-      final userIdsCombined = ownId.compareTo(e.otherId) > 0
-          ? '${ownId}_${e.otherId}'
-          : '${e.otherId}_$ownId';
+        final userIdsCombined = ownId.compareTo(e.otherId) > 0
+            ? '${ownId}_${e.otherId}'
+            : '${e.otherId}_$ownId';
 
-      yield state.copyWith(
-        userIds: [ownId, e.otherId],
-        isLoading: true,
-        failureOrChat: right(Chat.empty()),
-      );
+        yield state.copyWith(
+          userIds: [ownId, e.otherId],
+          isLoading: true,
+          failureOrChat: right(Chat.empty()),
+        );
 
-      Either<DataFailure, Chat> failureOrChat;
-      failureOrChat = await _chatRepository.createChat(
-          state.chat.copyWith(
-              userIdsCombined: userIdsCombined, userIds: [ownId, e.otherId]),
-          userIdsCombined,
-          e.otherId);
+        Either<DataFailure, Chat> failureOrChat;
+        failureOrChat = await _chatRepository.createChat(
+            state.chat.copyWith(
+              userIdsCombined: userIdsCombined,
+              userIds: [ownId, e.otherId],
+            ),
+            userIdsCombined,
+            e.otherId);
 
-      yield state.copyWith(
-        isLoading: false,
-        chat: failureOrChat.getOrElse(() => Chat.empty()),
-        failureOrChat: failureOrChat,
-      );
-    }, retrievedUserChats: (e) async* {
-      final ownId = await _chatRepository.getOwnId();
-      yield state.copyWith(isLoading: true);
-      await _userChatsStreamSubscription?.cancel();
-      Either<DataFailure, List<Chat>> failureOrChats = right([]);
-      _userChatsStreamSubscription = _chatRepository
-          .retrieveUserChats(ownId)
-          .listen((failureOrChats) => failureOrChats = failureOrChats);
-      yield state.copyWith(
-        isLoading: false,
-        userChats: failureOrChats,
-      );
-    });
+        yield state.copyWith(
+          isLoading: false,
+          chat: failureOrChat.getOrElse(() => Chat.empty()),
+          failureOrChat: failureOrChat,
+        );
+      },
+    );
   }
 }

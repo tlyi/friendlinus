@@ -18,12 +18,16 @@ class _$ChatMessageTearOff {
 
   _ChatMessage call(
       {required MessageBody messageBody,
-      required DateTime timeSent,
-      required String senderID}) {
+      required String timeSent,
+      required String senderId,
+      required String photoUrl,
+      required bool read}) {
     return _ChatMessage(
       messageBody: messageBody,
       timeSent: timeSent,
-      senderID: senderID,
+      senderId: senderId,
+      photoUrl: photoUrl,
+      read: read,
     );
   }
 }
@@ -34,8 +38,10 @@ const $ChatMessage = _$ChatMessageTearOff();
 /// @nodoc
 mixin _$ChatMessage {
   MessageBody get messageBody => throw _privateConstructorUsedError;
-  DateTime get timeSent => throw _privateConstructorUsedError;
-  String get senderID => throw _privateConstructorUsedError;
+  String get timeSent => throw _privateConstructorUsedError;
+  String get senderId => throw _privateConstructorUsedError;
+  String get photoUrl => throw _privateConstructorUsedError;
+  bool get read => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ChatMessageCopyWith<ChatMessage> get copyWith =>
@@ -47,7 +53,12 @@ abstract class $ChatMessageCopyWith<$Res> {
   factory $ChatMessageCopyWith(
           ChatMessage value, $Res Function(ChatMessage) then) =
       _$ChatMessageCopyWithImpl<$Res>;
-  $Res call({MessageBody messageBody, DateTime timeSent, String senderID});
+  $Res call(
+      {MessageBody messageBody,
+      String timeSent,
+      String senderId,
+      String photoUrl,
+      bool read});
 }
 
 /// @nodoc
@@ -62,7 +73,9 @@ class _$ChatMessageCopyWithImpl<$Res> implements $ChatMessageCopyWith<$Res> {
   $Res call({
     Object? messageBody = freezed,
     Object? timeSent = freezed,
-    Object? senderID = freezed,
+    Object? senderId = freezed,
+    Object? photoUrl = freezed,
+    Object? read = freezed,
   }) {
     return _then(_value.copyWith(
       messageBody: messageBody == freezed
@@ -72,11 +85,19 @@ class _$ChatMessageCopyWithImpl<$Res> implements $ChatMessageCopyWith<$Res> {
       timeSent: timeSent == freezed
           ? _value.timeSent
           : timeSent // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      senderID: senderID == freezed
-          ? _value.senderID
-          : senderID // ignore: cast_nullable_to_non_nullable
               as String,
+      senderId: senderId == freezed
+          ? _value.senderId
+          : senderId // ignore: cast_nullable_to_non_nullable
+              as String,
+      photoUrl: photoUrl == freezed
+          ? _value.photoUrl
+          : photoUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      read: read == freezed
+          ? _value.read
+          : read // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -88,7 +109,12 @@ abstract class _$ChatMessageCopyWith<$Res>
           _ChatMessage value, $Res Function(_ChatMessage) then) =
       __$ChatMessageCopyWithImpl<$Res>;
   @override
-  $Res call({MessageBody messageBody, DateTime timeSent, String senderID});
+  $Res call(
+      {MessageBody messageBody,
+      String timeSent,
+      String senderId,
+      String photoUrl,
+      bool read});
 }
 
 /// @nodoc
@@ -105,7 +131,9 @@ class __$ChatMessageCopyWithImpl<$Res> extends _$ChatMessageCopyWithImpl<$Res>
   $Res call({
     Object? messageBody = freezed,
     Object? timeSent = freezed,
-    Object? senderID = freezed,
+    Object? senderId = freezed,
+    Object? photoUrl = freezed,
+    Object? read = freezed,
   }) {
     return _then(_ChatMessage(
       messageBody: messageBody == freezed
@@ -115,11 +143,19 @@ class __$ChatMessageCopyWithImpl<$Res> extends _$ChatMessageCopyWithImpl<$Res>
       timeSent: timeSent == freezed
           ? _value.timeSent
           : timeSent // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      senderID: senderID == freezed
-          ? _value.senderID
-          : senderID // ignore: cast_nullable_to_non_nullable
               as String,
+      senderId: senderId == freezed
+          ? _value.senderId
+          : senderId // ignore: cast_nullable_to_non_nullable
+              as String,
+      photoUrl: photoUrl == freezed
+          ? _value.photoUrl
+          : photoUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      read: read == freezed
+          ? _value.read
+          : read // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -130,19 +166,25 @@ class _$_ChatMessage extends _ChatMessage {
   const _$_ChatMessage(
       {required this.messageBody,
       required this.timeSent,
-      required this.senderID})
+      required this.senderId,
+      required this.photoUrl,
+      required this.read})
       : super._();
 
   @override
   final MessageBody messageBody;
   @override
-  final DateTime timeSent;
+  final String timeSent;
   @override
-  final String senderID;
+  final String senderId;
+  @override
+  final String photoUrl;
+  @override
+  final bool read;
 
   @override
   String toString() {
-    return 'ChatMessage(messageBody: $messageBody, timeSent: $timeSent, senderID: $senderID)';
+    return 'ChatMessage(messageBody: $messageBody, timeSent: $timeSent, senderId: $senderId, photoUrl: $photoUrl, read: $read)';
   }
 
   @override
@@ -155,9 +197,14 @@ class _$_ChatMessage extends _ChatMessage {
             (identical(other.timeSent, timeSent) ||
                 const DeepCollectionEquality()
                     .equals(other.timeSent, timeSent)) &&
-            (identical(other.senderID, senderID) ||
+            (identical(other.senderId, senderId) ||
                 const DeepCollectionEquality()
-                    .equals(other.senderID, senderID)));
+                    .equals(other.senderId, senderId)) &&
+            (identical(other.photoUrl, photoUrl) ||
+                const DeepCollectionEquality()
+                    .equals(other.photoUrl, photoUrl)) &&
+            (identical(other.read, read) ||
+                const DeepCollectionEquality().equals(other.read, read)));
   }
 
   @override
@@ -165,7 +212,9 @@ class _$_ChatMessage extends _ChatMessage {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(messageBody) ^
       const DeepCollectionEquality().hash(timeSent) ^
-      const DeepCollectionEquality().hash(senderID);
+      const DeepCollectionEquality().hash(senderId) ^
+      const DeepCollectionEquality().hash(photoUrl) ^
+      const DeepCollectionEquality().hash(read);
 
   @JsonKey(ignore: true)
   @override
@@ -176,16 +225,22 @@ class _$_ChatMessage extends _ChatMessage {
 abstract class _ChatMessage extends ChatMessage {
   const factory _ChatMessage(
       {required MessageBody messageBody,
-      required DateTime timeSent,
-      required String senderID}) = _$_ChatMessage;
+      required String timeSent,
+      required String senderId,
+      required String photoUrl,
+      required bool read}) = _$_ChatMessage;
   const _ChatMessage._() : super._();
 
   @override
   MessageBody get messageBody => throw _privateConstructorUsedError;
   @override
-  DateTime get timeSent => throw _privateConstructorUsedError;
+  String get timeSent => throw _privateConstructorUsedError;
   @override
-  String get senderID => throw _privateConstructorUsedError;
+  String get senderId => throw _privateConstructorUsedError;
+  @override
+  String get photoUrl => throw _privateConstructorUsedError;
+  @override
+  bool get read => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$ChatMessageCopyWith<_ChatMessage> get copyWith =>

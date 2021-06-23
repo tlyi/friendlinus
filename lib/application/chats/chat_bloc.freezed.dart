@@ -21,10 +21,6 @@ class _$ChatEventTearOff {
       otherId,
     );
   }
-
-  _RetrievedUserChats retrievedUserChats() {
-    return const _RetrievedUserChats();
-  }
 }
 
 /// @nodoc
@@ -32,31 +28,33 @@ const $ChatEvent = _$ChatEventTearOff();
 
 /// @nodoc
 mixin _$ChatEvent {
+  String get otherId => throw _privateConstructorUsedError;
+
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String otherId) chatStarted,
-    required TResult Function() retrievedUserChats,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String otherId)? chatStarted,
-    TResult Function()? retrievedUserChats,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_ChatStarted value) chatStarted,
-    required TResult Function(_RetrievedUserChats value) retrievedUserChats,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_ChatStarted value)? chatStarted,
-    TResult Function(_RetrievedUserChats value)? retrievedUserChats,
     required TResult orElse(),
   }) =>
+      throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $ChatEventCopyWith<ChatEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -64,6 +62,7 @@ mixin _$ChatEvent {
 abstract class $ChatEventCopyWith<$Res> {
   factory $ChatEventCopyWith(ChatEvent value, $Res Function(ChatEvent) then) =
       _$ChatEventCopyWithImpl<$Res>;
+  $Res call({String otherId});
 }
 
 /// @nodoc
@@ -73,13 +72,26 @@ class _$ChatEventCopyWithImpl<$Res> implements $ChatEventCopyWith<$Res> {
   final ChatEvent _value;
   // ignore: unused_field
   final $Res Function(ChatEvent) _then;
+
+  @override
+  $Res call({
+    Object? otherId = freezed,
+  }) {
+    return _then(_value.copyWith(
+      otherId: otherId == freezed
+          ? _value.otherId
+          : otherId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
-abstract class _$ChatStartedCopyWith<$Res> {
+abstract class _$ChatStartedCopyWith<$Res> implements $ChatEventCopyWith<$Res> {
   factory _$ChatStartedCopyWith(
           _ChatStarted value, $Res Function(_ChatStarted) then) =
       __$ChatStartedCopyWithImpl<$Res>;
+  @override
   $Res call({String otherId});
 }
 
@@ -140,7 +152,6 @@ class _$_ChatStarted implements _ChatStarted {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String otherId) chatStarted,
-    required TResult Function() retrievedUserChats,
   }) {
     return chatStarted(otherId);
   }
@@ -149,7 +160,6 @@ class _$_ChatStarted implements _ChatStarted {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String otherId)? chatStarted,
-    TResult Function()? retrievedUserChats,
     required TResult orElse(),
   }) {
     if (chatStarted != null) {
@@ -162,7 +172,6 @@ class _$_ChatStarted implements _ChatStarted {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_ChatStarted value) chatStarted,
-    required TResult Function(_RetrievedUserChats value) retrievedUserChats,
   }) {
     return chatStarted(this);
   }
@@ -171,7 +180,6 @@ class _$_ChatStarted implements _ChatStarted {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_ChatStarted value)? chatStarted,
-    TResult Function(_RetrievedUserChats value)? retrievedUserChats,
     required TResult orElse(),
   }) {
     if (chatStarted != null) {
@@ -184,96 +192,12 @@ class _$_ChatStarted implements _ChatStarted {
 abstract class _ChatStarted implements ChatEvent {
   const factory _ChatStarted(String otherId) = _$_ChatStarted;
 
+  @override
   String get otherId => throw _privateConstructorUsedError;
+  @override
   @JsonKey(ignore: true)
   _$ChatStartedCopyWith<_ChatStarted> get copyWith =>
       throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$RetrievedUserChatsCopyWith<$Res> {
-  factory _$RetrievedUserChatsCopyWith(
-          _RetrievedUserChats value, $Res Function(_RetrievedUserChats) then) =
-      __$RetrievedUserChatsCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$RetrievedUserChatsCopyWithImpl<$Res>
-    extends _$ChatEventCopyWithImpl<$Res>
-    implements _$RetrievedUserChatsCopyWith<$Res> {
-  __$RetrievedUserChatsCopyWithImpl(
-      _RetrievedUserChats _value, $Res Function(_RetrievedUserChats) _then)
-      : super(_value, (v) => _then(v as _RetrievedUserChats));
-
-  @override
-  _RetrievedUserChats get _value => super._value as _RetrievedUserChats;
-}
-
-/// @nodoc
-
-class _$_RetrievedUserChats implements _RetrievedUserChats {
-  const _$_RetrievedUserChats();
-
-  @override
-  String toString() {
-    return 'ChatEvent.retrievedUserChats()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _RetrievedUserChats);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(String otherId) chatStarted,
-    required TResult Function() retrievedUserChats,
-  }) {
-    return retrievedUserChats();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String otherId)? chatStarted,
-    TResult Function()? retrievedUserChats,
-    required TResult orElse(),
-  }) {
-    if (retrievedUserChats != null) {
-      return retrievedUserChats();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_ChatStarted value) chatStarted,
-    required TResult Function(_RetrievedUserChats value) retrievedUserChats,
-  }) {
-    return retrievedUserChats(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_ChatStarted value)? chatStarted,
-    TResult Function(_RetrievedUserChats value)? retrievedUserChats,
-    required TResult orElse(),
-  }) {
-    if (retrievedUserChats != null) {
-      return retrievedUserChats(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _RetrievedUserChats implements ChatEvent {
-  const factory _RetrievedUserChats() = _$_RetrievedUserChats;
 }
 
 /// @nodoc
@@ -284,14 +208,12 @@ class _$ChatStateTearOff {
       {required List<String> userIds,
       required Chat chat,
       required bool isLoading,
-      required Either<DataFailure, Chat> failureOrChat,
-      required Either<DataFailure, List<Chat>> userChats}) {
+      required Either<DataFailure, Chat> failureOrChat}) {
     return _ChatState(
       userIds: userIds,
       chat: chat,
       isLoading: isLoading,
       failureOrChat: failureOrChat,
-      userChats: userChats,
     );
   }
 }
@@ -305,8 +227,6 @@ mixin _$ChatState {
   Chat get chat => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   Either<DataFailure, Chat> get failureOrChat =>
-      throw _privateConstructorUsedError;
-  Either<DataFailure, List<Chat>> get userChats =>
       throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -322,8 +242,7 @@ abstract class $ChatStateCopyWith<$Res> {
       {List<String> userIds,
       Chat chat,
       bool isLoading,
-      Either<DataFailure, Chat> failureOrChat,
-      Either<DataFailure, List<Chat>> userChats});
+      Either<DataFailure, Chat> failureOrChat});
 
   $ChatCopyWith<$Res> get chat;
 }
@@ -342,7 +261,6 @@ class _$ChatStateCopyWithImpl<$Res> implements $ChatStateCopyWith<$Res> {
     Object? chat = freezed,
     Object? isLoading = freezed,
     Object? failureOrChat = freezed,
-    Object? userChats = freezed,
   }) {
     return _then(_value.copyWith(
       userIds: userIds == freezed
@@ -361,10 +279,6 @@ class _$ChatStateCopyWithImpl<$Res> implements $ChatStateCopyWith<$Res> {
           ? _value.failureOrChat
           : failureOrChat // ignore: cast_nullable_to_non_nullable
               as Either<DataFailure, Chat>,
-      userChats: userChats == freezed
-          ? _value.userChats
-          : userChats // ignore: cast_nullable_to_non_nullable
-              as Either<DataFailure, List<Chat>>,
     ));
   }
 
@@ -386,8 +300,7 @@ abstract class _$ChatStateCopyWith<$Res> implements $ChatStateCopyWith<$Res> {
       {List<String> userIds,
       Chat chat,
       bool isLoading,
-      Either<DataFailure, Chat> failureOrChat,
-      Either<DataFailure, List<Chat>> userChats});
+      Either<DataFailure, Chat> failureOrChat});
 
   @override
   $ChatCopyWith<$Res> get chat;
@@ -408,7 +321,6 @@ class __$ChatStateCopyWithImpl<$Res> extends _$ChatStateCopyWithImpl<$Res>
     Object? chat = freezed,
     Object? isLoading = freezed,
     Object? failureOrChat = freezed,
-    Object? userChats = freezed,
   }) {
     return _then(_ChatState(
       userIds: userIds == freezed
@@ -427,10 +339,6 @@ class __$ChatStateCopyWithImpl<$Res> extends _$ChatStateCopyWithImpl<$Res>
           ? _value.failureOrChat
           : failureOrChat // ignore: cast_nullable_to_non_nullable
               as Either<DataFailure, Chat>,
-      userChats: userChats == freezed
-          ? _value.userChats
-          : userChats // ignore: cast_nullable_to_non_nullable
-              as Either<DataFailure, List<Chat>>,
     ));
   }
 }
@@ -442,8 +350,7 @@ class _$_ChatState implements _ChatState {
       {required this.userIds,
       required this.chat,
       required this.isLoading,
-      required this.failureOrChat,
-      required this.userChats});
+      required this.failureOrChat});
 
   @override
   final List<String> userIds;
@@ -453,12 +360,10 @@ class _$_ChatState implements _ChatState {
   final bool isLoading;
   @override
   final Either<DataFailure, Chat> failureOrChat;
-  @override
-  final Either<DataFailure, List<Chat>> userChats;
 
   @override
   String toString() {
-    return 'ChatState(userIds: $userIds, chat: $chat, isLoading: $isLoading, failureOrChat: $failureOrChat, userChats: $userChats)';
+    return 'ChatState(userIds: $userIds, chat: $chat, isLoading: $isLoading, failureOrChat: $failureOrChat)';
   }
 
   @override
@@ -475,10 +380,7 @@ class _$_ChatState implements _ChatState {
                     .equals(other.isLoading, isLoading)) &&
             (identical(other.failureOrChat, failureOrChat) ||
                 const DeepCollectionEquality()
-                    .equals(other.failureOrChat, failureOrChat)) &&
-            (identical(other.userChats, userChats) ||
-                const DeepCollectionEquality()
-                    .equals(other.userChats, userChats)));
+                    .equals(other.failureOrChat, failureOrChat)));
   }
 
   @override
@@ -487,8 +389,7 @@ class _$_ChatState implements _ChatState {
       const DeepCollectionEquality().hash(userIds) ^
       const DeepCollectionEquality().hash(chat) ^
       const DeepCollectionEquality().hash(isLoading) ^
-      const DeepCollectionEquality().hash(failureOrChat) ^
-      const DeepCollectionEquality().hash(userChats);
+      const DeepCollectionEquality().hash(failureOrChat);
 
   @JsonKey(ignore: true)
   @override
@@ -501,8 +402,7 @@ abstract class _ChatState implements ChatState {
       {required List<String> userIds,
       required Chat chat,
       required bool isLoading,
-      required Either<DataFailure, Chat> failureOrChat,
-      required Either<DataFailure, List<Chat>> userChats}) = _$_ChatState;
+      required Either<DataFailure, Chat> failureOrChat}) = _$_ChatState;
 
   @override
   List<String> get userIds => throw _privateConstructorUsedError;
@@ -512,9 +412,6 @@ abstract class _ChatState implements ChatState {
   bool get isLoading => throw _privateConstructorUsedError;
   @override
   Either<DataFailure, Chat> get failureOrChat =>
-      throw _privateConstructorUsedError;
-  @override
-  Either<DataFailure, List<Chat>> get userChats =>
       throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)

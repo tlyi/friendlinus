@@ -14,9 +14,20 @@ class RegisterPage extends StatelessWidget {
         header: 'Reset Password',
         canGoBack: true,
       ),
-      body: BlocProvider(
-        create: (context) => getIt<SignInFormBloc>(),
-        child: RegisterForm(),
+      body: Container(
+        alignment: Alignment.center,
+        child: SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              maxHeight: MediaQuery.of(context).size.height -
+                  (MediaQuery.of(context).padding.top + kToolbarHeight),
+            ),
+            child: BlocProvider(
+              create: (context) => getIt<SignInFormBloc>(),
+              child: RegisterForm(),
+            ),
+          ),
+        ),
       ),
     );
   }

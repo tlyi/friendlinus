@@ -2,20 +2,27 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:friendlinus/domain/core/value_objects.dart';
+import 'package:friendlinus/domain/data/chats/chat_message/chat_message.dart';
+import 'package:friendlinus/domain/data/chats/value_objects.dart';
 import 'package:friendlinus/domain/data/data_failure.dart';
-import 'package:friendlinus/domain/data/chats/chat_message.dart';
 import 'package:friendlinus/domain/data/chats/chat.dart';
+import 'package:friendlinus/domain/data/profile/profile.dart';
 import 'package:friendlinus/infrastructure/data/chats/chat_dtos.dart';
+import 'package:friendlinus/infrastructure/data/profile/profile_dtos.dart';
 import 'package:injectable/injectable.dart';
 import 'package:friendlinus/domain/data/chats/i_chat_repository.dart';
 import 'package:friendlinus/infrastructure/core/firestore_helpers.dart';
 
+import 'chat_message/chat_message_dtos.dart';
+
 @LazySingleton(as: IChatRepository)
 class ChatRepository implements IChatRepository {
   final FirebaseFirestore _firestore;
+  final FirebaseStorage _firebaseStorage;
 
-  ChatRepository(this._firestore);
+  ChatRepository(this._firestore, this._firebaseStorage);
 
   @override
   Future<String> getOwnId() async {
@@ -33,15 +40,12 @@ class ChatRepository implements IChatRepository {
       final otherUserDoc = await _firestore.userDocumentById(otherId);
       final ownId = await getOwnId();
 
-      QuerySnapshot query = await chatsRef
-          .where('userIdsCombined', isEqualTo: userIdsCombined)
-          .get();
+      DocumentSnapshot doc = await chatsRef.doc(userIdsCombined).get();
 
-      print(query.docs.length);
-      if (query.docs.isEmpty) {
+      if (!doc.exists) {
         try {
           //If chat does not exist, create chat
-          await chatsRef.add(chatDto.toJson());
+          await chatsRef.doc(userIdsCombined).set(chatDto.toJson());
           await userDoc.update({
             'chatsImIn': FieldValue.arrayUnion([otherId])
           });
@@ -62,7 +66,7 @@ class ChatRepository implements IChatRepository {
       } else {
         //If chat exists, just return
         print('chat alr exists');
-        return right(ChatDto.fromFirestore(query.docs[0]).toDomain());
+        return right(ChatDto.fromFirestore(doc).toDomain());
       }
     } on FirebaseException catch (e) {
       if (e.message!.contains('PERMISSION_DENIED')) {
@@ -77,9 +81,10 @@ class ChatRepository implements IChatRepository {
   Stream<Either<DataFailure, List<Chat>>> retrieveUserChats(
       String userId) async* {
     final chatsRef = await _firestore.chatsRef();
+    print("here");
     yield* chatsRef
         .orderBy('timestamp', descending: true)
-        .where('users', arrayContains: userId)
+        .where('userIds', arrayContains: userId)
         .snapshots()
         .map(
           (snapshot) => right<DataFailure, List<Chat>>(
@@ -99,9 +104,68 @@ class ChatRepository implements IChatRepository {
   }
 
   @override
-  Future<Either<DataFailure, Unit>> createMessage(ChatMessage chatMessage) {
-    // TODO: implement createMessage
-    throw UnimplementedError();
+  Future<Either<DataFailure, Profile>> searchProfileByUuid(String uuid) async {
+    try {
+      final usersRef = await _firestore.usersRef();
+      return usersRef.doc(uuid).get().then((DocumentSnapshot doc) =>
+          right(ProfileDto.fromFirestore(doc).toDomain()));
+    } on FirebaseException catch (e) {
+      print(e);
+      return left(const DataFailure.unexpected());
+    }
+  }
+
+  @override
+  Future<Either<DataFailure, Unit>> createMessage(
+      {required String convoId,
+      required String messageId,
+      required ChatMessage chatMessage}) async {
+    try {
+      final convoMessagesRef = await _firestore.convoMessagesRef(convoId);
+      final chatMessageDto = ChatMessageDto.fromDomain(chatMessage);
+      await convoMessagesRef.doc(messageId).set(chatMessageDto.toJson());
+      await _firestore.runTransaction((transaction) async {
+        final chatDoc = await _firestore.chatDocumentById(convoId);
+        transaction.update(
+          chatDoc,
+          {
+            'lastMessage': chatMessageDto.messageBody,
+            'lastSenderId': chatMessageDto.senderId,
+            'lastMessageRead': false,
+            'timestamp': chatMessageDto.timeSent,
+          },
+        );
+      }); //update last message in chat
+      return right(unit);
+    } on FirebaseException catch (e) {
+      if (e.message!.contains('PERMISSION_DENIED')) {
+        return left(const DataFailure.insufficientPermission());
+      } else {
+        return left(const DataFailure.unexpected());
+      }
+    }
+  }
+
+  @override
+  Future<Either<DataFailure, String>> uploadPhoto(
+      File photo, String convoId, String messageId) async {
+    UploadTask storageUploadTask;
+    storageUploadTask = _firebaseStorage
+        .ref()
+        .child('forumPictures')
+        .child(convoId)
+        .child(messageId)
+        .putFile(photo);
+
+    try {
+      final String url = await storageUploadTask.then((ref) async {
+        return ref.ref.getDownloadURL();
+      });
+      return right(url);
+    } on FirebaseException catch (e) {
+      print(e.code);
+      return left(const DataFailure.unexpected());
+    }
   }
 
   @override
@@ -141,8 +205,32 @@ class ChatRepository implements IChatRepository {
     // TODO: implement updateMessage
     throw UnimplementedError();
   }
-}
 
+  @override
+  Stream<Either<DataFailure, List<ChatMessage>>> getConvo(
+      String convoId) async* {
+    final convoMessagesRef = await _firestore.convoMessagesRef(convoId);
+    print("retrieving messages");
+    yield* convoMessagesRef
+        .orderBy('timesent', descending: true)
+        .snapshots()
+        .map(
+          (snapshot) => right<DataFailure, List<ChatMessage>>(
+            snapshot.docs
+                .map((doc) => ChatMessageDto.fromFirestore(doc).toDomain())
+                .toList(),
+          ),
+        )
+        .handleError((e) {
+      if (e is FirebaseException && e.message!.contains('PERMISSION_DENIED')) {
+        return left(const DataFailure.insufficientPermission());
+      } else {
+        print(e);
+        return left(const DataFailure.unexpected());
+      }
+    });
+  }
+}
 
 /*   try {
       final chatsRef = await _firestore.chatsRef();

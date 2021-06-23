@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:friendlinus/domain/core/value_objects.dart';
 import 'package:friendlinus/domain/data/chats/chat.dart';
+import 'package:friendlinus/domain/data/chats/chat_message/chat_message.dart';
 import 'package:friendlinus/domain/data/chats/value_objects.dart';
 
 part 'chat_dtos.freezed.dart';
@@ -12,7 +13,9 @@ abstract class ChatDto implements _$ChatDto {
   const ChatDto._();
 
   const factory ChatDto({
-    required String messagePreview,
+    required String lastMessage,
+    required String lastSenderId,
+    required bool lastMessageRead,
     required String userIdsCombined,
     required List<String> userIds,
     required String timestamp,
@@ -20,7 +23,9 @@ abstract class ChatDto implements _$ChatDto {
 
   factory ChatDto.fromDomain(Chat chat) {
     return ChatDto(
-      messagePreview: chat.messagePreview.getOrCrash(),
+      lastMessage: chat.lastMessage,
+      lastSenderId: chat.lastSenderId,
+      lastMessageRead: chat.lastMessageRead,
       userIdsCombined: chat.userIdsCombined,
       userIds: chat.userIds,
       timestamp: DateTime.now().millisecondsSinceEpoch.toString(),
@@ -29,9 +34,12 @@ abstract class ChatDto implements _$ChatDto {
 
   Chat toDomain() {
     return Chat(
-      messagePreview: MessagePreview(messagePreview),
+      lastMessage: lastMessage,
+      lastSenderId: lastSenderId,
+      lastMessageRead: lastMessageRead,
       userIdsCombined: userIdsCombined,
       userIds: userIds,
+      timestamp: timestamp,
     );
   }
 
