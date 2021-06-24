@@ -5,6 +5,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:friendlinus/presentation/core/app_bar.dart';
 import 'package:friendlinus/presentation/core/nav_bar.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
+import 'package:friendlinus/domain/core/constants.dart' as constants;
 
 class HomePage extends StatelessWidget {
   @override
@@ -44,7 +45,8 @@ class _BuildSignOutButton extends StatelessWidget {
       width: MediaQuery.of(context).size.width * 0.62,
       child: ElevatedButton(
         style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Color(0xFF7BA5BB))),
+          backgroundColor: MaterialStateProperty.all(constants.THEME_BLUE),
+        ),
         child: const Text("Sign Out"),
         onPressed: () {
           context.read<AuthBloc>().add(
@@ -64,7 +66,7 @@ class _BuildSearchUsersButton extends StatelessWidget {
       width: MediaQuery.of(context).size.width * 0.62,
       child: ElevatedButton(
         style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Color(0xFF7BA5BB))),
+            backgroundColor: MaterialStateProperty.all(constants.THEME_BLUE)),
         child: const Text("Search Users"),
         onPressed: () {
           context.pushRoute(const SearchUsersRoute());

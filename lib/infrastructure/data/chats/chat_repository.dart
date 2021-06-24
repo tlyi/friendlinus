@@ -181,16 +181,21 @@ class ChatRepository implements IChatRepository {
   }
 
   @override
-  Future<Either<DataFailure, Chat>> getChatIfExists(String userIds) async {
+  Future<Either<DataFailure, Unit>> updateMessageRead(
+      {required String convoId, required String messageId}) async {
     try {
-      final chatsRef = await _firestore.chatsRef();
-      QuerySnapshot query =
-          await chatsRef.where('userIds', isEqualTo: userIds).get();
-      if (query.docs.isNotEmpty) {
-        return right(ChatDto.fromFirestore(query.docs[0]).toDomain());
-      } else {
-        return right(Chat.empty());
-      }
+      print('updating read');
+      await _firestore.runTransaction((transaction) async {
+        final messageDoc =
+            await _firestore.messageDocumentById(convoId, messageId);
+        transaction.update(
+          messageDoc,
+          {
+            'read': true,
+          },
+        );
+      });
+      return right(unit);
     } on FirebaseException catch (e) {
       if (e.message!.contains('PERMISSION_DENIED')) {
         return left(const DataFailure.insufficientPermission());
@@ -201,9 +206,27 @@ class ChatRepository implements IChatRepository {
   }
 
   @override
-  Future<Either<DataFailure, Unit>> updateMessage(ChatMessage chatMessage) {
-    // TODO: implement updateMessage
-    throw UnimplementedError();
+  Future<Either<DataFailure, Unit>> updateLastMessageRead(
+      {required String convoId}) async {
+    try {
+      print('updating last message of chat read');
+      await _firestore.runTransaction((transaction) async {
+        final chatDoc = await _firestore.chatDocumentById(convoId);
+        transaction.update(
+          chatDoc,
+          {
+            'lastMessageRead': true,
+          },
+        );
+      });
+      return right(unit);
+    } on FirebaseException catch (e) {
+      if (e.message!.contains('PERMISSION_DENIED')) {
+        return left(const DataFailure.insufficientPermission());
+      } else {
+        return left(const DataFailure.unexpected());
+      }
+    }
   }
 
   @override
@@ -212,7 +235,7 @@ class ChatRepository implements IChatRepository {
     final convoMessagesRef = await _firestore.convoMessagesRef(convoId);
     print("retrieving messages");
     yield* convoMessagesRef
-        .orderBy('timesent', descending: true)
+        .orderBy('timeSent', descending: true)
         .snapshots()
         .map(
           (snapshot) => right<DataFailure, List<ChatMessage>>(

@@ -29,6 +29,15 @@ extension FirestoreX on FirebaseFirestore {
     return FirebaseFirestore.instance.collection('chats').doc(convoId);
   }
 
+  Future<DocumentReference> messageDocumentById(
+      String convoId, String messageId) async {
+    return FirebaseFirestore.instance
+        .collection('messages')
+        .doc(convoId)
+        .collection('messages')
+        .doc(messageId);
+  }
+
   Future<CollectionReference> convoMessagesRef(String convoId) async {
     return FirebaseFirestore.instance
         .collection('messages')

@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:friendlinus/application/chats/convo_actor/convo_actor_bloc.dart';
 import 'package:friendlinus/domain/data/profile/profile.dart';
+import 'package:friendlinus/presentation/chats/convos/widgets/convo_messages.dart';
 
-class Convo extends StatelessWidget {
+class ConvoActions extends StatelessWidget {
   final String convoId;
   final Profile senderProfile;
-  const Convo({Key? key, required this.convoId, required this.senderProfile})
+  const ConvoActions(
+      {Key? key, required this.convoId, required this.senderProfile})
       : super(key: key);
 
   @override
@@ -18,8 +20,11 @@ class Convo extends StatelessWidget {
       builder: (context, state) {
         return Stack(
           children: [
+            ConvoMessages(
+              convoId: convoId,
+              senderProfile: senderProfile,
+            ),
             _BuildMessageField(),
-            _BuildSendButton(),
           ],
         );
       },
@@ -64,7 +69,7 @@ class _BuildMessageField extends StatelessWidget {
                       hintStyle: TextStyle(color: Colors.black54),
                       border: InputBorder.none,
                     ),
-                    onSubmitted: (message) async {
+                    onChanged: (message) {
                       context
                           .read<ConvoActorBloc>()
                           .add(ConvoActorEvent.messageChanged(message));
@@ -87,7 +92,11 @@ class _BuildMessageField extends StatelessWidget {
                       color: Colors.white,
                       size: 18,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      context
+                          .read<ConvoActorBloc>()
+                          .add(const ConvoActorEvent.messageSent());
+                    },
                   ),
                 ),
               ],

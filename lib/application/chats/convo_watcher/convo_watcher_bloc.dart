@@ -42,4 +42,10 @@ class ConvoWatcherBloc extends Bloc<ConvoWatcherEvent, ConvoWatcherState> {
       },
     );
   }
+
+  @override
+  Future<void> close() async {
+    await _convoStreamSubscription?.cancel();
+    return super.close();
+  }
 }

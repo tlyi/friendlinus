@@ -18,6 +18,7 @@ abstract class ChatMessageDto implements _$ChatMessageDto {
     required String senderId,
     required String photoUrl,
     required bool read,
+    required String messageId,
   }) = _ChatMessageDto;
 
   factory ChatMessageDto.fromDomain(ChatMessage chatMessage) {
@@ -27,6 +28,7 @@ abstract class ChatMessageDto implements _$ChatMessageDto {
       senderId: chatMessage.senderId,
       photoUrl: chatMessage.photoUrl,
       read: chatMessage.read,
+      messageId: chatMessage.messageId,
     );
   }
 
@@ -37,6 +39,7 @@ abstract class ChatMessageDto implements _$ChatMessageDto {
       senderId: senderId,
       photoUrl: photoUrl,
       read: read,
+      messageId: messageId,
     );
   }
 

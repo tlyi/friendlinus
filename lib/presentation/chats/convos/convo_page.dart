@@ -4,7 +4,7 @@ import 'package:friendlinus/application/chats/convo_watcher/convo_watcher_bloc.d
 import 'package:friendlinus/application/chats/convo_actor/convo_actor_bloc.dart';
 import 'package:friendlinus/domain/data/profile/profile.dart';
 import 'package:friendlinus/injection.dart';
-import 'package:friendlinus/presentation/chats/convos/widgets/convo.dart';
+import 'package:friendlinus/presentation/chats/convos/widgets/convo_actions.dart';
 import 'package:friendlinus/presentation/core/app_bar.dart';
 
 class ConvoPage extends StatelessWidget {
@@ -31,15 +31,16 @@ class ConvoPage extends StatelessWidget {
             child: MultiBlocProvider(
               providers: [
                 BlocProvider(
-                  create: (context) =>
-                      getIt<ConvoWatcherBloc>(), //to revisit: what bloc to give
+                  create: (context) => getIt<ConvoWatcherBloc>()
+                    ..add(ConvoWatcherEvent.retrieveConvoStarted(convoId)),
                 ),
                 BlocProvider(
                   create: (context) => getIt<ConvoActorBloc>()
                     ..add(ConvoActorEvent.convoOpened(convoId)),
                 )
               ],
-              child: Convo(convoId: convoId, senderProfile: senderProfile),
+              child:
+                  ConvoActions(convoId: convoId, senderProfile: senderProfile),
             ),
           ),
         ),
