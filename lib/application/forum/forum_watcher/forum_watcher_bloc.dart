@@ -6,11 +6,13 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:friendlinus/domain/data/data_failure.dart';
 import 'package:friendlinus/domain/data/forum/forum_post.dart';
 import 'package:friendlinus/domain/data/forum/i_forum_repository.dart';
+import 'package:injectable/injectable.dart';
 
 part 'forum_watcher_event.dart';
 part 'forum_watcher_state.dart';
 part 'forum_watcher_bloc.freezed.dart';
 
+@injectable
 class ForumWatcherBloc extends Bloc<ForumWatcherEvent, ForumWatcherState> {
   final IForumRepository _forumRepository;
   ForumWatcherBloc(this._forumRepository)

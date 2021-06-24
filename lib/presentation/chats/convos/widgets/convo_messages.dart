@@ -83,7 +83,7 @@ class ConvoMessages extends StatelessWidget {
                               Padding(
                                 padding: EdgeInsets.only(left: 5, top: 10),
                                 child: message.read
-                                    ? const Icon(MdiIcons.check,
+                                    ? const Icon(MdiIcons.checkAll,
                                         color: Colors.white, size: 15)
                                     : const Icon(MdiIcons.check,
                                         color: Colors.white, size: 15),

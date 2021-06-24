@@ -9,7 +9,7 @@ class ForumCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
         shape: RoundedRectangleBorder(
-          side: new BorderSide(color: const Color(0xFF7BA5BB), width: 2.0),
+          side: BorderSide(color: const Color(0xFF7BA5BB), width: 2.0),
           borderRadius: BorderRadius.circular(15.0),
         ),
         child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[

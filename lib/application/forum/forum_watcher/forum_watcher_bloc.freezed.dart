@@ -308,9 +308,9 @@ class _$ForumWatcherStateTearOff {
     return const _LoadInProgress();
   }
 
-  _LoadSuccess loadSuccess(List<ForumPost> chats) {
+  _LoadSuccess loadSuccess(List<ForumPost> forums) {
     return _LoadSuccess(
-      chats,
+      forums,
     );
   }
 
@@ -330,7 +330,7 @@ mixin _$ForumWatcherState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<ForumPost> chats) loadSuccess,
+    required TResult Function(List<ForumPost> forums) loadSuccess,
     required TResult Function(DataFailure dataFailure) loadFailure,
   }) =>
       throw _privateConstructorUsedError;
@@ -338,7 +338,7 @@ mixin _$ForumWatcherState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<ForumPost> chats)? loadSuccess,
+    TResult Function(List<ForumPost> forums)? loadSuccess,
     TResult Function(DataFailure dataFailure)? loadFailure,
     required TResult orElse(),
   }) =>
@@ -418,7 +418,7 @@ class _$_Initial implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<ForumPost> chats) loadSuccess,
+    required TResult Function(List<ForumPost> forums) loadSuccess,
     required TResult Function(DataFailure dataFailure) loadFailure,
   }) {
     return initial();
@@ -429,7 +429,7 @@ class _$_Initial implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<ForumPost> chats)? loadSuccess,
+    TResult Function(List<ForumPost> forums)? loadSuccess,
     TResult Function(DataFailure dataFailure)? loadFailure,
     required TResult orElse(),
   }) {
@@ -512,7 +512,7 @@ class _$_LoadInProgress implements _LoadInProgress {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<ForumPost> chats) loadSuccess,
+    required TResult Function(List<ForumPost> forums) loadSuccess,
     required TResult Function(DataFailure dataFailure) loadFailure,
   }) {
     return loadInProgress();
@@ -523,7 +523,7 @@ class _$_LoadInProgress implements _LoadInProgress {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<ForumPost> chats)? loadSuccess,
+    TResult Function(List<ForumPost> forums)? loadSuccess,
     TResult Function(DataFailure dataFailure)? loadFailure,
     required TResult orElse(),
   }) {
@@ -569,7 +569,7 @@ abstract class _$LoadSuccessCopyWith<$Res> {
   factory _$LoadSuccessCopyWith(
           _LoadSuccess value, $Res Function(_LoadSuccess) then) =
       __$LoadSuccessCopyWithImpl<$Res>;
-  $Res call({List<ForumPost> chats});
+  $Res call({List<ForumPost> forums});
 }
 
 /// @nodoc
@@ -585,12 +585,12 @@ class __$LoadSuccessCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? chats = freezed,
+    Object? forums = freezed,
   }) {
     return _then(_LoadSuccess(
-      chats == freezed
-          ? _value.chats
-          : chats // ignore: cast_nullable_to_non_nullable
+      forums == freezed
+          ? _value.forums
+          : forums // ignore: cast_nullable_to_non_nullable
               as List<ForumPost>,
     ));
   }
@@ -599,27 +599,27 @@ class __$LoadSuccessCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_LoadSuccess implements _LoadSuccess {
-  const _$_LoadSuccess(this.chats);
+  const _$_LoadSuccess(this.forums);
 
   @override
-  final List<ForumPost> chats;
+  final List<ForumPost> forums;
 
   @override
   String toString() {
-    return 'ForumWatcherState.loadSuccess(chats: $chats)';
+    return 'ForumWatcherState.loadSuccess(forums: $forums)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _LoadSuccess &&
-            (identical(other.chats, chats) ||
-                const DeepCollectionEquality().equals(other.chats, chats)));
+            (identical(other.forums, forums) ||
+                const DeepCollectionEquality().equals(other.forums, forums)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(chats);
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(forums);
 
   @JsonKey(ignore: true)
   @override
@@ -631,10 +631,10 @@ class _$_LoadSuccess implements _LoadSuccess {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<ForumPost> chats) loadSuccess,
+    required TResult Function(List<ForumPost> forums) loadSuccess,
     required TResult Function(DataFailure dataFailure) loadFailure,
   }) {
-    return loadSuccess(chats);
+    return loadSuccess(forums);
   }
 
   @override
@@ -642,12 +642,12 @@ class _$_LoadSuccess implements _LoadSuccess {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<ForumPost> chats)? loadSuccess,
+    TResult Function(List<ForumPost> forums)? loadSuccess,
     TResult Function(DataFailure dataFailure)? loadFailure,
     required TResult orElse(),
   }) {
     if (loadSuccess != null) {
-      return loadSuccess(chats);
+      return loadSuccess(forums);
     }
     return orElse();
   }
@@ -680,9 +680,9 @@ class _$_LoadSuccess implements _LoadSuccess {
 }
 
 abstract class _LoadSuccess implements ForumWatcherState {
-  const factory _LoadSuccess(List<ForumPost> chats) = _$_LoadSuccess;
+  const factory _LoadSuccess(List<ForumPost> forums) = _$_LoadSuccess;
 
-  List<ForumPost> get chats => throw _privateConstructorUsedError;
+  List<ForumPost> get forums => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$LoadSuccessCopyWith<_LoadSuccess> get copyWith =>
       throw _privateConstructorUsedError;
@@ -765,7 +765,7 @@ class _$_LoadFailure implements _LoadFailure {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<ForumPost> chats) loadSuccess,
+    required TResult Function(List<ForumPost> forums) loadSuccess,
     required TResult Function(DataFailure dataFailure) loadFailure,
   }) {
     return loadFailure(dataFailure);
@@ -776,7 +776,7 @@ class _$_LoadFailure implements _LoadFailure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<ForumPost> chats)? loadSuccess,
+    TResult Function(List<ForumPost> forums)? loadSuccess,
     TResult Function(DataFailure dataFailure)? loadFailure,
     required TResult orElse(),
   }) {
