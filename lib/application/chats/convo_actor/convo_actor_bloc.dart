@@ -53,10 +53,15 @@ class ConvoActorBloc extends Bloc<ConvoActorEvent, ConvoActorState> {
       failureOrSuccess = await _chatRepository.createMessage(
           convoId: state.convoId,
           messageId: state.messageId,
-          chatMessage: state.chatMessage);
+          chatMessage: state.chatMessage.copyWith(messageId: state.messageId));
       yield state.copyWith(
           sentFailureOrSuccessOption: optionOf(failureOrSuccess),
           messageId: UniqueId('').getOrCrash());
+    }, messageRead: (e) async* {
+      await _chatRepository.updateMessageRead(
+          convoId: state.convoId, messageId: e.messageId);
+    }, lastMessageRead: (e) async* {
+      await _chatRepository.updateLastMessageRead(convoId: state.convoId);
     });
   }
 }

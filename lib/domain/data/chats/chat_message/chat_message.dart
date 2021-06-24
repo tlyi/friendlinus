@@ -14,6 +14,7 @@ abstract class ChatMessage implements _$ChatMessage {
     required String senderId,
     required String photoUrl,
     required bool read,
+    required String messageId,
   }) = _ChatMessage;
 
   factory ChatMessage.empty() => ChatMessage(
@@ -22,5 +23,6 @@ abstract class ChatMessage implements _$ChatMessage {
         senderId: '',
         photoUrl: '',
         read: false,
+        messageId: '',
       );
 }

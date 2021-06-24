@@ -46,6 +46,7 @@ dependencies:
   json_annotation: ^4.0.1
   intl: ^0.17.0
   bubble: ^1.2.1
+  material_design_icons_flutter: 5.0.5955-rc.1
 
 #Stuff that you need during development
 dev_dependencies:

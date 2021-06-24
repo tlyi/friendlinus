@@ -13,6 +13,7 @@ _$_ChatMessageDto _$_$_ChatMessageDtoFromJson(Map<String, dynamic> json) {
     senderId: json['senderId'] as String,
     photoUrl: json['photoUrl'] as String,
     read: json['read'] as bool,
+    messageId: json['messageId'] as String,
   );
 }
 
@@ -23,4 +24,5 @@ Map<String, dynamic> _$_$_ChatMessageDtoToJson(_$_ChatMessageDto instance) =>
       'senderId': instance.senderId,
       'photoUrl': instance.photoUrl,
       'read': instance.read,
+      'messageId': instance.messageId,
     };

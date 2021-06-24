@@ -30,8 +30,11 @@ abstract class IChatRepository {
   Future<Either<DataFailure, String>> uploadPhoto(
       File photo, String convoId, String messageId);
 
-  Future<Either<DataFailure, Unit>> updateMessage(
-      ChatMessage chatMessage); //to be implemented
+  Future<Either<DataFailure, Unit>> updateMessageRead(
+      {required String convoId, required String messageId});
+
+  Future<Either<DataFailure, Unit>> updateLastMessageRead(
+      {required String convoId}); //to be implemented
 
   Future<Either<DataFailure, Unit>> deleteMessage(
       ChatMessage chatMessage); //to be implemented

@@ -37,6 +37,16 @@ class _$ConvoActorEventTearOff {
   _MessageSent messageSent() {
     return const _MessageSent();
   }
+
+  _MessageRead messageRead(String messageId) {
+    return _MessageRead(
+      messageId,
+    );
+  }
+
+  _LastMessageRead lastMessageRead() {
+    return const _LastMessageRead();
+  }
 }
 
 /// @nodoc
@@ -50,6 +60,8 @@ mixin _$ConvoActorEvent {
     required TResult Function(String message) messageChanged,
     required TResult Function(File photo) photoChanged,
     required TResult Function() messageSent,
+    required TResult Function(String messageId) messageRead,
+    required TResult Function() lastMessageRead,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -58,6 +70,8 @@ mixin _$ConvoActorEvent {
     TResult Function(String message)? messageChanged,
     TResult Function(File photo)? photoChanged,
     TResult Function()? messageSent,
+    TResult Function(String messageId)? messageRead,
+    TResult Function()? lastMessageRead,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -67,6 +81,8 @@ mixin _$ConvoActorEvent {
     required TResult Function(_MessageChanged value) messageChanged,
     required TResult Function(_PhotoChanged value) photoChanged,
     required TResult Function(_MessageSent value) messageSent,
+    required TResult Function(_MessageRead value) messageRead,
+    required TResult Function(_LastMessageRead value) lastMessageRead,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -75,6 +91,8 @@ mixin _$ConvoActorEvent {
     TResult Function(_MessageChanged value)? messageChanged,
     TResult Function(_PhotoChanged value)? photoChanged,
     TResult Function(_MessageSent value)? messageSent,
+    TResult Function(_MessageRead value)? messageRead,
+    TResult Function(_LastMessageRead value)? lastMessageRead,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -166,6 +184,8 @@ class _$_ConvoOpened implements _ConvoOpened {
     required TResult Function(String message) messageChanged,
     required TResult Function(File photo) photoChanged,
     required TResult Function() messageSent,
+    required TResult Function(String messageId) messageRead,
+    required TResult Function() lastMessageRead,
   }) {
     return convoOpened(convoId);
   }
@@ -177,6 +197,8 @@ class _$_ConvoOpened implements _ConvoOpened {
     TResult Function(String message)? messageChanged,
     TResult Function(File photo)? photoChanged,
     TResult Function()? messageSent,
+    TResult Function(String messageId)? messageRead,
+    TResult Function()? lastMessageRead,
     required TResult orElse(),
   }) {
     if (convoOpened != null) {
@@ -192,6 +214,8 @@ class _$_ConvoOpened implements _ConvoOpened {
     required TResult Function(_MessageChanged value) messageChanged,
     required TResult Function(_PhotoChanged value) photoChanged,
     required TResult Function(_MessageSent value) messageSent,
+    required TResult Function(_MessageRead value) messageRead,
+    required TResult Function(_LastMessageRead value) lastMessageRead,
   }) {
     return convoOpened(this);
   }
@@ -203,6 +227,8 @@ class _$_ConvoOpened implements _ConvoOpened {
     TResult Function(_MessageChanged value)? messageChanged,
     TResult Function(_PhotoChanged value)? photoChanged,
     TResult Function(_MessageSent value)? messageSent,
+    TResult Function(_MessageRead value)? messageRead,
+    TResult Function(_LastMessageRead value)? lastMessageRead,
     required TResult orElse(),
   }) {
     if (convoOpened != null) {
@@ -290,6 +316,8 @@ class _$_MessageChanged implements _MessageChanged {
     required TResult Function(String message) messageChanged,
     required TResult Function(File photo) photoChanged,
     required TResult Function() messageSent,
+    required TResult Function(String messageId) messageRead,
+    required TResult Function() lastMessageRead,
   }) {
     return messageChanged(message);
   }
@@ -301,6 +329,8 @@ class _$_MessageChanged implements _MessageChanged {
     TResult Function(String message)? messageChanged,
     TResult Function(File photo)? photoChanged,
     TResult Function()? messageSent,
+    TResult Function(String messageId)? messageRead,
+    TResult Function()? lastMessageRead,
     required TResult orElse(),
   }) {
     if (messageChanged != null) {
@@ -316,6 +346,8 @@ class _$_MessageChanged implements _MessageChanged {
     required TResult Function(_MessageChanged value) messageChanged,
     required TResult Function(_PhotoChanged value) photoChanged,
     required TResult Function(_MessageSent value) messageSent,
+    required TResult Function(_MessageRead value) messageRead,
+    required TResult Function(_LastMessageRead value) lastMessageRead,
   }) {
     return messageChanged(this);
   }
@@ -327,6 +359,8 @@ class _$_MessageChanged implements _MessageChanged {
     TResult Function(_MessageChanged value)? messageChanged,
     TResult Function(_PhotoChanged value)? photoChanged,
     TResult Function(_MessageSent value)? messageSent,
+    TResult Function(_MessageRead value)? messageRead,
+    TResult Function(_LastMessageRead value)? lastMessageRead,
     required TResult orElse(),
   }) {
     if (messageChanged != null) {
@@ -414,6 +448,8 @@ class _$_PhotoChanged implements _PhotoChanged {
     required TResult Function(String message) messageChanged,
     required TResult Function(File photo) photoChanged,
     required TResult Function() messageSent,
+    required TResult Function(String messageId) messageRead,
+    required TResult Function() lastMessageRead,
   }) {
     return photoChanged(photo);
   }
@@ -425,6 +461,8 @@ class _$_PhotoChanged implements _PhotoChanged {
     TResult Function(String message)? messageChanged,
     TResult Function(File photo)? photoChanged,
     TResult Function()? messageSent,
+    TResult Function(String messageId)? messageRead,
+    TResult Function()? lastMessageRead,
     required TResult orElse(),
   }) {
     if (photoChanged != null) {
@@ -440,6 +478,8 @@ class _$_PhotoChanged implements _PhotoChanged {
     required TResult Function(_MessageChanged value) messageChanged,
     required TResult Function(_PhotoChanged value) photoChanged,
     required TResult Function(_MessageSent value) messageSent,
+    required TResult Function(_MessageRead value) messageRead,
+    required TResult Function(_LastMessageRead value) lastMessageRead,
   }) {
     return photoChanged(this);
   }
@@ -451,6 +491,8 @@ class _$_PhotoChanged implements _PhotoChanged {
     TResult Function(_MessageChanged value)? messageChanged,
     TResult Function(_PhotoChanged value)? photoChanged,
     TResult Function(_MessageSent value)? messageSent,
+    TResult Function(_MessageRead value)? messageRead,
+    TResult Function(_LastMessageRead value)? lastMessageRead,
     required TResult orElse(),
   }) {
     if (photoChanged != null) {
@@ -513,6 +555,8 @@ class _$_MessageSent implements _MessageSent {
     required TResult Function(String message) messageChanged,
     required TResult Function(File photo) photoChanged,
     required TResult Function() messageSent,
+    required TResult Function(String messageId) messageRead,
+    required TResult Function() lastMessageRead,
   }) {
     return messageSent();
   }
@@ -524,6 +568,8 @@ class _$_MessageSent implements _MessageSent {
     TResult Function(String message)? messageChanged,
     TResult Function(File photo)? photoChanged,
     TResult Function()? messageSent,
+    TResult Function(String messageId)? messageRead,
+    TResult Function()? lastMessageRead,
     required TResult orElse(),
   }) {
     if (messageSent != null) {
@@ -539,6 +585,8 @@ class _$_MessageSent implements _MessageSent {
     required TResult Function(_MessageChanged value) messageChanged,
     required TResult Function(_PhotoChanged value) photoChanged,
     required TResult Function(_MessageSent value) messageSent,
+    required TResult Function(_MessageRead value) messageRead,
+    required TResult Function(_LastMessageRead value) lastMessageRead,
   }) {
     return messageSent(this);
   }
@@ -550,6 +598,8 @@ class _$_MessageSent implements _MessageSent {
     TResult Function(_MessageChanged value)? messageChanged,
     TResult Function(_PhotoChanged value)? photoChanged,
     TResult Function(_MessageSent value)? messageSent,
+    TResult Function(_MessageRead value)? messageRead,
+    TResult Function(_LastMessageRead value)? lastMessageRead,
     required TResult orElse(),
   }) {
     if (messageSent != null) {
@@ -561,6 +611,241 @@ class _$_MessageSent implements _MessageSent {
 
 abstract class _MessageSent implements ConvoActorEvent {
   const factory _MessageSent() = _$_MessageSent;
+}
+
+/// @nodoc
+abstract class _$MessageReadCopyWith<$Res> {
+  factory _$MessageReadCopyWith(
+          _MessageRead value, $Res Function(_MessageRead) then) =
+      __$MessageReadCopyWithImpl<$Res>;
+  $Res call({String messageId});
+}
+
+/// @nodoc
+class __$MessageReadCopyWithImpl<$Res>
+    extends _$ConvoActorEventCopyWithImpl<$Res>
+    implements _$MessageReadCopyWith<$Res> {
+  __$MessageReadCopyWithImpl(
+      _MessageRead _value, $Res Function(_MessageRead) _then)
+      : super(_value, (v) => _then(v as _MessageRead));
+
+  @override
+  _MessageRead get _value => super._value as _MessageRead;
+
+  @override
+  $Res call({
+    Object? messageId = freezed,
+  }) {
+    return _then(_MessageRead(
+      messageId == freezed
+          ? _value.messageId
+          : messageId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_MessageRead implements _MessageRead {
+  const _$_MessageRead(this.messageId);
+
+  @override
+  final String messageId;
+
+  @override
+  String toString() {
+    return 'ConvoActorEvent.messageRead(messageId: $messageId)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _MessageRead &&
+            (identical(other.messageId, messageId) ||
+                const DeepCollectionEquality()
+                    .equals(other.messageId, messageId)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(messageId);
+
+  @JsonKey(ignore: true)
+  @override
+  _$MessageReadCopyWith<_MessageRead> get copyWith =>
+      __$MessageReadCopyWithImpl<_MessageRead>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String convoId) convoOpened,
+    required TResult Function(String message) messageChanged,
+    required TResult Function(File photo) photoChanged,
+    required TResult Function() messageSent,
+    required TResult Function(String messageId) messageRead,
+    required TResult Function() lastMessageRead,
+  }) {
+    return messageRead(messageId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String convoId)? convoOpened,
+    TResult Function(String message)? messageChanged,
+    TResult Function(File photo)? photoChanged,
+    TResult Function()? messageSent,
+    TResult Function(String messageId)? messageRead,
+    TResult Function()? lastMessageRead,
+    required TResult orElse(),
+  }) {
+    if (messageRead != null) {
+      return messageRead(messageId);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_ConvoOpened value) convoOpened,
+    required TResult Function(_MessageChanged value) messageChanged,
+    required TResult Function(_PhotoChanged value) photoChanged,
+    required TResult Function(_MessageSent value) messageSent,
+    required TResult Function(_MessageRead value) messageRead,
+    required TResult Function(_LastMessageRead value) lastMessageRead,
+  }) {
+    return messageRead(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_ConvoOpened value)? convoOpened,
+    TResult Function(_MessageChanged value)? messageChanged,
+    TResult Function(_PhotoChanged value)? photoChanged,
+    TResult Function(_MessageSent value)? messageSent,
+    TResult Function(_MessageRead value)? messageRead,
+    TResult Function(_LastMessageRead value)? lastMessageRead,
+    required TResult orElse(),
+  }) {
+    if (messageRead != null) {
+      return messageRead(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _MessageRead implements ConvoActorEvent {
+  const factory _MessageRead(String messageId) = _$_MessageRead;
+
+  String get messageId => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$MessageReadCopyWith<_MessageRead> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$LastMessageReadCopyWith<$Res> {
+  factory _$LastMessageReadCopyWith(
+          _LastMessageRead value, $Res Function(_LastMessageRead) then) =
+      __$LastMessageReadCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$LastMessageReadCopyWithImpl<$Res>
+    extends _$ConvoActorEventCopyWithImpl<$Res>
+    implements _$LastMessageReadCopyWith<$Res> {
+  __$LastMessageReadCopyWithImpl(
+      _LastMessageRead _value, $Res Function(_LastMessageRead) _then)
+      : super(_value, (v) => _then(v as _LastMessageRead));
+
+  @override
+  _LastMessageRead get _value => super._value as _LastMessageRead;
+}
+
+/// @nodoc
+
+class _$_LastMessageRead implements _LastMessageRead {
+  const _$_LastMessageRead();
+
+  @override
+  String toString() {
+    return 'ConvoActorEvent.lastMessageRead()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _LastMessageRead);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String convoId) convoOpened,
+    required TResult Function(String message) messageChanged,
+    required TResult Function(File photo) photoChanged,
+    required TResult Function() messageSent,
+    required TResult Function(String messageId) messageRead,
+    required TResult Function() lastMessageRead,
+  }) {
+    return lastMessageRead();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String convoId)? convoOpened,
+    TResult Function(String message)? messageChanged,
+    TResult Function(File photo)? photoChanged,
+    TResult Function()? messageSent,
+    TResult Function(String messageId)? messageRead,
+    TResult Function()? lastMessageRead,
+    required TResult orElse(),
+  }) {
+    if (lastMessageRead != null) {
+      return lastMessageRead();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_ConvoOpened value) convoOpened,
+    required TResult Function(_MessageChanged value) messageChanged,
+    required TResult Function(_PhotoChanged value) photoChanged,
+    required TResult Function(_MessageSent value) messageSent,
+    required TResult Function(_MessageRead value) messageRead,
+    required TResult Function(_LastMessageRead value) lastMessageRead,
+  }) {
+    return lastMessageRead(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_ConvoOpened value)? convoOpened,
+    TResult Function(_MessageChanged value)? messageChanged,
+    TResult Function(_PhotoChanged value)? photoChanged,
+    TResult Function(_MessageSent value)? messageSent,
+    TResult Function(_MessageRead value)? messageRead,
+    TResult Function(_LastMessageRead value)? lastMessageRead,
+    required TResult orElse(),
+  }) {
+    if (lastMessageRead != null) {
+      return lastMessageRead(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _LastMessageRead implements ConvoActorEvent {
+  const factory _LastMessageRead() = _$_LastMessageRead;
 }
 
 /// @nodoc

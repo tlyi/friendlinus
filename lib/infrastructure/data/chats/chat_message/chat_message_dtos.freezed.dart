@@ -25,13 +25,15 @@ class _$ChatMessageDtoTearOff {
       required String timeSent,
       required String senderId,
       required String photoUrl,
-      required bool read}) {
+      required bool read,
+      required String messageId}) {
     return _ChatMessageDto(
       messageBody: messageBody,
       timeSent: timeSent,
       senderId: senderId,
       photoUrl: photoUrl,
       read: read,
+      messageId: messageId,
     );
   }
 
@@ -50,6 +52,7 @@ mixin _$ChatMessageDto {
   String get senderId => throw _privateConstructorUsedError;
   String get photoUrl => throw _privateConstructorUsedError;
   bool get read => throw _privateConstructorUsedError;
+  String get messageId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -67,7 +70,8 @@ abstract class $ChatMessageDtoCopyWith<$Res> {
       String timeSent,
       String senderId,
       String photoUrl,
-      bool read});
+      bool read,
+      String messageId});
 }
 
 /// @nodoc
@@ -86,6 +90,7 @@ class _$ChatMessageDtoCopyWithImpl<$Res>
     Object? senderId = freezed,
     Object? photoUrl = freezed,
     Object? read = freezed,
+    Object? messageId = freezed,
   }) {
     return _then(_value.copyWith(
       messageBody: messageBody == freezed
@@ -108,6 +113,10 @@ class _$ChatMessageDtoCopyWithImpl<$Res>
           ? _value.read
           : read // ignore: cast_nullable_to_non_nullable
               as bool,
+      messageId: messageId == freezed
+          ? _value.messageId
+          : messageId // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -124,7 +133,8 @@ abstract class _$ChatMessageDtoCopyWith<$Res>
       String timeSent,
       String senderId,
       String photoUrl,
-      bool read});
+      bool read,
+      String messageId});
 }
 
 /// @nodoc
@@ -145,6 +155,7 @@ class __$ChatMessageDtoCopyWithImpl<$Res>
     Object? senderId = freezed,
     Object? photoUrl = freezed,
     Object? read = freezed,
+    Object? messageId = freezed,
   }) {
     return _then(_ChatMessageDto(
       messageBody: messageBody == freezed
@@ -167,6 +178,10 @@ class __$ChatMessageDtoCopyWithImpl<$Res>
           ? _value.read
           : read // ignore: cast_nullable_to_non_nullable
               as bool,
+      messageId: messageId == freezed
+          ? _value.messageId
+          : messageId // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -179,7 +194,8 @@ class _$_ChatMessageDto extends _ChatMessageDto {
       required this.timeSent,
       required this.senderId,
       required this.photoUrl,
-      required this.read})
+      required this.read,
+      required this.messageId})
       : super._();
 
   factory _$_ChatMessageDto.fromJson(Map<String, dynamic> json) =>
@@ -195,10 +211,12 @@ class _$_ChatMessageDto extends _ChatMessageDto {
   final String photoUrl;
   @override
   final bool read;
+  @override
+  final String messageId;
 
   @override
   String toString() {
-    return 'ChatMessageDto(messageBody: $messageBody, timeSent: $timeSent, senderId: $senderId, photoUrl: $photoUrl, read: $read)';
+    return 'ChatMessageDto(messageBody: $messageBody, timeSent: $timeSent, senderId: $senderId, photoUrl: $photoUrl, read: $read, messageId: $messageId)';
   }
 
   @override
@@ -218,7 +236,10 @@ class _$_ChatMessageDto extends _ChatMessageDto {
                 const DeepCollectionEquality()
                     .equals(other.photoUrl, photoUrl)) &&
             (identical(other.read, read) ||
-                const DeepCollectionEquality().equals(other.read, read)));
+                const DeepCollectionEquality().equals(other.read, read)) &&
+            (identical(other.messageId, messageId) ||
+                const DeepCollectionEquality()
+                    .equals(other.messageId, messageId)));
   }
 
   @override
@@ -228,7 +249,8 @@ class _$_ChatMessageDto extends _ChatMessageDto {
       const DeepCollectionEquality().hash(timeSent) ^
       const DeepCollectionEquality().hash(senderId) ^
       const DeepCollectionEquality().hash(photoUrl) ^
-      const DeepCollectionEquality().hash(read);
+      const DeepCollectionEquality().hash(read) ^
+      const DeepCollectionEquality().hash(messageId);
 
   @JsonKey(ignore: true)
   @override
@@ -247,7 +269,8 @@ abstract class _ChatMessageDto extends ChatMessageDto {
       required String timeSent,
       required String senderId,
       required String photoUrl,
-      required bool read}) = _$_ChatMessageDto;
+      required bool read,
+      required String messageId}) = _$_ChatMessageDto;
   const _ChatMessageDto._() : super._();
 
   factory _ChatMessageDto.fromJson(Map<String, dynamic> json) =
@@ -263,6 +286,8 @@ abstract class _ChatMessageDto extends ChatMessageDto {
   String get photoUrl => throw _privateConstructorUsedError;
   @override
   bool get read => throw _privateConstructorUsedError;
+  @override
+  String get messageId => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$ChatMessageDtoCopyWith<_ChatMessageDto> get copyWith =>
