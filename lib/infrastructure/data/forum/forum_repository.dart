@@ -67,7 +67,7 @@ class ForumPostRepository implements IForumRepository {
       final pollDto = PollDto.fromDomain(poll);
 
       await pollDoc.set(pollDto.toJson());
-      
+
       return right(unit);
     } on FirebaseException catch (e) {
       if (e.message!.contains('PERMISSION_DENIED')) {
@@ -76,5 +76,28 @@ class ForumPostRepository implements IForumRepository {
         return left(const DataFailure.unexpected());
       }
     }
+  }
+
+  @override
+  Stream<Either<DataFailure, List<ForumPost>>> retrieveForums() async* {
+    final forumsRef = await _firestore.forumsRef();
+    yield* forumsRef
+        .orderBy('timestamp', descending: true)
+        .snapshots()
+        .map(
+          (snapshot) => right<DataFailure, List<ForumPost>>(
+            snapshot.docs
+                .map((doc) => ForumPostDto.fromFirestore(doc).toDomain())
+                .toList(),
+          ),
+        )
+        .handleError((e) {
+      if (e is FirebaseException && e.message!.contains('PERMISSION_DENIED')) {
+        return left(const DataFailure.insufficientPermission());
+      } else {
+        print(e);
+        return left(const DataFailure.unexpected());
+      }
+    });
   }
 }

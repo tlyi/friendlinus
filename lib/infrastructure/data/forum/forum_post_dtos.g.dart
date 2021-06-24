@@ -8,6 +8,7 @@ part of 'forum_post_dtos.dart';
 
 _$_ForumPostDto _$_$_ForumPostDtoFromJson(Map<String, dynamic> json) {
   return _$_ForumPostDto(
+    forumId: json['forumId'] as String,
     title: json['title'] as String,
     tag: json['tag'] as String,
     body: json['body'] as String,
@@ -17,11 +18,13 @@ _$_ForumPostDto _$_$_ForumPostDtoFromJson(Map<String, dynamic> json) {
     photoUrl: json['photoUrl'] as String,
     photoAdded: json['photoAdded'] as bool,
     pollAdded: json['pollAdded'] as bool,
+    timestamp: json['timestamp'] as String,
   );
 }
 
 Map<String, dynamic> _$_$_ForumPostDtoToJson(_$_ForumPostDto instance) =>
     <String, dynamic>{
+      'forumId': instance.forumId,
       'title': instance.title,
       'tag': instance.tag,
       'body': instance.body,
@@ -31,4 +34,5 @@ Map<String, dynamic> _$_$_ForumPostDtoToJson(_$_ForumPostDto instance) =>
       'photoUrl': instance.photoUrl,
       'photoAdded': instance.photoAdded,
       'pollAdded': instance.pollAdded,
+      'timestamp': instance.timestamp,
     };

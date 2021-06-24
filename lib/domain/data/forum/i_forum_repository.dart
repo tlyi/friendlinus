@@ -9,4 +9,5 @@ abstract class IForumRepository {
   Future<Either<DataFailure, Unit>> create(ForumPost forumPost, String forumId);
   Future<Either<DataFailure, String>> uploadPhoto(File photo, String forumId);
   Future<Either<DataFailure, Unit>> createPoll(Poll poll, String forumId);
+  Stream<Either<DataFailure, List<ForumPost>>> retrieveForums();
 }

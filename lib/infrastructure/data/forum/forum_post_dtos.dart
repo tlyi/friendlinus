@@ -11,6 +11,7 @@ abstract class ForumPostDto implements _$ForumPostDto {
   const ForumPostDto._();
 
   const factory ForumPostDto({
+    required String forumId,
     required String title,
     required String tag,
     required String body,
@@ -20,11 +21,13 @@ abstract class ForumPostDto implements _$ForumPostDto {
     required String photoUrl,
     required bool photoAdded,
     required bool pollAdded,
+    required String timestamp,
 
   }) = _ForumPostDto;
 
   factory ForumPostDto.fromDomain(ForumPost forumPost) {
     return ForumPostDto(
+      forumId: forumPost.forumId,
       title: forumPost.title.getOrCrash(),
       tag: forumPost.tag.getOrCrash(),
       body: forumPost.body.getOrCrash(),
@@ -34,11 +37,13 @@ abstract class ForumPostDto implements _$ForumPostDto {
       photoUrl: forumPost.photoUrl,
       photoAdded: forumPost.photoAdded,
       pollAdded: forumPost.pollAdded,
+      timestamp: forumPost.timestamp,
     );
   }
 
   ForumPost toDomain() {
     return ForumPost(
+      forumId: forumId,
       title: Title(title),
       tag: Tag(tag),
       body: Body(body),
@@ -48,6 +53,7 @@ abstract class ForumPostDto implements _$ForumPostDto {
       photoUrl: photoUrl,
       photoAdded: photoAdded,
       pollAdded: pollAdded,
+      timestamp: timestamp,
     );
   }
 

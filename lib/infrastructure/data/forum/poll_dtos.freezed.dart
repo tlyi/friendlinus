@@ -22,11 +22,13 @@ class _$PollDtoTearOff {
 
   _PollDto call(
       {required int numOptions,
+      required String title,
       required List<String> optionList,
       required List<int> voteList,
       required int totalVotes}) {
     return _PollDto(
       numOptions: numOptions,
+      title: title,
       optionList: optionList,
       voteList: voteList,
       totalVotes: totalVotes,
@@ -44,6 +46,7 @@ const $PollDto = _$PollDtoTearOff();
 /// @nodoc
 mixin _$PollDto {
   int get numOptions => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
   List<String> get optionList => throw _privateConstructorUsedError;
   List<int> get voteList => throw _privateConstructorUsedError;
   int get totalVotes => throw _privateConstructorUsedError;
@@ -59,6 +62,7 @@ abstract class $PollDtoCopyWith<$Res> {
       _$PollDtoCopyWithImpl<$Res>;
   $Res call(
       {int numOptions,
+      String title,
       List<String> optionList,
       List<int> voteList,
       int totalVotes});
@@ -75,6 +79,7 @@ class _$PollDtoCopyWithImpl<$Res> implements $PollDtoCopyWith<$Res> {
   @override
   $Res call({
     Object? numOptions = freezed,
+    Object? title = freezed,
     Object? optionList = freezed,
     Object? voteList = freezed,
     Object? totalVotes = freezed,
@@ -84,6 +89,10 @@ class _$PollDtoCopyWithImpl<$Res> implements $PollDtoCopyWith<$Res> {
           ? _value.numOptions
           : numOptions // ignore: cast_nullable_to_non_nullable
               as int,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
       optionList: optionList == freezed
           ? _value.optionList
           : optionList // ignore: cast_nullable_to_non_nullable
@@ -107,6 +116,7 @@ abstract class _$PollDtoCopyWith<$Res> implements $PollDtoCopyWith<$Res> {
   @override
   $Res call(
       {int numOptions,
+      String title,
       List<String> optionList,
       List<int> voteList,
       int totalVotes});
@@ -124,6 +134,7 @@ class __$PollDtoCopyWithImpl<$Res> extends _$PollDtoCopyWithImpl<$Res>
   @override
   $Res call({
     Object? numOptions = freezed,
+    Object? title = freezed,
     Object? optionList = freezed,
     Object? voteList = freezed,
     Object? totalVotes = freezed,
@@ -133,6 +144,10 @@ class __$PollDtoCopyWithImpl<$Res> extends _$PollDtoCopyWithImpl<$Res>
           ? _value.numOptions
           : numOptions // ignore: cast_nullable_to_non_nullable
               as int,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
       optionList: optionList == freezed
           ? _value.optionList
           : optionList // ignore: cast_nullable_to_non_nullable
@@ -154,6 +169,7 @@ class __$PollDtoCopyWithImpl<$Res> extends _$PollDtoCopyWithImpl<$Res>
 class _$_PollDto extends _PollDto {
   const _$_PollDto(
       {required this.numOptions,
+      required this.title,
       required this.optionList,
       required this.voteList,
       required this.totalVotes})
@@ -165,6 +181,8 @@ class _$_PollDto extends _PollDto {
   @override
   final int numOptions;
   @override
+  final String title;
+  @override
   final List<String> optionList;
   @override
   final List<int> voteList;
@@ -173,7 +191,7 @@ class _$_PollDto extends _PollDto {
 
   @override
   String toString() {
-    return 'PollDto(numOptions: $numOptions, optionList: $optionList, voteList: $voteList, totalVotes: $totalVotes)';
+    return 'PollDto(numOptions: $numOptions, title: $title, optionList: $optionList, voteList: $voteList, totalVotes: $totalVotes)';
   }
 
   @override
@@ -183,6 +201,8 @@ class _$_PollDto extends _PollDto {
             (identical(other.numOptions, numOptions) ||
                 const DeepCollectionEquality()
                     .equals(other.numOptions, numOptions)) &&
+            (identical(other.title, title) ||
+                const DeepCollectionEquality().equals(other.title, title)) &&
             (identical(other.optionList, optionList) ||
                 const DeepCollectionEquality()
                     .equals(other.optionList, optionList)) &&
@@ -198,6 +218,7 @@ class _$_PollDto extends _PollDto {
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(numOptions) ^
+      const DeepCollectionEquality().hash(title) ^
       const DeepCollectionEquality().hash(optionList) ^
       const DeepCollectionEquality().hash(voteList) ^
       const DeepCollectionEquality().hash(totalVotes);
@@ -216,6 +237,7 @@ class _$_PollDto extends _PollDto {
 abstract class _PollDto extends PollDto {
   const factory _PollDto(
       {required int numOptions,
+      required String title,
       required List<String> optionList,
       required List<int> voteList,
       required int totalVotes}) = _$_PollDto;
@@ -225,6 +247,8 @@ abstract class _PollDto extends PollDto {
 
   @override
   int get numOptions => throw _privateConstructorUsedError;
+  @override
+  String get title => throw _privateConstructorUsedError;
   @override
   List<String> get optionList => throw _privateConstructorUsedError;
   @override

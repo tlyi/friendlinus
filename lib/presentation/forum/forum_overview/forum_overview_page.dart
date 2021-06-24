@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:friendlinus/application/forum/forum_watcher/forum_watcher_bloc.dart';
+import 'package:friendlinus/injection.dart';
 import 'package:friendlinus/presentation/core/app_bar.dart';
 import 'package:friendlinus/presentation/core/nav_bar.dart';
 import 'package:friendlinus/presentation/forum/forum_overview/widgets/forum_overview_body.dart';
@@ -14,6 +17,7 @@ class ForumOverviewPage extends StatelessWidget {
       appBar: appBar(context: context, header: 'Forums'),
       bottomNavigationBar: const NavigationBar(),
       floatingActionButton: FloatingActionButton(
+        tooltip: 'Post a Forum',
         onPressed: () {
           context.pushRoute(const ForumFormRoute());
         },
@@ -28,7 +32,11 @@ class ForumOverviewPage extends StatelessWidget {
               maxHeight: MediaQuery.of(context).size.height -
                   (MediaQuery.of(context).padding.top + kToolbarHeight),
             ),
-            child: ForumOverviewBody(),
+            child: BlocProvider(
+              create: (context) => getIt<ForumWatcherBloc>()
+                  ..add(const ForumWatcherEvent.retrieveForumsStarted()),
+              child: ForumOverviewBody(),
+            ),
           ),
         ),
       ),

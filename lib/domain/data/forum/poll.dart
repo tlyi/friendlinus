@@ -9,11 +9,12 @@ abstract class Poll implements _$Poll {
 
   const factory Poll({
     required int numOptions,
+    required Title title,
     required List<PollOption> optionList,
     required List<int> voteList,
     required int totalVotes,
   }) = _Poll;
 
   factory Poll.empty() =>
-      const Poll(numOptions: 0, optionList: [], voteList: [], totalVotes: 0);
+      Poll(numOptions: 0, title: Title(''), optionList: [], voteList: [], totalVotes: 0);
 }

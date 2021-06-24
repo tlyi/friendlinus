@@ -11,6 +11,8 @@ class ForumFormEvent with _$ForumFormEvent {
   const factory ForumFormEvent.pollAdded() = _PollAdded;
   const factory ForumFormEvent.pollNumOptionsChanged(int numOptions) =
       _PollNumOptionsChanged;
+      const factory ForumFormEvent.pollTitleChanged(String pollTitleStr) =
+      _PollTitleChanged;
   const factory ForumFormEvent.pollOptionChanged(int index, String optionStr) =
       _PollOptionChanged;
   const factory ForumFormEvent.photoRemoved() = _PhotoRemoved;

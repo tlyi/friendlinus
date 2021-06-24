@@ -12,6 +12,7 @@ abstract class PollDto implements _$PollDto {
 
   const factory PollDto({
     required int numOptions,
+    required String title,
     required List<String> optionList,
     required List<int> voteList,
     required int totalVotes,
@@ -20,7 +21,8 @@ abstract class PollDto implements _$PollDto {
   factory PollDto.fromDomain(Poll poll) {
     return PollDto(
       numOptions: poll.numOptions,
-      optionList: poll.optionList.map((value) => value.toString()).toList(),
+      title: poll.title.getOrCrash(),
+      optionList: poll.optionList.map((value) => value.getOrCrash()).toList(),
       voteList: poll.voteList,
       totalVotes: poll.totalVotes,
     );
@@ -29,6 +31,7 @@ abstract class PollDto implements _$PollDto {
   Poll toDomain() {
     return Poll(
       numOptions: numOptions,
+      title: Title(title),
       optionList: optionList.map((value) => PollOption(value)).toList(),
       voteList: voteList,
       totalVotes: totalVotes,

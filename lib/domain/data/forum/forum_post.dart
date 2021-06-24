@@ -1,5 +1,6 @@
 import 'dart:core';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:friendlinus/domain/core/value_objects.dart';
 import 'package:friendlinus/domain/data/forum/poll.dart';
 import 'package:friendlinus/domain/data/forum/value_objects.dart';
 
@@ -10,6 +11,7 @@ abstract class ForumPost implements _$ForumPost {
   const ForumPost._();
 
   const factory ForumPost({
+    required String forumId,
     required Title title,
     required Tag tag,
     required Body body,
@@ -19,9 +21,11 @@ abstract class ForumPost implements _$ForumPost {
     required String photoUrl,
     required bool photoAdded,
     required bool pollAdded, //Use this bool to check if poll exists and navigate to poll via forumId in firestore
+    required String timestamp,
   }) = _ForumPost;
 
   factory ForumPost.empty() => ForumPost(
+        forumId: UniqueId('').getOrCrash(),
         title: Title(''),
         tag: Tag(''),
         body: Body(''),
@@ -31,5 +35,6 @@ abstract class ForumPost implements _$ForumPost {
         photoUrl: '',
         photoAdded: false,
         pollAdded: false,
+        timestamp: '',
       );
 }
