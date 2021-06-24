@@ -6,7 +6,9 @@ class ForumFormState with _$ForumFormState {
     required String forumId,
     required ForumPost forumPost,
     required Either<DataFailure, String> photoUrl,
-   required Option<Either<DataFailure, Unit>> createFailureOrSuccessOption,
+    required Poll poll,
+    required Option<Either<DataFailure, Unit>> createPollFailureOrSuccessOption,
+    required Option<Either<DataFailure, Unit>> createFailureOrSuccessOption,
     required bool isLoading,
   }) = _ForumFormState;
 
@@ -14,7 +16,9 @@ class ForumFormState with _$ForumFormState {
         forumId: UniqueId('').getOrCrash(),
         forumPost: ForumPost.empty(),
         photoUrl: right(''),
+        poll: Poll.empty(),
         createFailureOrSuccessOption: none(),
+        createPollFailureOrSuccessOption: none(),
         isLoading: false,
       );
 }

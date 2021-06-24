@@ -49,6 +49,27 @@ class _$ForumFormEventTearOff {
     return const _PollAdded();
   }
 
+  _PollNumOptionsChanged pollNumOptionsChanged(int numOptions) {
+    return _PollNumOptionsChanged(
+      numOptions,
+    );
+  }
+
+  _PollOptionChanged pollOptionChanged(int index, String optionStr) {
+    return _PollOptionChanged(
+      index,
+      optionStr,
+    );
+  }
+
+  _PhotoRemoved photoRemoved() {
+    return const _PhotoRemoved();
+  }
+
+  _PollRemoved pollRemoved() {
+    return const _PollRemoved();
+  }
+
   _CreatedPost createdPost() {
     return const _CreatedPost();
   }
@@ -67,6 +88,10 @@ mixin _$ForumFormEvent {
     required TResult Function() anonStateChanged,
     required TResult Function(File photo, String forumId) photoAdded,
     required TResult Function() pollAdded,
+    required TResult Function(int numOptions) pollNumOptionsChanged,
+    required TResult Function(int index, String optionStr) pollOptionChanged,
+    required TResult Function() photoRemoved,
+    required TResult Function() pollRemoved,
     required TResult Function() createdPost,
   }) =>
       throw _privateConstructorUsedError;
@@ -78,6 +103,10 @@ mixin _$ForumFormEvent {
     TResult Function()? anonStateChanged,
     TResult Function(File photo, String forumId)? photoAdded,
     TResult Function()? pollAdded,
+    TResult Function(int numOptions)? pollNumOptionsChanged,
+    TResult Function(int index, String optionStr)? pollOptionChanged,
+    TResult Function()? photoRemoved,
+    TResult Function()? pollRemoved,
     TResult Function()? createdPost,
     required TResult orElse(),
   }) =>
@@ -90,6 +119,11 @@ mixin _$ForumFormEvent {
     required TResult Function(_AnonStateChanged value) anonStateChanged,
     required TResult Function(_PhotoAdded value) photoAdded,
     required TResult Function(_PollAdded value) pollAdded,
+    required TResult Function(_PollNumOptionsChanged value)
+        pollNumOptionsChanged,
+    required TResult Function(_PollOptionChanged value) pollOptionChanged,
+    required TResult Function(_PhotoRemoved value) photoRemoved,
+    required TResult Function(_PollRemoved value) pollRemoved,
     required TResult Function(_CreatedPost value) createdPost,
   }) =>
       throw _privateConstructorUsedError;
@@ -101,6 +135,10 @@ mixin _$ForumFormEvent {
     TResult Function(_AnonStateChanged value)? anonStateChanged,
     TResult Function(_PhotoAdded value)? photoAdded,
     TResult Function(_PollAdded value)? pollAdded,
+    TResult Function(_PollNumOptionsChanged value)? pollNumOptionsChanged,
+    TResult Function(_PollOptionChanged value)? pollOptionChanged,
+    TResult Function(_PhotoRemoved value)? photoRemoved,
+    TResult Function(_PollRemoved value)? pollRemoved,
     TResult Function(_CreatedPost value)? createdPost,
     required TResult orElse(),
   }) =>
@@ -204,6 +242,10 @@ class _$_TitleChanged with DiagnosticableTreeMixin implements _TitleChanged {
     required TResult Function() anonStateChanged,
     required TResult Function(File photo, String forumId) photoAdded,
     required TResult Function() pollAdded,
+    required TResult Function(int numOptions) pollNumOptionsChanged,
+    required TResult Function(int index, String optionStr) pollOptionChanged,
+    required TResult Function() photoRemoved,
+    required TResult Function() pollRemoved,
     required TResult Function() createdPost,
   }) {
     return titleChanged(titleStr);
@@ -218,6 +260,10 @@ class _$_TitleChanged with DiagnosticableTreeMixin implements _TitleChanged {
     TResult Function()? anonStateChanged,
     TResult Function(File photo, String forumId)? photoAdded,
     TResult Function()? pollAdded,
+    TResult Function(int numOptions)? pollNumOptionsChanged,
+    TResult Function(int index, String optionStr)? pollOptionChanged,
+    TResult Function()? photoRemoved,
+    TResult Function()? pollRemoved,
     TResult Function()? createdPost,
     required TResult orElse(),
   }) {
@@ -236,6 +282,11 @@ class _$_TitleChanged with DiagnosticableTreeMixin implements _TitleChanged {
     required TResult Function(_AnonStateChanged value) anonStateChanged,
     required TResult Function(_PhotoAdded value) photoAdded,
     required TResult Function(_PollAdded value) pollAdded,
+    required TResult Function(_PollNumOptionsChanged value)
+        pollNumOptionsChanged,
+    required TResult Function(_PollOptionChanged value) pollOptionChanged,
+    required TResult Function(_PhotoRemoved value) photoRemoved,
+    required TResult Function(_PollRemoved value) pollRemoved,
     required TResult Function(_CreatedPost value) createdPost,
   }) {
     return titleChanged(this);
@@ -250,6 +301,10 @@ class _$_TitleChanged with DiagnosticableTreeMixin implements _TitleChanged {
     TResult Function(_AnonStateChanged value)? anonStateChanged,
     TResult Function(_PhotoAdded value)? photoAdded,
     TResult Function(_PollAdded value)? pollAdded,
+    TResult Function(_PollNumOptionsChanged value)? pollNumOptionsChanged,
+    TResult Function(_PollOptionChanged value)? pollOptionChanged,
+    TResult Function(_PhotoRemoved value)? photoRemoved,
+    TResult Function(_PollRemoved value)? pollRemoved,
     TResult Function(_CreatedPost value)? createdPost,
     required TResult orElse(),
   }) {
@@ -347,6 +402,10 @@ class _$_TagChanged with DiagnosticableTreeMixin implements _TagChanged {
     required TResult Function() anonStateChanged,
     required TResult Function(File photo, String forumId) photoAdded,
     required TResult Function() pollAdded,
+    required TResult Function(int numOptions) pollNumOptionsChanged,
+    required TResult Function(int index, String optionStr) pollOptionChanged,
+    required TResult Function() photoRemoved,
+    required TResult Function() pollRemoved,
     required TResult Function() createdPost,
   }) {
     return tagChanged(tagStr);
@@ -361,6 +420,10 @@ class _$_TagChanged with DiagnosticableTreeMixin implements _TagChanged {
     TResult Function()? anonStateChanged,
     TResult Function(File photo, String forumId)? photoAdded,
     TResult Function()? pollAdded,
+    TResult Function(int numOptions)? pollNumOptionsChanged,
+    TResult Function(int index, String optionStr)? pollOptionChanged,
+    TResult Function()? photoRemoved,
+    TResult Function()? pollRemoved,
     TResult Function()? createdPost,
     required TResult orElse(),
   }) {
@@ -379,6 +442,11 @@ class _$_TagChanged with DiagnosticableTreeMixin implements _TagChanged {
     required TResult Function(_AnonStateChanged value) anonStateChanged,
     required TResult Function(_PhotoAdded value) photoAdded,
     required TResult Function(_PollAdded value) pollAdded,
+    required TResult Function(_PollNumOptionsChanged value)
+        pollNumOptionsChanged,
+    required TResult Function(_PollOptionChanged value) pollOptionChanged,
+    required TResult Function(_PhotoRemoved value) photoRemoved,
+    required TResult Function(_PollRemoved value) pollRemoved,
     required TResult Function(_CreatedPost value) createdPost,
   }) {
     return tagChanged(this);
@@ -393,6 +461,10 @@ class _$_TagChanged with DiagnosticableTreeMixin implements _TagChanged {
     TResult Function(_AnonStateChanged value)? anonStateChanged,
     TResult Function(_PhotoAdded value)? photoAdded,
     TResult Function(_PollAdded value)? pollAdded,
+    TResult Function(_PollNumOptionsChanged value)? pollNumOptionsChanged,
+    TResult Function(_PollOptionChanged value)? pollOptionChanged,
+    TResult Function(_PhotoRemoved value)? photoRemoved,
+    TResult Function(_PollRemoved value)? pollRemoved,
     TResult Function(_CreatedPost value)? createdPost,
     required TResult orElse(),
   }) {
@@ -491,6 +563,10 @@ class _$_BodyChanged with DiagnosticableTreeMixin implements _BodyChanged {
     required TResult Function() anonStateChanged,
     required TResult Function(File photo, String forumId) photoAdded,
     required TResult Function() pollAdded,
+    required TResult Function(int numOptions) pollNumOptionsChanged,
+    required TResult Function(int index, String optionStr) pollOptionChanged,
+    required TResult Function() photoRemoved,
+    required TResult Function() pollRemoved,
     required TResult Function() createdPost,
   }) {
     return bodyChanged(bodyStr);
@@ -505,6 +581,10 @@ class _$_BodyChanged with DiagnosticableTreeMixin implements _BodyChanged {
     TResult Function()? anonStateChanged,
     TResult Function(File photo, String forumId)? photoAdded,
     TResult Function()? pollAdded,
+    TResult Function(int numOptions)? pollNumOptionsChanged,
+    TResult Function(int index, String optionStr)? pollOptionChanged,
+    TResult Function()? photoRemoved,
+    TResult Function()? pollRemoved,
     TResult Function()? createdPost,
     required TResult orElse(),
   }) {
@@ -523,6 +603,11 @@ class _$_BodyChanged with DiagnosticableTreeMixin implements _BodyChanged {
     required TResult Function(_AnonStateChanged value) anonStateChanged,
     required TResult Function(_PhotoAdded value) photoAdded,
     required TResult Function(_PollAdded value) pollAdded,
+    required TResult Function(_PollNumOptionsChanged value)
+        pollNumOptionsChanged,
+    required TResult Function(_PollOptionChanged value) pollOptionChanged,
+    required TResult Function(_PhotoRemoved value) photoRemoved,
+    required TResult Function(_PollRemoved value) pollRemoved,
     required TResult Function(_CreatedPost value) createdPost,
   }) {
     return bodyChanged(this);
@@ -537,6 +622,10 @@ class _$_BodyChanged with DiagnosticableTreeMixin implements _BodyChanged {
     TResult Function(_AnonStateChanged value)? anonStateChanged,
     TResult Function(_PhotoAdded value)? photoAdded,
     TResult Function(_PollAdded value)? pollAdded,
+    TResult Function(_PollNumOptionsChanged value)? pollNumOptionsChanged,
+    TResult Function(_PollOptionChanged value)? pollOptionChanged,
+    TResult Function(_PhotoRemoved value)? photoRemoved,
+    TResult Function(_PollRemoved value)? pollRemoved,
     TResult Function(_CreatedPost value)? createdPost,
     required TResult orElse(),
   }) {
@@ -611,6 +700,10 @@ class _$_AnonStateChanged
     required TResult Function() anonStateChanged,
     required TResult Function(File photo, String forumId) photoAdded,
     required TResult Function() pollAdded,
+    required TResult Function(int numOptions) pollNumOptionsChanged,
+    required TResult Function(int index, String optionStr) pollOptionChanged,
+    required TResult Function() photoRemoved,
+    required TResult Function() pollRemoved,
     required TResult Function() createdPost,
   }) {
     return anonStateChanged();
@@ -625,6 +718,10 @@ class _$_AnonStateChanged
     TResult Function()? anonStateChanged,
     TResult Function(File photo, String forumId)? photoAdded,
     TResult Function()? pollAdded,
+    TResult Function(int numOptions)? pollNumOptionsChanged,
+    TResult Function(int index, String optionStr)? pollOptionChanged,
+    TResult Function()? photoRemoved,
+    TResult Function()? pollRemoved,
     TResult Function()? createdPost,
     required TResult orElse(),
   }) {
@@ -643,6 +740,11 @@ class _$_AnonStateChanged
     required TResult Function(_AnonStateChanged value) anonStateChanged,
     required TResult Function(_PhotoAdded value) photoAdded,
     required TResult Function(_PollAdded value) pollAdded,
+    required TResult Function(_PollNumOptionsChanged value)
+        pollNumOptionsChanged,
+    required TResult Function(_PollOptionChanged value) pollOptionChanged,
+    required TResult Function(_PhotoRemoved value) photoRemoved,
+    required TResult Function(_PollRemoved value) pollRemoved,
     required TResult Function(_CreatedPost value) createdPost,
   }) {
     return anonStateChanged(this);
@@ -657,6 +759,10 @@ class _$_AnonStateChanged
     TResult Function(_AnonStateChanged value)? anonStateChanged,
     TResult Function(_PhotoAdded value)? photoAdded,
     TResult Function(_PollAdded value)? pollAdded,
+    TResult Function(_PollNumOptionsChanged value)? pollNumOptionsChanged,
+    TResult Function(_PollOptionChanged value)? pollOptionChanged,
+    TResult Function(_PhotoRemoved value)? photoRemoved,
+    TResult Function(_PollRemoved value)? pollRemoved,
     TResult Function(_CreatedPost value)? createdPost,
     required TResult orElse(),
   }) {
@@ -761,6 +867,10 @@ class _$_PhotoAdded with DiagnosticableTreeMixin implements _PhotoAdded {
     required TResult Function() anonStateChanged,
     required TResult Function(File photo, String forumId) photoAdded,
     required TResult Function() pollAdded,
+    required TResult Function(int numOptions) pollNumOptionsChanged,
+    required TResult Function(int index, String optionStr) pollOptionChanged,
+    required TResult Function() photoRemoved,
+    required TResult Function() pollRemoved,
     required TResult Function() createdPost,
   }) {
     return photoAdded(photo, forumId);
@@ -775,6 +885,10 @@ class _$_PhotoAdded with DiagnosticableTreeMixin implements _PhotoAdded {
     TResult Function()? anonStateChanged,
     TResult Function(File photo, String forumId)? photoAdded,
     TResult Function()? pollAdded,
+    TResult Function(int numOptions)? pollNumOptionsChanged,
+    TResult Function(int index, String optionStr)? pollOptionChanged,
+    TResult Function()? photoRemoved,
+    TResult Function()? pollRemoved,
     TResult Function()? createdPost,
     required TResult orElse(),
   }) {
@@ -793,6 +907,11 @@ class _$_PhotoAdded with DiagnosticableTreeMixin implements _PhotoAdded {
     required TResult Function(_AnonStateChanged value) anonStateChanged,
     required TResult Function(_PhotoAdded value) photoAdded,
     required TResult Function(_PollAdded value) pollAdded,
+    required TResult Function(_PollNumOptionsChanged value)
+        pollNumOptionsChanged,
+    required TResult Function(_PollOptionChanged value) pollOptionChanged,
+    required TResult Function(_PhotoRemoved value) photoRemoved,
+    required TResult Function(_PollRemoved value) pollRemoved,
     required TResult Function(_CreatedPost value) createdPost,
   }) {
     return photoAdded(this);
@@ -807,6 +926,10 @@ class _$_PhotoAdded with DiagnosticableTreeMixin implements _PhotoAdded {
     TResult Function(_AnonStateChanged value)? anonStateChanged,
     TResult Function(_PhotoAdded value)? photoAdded,
     TResult Function(_PollAdded value)? pollAdded,
+    TResult Function(_PollNumOptionsChanged value)? pollNumOptionsChanged,
+    TResult Function(_PollOptionChanged value)? pollOptionChanged,
+    TResult Function(_PhotoRemoved value)? photoRemoved,
+    TResult Function(_PollRemoved value)? pollRemoved,
     TResult Function(_CreatedPost value)? createdPost,
     required TResult orElse(),
   }) {
@@ -877,6 +1000,10 @@ class _$_PollAdded with DiagnosticableTreeMixin implements _PollAdded {
     required TResult Function() anonStateChanged,
     required TResult Function(File photo, String forumId) photoAdded,
     required TResult Function() pollAdded,
+    required TResult Function(int numOptions) pollNumOptionsChanged,
+    required TResult Function(int index, String optionStr) pollOptionChanged,
+    required TResult Function() photoRemoved,
+    required TResult Function() pollRemoved,
     required TResult Function() createdPost,
   }) {
     return pollAdded();
@@ -891,6 +1018,10 @@ class _$_PollAdded with DiagnosticableTreeMixin implements _PollAdded {
     TResult Function()? anonStateChanged,
     TResult Function(File photo, String forumId)? photoAdded,
     TResult Function()? pollAdded,
+    TResult Function(int numOptions)? pollNumOptionsChanged,
+    TResult Function(int index, String optionStr)? pollOptionChanged,
+    TResult Function()? photoRemoved,
+    TResult Function()? pollRemoved,
     TResult Function()? createdPost,
     required TResult orElse(),
   }) {
@@ -909,6 +1040,11 @@ class _$_PollAdded with DiagnosticableTreeMixin implements _PollAdded {
     required TResult Function(_AnonStateChanged value) anonStateChanged,
     required TResult Function(_PhotoAdded value) photoAdded,
     required TResult Function(_PollAdded value) pollAdded,
+    required TResult Function(_PollNumOptionsChanged value)
+        pollNumOptionsChanged,
+    required TResult Function(_PollOptionChanged value) pollOptionChanged,
+    required TResult Function(_PhotoRemoved value) photoRemoved,
+    required TResult Function(_PollRemoved value) pollRemoved,
     required TResult Function(_CreatedPost value) createdPost,
   }) {
     return pollAdded(this);
@@ -923,6 +1059,10 @@ class _$_PollAdded with DiagnosticableTreeMixin implements _PollAdded {
     TResult Function(_AnonStateChanged value)? anonStateChanged,
     TResult Function(_PhotoAdded value)? photoAdded,
     TResult Function(_PollAdded value)? pollAdded,
+    TResult Function(_PollNumOptionsChanged value)? pollNumOptionsChanged,
+    TResult Function(_PollOptionChanged value)? pollOptionChanged,
+    TResult Function(_PhotoRemoved value)? photoRemoved,
+    TResult Function(_PollRemoved value)? pollRemoved,
     TResult Function(_CreatedPost value)? createdPost,
     required TResult orElse(),
   }) {
@@ -935,6 +1075,608 @@ class _$_PollAdded with DiagnosticableTreeMixin implements _PollAdded {
 
 abstract class _PollAdded implements ForumFormEvent {
   const factory _PollAdded() = _$_PollAdded;
+}
+
+/// @nodoc
+abstract class _$PollNumOptionsChangedCopyWith<$Res> {
+  factory _$PollNumOptionsChangedCopyWith(_PollNumOptionsChanged value,
+          $Res Function(_PollNumOptionsChanged) then) =
+      __$PollNumOptionsChangedCopyWithImpl<$Res>;
+  $Res call({int numOptions});
+}
+
+/// @nodoc
+class __$PollNumOptionsChangedCopyWithImpl<$Res>
+    extends _$ForumFormEventCopyWithImpl<$Res>
+    implements _$PollNumOptionsChangedCopyWith<$Res> {
+  __$PollNumOptionsChangedCopyWithImpl(_PollNumOptionsChanged _value,
+      $Res Function(_PollNumOptionsChanged) _then)
+      : super(_value, (v) => _then(v as _PollNumOptionsChanged));
+
+  @override
+  _PollNumOptionsChanged get _value => super._value as _PollNumOptionsChanged;
+
+  @override
+  $Res call({
+    Object? numOptions = freezed,
+  }) {
+    return _then(_PollNumOptionsChanged(
+      numOptions == freezed
+          ? _value.numOptions
+          : numOptions // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_PollNumOptionsChanged
+    with DiagnosticableTreeMixin
+    implements _PollNumOptionsChanged {
+  const _$_PollNumOptionsChanged(this.numOptions);
+
+  @override
+  final int numOptions;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ForumFormEvent.pollNumOptionsChanged(numOptions: $numOptions)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ForumFormEvent.pollNumOptionsChanged'))
+      ..add(DiagnosticsProperty('numOptions', numOptions));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _PollNumOptionsChanged &&
+            (identical(other.numOptions, numOptions) ||
+                const DeepCollectionEquality()
+                    .equals(other.numOptions, numOptions)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(numOptions);
+
+  @JsonKey(ignore: true)
+  @override
+  _$PollNumOptionsChangedCopyWith<_PollNumOptionsChanged> get copyWith =>
+      __$PollNumOptionsChangedCopyWithImpl<_PollNumOptionsChanged>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String titleStr) titleChanged,
+    required TResult Function(String tagStr) tagChanged,
+    required TResult Function(String bodyStr) bodyChanged,
+    required TResult Function() anonStateChanged,
+    required TResult Function(File photo, String forumId) photoAdded,
+    required TResult Function() pollAdded,
+    required TResult Function(int numOptions) pollNumOptionsChanged,
+    required TResult Function(int index, String optionStr) pollOptionChanged,
+    required TResult Function() photoRemoved,
+    required TResult Function() pollRemoved,
+    required TResult Function() createdPost,
+  }) {
+    return pollNumOptionsChanged(numOptions);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String titleStr)? titleChanged,
+    TResult Function(String tagStr)? tagChanged,
+    TResult Function(String bodyStr)? bodyChanged,
+    TResult Function()? anonStateChanged,
+    TResult Function(File photo, String forumId)? photoAdded,
+    TResult Function()? pollAdded,
+    TResult Function(int numOptions)? pollNumOptionsChanged,
+    TResult Function(int index, String optionStr)? pollOptionChanged,
+    TResult Function()? photoRemoved,
+    TResult Function()? pollRemoved,
+    TResult Function()? createdPost,
+    required TResult orElse(),
+  }) {
+    if (pollNumOptionsChanged != null) {
+      return pollNumOptionsChanged(numOptions);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_TitleChanged value) titleChanged,
+    required TResult Function(_TagChanged value) tagChanged,
+    required TResult Function(_BodyChanged value) bodyChanged,
+    required TResult Function(_AnonStateChanged value) anonStateChanged,
+    required TResult Function(_PhotoAdded value) photoAdded,
+    required TResult Function(_PollAdded value) pollAdded,
+    required TResult Function(_PollNumOptionsChanged value)
+        pollNumOptionsChanged,
+    required TResult Function(_PollOptionChanged value) pollOptionChanged,
+    required TResult Function(_PhotoRemoved value) photoRemoved,
+    required TResult Function(_PollRemoved value) pollRemoved,
+    required TResult Function(_CreatedPost value) createdPost,
+  }) {
+    return pollNumOptionsChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_TitleChanged value)? titleChanged,
+    TResult Function(_TagChanged value)? tagChanged,
+    TResult Function(_BodyChanged value)? bodyChanged,
+    TResult Function(_AnonStateChanged value)? anonStateChanged,
+    TResult Function(_PhotoAdded value)? photoAdded,
+    TResult Function(_PollAdded value)? pollAdded,
+    TResult Function(_PollNumOptionsChanged value)? pollNumOptionsChanged,
+    TResult Function(_PollOptionChanged value)? pollOptionChanged,
+    TResult Function(_PhotoRemoved value)? photoRemoved,
+    TResult Function(_PollRemoved value)? pollRemoved,
+    TResult Function(_CreatedPost value)? createdPost,
+    required TResult orElse(),
+  }) {
+    if (pollNumOptionsChanged != null) {
+      return pollNumOptionsChanged(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _PollNumOptionsChanged implements ForumFormEvent {
+  const factory _PollNumOptionsChanged(int numOptions) =
+      _$_PollNumOptionsChanged;
+
+  int get numOptions => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$PollNumOptionsChangedCopyWith<_PollNumOptionsChanged> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$PollOptionChangedCopyWith<$Res> {
+  factory _$PollOptionChangedCopyWith(
+          _PollOptionChanged value, $Res Function(_PollOptionChanged) then) =
+      __$PollOptionChangedCopyWithImpl<$Res>;
+  $Res call({int index, String optionStr});
+}
+
+/// @nodoc
+class __$PollOptionChangedCopyWithImpl<$Res>
+    extends _$ForumFormEventCopyWithImpl<$Res>
+    implements _$PollOptionChangedCopyWith<$Res> {
+  __$PollOptionChangedCopyWithImpl(
+      _PollOptionChanged _value, $Res Function(_PollOptionChanged) _then)
+      : super(_value, (v) => _then(v as _PollOptionChanged));
+
+  @override
+  _PollOptionChanged get _value => super._value as _PollOptionChanged;
+
+  @override
+  $Res call({
+    Object? index = freezed,
+    Object? optionStr = freezed,
+  }) {
+    return _then(_PollOptionChanged(
+      index == freezed
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int,
+      optionStr == freezed
+          ? _value.optionStr
+          : optionStr // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_PollOptionChanged
+    with DiagnosticableTreeMixin
+    implements _PollOptionChanged {
+  const _$_PollOptionChanged(this.index, this.optionStr);
+
+  @override
+  final int index;
+  @override
+  final String optionStr;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ForumFormEvent.pollOptionChanged(index: $index, optionStr: $optionStr)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ForumFormEvent.pollOptionChanged'))
+      ..add(DiagnosticsProperty('index', index))
+      ..add(DiagnosticsProperty('optionStr', optionStr));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _PollOptionChanged &&
+            (identical(other.index, index) ||
+                const DeepCollectionEquality().equals(other.index, index)) &&
+            (identical(other.optionStr, optionStr) ||
+                const DeepCollectionEquality()
+                    .equals(other.optionStr, optionStr)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(index) ^
+      const DeepCollectionEquality().hash(optionStr);
+
+  @JsonKey(ignore: true)
+  @override
+  _$PollOptionChangedCopyWith<_PollOptionChanged> get copyWith =>
+      __$PollOptionChangedCopyWithImpl<_PollOptionChanged>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String titleStr) titleChanged,
+    required TResult Function(String tagStr) tagChanged,
+    required TResult Function(String bodyStr) bodyChanged,
+    required TResult Function() anonStateChanged,
+    required TResult Function(File photo, String forumId) photoAdded,
+    required TResult Function() pollAdded,
+    required TResult Function(int numOptions) pollNumOptionsChanged,
+    required TResult Function(int index, String optionStr) pollOptionChanged,
+    required TResult Function() photoRemoved,
+    required TResult Function() pollRemoved,
+    required TResult Function() createdPost,
+  }) {
+    return pollOptionChanged(index, optionStr);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String titleStr)? titleChanged,
+    TResult Function(String tagStr)? tagChanged,
+    TResult Function(String bodyStr)? bodyChanged,
+    TResult Function()? anonStateChanged,
+    TResult Function(File photo, String forumId)? photoAdded,
+    TResult Function()? pollAdded,
+    TResult Function(int numOptions)? pollNumOptionsChanged,
+    TResult Function(int index, String optionStr)? pollOptionChanged,
+    TResult Function()? photoRemoved,
+    TResult Function()? pollRemoved,
+    TResult Function()? createdPost,
+    required TResult orElse(),
+  }) {
+    if (pollOptionChanged != null) {
+      return pollOptionChanged(index, optionStr);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_TitleChanged value) titleChanged,
+    required TResult Function(_TagChanged value) tagChanged,
+    required TResult Function(_BodyChanged value) bodyChanged,
+    required TResult Function(_AnonStateChanged value) anonStateChanged,
+    required TResult Function(_PhotoAdded value) photoAdded,
+    required TResult Function(_PollAdded value) pollAdded,
+    required TResult Function(_PollNumOptionsChanged value)
+        pollNumOptionsChanged,
+    required TResult Function(_PollOptionChanged value) pollOptionChanged,
+    required TResult Function(_PhotoRemoved value) photoRemoved,
+    required TResult Function(_PollRemoved value) pollRemoved,
+    required TResult Function(_CreatedPost value) createdPost,
+  }) {
+    return pollOptionChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_TitleChanged value)? titleChanged,
+    TResult Function(_TagChanged value)? tagChanged,
+    TResult Function(_BodyChanged value)? bodyChanged,
+    TResult Function(_AnonStateChanged value)? anonStateChanged,
+    TResult Function(_PhotoAdded value)? photoAdded,
+    TResult Function(_PollAdded value)? pollAdded,
+    TResult Function(_PollNumOptionsChanged value)? pollNumOptionsChanged,
+    TResult Function(_PollOptionChanged value)? pollOptionChanged,
+    TResult Function(_PhotoRemoved value)? photoRemoved,
+    TResult Function(_PollRemoved value)? pollRemoved,
+    TResult Function(_CreatedPost value)? createdPost,
+    required TResult orElse(),
+  }) {
+    if (pollOptionChanged != null) {
+      return pollOptionChanged(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _PollOptionChanged implements ForumFormEvent {
+  const factory _PollOptionChanged(int index, String optionStr) =
+      _$_PollOptionChanged;
+
+  int get index => throw _privateConstructorUsedError;
+  String get optionStr => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$PollOptionChangedCopyWith<_PollOptionChanged> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$PhotoRemovedCopyWith<$Res> {
+  factory _$PhotoRemovedCopyWith(
+          _PhotoRemoved value, $Res Function(_PhotoRemoved) then) =
+      __$PhotoRemovedCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$PhotoRemovedCopyWithImpl<$Res>
+    extends _$ForumFormEventCopyWithImpl<$Res>
+    implements _$PhotoRemovedCopyWith<$Res> {
+  __$PhotoRemovedCopyWithImpl(
+      _PhotoRemoved _value, $Res Function(_PhotoRemoved) _then)
+      : super(_value, (v) => _then(v as _PhotoRemoved));
+
+  @override
+  _PhotoRemoved get _value => super._value as _PhotoRemoved;
+}
+
+/// @nodoc
+
+class _$_PhotoRemoved with DiagnosticableTreeMixin implements _PhotoRemoved {
+  const _$_PhotoRemoved();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ForumFormEvent.photoRemoved()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties..add(DiagnosticsProperty('type', 'ForumFormEvent.photoRemoved'));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _PhotoRemoved);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String titleStr) titleChanged,
+    required TResult Function(String tagStr) tagChanged,
+    required TResult Function(String bodyStr) bodyChanged,
+    required TResult Function() anonStateChanged,
+    required TResult Function(File photo, String forumId) photoAdded,
+    required TResult Function() pollAdded,
+    required TResult Function(int numOptions) pollNumOptionsChanged,
+    required TResult Function(int index, String optionStr) pollOptionChanged,
+    required TResult Function() photoRemoved,
+    required TResult Function() pollRemoved,
+    required TResult Function() createdPost,
+  }) {
+    return photoRemoved();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String titleStr)? titleChanged,
+    TResult Function(String tagStr)? tagChanged,
+    TResult Function(String bodyStr)? bodyChanged,
+    TResult Function()? anonStateChanged,
+    TResult Function(File photo, String forumId)? photoAdded,
+    TResult Function()? pollAdded,
+    TResult Function(int numOptions)? pollNumOptionsChanged,
+    TResult Function(int index, String optionStr)? pollOptionChanged,
+    TResult Function()? photoRemoved,
+    TResult Function()? pollRemoved,
+    TResult Function()? createdPost,
+    required TResult orElse(),
+  }) {
+    if (photoRemoved != null) {
+      return photoRemoved();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_TitleChanged value) titleChanged,
+    required TResult Function(_TagChanged value) tagChanged,
+    required TResult Function(_BodyChanged value) bodyChanged,
+    required TResult Function(_AnonStateChanged value) anonStateChanged,
+    required TResult Function(_PhotoAdded value) photoAdded,
+    required TResult Function(_PollAdded value) pollAdded,
+    required TResult Function(_PollNumOptionsChanged value)
+        pollNumOptionsChanged,
+    required TResult Function(_PollOptionChanged value) pollOptionChanged,
+    required TResult Function(_PhotoRemoved value) photoRemoved,
+    required TResult Function(_PollRemoved value) pollRemoved,
+    required TResult Function(_CreatedPost value) createdPost,
+  }) {
+    return photoRemoved(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_TitleChanged value)? titleChanged,
+    TResult Function(_TagChanged value)? tagChanged,
+    TResult Function(_BodyChanged value)? bodyChanged,
+    TResult Function(_AnonStateChanged value)? anonStateChanged,
+    TResult Function(_PhotoAdded value)? photoAdded,
+    TResult Function(_PollAdded value)? pollAdded,
+    TResult Function(_PollNumOptionsChanged value)? pollNumOptionsChanged,
+    TResult Function(_PollOptionChanged value)? pollOptionChanged,
+    TResult Function(_PhotoRemoved value)? photoRemoved,
+    TResult Function(_PollRemoved value)? pollRemoved,
+    TResult Function(_CreatedPost value)? createdPost,
+    required TResult orElse(),
+  }) {
+    if (photoRemoved != null) {
+      return photoRemoved(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _PhotoRemoved implements ForumFormEvent {
+  const factory _PhotoRemoved() = _$_PhotoRemoved;
+}
+
+/// @nodoc
+abstract class _$PollRemovedCopyWith<$Res> {
+  factory _$PollRemovedCopyWith(
+          _PollRemoved value, $Res Function(_PollRemoved) then) =
+      __$PollRemovedCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$PollRemovedCopyWithImpl<$Res>
+    extends _$ForumFormEventCopyWithImpl<$Res>
+    implements _$PollRemovedCopyWith<$Res> {
+  __$PollRemovedCopyWithImpl(
+      _PollRemoved _value, $Res Function(_PollRemoved) _then)
+      : super(_value, (v) => _then(v as _PollRemoved));
+
+  @override
+  _PollRemoved get _value => super._value as _PollRemoved;
+}
+
+/// @nodoc
+
+class _$_PollRemoved with DiagnosticableTreeMixin implements _PollRemoved {
+  const _$_PollRemoved();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ForumFormEvent.pollRemoved()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties..add(DiagnosticsProperty('type', 'ForumFormEvent.pollRemoved'));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _PollRemoved);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String titleStr) titleChanged,
+    required TResult Function(String tagStr) tagChanged,
+    required TResult Function(String bodyStr) bodyChanged,
+    required TResult Function() anonStateChanged,
+    required TResult Function(File photo, String forumId) photoAdded,
+    required TResult Function() pollAdded,
+    required TResult Function(int numOptions) pollNumOptionsChanged,
+    required TResult Function(int index, String optionStr) pollOptionChanged,
+    required TResult Function() photoRemoved,
+    required TResult Function() pollRemoved,
+    required TResult Function() createdPost,
+  }) {
+    return pollRemoved();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String titleStr)? titleChanged,
+    TResult Function(String tagStr)? tagChanged,
+    TResult Function(String bodyStr)? bodyChanged,
+    TResult Function()? anonStateChanged,
+    TResult Function(File photo, String forumId)? photoAdded,
+    TResult Function()? pollAdded,
+    TResult Function(int numOptions)? pollNumOptionsChanged,
+    TResult Function(int index, String optionStr)? pollOptionChanged,
+    TResult Function()? photoRemoved,
+    TResult Function()? pollRemoved,
+    TResult Function()? createdPost,
+    required TResult orElse(),
+  }) {
+    if (pollRemoved != null) {
+      return pollRemoved();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_TitleChanged value) titleChanged,
+    required TResult Function(_TagChanged value) tagChanged,
+    required TResult Function(_BodyChanged value) bodyChanged,
+    required TResult Function(_AnonStateChanged value) anonStateChanged,
+    required TResult Function(_PhotoAdded value) photoAdded,
+    required TResult Function(_PollAdded value) pollAdded,
+    required TResult Function(_PollNumOptionsChanged value)
+        pollNumOptionsChanged,
+    required TResult Function(_PollOptionChanged value) pollOptionChanged,
+    required TResult Function(_PhotoRemoved value) photoRemoved,
+    required TResult Function(_PollRemoved value) pollRemoved,
+    required TResult Function(_CreatedPost value) createdPost,
+  }) {
+    return pollRemoved(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_TitleChanged value)? titleChanged,
+    TResult Function(_TagChanged value)? tagChanged,
+    TResult Function(_BodyChanged value)? bodyChanged,
+    TResult Function(_AnonStateChanged value)? anonStateChanged,
+    TResult Function(_PhotoAdded value)? photoAdded,
+    TResult Function(_PollAdded value)? pollAdded,
+    TResult Function(_PollNumOptionsChanged value)? pollNumOptionsChanged,
+    TResult Function(_PollOptionChanged value)? pollOptionChanged,
+    TResult Function(_PhotoRemoved value)? photoRemoved,
+    TResult Function(_PollRemoved value)? pollRemoved,
+    TResult Function(_CreatedPost value)? createdPost,
+    required TResult orElse(),
+  }) {
+    if (pollRemoved != null) {
+      return pollRemoved(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _PollRemoved implements ForumFormEvent {
+  const factory _PollRemoved() = _$_PollRemoved;
 }
 
 /// @nodoc
@@ -989,6 +1731,10 @@ class _$_CreatedPost with DiagnosticableTreeMixin implements _CreatedPost {
     required TResult Function() anonStateChanged,
     required TResult Function(File photo, String forumId) photoAdded,
     required TResult Function() pollAdded,
+    required TResult Function(int numOptions) pollNumOptionsChanged,
+    required TResult Function(int index, String optionStr) pollOptionChanged,
+    required TResult Function() photoRemoved,
+    required TResult Function() pollRemoved,
     required TResult Function() createdPost,
   }) {
     return createdPost();
@@ -1003,6 +1749,10 @@ class _$_CreatedPost with DiagnosticableTreeMixin implements _CreatedPost {
     TResult Function()? anonStateChanged,
     TResult Function(File photo, String forumId)? photoAdded,
     TResult Function()? pollAdded,
+    TResult Function(int numOptions)? pollNumOptionsChanged,
+    TResult Function(int index, String optionStr)? pollOptionChanged,
+    TResult Function()? photoRemoved,
+    TResult Function()? pollRemoved,
     TResult Function()? createdPost,
     required TResult orElse(),
   }) {
@@ -1021,6 +1771,11 @@ class _$_CreatedPost with DiagnosticableTreeMixin implements _CreatedPost {
     required TResult Function(_AnonStateChanged value) anonStateChanged,
     required TResult Function(_PhotoAdded value) photoAdded,
     required TResult Function(_PollAdded value) pollAdded,
+    required TResult Function(_PollNumOptionsChanged value)
+        pollNumOptionsChanged,
+    required TResult Function(_PollOptionChanged value) pollOptionChanged,
+    required TResult Function(_PhotoRemoved value) photoRemoved,
+    required TResult Function(_PollRemoved value) pollRemoved,
     required TResult Function(_CreatedPost value) createdPost,
   }) {
     return createdPost(this);
@@ -1035,6 +1790,10 @@ class _$_CreatedPost with DiagnosticableTreeMixin implements _CreatedPost {
     TResult Function(_AnonStateChanged value)? anonStateChanged,
     TResult Function(_PhotoAdded value)? photoAdded,
     TResult Function(_PollAdded value)? pollAdded,
+    TResult Function(_PollNumOptionsChanged value)? pollNumOptionsChanged,
+    TResult Function(_PollOptionChanged value)? pollOptionChanged,
+    TResult Function(_PhotoRemoved value)? photoRemoved,
+    TResult Function(_PollRemoved value)? pollRemoved,
     TResult Function(_CreatedPost value)? createdPost,
     required TResult orElse(),
   }) {
@@ -1057,12 +1816,17 @@ class _$ForumFormStateTearOff {
       {required String forumId,
       required ForumPost forumPost,
       required Either<DataFailure, String> photoUrl,
+      required Poll poll,
+      required Option<Either<DataFailure, Unit>>
+          createPollFailureOrSuccessOption,
       required Option<Either<DataFailure, Unit>> createFailureOrSuccessOption,
       required bool isLoading}) {
     return _ForumFormState(
       forumId: forumId,
       forumPost: forumPost,
       photoUrl: photoUrl,
+      poll: poll,
+      createPollFailureOrSuccessOption: createPollFailureOrSuccessOption,
       createFailureOrSuccessOption: createFailureOrSuccessOption,
       isLoading: isLoading,
     );
@@ -1077,6 +1841,9 @@ mixin _$ForumFormState {
   String get forumId => throw _privateConstructorUsedError;
   ForumPost get forumPost => throw _privateConstructorUsedError;
   Either<DataFailure, String> get photoUrl =>
+      throw _privateConstructorUsedError;
+  Poll get poll => throw _privateConstructorUsedError;
+  Option<Either<DataFailure, Unit>> get createPollFailureOrSuccessOption =>
       throw _privateConstructorUsedError;
   Option<Either<DataFailure, Unit>> get createFailureOrSuccessOption =>
       throw _privateConstructorUsedError;
@@ -1096,10 +1863,13 @@ abstract class $ForumFormStateCopyWith<$Res> {
       {String forumId,
       ForumPost forumPost,
       Either<DataFailure, String> photoUrl,
+      Poll poll,
+      Option<Either<DataFailure, Unit>> createPollFailureOrSuccessOption,
       Option<Either<DataFailure, Unit>> createFailureOrSuccessOption,
       bool isLoading});
 
   $ForumPostCopyWith<$Res> get forumPost;
+  $PollCopyWith<$Res> get poll;
 }
 
 /// @nodoc
@@ -1116,6 +1886,8 @@ class _$ForumFormStateCopyWithImpl<$Res>
     Object? forumId = freezed,
     Object? forumPost = freezed,
     Object? photoUrl = freezed,
+    Object? poll = freezed,
+    Object? createPollFailureOrSuccessOption = freezed,
     Object? createFailureOrSuccessOption = freezed,
     Object? isLoading = freezed,
   }) {
@@ -1132,6 +1904,15 @@ class _$ForumFormStateCopyWithImpl<$Res>
           ? _value.photoUrl
           : photoUrl // ignore: cast_nullable_to_non_nullable
               as Either<DataFailure, String>,
+      poll: poll == freezed
+          ? _value.poll
+          : poll // ignore: cast_nullable_to_non_nullable
+              as Poll,
+      createPollFailureOrSuccessOption: createPollFailureOrSuccessOption ==
+              freezed
+          ? _value.createPollFailureOrSuccessOption
+          : createPollFailureOrSuccessOption // ignore: cast_nullable_to_non_nullable
+              as Option<Either<DataFailure, Unit>>,
       createFailureOrSuccessOption: createFailureOrSuccessOption == freezed
           ? _value.createFailureOrSuccessOption
           : createFailureOrSuccessOption // ignore: cast_nullable_to_non_nullable
@@ -1149,6 +1930,13 @@ class _$ForumFormStateCopyWithImpl<$Res>
       return _then(_value.copyWith(forumPost: value));
     });
   }
+
+  @override
+  $PollCopyWith<$Res> get poll {
+    return $PollCopyWith<$Res>(_value.poll, (value) {
+      return _then(_value.copyWith(poll: value));
+    });
+  }
 }
 
 /// @nodoc
@@ -1162,11 +1950,15 @@ abstract class _$ForumFormStateCopyWith<$Res>
       {String forumId,
       ForumPost forumPost,
       Either<DataFailure, String> photoUrl,
+      Poll poll,
+      Option<Either<DataFailure, Unit>> createPollFailureOrSuccessOption,
       Option<Either<DataFailure, Unit>> createFailureOrSuccessOption,
       bool isLoading});
 
   @override
   $ForumPostCopyWith<$Res> get forumPost;
+  @override
+  $PollCopyWith<$Res> get poll;
 }
 
 /// @nodoc
@@ -1185,6 +1977,8 @@ class __$ForumFormStateCopyWithImpl<$Res>
     Object? forumId = freezed,
     Object? forumPost = freezed,
     Object? photoUrl = freezed,
+    Object? poll = freezed,
+    Object? createPollFailureOrSuccessOption = freezed,
     Object? createFailureOrSuccessOption = freezed,
     Object? isLoading = freezed,
   }) {
@@ -1201,6 +1995,15 @@ class __$ForumFormStateCopyWithImpl<$Res>
           ? _value.photoUrl
           : photoUrl // ignore: cast_nullable_to_non_nullable
               as Either<DataFailure, String>,
+      poll: poll == freezed
+          ? _value.poll
+          : poll // ignore: cast_nullable_to_non_nullable
+              as Poll,
+      createPollFailureOrSuccessOption: createPollFailureOrSuccessOption ==
+              freezed
+          ? _value.createPollFailureOrSuccessOption
+          : createPollFailureOrSuccessOption // ignore: cast_nullable_to_non_nullable
+              as Option<Either<DataFailure, Unit>>,
       createFailureOrSuccessOption: createFailureOrSuccessOption == freezed
           ? _value.createFailureOrSuccessOption
           : createFailureOrSuccessOption // ignore: cast_nullable_to_non_nullable
@@ -1222,6 +2025,8 @@ class _$_ForumFormState
       {required this.forumId,
       required this.forumPost,
       required this.photoUrl,
+      required this.poll,
+      required this.createPollFailureOrSuccessOption,
       required this.createFailureOrSuccessOption,
       required this.isLoading});
 
@@ -1232,13 +2037,17 @@ class _$_ForumFormState
   @override
   final Either<DataFailure, String> photoUrl;
   @override
+  final Poll poll;
+  @override
+  final Option<Either<DataFailure, Unit>> createPollFailureOrSuccessOption;
+  @override
   final Option<Either<DataFailure, Unit>> createFailureOrSuccessOption;
   @override
   final bool isLoading;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ForumFormState(forumId: $forumId, forumPost: $forumPost, photoUrl: $photoUrl, createFailureOrSuccessOption: $createFailureOrSuccessOption, isLoading: $isLoading)';
+    return 'ForumFormState(forumId: $forumId, forumPost: $forumPost, photoUrl: $photoUrl, poll: $poll, createPollFailureOrSuccessOption: $createPollFailureOrSuccessOption, createFailureOrSuccessOption: $createFailureOrSuccessOption, isLoading: $isLoading)';
   }
 
   @override
@@ -1249,6 +2058,9 @@ class _$_ForumFormState
       ..add(DiagnosticsProperty('forumId', forumId))
       ..add(DiagnosticsProperty('forumPost', forumPost))
       ..add(DiagnosticsProperty('photoUrl', photoUrl))
+      ..add(DiagnosticsProperty('poll', poll))
+      ..add(DiagnosticsProperty(
+          'createPollFailureOrSuccessOption', createPollFailureOrSuccessOption))
       ..add(DiagnosticsProperty(
           'createFailureOrSuccessOption', createFailureOrSuccessOption))
       ..add(DiagnosticsProperty('isLoading', isLoading));
@@ -1267,6 +2079,13 @@ class _$_ForumFormState
             (identical(other.photoUrl, photoUrl) ||
                 const DeepCollectionEquality()
                     .equals(other.photoUrl, photoUrl)) &&
+            (identical(other.poll, poll) ||
+                const DeepCollectionEquality().equals(other.poll, poll)) &&
+            (identical(other.createPollFailureOrSuccessOption,
+                    createPollFailureOrSuccessOption) ||
+                const DeepCollectionEquality().equals(
+                    other.createPollFailureOrSuccessOption,
+                    createPollFailureOrSuccessOption)) &&
             (identical(other.createFailureOrSuccessOption,
                     createFailureOrSuccessOption) ||
                 const DeepCollectionEquality().equals(
@@ -1283,6 +2102,8 @@ class _$_ForumFormState
       const DeepCollectionEquality().hash(forumId) ^
       const DeepCollectionEquality().hash(forumPost) ^
       const DeepCollectionEquality().hash(photoUrl) ^
+      const DeepCollectionEquality().hash(poll) ^
+      const DeepCollectionEquality().hash(createPollFailureOrSuccessOption) ^
       const DeepCollectionEquality().hash(createFailureOrSuccessOption) ^
       const DeepCollectionEquality().hash(isLoading);
 
@@ -1297,6 +2118,9 @@ abstract class _ForumFormState implements ForumFormState {
       {required String forumId,
       required ForumPost forumPost,
       required Either<DataFailure, String> photoUrl,
+      required Poll poll,
+      required Option<Either<DataFailure, Unit>>
+          createPollFailureOrSuccessOption,
       required Option<Either<DataFailure, Unit>> createFailureOrSuccessOption,
       required bool isLoading}) = _$_ForumFormState;
 
@@ -1306,6 +2130,11 @@ abstract class _ForumFormState implements ForumFormState {
   ForumPost get forumPost => throw _privateConstructorUsedError;
   @override
   Either<DataFailure, String> get photoUrl =>
+      throw _privateConstructorUsedError;
+  @override
+  Poll get poll => throw _privateConstructorUsedError;
+  @override
+  Option<Either<DataFailure, Unit>> get createPollFailureOrSuccessOption =>
       throw _privateConstructorUsedError;
   @override
   Option<Either<DataFailure, Unit>> get createFailureOrSuccessOption =>

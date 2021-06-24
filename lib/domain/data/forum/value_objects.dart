@@ -42,3 +42,17 @@ class Body extends ValueObject<String> {
 
   const Body._(this.value);
 }
+
+class PollOption extends ValueObject<String> {
+  @override
+  final Either<ValueFailure<String>, String> value;
+
+  static const maxLength = 15;
+
+  factory PollOption(String input) {
+    return PollOption._(validateMaxStringLength(input, maxLength)
+        .flatMap(validateStringNotEmpty));
+  }
+
+  const PollOption._(this.value);
+}

@@ -15,11 +15,26 @@ class ForumForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<ForumFormBloc, ForumFormState>(
       listener: (context, state) {
-        // TODO: implement listener
+        state.createFailureOrSuccessOption.fold(
+            () {},
+            (either) => either.fold((failure) {
+                  FlushbarHelper.createError(
+                      message: failure.map(
+                          unexpected: (_) => 'Unexpected error',
+                          insufficientPermission: (_) =>
+                              'Insufficient permission',
+                          unableToUpdate: (_) => 'Unable to update'));
+                }, (_) => context.popRoute()));
+        state.photoUrl.fold(
+            (f) => FlushbarHelper.createError(
+                message: 'Error uploading photo to database, try again'),
+            (r) => null);
       },
       builder: (context, state) {
-        String photoUrl =
-            context.read<ForumFormBloc>().state.photoUrl.getOrElse(() => '');
+        bool photoAdded =
+            context.read<ForumFormBloc>().state.forumPost.photoAdded;
+        bool pollAdded =
+            context.read<ForumFormBloc>().state.forumPost.pollAdded;
         return Form(
           autovalidateMode: AutovalidateMode.onUserInteraction,
           child: Container(
@@ -33,7 +48,8 @@ class ForumForm extends StatelessWidget {
                 const SizedBox(height: 15),
                 const _BuildBody(),
                 const SizedBox(height: 15),
-                if (photoUrl != '') const _BuildImage(),
+                if (photoAdded) const _BuildImage(),
+                if (pollAdded) _BuildPoll(),
                 Row(
                   children: <Widget>[
                     _BuildAnonymousSwitch(),
@@ -157,15 +173,78 @@ class _BuildImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: <Widget>[
-      Container(
-          height: MediaQuery.of(context).size.height * 0.4,
-          child: Image(
-            fit: BoxFit.contain,
-            image: NetworkImage(
-                context.read<ForumFormBloc>().state.forumPost.photoUrl),
-          ))
-    ]);
+    return Container(
+        height: MediaQuery.of(context).size.height * 0.4,
+        child: Image(
+          fit: BoxFit.contain,
+          image: NetworkImage(
+              context.read<ForumFormBloc>().state.forumPost.photoUrl),
+        ));
+  }
+}
+
+class _BuildPoll extends StatelessWidget {
+  const _BuildPoll({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    List<int> optionList = [0, 1, 2, 3, 4];
+    int numOptions = context.read<ForumFormBloc>().state.poll.numOptions;
+    List<String> pollOptions = List.filled(numOptions, '');
+    return Column(
+      children: [
+        Row(
+          children: <Widget>[
+            const Text('Number of Poll Options'),
+            const SizedBox(width: 20),
+            DropdownButton<int>(
+              value: numOptions,
+              items: optionList.map((int value) {
+                return DropdownMenuItem<int>(
+                    value: value, child: Text(value.toString()));
+              }).toList(),
+              onChanged: (int? newValue) {
+                context
+                    .read<ForumFormBloc>()
+                    .add(ForumFormEvent.pollNumOptionsChanged(newValue!));
+              },
+            )
+          ],
+        ),
+        for (var i in optionList.take(numOptions))
+          Padding(
+            padding: const EdgeInsets.only(bottom: 15.0),
+            child: TextFormField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                labelText: 'Poll Option #${i + 1}',
+              ),
+              autocorrect: false,
+              onChanged: (value) => context
+                  .read<ForumFormBloc>()
+                  .add(ForumFormEvent.pollOptionChanged(i, value)),
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              validator: (_) {
+                return context
+                    .read<ForumFormBloc>()
+                    .state
+                    .poll
+                    .optionList[i]
+                    .value
+                    .fold(
+                        (f) => f.maybeMap(
+                            emptyString: (_) => 'Poll optiion cannot be empty',
+                            exceedingLength: (_) =>
+                                'Option too long, maximum of 15 characters only',
+                            orElse: () => null),
+                        (_) => null);
+              },
+            ),
+          ),
+      ],
+    );
   }
 }
 
@@ -197,7 +276,6 @@ class _BuildSaveButton extends StatelessWidget {
             context
                 .read<ForumFormBloc>()
                 .add(const ForumFormEvent.createdPost());
-            context.popRoute();
           },
           child: const Text(
             "Post",
@@ -210,69 +288,162 @@ class _BuildSaveButton extends StatelessWidget {
 class _BuildAddImageButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: 20.0),
-      child: Container(
-        height: 40,
-        decoration: const BoxDecoration(
-          shape: BoxShape.circle,
-          color: Color(0xFF7BA5BB),
-        ),
-        child: IconButton(
-          icon: const Icon(
-            Icons.image_outlined,
-            color: Colors.white,
+    if (context.read<ForumFormBloc>().state.forumPost.photoAdded) {
+      return Container(
+          margin: const EdgeInsets.only(top: 20.0),
+          child: Container(
+              height: 40,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.red[300],
+              ),
+              child: IconButton(
+                icon: const Icon(
+                  Icons.delete,
+                  color: Colors.white,
+                ),
+                tooltip: 'Remove Image',
+                onPressed: () => context
+                    .read<ForumFormBloc>()
+                    .add(const ForumFormEvent.photoRemoved()),
+              )));
+    } else {
+      return Container(
+        margin: const EdgeInsets.only(top: 20.0),
+        child: Container(
+          height: 40,
+          decoration: const BoxDecoration(
+            shape: BoxShape.circle,
+            color: Color(0xFF7BA5BB),
           ),
-          tooltip: 'Add Image',
-          onPressed: () async {
-            final picker = ImagePicker();
-            File? pickedImage;
-            final pickedFile = await picker.getImage(
-              source: ImageSource.gallery,
-              imageQuality: 70,
-            );
-            if (pickedFile == null) {
-              FlushbarHelper.createError(message: 'No image picked')
-                  .show(context);
-            } else {
-              pickedImage = File(pickedFile.path);
-              context.read<ForumFormBloc>().add(ForumFormEvent.photoAdded(
-                    pickedImage,
-                    context.read<ForumFormBloc>().state.forumId,
-                  ));
-            }
-          },
+          child: IconButton(
+            icon: const Icon(
+              Icons.image_outlined,
+              color: Colors.white,
+            ),
+            tooltip: 'Add Image',
+            onPressed: () async {
+              void pickPhoto() async {
+                final picker = ImagePicker();
+                File? pickedImage;
+                final pickedFile = await picker.getImage(
+                  source: ImageSource.gallery,
+                  imageQuality: 70,
+                );
+                if (pickedFile == null) {
+                  FlushbarHelper.createError(message: 'No image picked')
+                      .show(context);
+                } else {
+                  pickedImage = File(pickedFile.path);
+                  context.read<ForumFormBloc>().add(ForumFormEvent.photoAdded(
+                        pickedImage,
+                        context.read<ForumFormBloc>().state.forumId,
+                      ));
+                }
+              }
+
+              if (context.read<ForumFormBloc>().state.forumPost.pollAdded) {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                          title: const Text('Delete Poll?'),
+                          content: const Text(
+                              'Press OK to delete the existing poll and add a picture.'),
+                          actions: <Widget>[
+                            TextButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: const Text('Cancel')),
+                            TextButton(
+                                onPressed: () {
+                                  pickPhoto();
+                                  Navigator.pop(context);
+                                },
+                                child: const Text('OK'))
+                          ],
+                        ));
+              } else {
+                pickPhoto();
+              }
+            },
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 }
 
 class _BuildAddPollButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: 20.0),
-      child: Container(
-        height: 40,
-        decoration: const BoxDecoration(
-          shape: BoxShape.circle,
-          color: Color(0xFF7BA5BB),
-        ),
-        child: IconButton(
-          icon: Transform.rotate(
-            angle: 90 * pi / 180,
-            child: const Icon(
-              Icons.poll_outlined,
-              color: Colors.white,
-            ),
+    if (context.read<ForumFormBloc>().state.forumPost.pollAdded) {
+      return Container(
+          margin: const EdgeInsets.only(top: 20.0),
+          child: Container(
+              height: 40,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.red[300],
+              ),
+              child: IconButton(
+                icon: const Icon(
+                  Icons.delete,
+                  color: Colors.white,
+                ),
+                tooltip: 'Remove Poll',
+                onPressed: () => context
+                    .read<ForumFormBloc>()
+                    .add(const ForumFormEvent.pollRemoved()),
+              )));
+    } else {
+      return Container(
+        margin: const EdgeInsets.only(top: 20.0),
+        child: Container(
+          height: 40,
+          decoration: const BoxDecoration(
+            shape: BoxShape.circle,
+            color: Color(0xFF7BA5BB),
           ),
-          tooltip: 'Add Poll',
-          onPressed: () {
-            print('user adds poll');
-          },
+          child: IconButton(
+            icon: Transform.rotate(
+              angle: 90 * pi / 180,
+              child: const Icon(
+                Icons.poll_outlined,
+                color: Colors.white,
+              ),
+            ),
+            tooltip: 'Add Poll',
+            onPressed: () {
+              if (context.read<ForumFormBloc>().state.forumPost.photoAdded) {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                          title: const Text('Delete Photo?'),
+                          content: const Text(
+                              'Press OK to delete the uploaded photo and add a poll.'),
+                          actions: <Widget>[
+                            TextButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: const Text('Cancel')),
+                            TextButton(
+                                onPressed: () {
+                                  context
+                                      .read<ForumFormBloc>()
+                                      .add(const ForumFormEvent.pollAdded());
+
+                                  Navigator.pop(context);
+                                },
+                                child: const Text('OK'))
+                          ],
+                        ));
+              } else {
+                context
+                    .read<ForumFormBloc>()
+                    .add(const ForumFormEvent.pollAdded());
+              }
+            },
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 }
