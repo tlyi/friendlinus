@@ -9,6 +9,8 @@ import 'package:friendlinus/presentation/chats/chat_list/chat_list_page.dart';
 import 'package:intl/intl.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:friendlinus/domain/core/constants.dart' as constants;
 
 class ChatList extends StatelessWidget {
   const ChatList({Key? key}) : super(key: key);
@@ -39,8 +41,26 @@ class ChatList extends StatelessWidget {
                       backgroundImage: NetworkImage(profile.photoUrl),
                     ),
                     title: Text(profile.username.getOrCrash()),
-                    subtitle: Text(chat.lastMessage),
-                    trailing: Text(getTime(chat.timestamp)),
+                    subtitle: Text(
+                      chat.lastMessage,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    trailing: Row(mainAxisSize: MainAxisSize.min, children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 5),
+                        child: chat.lastSenderId == profile.uuid
+                            ? chat.lastMessageRead
+                                ? Container()
+                                : const Icon(MdiIcons.checkboxBlankCircle,
+                                    size: 15, color: constants.THEME_BLUE)
+                            : chat.lastMessageRead
+                                ? const Icon(MdiIcons.checkAll,
+                                    size: 17, color: constants.THEME_BLUE)
+                                : const Icon(MdiIcons.check, size: 17),
+                      ),
+                      Text(getTime(chat.timestamp))
+                    ]),
                     onTap: () {
                       context.pushRoute(ConvoRoute(
                           convoId: chat.userIdsCombined,

@@ -5,6 +5,7 @@ import 'package:friendlinus/application/chats/convo_actor/convo_actor_bloc.dart'
 import 'package:friendlinus/domain/data/profile/profile.dart';
 import 'package:friendlinus/injection.dart';
 import 'package:friendlinus/presentation/chats/convos/widgets/convo_actions.dart';
+import 'package:friendlinus/presentation/chats/convos/widgets/convo_messages.dart';
 import 'package:friendlinus/presentation/core/app_bar.dart';
 
 class ConvoPage extends StatelessWidget {
@@ -16,34 +17,33 @@ class ConvoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: appBar(
-          context: context,
-          header: senderProfile.username.getOrCrash(),
-          canGoBack: true),
-      body: Container(
-        alignment: Alignment.topCenter,
-        child: SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-                maxHeight: MediaQuery.of(context).size.height -
-                    (MediaQuery.of(context).padding.top + kToolbarHeight)),
-            child: MultiBlocProvider(
-              providers: [
-                BlocProvider(
-                  create: (context) => getIt<ConvoWatcherBloc>()
-                    ..add(ConvoWatcherEvent.retrieveConvoStarted(convoId)),
-                ),
-                BlocProvider(
-                  create: (context) => getIt<ConvoActorBloc>()
-                    ..add(ConvoActorEvent.convoOpened(convoId)),
-                )
-              ],
-              child:
-                  ConvoActions(convoId: convoId, senderProfile: senderProfile),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => getIt<ConvoWatcherBloc>()
+            ..add(ConvoWatcherEvent.retrieveConvoStarted(convoId)),
+        ),
+        BlocProvider(
+          create: (context) => getIt<ConvoActorBloc>()
+            ..add(ConvoActorEvent.convoOpened(convoId)),
+        ),
+      ],
+      child: Scaffold(
+        appBar: appBar(
+            context: context,
+            header: senderProfile.username.getOrCrash(),
+            canGoBack: true),
+        body: Column(children: [
+          Expanded(
+            child: ClipRRect(
+              child: ConvoMessages(
+                convoId: convoId,
+                senderProfile: senderProfile,
+              ),
             ),
           ),
-        ),
+          ConvoActions(convoId: convoId, senderProfile: senderProfile),
+        ]),
       ),
     );
   }
