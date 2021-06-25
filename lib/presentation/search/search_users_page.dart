@@ -9,12 +9,13 @@ import 'package:friendlinus/presentation/search/widgets/search_bar.dart';
 class SearchUsersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: appBar(context: context, header: 'Search Users', canGoBack: true),
-      bottomNavigationBar: const NavigationBar(),
-      body: BlocProvider(
-        create: (context) => getIt<SearchProfileBloc>(),
-        child: SearchBar(),
+    return BlocProvider(
+      create: (context) => getIt<SearchProfileBloc>(),
+      child: Scaffold(
+        appBar:
+            appBar(context: context, header: 'Search Users', canGoBack: true),
+        bottomNavigationBar: const NavigationBar(),
+        body: SearchBar(),
       ),
     );
   }

@@ -16,33 +16,27 @@ class OtherProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: appBar(
-        context: context,
-        header: userProfile.username.getOrCrash(),
-        canGoBack: true,
-      ),
-      bottomNavigationBar: const NavigationBar(),
-      body: Container(
-        alignment: Alignment.center,
-        child: SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              maxHeight: MediaQuery.of(context).size.height -
-                  (MediaQuery.of(context).padding.top + kToolbarHeight),
-            ),
-            child: MultiBlocProvider(
-              providers: [
-                BlocProvider(
-                  create: (context) =>
-                      getIt<ProfileFormBloc>(), //to revisit: what bloc to give
-                ),
-                BlocProvider(
-                  create: (context) => getIt<ChatBloc>(),
-                )
-              ],
-              child: OtherProfile(userProfile: userProfile),
-            ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) =>
+              getIt<ProfileFormBloc>(), //to revisit: what bloc to give
+        ),
+        BlocProvider(
+          create: (context) => getIt<ChatBloc>(),
+        )
+      ],
+      child: Scaffold(
+        appBar: appBar(
+          context: context,
+          header: userProfile.username.getOrCrash(),
+          canGoBack: true,
+        ),
+        bottomNavigationBar: const NavigationBar(),
+        body: Container(
+          alignment: Alignment.center,
+          child: SingleChildScrollView(
+            child: OtherProfile(userProfile: userProfile),
           ),
         ),
       ),

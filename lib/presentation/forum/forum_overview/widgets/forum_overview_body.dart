@@ -33,16 +33,13 @@ class ForumOverviewBody extends StatelessWidget {
                       ),
                       child: ListTile(
                         //isThreeLine: true,
-                        leading: SizedBox(
+                        leading: Column(
                           //DO NOT ADJUST SPACING :')
-                          height: 40,
-                          width: 40,
-                          child: Stack(
-                            children: <Widget>[
-                              SizedBox(
-                                height: 24,
-                                width: 24,
-                                child: IconButton(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Stack(
+                              children: [
+                                IconButton(
                                   padding: const EdgeInsets.all(0),
                                   onPressed: () {
                                     if (forum.likedUserIds.contains(userId)) {
@@ -59,17 +56,17 @@ class ForumOverviewBody extends StatelessWidget {
                                     color: forum.likedUserIds.contains(userId)
                                         ? Colors.grey[800]
                                         : Colors.grey[400],
+                                    size: 35,
                                   ),
                                 ),
-                              ),
-                              Positioned(
-                                  left: 8,
-                                  bottom: 3,
-                                  child: Text(forum.likes.toString())),
-                            ],
-                          ),
+                                Positioned(
+                                    left: 20,
+                                    bottom: -1,
+                                    child: Text(forum.likes.toString())),
+                              ],
+                            ),
+                          ],
                         ),
-
                         title: Text(forum.title.getOrCrash()),
                         subtitle: Text(
                           forum.body.getOrCrash(),
@@ -99,3 +96,44 @@ class ForumOverviewBody extends StatelessWidget {
     );
   }
 }
+
+
+/*
+leading: SizedBox(
+                          //DO NOT ADJUST SPACING :')
+                          height: 40,
+                          width: 40,
+                          child: Stack(
+                            children: <Widget>[
+                              SizedBox(
+                                height: 30,
+                                width: 30,
+                                child: IconButton(
+                                  padding: const EdgeInsets.all(0),
+                                  onPressed: () {
+                                    if (forum.likedUserIds.contains(userId)) {
+                                      context.read<ForumActorBloc>().add(
+                                          ForumActorEvent.unliked(
+                                              forum.forumId));
+                                    } else {
+                                      context.read<ForumActorBloc>().add(
+                                          ForumActorEvent.liked(forum.forumId));
+                                    }
+                                  },
+                                  icon: Icon(
+                                    Icons.arrow_drop_up,
+                                    color: forum.likedUserIds.contains(userId)
+                                        ? Colors.grey[800]
+                                        : Colors.grey[400],
+                                    size: 26,
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                  left: 8,
+                                  bottom: 3,
+                                  child: Text(forum.likes.toString())),
+                            ],
+                          ),
+
+                          */

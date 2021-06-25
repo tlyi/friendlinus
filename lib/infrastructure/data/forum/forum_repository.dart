@@ -195,9 +195,14 @@ class ForumPostRepository implements IForumRepository {
     try {
       await _firestore.runTransaction((transaction) async {
         final pollDoc = await _firestore.pollDocument(forumId);
+        List<double> voteList = [];
+        await pollDoc.get().then((snapshot) {
+          voteList = PollDto.fromFirestore(snapshot).toDomain().voteList;
+        });
+        voteList[index]++;
         transaction.update(pollDoc, {
-          'usersWhoVoted.$userId': index,
-          'voteList.$index': FieldValue.increment(1)
+          'usersWhoVoted.$userId': index, //user[id]=0
+          'voteList': voteList,
         });
       });
       return right(unit);

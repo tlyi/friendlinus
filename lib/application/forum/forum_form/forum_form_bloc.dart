@@ -115,22 +115,21 @@ class ForumFormBloc extends Bloc<ForumFormEvent, ForumFormState> {
       },
       createdPost: (e) async* {
         Either<DataFailure, Unit> failureOrSuccess;
-
-        final userOption = await getIt<IAuthFacade>().getSignedInUser();
-        final user = userOption.getOrElse(() => throw NotAuthenticatedError());
-        final String userID = user.id.getOrCrash();
+        final userId = await _forumRepository.getOwnId();
         yield state.copyWith(
             isLoading: true,
-            forumPost: state.forumPost.copyWith(posterUserId: userID),
-            poll: state.poll.copyWith(creatorUuid: userID));
+            forumPost: state.forumPost.copyWith(posterUserId: userId),
+            poll: state.poll.copyWith(creatorUuid: userId));
+
+        _profileRepository.addForum(state.forumPost.forumId);
         if (state.forumPost.pollAdded) {
           Either<DataFailure, Unit> pollFailureOrSuccess;
           pollFailureOrSuccess = await _forumRepository.createPoll(
-              state.poll, state.forumPost.forumId);
+              state.poll.copyWith(creatorUuid: userId),
+              state.forumPost.forumId);
           yield state.copyWith(
               createPollFailureOrSuccessOption: optionOf(pollFailureOrSuccess));
         }
-        _profileRepository.addForum(state.forumPost.forumId);
 
         failureOrSuccess = await _forumRepository.create(
             state.forumPost, state.forumPost.forumId);

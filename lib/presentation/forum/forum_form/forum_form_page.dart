@@ -10,25 +10,19 @@ class ForumFormPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: appBar(
-        context: context,
-        header: 'Create Post',
-        canClose: true,
-        notifications: false,
-      ),
-      body: Container(
-        alignment: Alignment.topCenter,
-        child: SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              maxHeight: MediaQuery.of(context).size.height -
-                  (MediaQuery.of(context).padding.top + kToolbarHeight),
-            ),
-            child: BlocProvider(
-              create: (context) => getIt<ForumFormBloc>(),
-              child: ForumForm(),
-            ),
+    return BlocProvider(
+      create: (context) => getIt<ForumFormBloc>(),
+      child: Scaffold(
+        appBar: appBar(
+          context: context,
+          header: 'Create Post',
+          canClose: true,
+          notifications: false,
+        ),
+        body: Container(
+          alignment: Alignment.topCenter,
+          child: SingleChildScrollView(
+            child: ForumForm(),
           ),
         ),
       ),

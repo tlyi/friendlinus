@@ -8,21 +8,21 @@ import 'package:friendlinus/presentation/sign_in/widgets/reset_password_form.dar
 class ResetPasswordPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: appBar(
-        context: context,
-        header: 'Reset Password',
-        canGoBack: true,
-      ),
-      body: Container(
-        margin: const EdgeInsets.all(30.0),
-        alignment: Alignment.center,
-        child: SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints:
-                BoxConstraints(maxHeight: MediaQuery.of(context).size.height),
-            child: BlocProvider(
-              create: (context) => getIt<SignInFormBloc>(),
+    return BlocProvider(
+      create: (context) => getIt<SignInFormBloc>(),
+      child: Scaffold(
+        appBar: appBar(
+          context: context,
+          header: 'Reset Password',
+          canGoBack: true,
+        ),
+        body: Container(
+          margin: const EdgeInsets.all(30.0),
+          alignment: Alignment.center,
+          child: SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints:
+                  BoxConstraints(maxHeight: MediaQuery.of(context).size.height),
               child: ResetPasswordForm(),
             ),
           ),
