@@ -26,6 +26,7 @@ class _$ForumPostDtoTearOff {
       required String tag,
       required String body,
       required int likes,
+      required List<String> likedUserIds,
       required String posterUserId,
       required bool isAnon,
       required String photoUrl,
@@ -38,6 +39,7 @@ class _$ForumPostDtoTearOff {
       tag: tag,
       body: body,
       likes: likes,
+      likedUserIds: likedUserIds,
       posterUserId: posterUserId,
       isAnon: isAnon,
       photoUrl: photoUrl,
@@ -62,6 +64,7 @@ mixin _$ForumPostDto {
   String get tag => throw _privateConstructorUsedError;
   String get body => throw _privateConstructorUsedError;
   int get likes => throw _privateConstructorUsedError;
+  List<String> get likedUserIds => throw _privateConstructorUsedError;
   String get posterUserId => throw _privateConstructorUsedError;
   bool get isAnon => throw _privateConstructorUsedError;
   String get photoUrl => throw _privateConstructorUsedError;
@@ -86,6 +89,7 @@ abstract class $ForumPostDtoCopyWith<$Res> {
       String tag,
       String body,
       int likes,
+      List<String> likedUserIds,
       String posterUserId,
       bool isAnon,
       String photoUrl,
@@ -109,6 +113,7 @@ class _$ForumPostDtoCopyWithImpl<$Res> implements $ForumPostDtoCopyWith<$Res> {
     Object? tag = freezed,
     Object? body = freezed,
     Object? likes = freezed,
+    Object? likedUserIds = freezed,
     Object? posterUserId = freezed,
     Object? isAnon = freezed,
     Object? photoUrl = freezed,
@@ -137,6 +142,10 @@ class _$ForumPostDtoCopyWithImpl<$Res> implements $ForumPostDtoCopyWith<$Res> {
           ? _value.likes
           : likes // ignore: cast_nullable_to_non_nullable
               as int,
+      likedUserIds: likedUserIds == freezed
+          ? _value.likedUserIds
+          : likedUserIds // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       posterUserId: posterUserId == freezed
           ? _value.posterUserId
           : posterUserId // ignore: cast_nullable_to_non_nullable
@@ -178,6 +187,7 @@ abstract class _$ForumPostDtoCopyWith<$Res>
       String tag,
       String body,
       int likes,
+      List<String> likedUserIds,
       String posterUserId,
       bool isAnon,
       String photoUrl,
@@ -203,6 +213,7 @@ class __$ForumPostDtoCopyWithImpl<$Res> extends _$ForumPostDtoCopyWithImpl<$Res>
     Object? tag = freezed,
     Object? body = freezed,
     Object? likes = freezed,
+    Object? likedUserIds = freezed,
     Object? posterUserId = freezed,
     Object? isAnon = freezed,
     Object? photoUrl = freezed,
@@ -231,6 +242,10 @@ class __$ForumPostDtoCopyWithImpl<$Res> extends _$ForumPostDtoCopyWithImpl<$Res>
           ? _value.likes
           : likes // ignore: cast_nullable_to_non_nullable
               as int,
+      likedUserIds: likedUserIds == freezed
+          ? _value.likedUserIds
+          : likedUserIds // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       posterUserId: posterUserId == freezed
           ? _value.posterUserId
           : posterUserId // ignore: cast_nullable_to_non_nullable
@@ -268,6 +283,7 @@ class _$_ForumPostDto extends _ForumPostDto {
       required this.tag,
       required this.body,
       required this.likes,
+      required this.likedUserIds,
       required this.posterUserId,
       required this.isAnon,
       required this.photoUrl,
@@ -290,6 +306,8 @@ class _$_ForumPostDto extends _ForumPostDto {
   @override
   final int likes;
   @override
+  final List<String> likedUserIds;
+  @override
   final String posterUserId;
   @override
   final bool isAnon;
@@ -304,7 +322,7 @@ class _$_ForumPostDto extends _ForumPostDto {
 
   @override
   String toString() {
-    return 'ForumPostDto(forumId: $forumId, title: $title, tag: $tag, body: $body, likes: $likes, posterUserId: $posterUserId, isAnon: $isAnon, photoUrl: $photoUrl, photoAdded: $photoAdded, pollAdded: $pollAdded, timestamp: $timestamp)';
+    return 'ForumPostDto(forumId: $forumId, title: $title, tag: $tag, body: $body, likes: $likes, likedUserIds: $likedUserIds, posterUserId: $posterUserId, isAnon: $isAnon, photoUrl: $photoUrl, photoAdded: $photoAdded, pollAdded: $pollAdded, timestamp: $timestamp)';
   }
 
   @override
@@ -322,6 +340,9 @@ class _$_ForumPostDto extends _ForumPostDto {
                 const DeepCollectionEquality().equals(other.body, body)) &&
             (identical(other.likes, likes) ||
                 const DeepCollectionEquality().equals(other.likes, likes)) &&
+            (identical(other.likedUserIds, likedUserIds) ||
+                const DeepCollectionEquality()
+                    .equals(other.likedUserIds, likedUserIds)) &&
             (identical(other.posterUserId, posterUserId) ||
                 const DeepCollectionEquality()
                     .equals(other.posterUserId, posterUserId)) &&
@@ -349,6 +370,7 @@ class _$_ForumPostDto extends _ForumPostDto {
       const DeepCollectionEquality().hash(tag) ^
       const DeepCollectionEquality().hash(body) ^
       const DeepCollectionEquality().hash(likes) ^
+      const DeepCollectionEquality().hash(likedUserIds) ^
       const DeepCollectionEquality().hash(posterUserId) ^
       const DeepCollectionEquality().hash(isAnon) ^
       const DeepCollectionEquality().hash(photoUrl) ^
@@ -374,6 +396,7 @@ abstract class _ForumPostDto extends ForumPostDto {
       required String tag,
       required String body,
       required int likes,
+      required List<String> likedUserIds,
       required String posterUserId,
       required bool isAnon,
       required String photoUrl,
@@ -395,6 +418,8 @@ abstract class _ForumPostDto extends ForumPostDto {
   String get body => throw _privateConstructorUsedError;
   @override
   int get likes => throw _privateConstructorUsedError;
+  @override
+  List<String> get likedUserIds => throw _privateConstructorUsedError;
   @override
   String get posterUserId => throw _privateConstructorUsedError;
   @override

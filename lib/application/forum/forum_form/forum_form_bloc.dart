@@ -120,11 +120,9 @@ class ForumFormBloc extends Bloc<ForumFormEvent, ForumFormState> {
         final user = userOption.getOrElse(() => throw NotAuthenticatedError());
         final String userID = user.id.getOrCrash();
         yield state.copyWith(
-          isLoading: true,
-          forumPost: state.forumPost.copyWith(posterUserId: userID,
-          timestamp: DateTime.now().millisecondsSinceEpoch.toString())
-        );
-
+            isLoading: true,
+            forumPost: state.forumPost.copyWith(posterUserId: userID),
+            poll: state.poll.copyWith(creatorUuid: userID));
         if (state.forumPost.pollAdded) {
           Either<DataFailure, Unit> pollFailureOrSuccess;
           pollFailureOrSuccess = await _forumRepository.createPoll(

@@ -36,7 +36,7 @@ class ForumForm extends StatelessWidget {
         bool pollAdded =
             context.read<ForumFormBloc>().state.forumPost.pollAdded;
         return Form(
-          autovalidateMode: AutovalidateMode.onUserInteraction,
+          autovalidateMode: AutovalidateMode.always,
           child: Container(
             margin: const EdgeInsets.all(30.0),
             child: Column(
@@ -174,7 +174,9 @@ class _BuildImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: MediaQuery.of(context).size.height * 0.5,
+        height: 200, // MediaQuery.of(context).size.height * 0.4,
+                ///width: MediaQuery.of(context).size.width *0.8,
+
         child: Image(
           fit: BoxFit.contain,
           image: NetworkImage(

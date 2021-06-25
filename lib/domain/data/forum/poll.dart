@@ -9,12 +9,18 @@ abstract class Poll implements _$Poll {
 
   const factory Poll({
     required int numOptions,
+    required String creatorUuid,
     required Title title,
     required List<PollOption> optionList,
-    required List<int> voteList,
-    required int totalVotes,
+    required List<double> voteList,
+    required Map<String, int> usersWhoVoted, //Maps uuids to selected option
   }) = _Poll;
 
-  factory Poll.empty() =>
-      Poll(numOptions: 0, title: Title(''), optionList: [], voteList: [], totalVotes: 0);
+  factory Poll.empty() => Poll(
+      numOptions: 0,
+      creatorUuid: '',
+      title: Title(''),
+      optionList: [],
+      voteList: [],
+      usersWhoVoted: {});
 }

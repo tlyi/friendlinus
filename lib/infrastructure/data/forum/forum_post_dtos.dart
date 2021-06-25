@@ -16,6 +16,7 @@ abstract class ForumPostDto implements _$ForumPostDto {
     required String tag,
     required String body,
     required int likes,
+    required List<String> likedUserIds,
     required String posterUserId,
     required bool isAnon,
     required String photoUrl,
@@ -32,12 +33,13 @@ abstract class ForumPostDto implements _$ForumPostDto {
       tag: forumPost.tag.getOrCrash(),
       body: forumPost.body.getOrCrash(),
       likes: forumPost.likes,
+      likedUserIds: forumPost.likedUserIds,
       posterUserId: forumPost.posterUserId,
       isAnon: forumPost.isAnon,
       photoUrl: forumPost.photoUrl,
       photoAdded: forumPost.photoAdded,
       pollAdded: forumPost.pollAdded,
-      timestamp: forumPost.timestamp,
+      timestamp: DateTime.now().millisecondsSinceEpoch.toString(),
     );
   }
 
@@ -48,6 +50,7 @@ abstract class ForumPostDto implements _$ForumPostDto {
       tag: Tag(tag),
       body: Body(body),
       likes: likes,
+      likedUserIds: likedUserIds,
       posterUserId: posterUserId,
       isAnon: isAnon,
       photoUrl: photoUrl,

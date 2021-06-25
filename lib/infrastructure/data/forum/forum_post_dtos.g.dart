@@ -13,6 +13,9 @@ _$_ForumPostDto _$_$_ForumPostDtoFromJson(Map<String, dynamic> json) {
     tag: json['tag'] as String,
     body: json['body'] as String,
     likes: json['likes'] as int,
+    likedUserIds: (json['likedUserIds'] as List<dynamic>)
+        .map((e) => e as String)
+        .toList(),
     posterUserId: json['posterUserId'] as String,
     isAnon: json['isAnon'] as bool,
     photoUrl: json['photoUrl'] as String,
@@ -29,6 +32,7 @@ Map<String, dynamic> _$_$_ForumPostDtoToJson(_$_ForumPostDto instance) =>
       'tag': instance.tag,
       'body': instance.body,
       'likes': instance.likes,
+      'likedUserIds': instance.likedUserIds,
       'posterUserId': instance.posterUserId,
       'isAnon': instance.isAnon,
       'photoUrl': instance.photoUrl,

@@ -18,16 +18,18 @@ class _$PollTearOff {
 
   _Poll call(
       {required int numOptions,
+      required String creatorUuid,
       required Title title,
       required List<PollOption> optionList,
-      required List<int> voteList,
-      required int totalVotes}) {
+      required List<double> voteList,
+      required Map<String, int> usersWhoVoted}) {
     return _Poll(
       numOptions: numOptions,
+      creatorUuid: creatorUuid,
       title: title,
       optionList: optionList,
       voteList: voteList,
-      totalVotes: totalVotes,
+      usersWhoVoted: usersWhoVoted,
     );
   }
 }
@@ -38,10 +40,11 @@ const $Poll = _$PollTearOff();
 /// @nodoc
 mixin _$Poll {
   int get numOptions => throw _privateConstructorUsedError;
+  String get creatorUuid => throw _privateConstructorUsedError;
   Title get title => throw _privateConstructorUsedError;
   List<PollOption> get optionList => throw _privateConstructorUsedError;
-  List<int> get voteList => throw _privateConstructorUsedError;
-  int get totalVotes => throw _privateConstructorUsedError;
+  List<double> get voteList => throw _privateConstructorUsedError;
+  Map<String, int> get usersWhoVoted => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $PollCopyWith<Poll> get copyWith => throw _privateConstructorUsedError;
@@ -53,10 +56,11 @@ abstract class $PollCopyWith<$Res> {
       _$PollCopyWithImpl<$Res>;
   $Res call(
       {int numOptions,
+      String creatorUuid,
       Title title,
       List<PollOption> optionList,
-      List<int> voteList,
-      int totalVotes});
+      List<double> voteList,
+      Map<String, int> usersWhoVoted});
 }
 
 /// @nodoc
@@ -70,16 +74,21 @@ class _$PollCopyWithImpl<$Res> implements $PollCopyWith<$Res> {
   @override
   $Res call({
     Object? numOptions = freezed,
+    Object? creatorUuid = freezed,
     Object? title = freezed,
     Object? optionList = freezed,
     Object? voteList = freezed,
-    Object? totalVotes = freezed,
+    Object? usersWhoVoted = freezed,
   }) {
     return _then(_value.copyWith(
       numOptions: numOptions == freezed
           ? _value.numOptions
           : numOptions // ignore: cast_nullable_to_non_nullable
               as int,
+      creatorUuid: creatorUuid == freezed
+          ? _value.creatorUuid
+          : creatorUuid // ignore: cast_nullable_to_non_nullable
+              as String,
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -91,11 +100,11 @@ class _$PollCopyWithImpl<$Res> implements $PollCopyWith<$Res> {
       voteList: voteList == freezed
           ? _value.voteList
           : voteList // ignore: cast_nullable_to_non_nullable
-              as List<int>,
-      totalVotes: totalVotes == freezed
-          ? _value.totalVotes
-          : totalVotes // ignore: cast_nullable_to_non_nullable
-              as int,
+              as List<double>,
+      usersWhoVoted: usersWhoVoted == freezed
+          ? _value.usersWhoVoted
+          : usersWhoVoted // ignore: cast_nullable_to_non_nullable
+              as Map<String, int>,
     ));
   }
 }
@@ -107,10 +116,11 @@ abstract class _$PollCopyWith<$Res> implements $PollCopyWith<$Res> {
   @override
   $Res call(
       {int numOptions,
+      String creatorUuid,
       Title title,
       List<PollOption> optionList,
-      List<int> voteList,
-      int totalVotes});
+      List<double> voteList,
+      Map<String, int> usersWhoVoted});
 }
 
 /// @nodoc
@@ -125,16 +135,21 @@ class __$PollCopyWithImpl<$Res> extends _$PollCopyWithImpl<$Res>
   @override
   $Res call({
     Object? numOptions = freezed,
+    Object? creatorUuid = freezed,
     Object? title = freezed,
     Object? optionList = freezed,
     Object? voteList = freezed,
-    Object? totalVotes = freezed,
+    Object? usersWhoVoted = freezed,
   }) {
     return _then(_Poll(
       numOptions: numOptions == freezed
           ? _value.numOptions
           : numOptions // ignore: cast_nullable_to_non_nullable
               as int,
+      creatorUuid: creatorUuid == freezed
+          ? _value.creatorUuid
+          : creatorUuid // ignore: cast_nullable_to_non_nullable
+              as String,
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -146,11 +161,11 @@ class __$PollCopyWithImpl<$Res> extends _$PollCopyWithImpl<$Res>
       voteList: voteList == freezed
           ? _value.voteList
           : voteList // ignore: cast_nullable_to_non_nullable
-              as List<int>,
-      totalVotes: totalVotes == freezed
-          ? _value.totalVotes
-          : totalVotes // ignore: cast_nullable_to_non_nullable
-              as int,
+              as List<double>,
+      usersWhoVoted: usersWhoVoted == freezed
+          ? _value.usersWhoVoted
+          : usersWhoVoted // ignore: cast_nullable_to_non_nullable
+              as Map<String, int>,
     ));
   }
 }
@@ -160,26 +175,29 @@ class __$PollCopyWithImpl<$Res> extends _$PollCopyWithImpl<$Res>
 class _$_Poll extends _Poll {
   const _$_Poll(
       {required this.numOptions,
+      required this.creatorUuid,
       required this.title,
       required this.optionList,
       required this.voteList,
-      required this.totalVotes})
+      required this.usersWhoVoted})
       : super._();
 
   @override
   final int numOptions;
   @override
+  final String creatorUuid;
+  @override
   final Title title;
   @override
   final List<PollOption> optionList;
   @override
-  final List<int> voteList;
+  final List<double> voteList;
   @override
-  final int totalVotes;
+  final Map<String, int> usersWhoVoted;
 
   @override
   String toString() {
-    return 'Poll(numOptions: $numOptions, title: $title, optionList: $optionList, voteList: $voteList, totalVotes: $totalVotes)';
+    return 'Poll(numOptions: $numOptions, creatorUuid: $creatorUuid, title: $title, optionList: $optionList, voteList: $voteList, usersWhoVoted: $usersWhoVoted)';
   }
 
   @override
@@ -189,6 +207,9 @@ class _$_Poll extends _Poll {
             (identical(other.numOptions, numOptions) ||
                 const DeepCollectionEquality()
                     .equals(other.numOptions, numOptions)) &&
+            (identical(other.creatorUuid, creatorUuid) ||
+                const DeepCollectionEquality()
+                    .equals(other.creatorUuid, creatorUuid)) &&
             (identical(other.title, title) ||
                 const DeepCollectionEquality().equals(other.title, title)) &&
             (identical(other.optionList, optionList) ||
@@ -197,19 +218,20 @@ class _$_Poll extends _Poll {
             (identical(other.voteList, voteList) ||
                 const DeepCollectionEquality()
                     .equals(other.voteList, voteList)) &&
-            (identical(other.totalVotes, totalVotes) ||
+            (identical(other.usersWhoVoted, usersWhoVoted) ||
                 const DeepCollectionEquality()
-                    .equals(other.totalVotes, totalVotes)));
+                    .equals(other.usersWhoVoted, usersWhoVoted)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(numOptions) ^
+      const DeepCollectionEquality().hash(creatorUuid) ^
       const DeepCollectionEquality().hash(title) ^
       const DeepCollectionEquality().hash(optionList) ^
       const DeepCollectionEquality().hash(voteList) ^
-      const DeepCollectionEquality().hash(totalVotes);
+      const DeepCollectionEquality().hash(usersWhoVoted);
 
   @JsonKey(ignore: true)
   @override
@@ -220,22 +242,25 @@ class _$_Poll extends _Poll {
 abstract class _Poll extends Poll {
   const factory _Poll(
       {required int numOptions,
+      required String creatorUuid,
       required Title title,
       required List<PollOption> optionList,
-      required List<int> voteList,
-      required int totalVotes}) = _$_Poll;
+      required List<double> voteList,
+      required Map<String, int> usersWhoVoted}) = _$_Poll;
   const _Poll._() : super._();
 
   @override
   int get numOptions => throw _privateConstructorUsedError;
   @override
+  String get creatorUuid => throw _privateConstructorUsedError;
+  @override
   Title get title => throw _privateConstructorUsedError;
   @override
   List<PollOption> get optionList => throw _privateConstructorUsedError;
   @override
-  List<int> get voteList => throw _privateConstructorUsedError;
+  List<double> get voteList => throw _privateConstructorUsedError;
   @override
-  int get totalVotes => throw _privateConstructorUsedError;
+  Map<String, int> get usersWhoVoted => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$PollCopyWith<_Poll> get copyWith => throw _privateConstructorUsedError;

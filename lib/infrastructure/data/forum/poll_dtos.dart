@@ -12,29 +12,32 @@ abstract class PollDto implements _$PollDto {
 
   const factory PollDto({
     required int numOptions,
+    required String creatorUuid,
     required String title,
     required List<String> optionList,
-    required List<int> voteList,
-    required int totalVotes,
+    required List<double> voteList,
+    required Map<String, int> usersWhoVoted,
   }) = _PollDto;
 
   factory PollDto.fromDomain(Poll poll) {
     return PollDto(
       numOptions: poll.numOptions,
+      creatorUuid: poll.creatorUuid,
       title: poll.title.getOrCrash(),
       optionList: poll.optionList.map((value) => value.getOrCrash()).toList(),
       voteList: poll.voteList,
-      totalVotes: poll.totalVotes,
+      usersWhoVoted: poll.usersWhoVoted,
     );
   }
 
   Poll toDomain() {
     return Poll(
       numOptions: numOptions,
+      creatorUuid: creatorUuid,
       title: Title(title),
       optionList: optionList.map((value) => PollOption(value)).toList(),
       voteList: voteList,
-      totalVotes: totalVotes,
+      usersWhoVoted: usersWhoVoted,
     );
   }
 

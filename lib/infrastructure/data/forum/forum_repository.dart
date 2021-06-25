@@ -100,4 +100,84 @@ class ForumPostRepository implements IForumRepository {
       }
     });
   }
+
+  @override
+  Future<Either<DataFailure, Poll>> retrievePoll(String forumId) async {
+    try {
+      final pollsDoc = await _firestore.pollDocument(forumId);
+      DocumentSnapshot pollSnapshot = await pollsDoc.get();
+      Poll poll = PollDto.fromFirestore(pollSnapshot).toDomain();
+      return right(poll);
+    } on FirebaseException catch (e) {
+      if (e.message!.contains('PERMISSION_DENIED')) {
+        return left(const DataFailure.insufficientPermission());
+      } else {
+        return left(const DataFailure.unexpected());
+      }
+    }
+  }
+
+  @override
+  Future<Either<DataFailure, Unit>> like(String forumId, String userId) async {
+    try {
+      await _firestore.runTransaction((transaction) async {
+        final forumsRef = await _firestore.forumsRef();
+        final forumDoc = forumsRef.doc(forumId);
+        transaction.update(forumDoc, {
+          'likedUserIds': FieldValue.arrayUnion([userId]),
+          'likes': FieldValue.increment(1),
+        });
+      });
+      return right(unit);
+    } on FirebaseException catch (e) {
+      if (e.message!.contains('PERMISSION_DENIED')) {
+        return left(const DataFailure.insufficientPermission());
+      } else {
+        return left(const DataFailure.unexpected());
+      }
+    }
+  }
+
+  @override
+  Future<Either<DataFailure, Unit>> unlike(
+      String forumId, String userId) async {
+    try {
+      await _firestore.runTransaction((transaction) async {
+        final forumsRef = await _firestore.forumsRef();
+        final forumDoc = forumsRef.doc(forumId);
+        transaction.update(forumDoc, {
+          'likedUserIds': FieldValue.arrayRemove([userId]),
+          'likes': FieldValue.increment(-1),
+        });
+      });
+      return right(unit);
+    } on FirebaseException catch (e) {
+      if (e.message!.contains('PERMISSION_DENIED')) {
+        return left(const DataFailure.insufficientPermission());
+      } else {
+        return left(const DataFailure.unexpected());
+      }
+    }
+  }
+
+  @override
+  Future<Either<DataFailure, Unit>> vote(
+      String forumId, int index, String userId) async {
+    try {
+      await _firestore.runTransaction((transaction) async {
+        final pollDoc = await _firestore.pollDocument(forumId);
+        transaction.update(pollDoc, {
+          'usersWhoVoted.$userId': index,
+          'voteList.$index': FieldValue.increment(1)
+        });
+      });
+      return right(unit);
+    } on FirebaseException catch (e) {
+      if (e.message!.contains('PERMISSION_DENIED')) {
+        return left(const DataFailure.insufficientPermission());
+      } else {
+        return left(const DataFailure.unexpected());
+      }
+    }
+  }
 }
