@@ -4,12 +4,23 @@ import 'package:friendlinus/application/chats/convo_actor/convo_actor_bloc.dart'
 import 'package:friendlinus/domain/data/profile/profile.dart';
 import 'package:friendlinus/presentation/chats/convos/widgets/convo_messages.dart';
 
-class ConvoActions extends StatelessWidget {
+class ConvoActions extends StatefulWidget {
   final String convoId;
   final Profile senderProfile;
   const ConvoActions(
       {Key? key, required this.convoId, required this.senderProfile})
       : super(key: key);
+
+  @override
+  _ConvoActionsState createState() => _ConvoActionsState();
+}
+
+class _ConvoActionsState extends State<ConvoActions> {
+  final textController = TextEditingController();
+
+  void clearText() {
+    textController.clear();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,27 +29,10 @@ class ConvoActions extends StatelessWidget {
         // TODO: implement listener
       },
       builder: (context, state) {
-        return Stack(
-          children: [
-            ConvoMessages(
-              convoId: convoId,
-              senderProfile: senderProfile,
-            ),
-            _BuildMessageField(),
-          ],
-        );
-      },
-    );
-  }
-}
-
-class _BuildMessageField extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-        alignment: Alignment.bottomLeft,
-        child: Container(
-            padding: EdgeInsets.all(10),
+        return Align(
+          alignment: Alignment.bottomLeft,
+          child: Container(
+            padding: const EdgeInsets.all(10),
             color: Colors.white,
             height: 60,
             child: Row(
@@ -74,6 +68,13 @@ class _BuildMessageField extends StatelessWidget {
                           .read<ConvoActorBloc>()
                           .add(ConvoActorEvent.messageChanged(message));
                     },
+                    controller: textController,
+                    onSubmitted: (_) {
+                      context
+                          .read<ConvoActorBloc>()
+                          .add(const ConvoActorEvent.messageSent());
+                      clearText();
+                    },
                   ),
                 ),
                 const SizedBox(
@@ -96,23 +97,15 @@ class _BuildMessageField extends StatelessWidget {
                       context
                           .read<ConvoActorBloc>()
                           .add(const ConvoActorEvent.messageSent());
+                      clearText();
                     },
                   ),
                 ),
               ],
-            )));
-  }
-}
-
-class _BuildSendButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-        onPressed: () {
-          context
-              .read<ConvoActorBloc>()
-              .add(const ConvoActorEvent.messageSent());
-        },
-        child: Text('Send'));
+            ),
+          ),
+        );
+      },
+    );
   }
 }
