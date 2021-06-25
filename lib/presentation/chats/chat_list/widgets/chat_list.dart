@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:friendlinus/application/chats/chat_bloc.dart';
 import 'package:friendlinus/application/chats/chat_watcher/chat_watcher_bloc.dart';
 import 'package:friendlinus/presentation/chats/chat_list/chat_list_page.dart';
+import 'package:friendlinus/presentation/core/get_time.dart';
 import 'package:intl/intl.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
@@ -82,28 +83,4 @@ class ChatList extends StatelessWidget {
           });
     });
   }
-}
-
-String getTime(String timestamp) {
-  final DateTime dateTime =
-      DateTime.fromMillisecondsSinceEpoch(int.parse(timestamp));
-
-  String timeAgo(DateTime d) {
-    Duration diff = DateTime.now().difference(d);
-    if (diff.inDays > 365) {
-      return "${(diff.inDays / 365).floor()} ${(diff.inDays / 365).floor() == 1 ? "year" : "years"} ago";
-    }
-    if (diff.inDays > 30) {
-      return "${(diff.inDays / 30).floor()} ${(diff.inDays / 30).floor() == 1 ? "month" : "months"} ago";
-    }
-    if (diff.inDays > 7) {
-      return "${(diff.inDays / 7).floor()} ${(diff.inDays / 7).floor() == 1 ? "week" : "weeks"} ago";
-    }
-    if (diff.inDays > 0) {
-      return "${diff.inDays} ${diff.inDays == 1 ? "day" : "days"} ago";
-    }
-    return DateFormat('jm').format(d);
-  }
-
-  return timeAgo(dateTime);
 }
