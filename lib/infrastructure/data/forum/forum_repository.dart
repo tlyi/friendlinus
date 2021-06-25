@@ -20,6 +20,12 @@ class ForumPostRepository implements IForumRepository {
   ForumPostRepository(this._firestore, this._firebaseStorage);
 
   @override
+  Future<String> getOwnId() async {
+    final userDoc = await _firestore.userDocument();
+    return userDoc.id;
+  }
+
+  @override
   Future<Either<DataFailure, Unit>> create(
       ForumPost forumPost, String forumId) async {
     try {
@@ -102,19 +108,42 @@ class ForumPostRepository implements IForumRepository {
   }
 
   @override
-  Future<Either<DataFailure, Poll>> retrievePoll(String forumId) async {
-    try {
-      final pollsDoc = await _firestore.pollDocument(forumId);
-      DocumentSnapshot pollSnapshot = await pollsDoc.get();
-      Poll poll = PollDto.fromFirestore(pollSnapshot).toDomain();
-      return right(poll);
-    } on FirebaseException catch (e) {
-      if (e.message!.contains('PERMISSION_DENIED')) {
+  Stream<Either<DataFailure, ForumPost>> retrieveForumPost(
+      String forumId) async* {
+    final forumDoc = await _firestore.forumDocument(forumId);
+    yield* forumDoc
+        .snapshots()
+        .map(
+          (snapshot) => right<DataFailure, ForumPost>(
+              ForumPostDto.fromFirestore(snapshot).toDomain()),
+        )
+        .handleError((e) {
+      if (e is FirebaseException && e.message!.contains('PERMISSION_DENIED')) {
         return left(const DataFailure.insufficientPermission());
       } else {
+        print(e);
         return left(const DataFailure.unexpected());
       }
-    }
+    });
+  }
+
+  @override
+  Stream<Either<DataFailure, Poll>> retrievePoll(String forumId) async* {
+    final pollsDoc = await _firestore.pollDocument(forumId);
+    yield* pollsDoc
+        .snapshots()
+        .map(
+          (snapshot) => right<DataFailure, Poll>(
+              PollDto.fromFirestore(snapshot).toDomain()),
+        )
+        .handleError((e) {
+      if (e is FirebaseException && e.message!.contains('PERMISSION_DENIED')) {
+        return left(const DataFailure.insufficientPermission());
+      } else {
+        print(e);
+        return left(const DataFailure.unexpected());
+      }
+    });
   }
 
   @override

@@ -1,6 +1,7 @@
 import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:friendlinus/application/forum/forum_actor/forum_actor_bloc.dart';
 import 'package:friendlinus/application/forum/forum_watcher/forum_watcher_bloc.dart';
 import 'package:friendlinus/presentation/core/get_time.dart';
 import 'package:auto_route/auto_route.dart';
@@ -9,11 +10,9 @@ import 'package:friendlinus/presentation/routes/router.gr.dart';
 class ForumOverviewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<ForumWatcherBloc, ForumWatcherState>(
-      listener: (context, state) {
-        // TODO: implement listener: when click on forum, navigate
-      },
+    return BlocBuilder<ForumWatcherBloc, ForumWatcherState>(
       builder: (context, state) {
+        final userId = context.read<ForumActorBloc>().state.userId;
         return state.map(
             initial: (_) => Container(),
             loadInProgress: (_) => const Scaffold(
@@ -46,9 +45,21 @@ class ForumOverviewBody extends StatelessWidget {
                                 child: IconButton(
                                   padding: const EdgeInsets.all(0),
                                   onPressed: () {
-                                    //Implement LIKE and UNLIKE
+                                    if (forum.likedUserIds.contains(userId)) {
+                                      context.read<ForumActorBloc>().add(
+                                          ForumActorEvent.unliked(
+                                              forum.forumId));
+                                    } else {
+                                      context.read<ForumActorBloc>().add(
+                                          ForumActorEvent.liked(forum.forumId));
+                                    }
                                   },
-                                  icon: const Icon(Icons.arrow_drop_up),
+                                  icon: Icon(
+                                    Icons.arrow_drop_up,
+                                    color: forum.likedUserIds.contains(userId)
+                                        ? Colors.grey[800]
+                                        : Colors.grey[400],
+                                  ),
                                 ),
                               ),
                               Positioned(
@@ -69,7 +80,7 @@ class ForumOverviewBody extends StatelessWidget {
                         isThreeLine: true,
 
                         onTap: () {
-                          context.pushRoute(ForumRoute(forum: forum));
+                          context.pushRoute(ForumRoute(forumId: forum.forumId));
                         },
                       ),
                     );

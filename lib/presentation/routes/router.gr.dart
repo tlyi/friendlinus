@@ -6,7 +6,6 @@
 
 import 'package:auto_route/auto_route.dart' as _i1;
 import 'package:flutter/material.dart' as _i2;
-import 'package:friendlinus/domain/data/forum/forum_post.dart' as _i20;
 import 'package:friendlinus/domain/data/profile/profile.dart' as _i19;
 import 'package:friendlinus/presentation/chats/chat_list/chat_list_page.dart'
     as _i16;
@@ -125,7 +124,7 @@ class AppRouter extends _i1.RootStackRouter {
         routeData: routeData,
         builder: (data) {
           final args = data.argsAs<ForumRouteArgs>();
-          return _i18.ForumPage(key: args.key, forum: args.forum);
+          return _i18.ForumPage(key: args.key, forumId: args.forumId);
         })
   };
 
@@ -271,17 +270,18 @@ class ConvoRouteArgs {
 }
 
 class ForumRoute extends _i1.PageRouteInfo<ForumRouteArgs> {
-  ForumRoute({_i2.Key? key, required _i20.ForumPost forum})
+  ForumRoute({_i2.Key? key, required String forumId})
       : super(name,
-            path: '/forum-page', args: ForumRouteArgs(key: key, forum: forum));
+            path: '/forum-page',
+            args: ForumRouteArgs(key: key, forumId: forumId));
 
   static const String name = 'ForumRoute';
 }
 
 class ForumRouteArgs {
-  const ForumRouteArgs({this.key, required this.forum});
+  const ForumRouteArgs({this.key, required this.forumId});
 
   final _i2.Key? key;
 
-  final _i20.ForumPost forum;
+  final String forumId;
 }

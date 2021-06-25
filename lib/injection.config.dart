@@ -16,8 +16,11 @@ import 'application/chats/chat_bloc.dart' as _i18;
 import 'application/chats/chat_watcher/chat_watcher_bloc.dart' as _i19;
 import 'application/chats/convo_actor/convo_actor_bloc.dart' as _i20;
 import 'application/chats/convo_watcher/convo_watcher_bloc.dart' as _i21;
-import 'application/forum/forum_form/forum_form_bloc.dart' as _i22;
-import 'application/forum/forum_watcher/forum_watcher_bloc.dart' as _i23;
+import 'application/forum/forum_actor/forum_actor_bloc.dart' as _i22;
+import 'application/forum/forum_form/forum_form_bloc.dart' as _i23;
+import 'application/forum/forum_post_watcher/forum_post_watcher_bloc.dart'
+    as _i24;
+import 'application/forum/forum_watcher/forum_watcher_bloc.dart' as _i25;
 import 'application/profile/profile_form/profile_form_bloc.dart' as _i14;
 import 'application/search/search_profile_bloc.dart' as _i15;
 import 'domain/auth/i_auth_facade.dart' as _i6;
@@ -25,7 +28,7 @@ import 'domain/data/chats/i_chat_repository.dart' as _i8;
 import 'domain/data/forum/i_forum_repository.dart' as _i10;
 import 'domain/data/profile/i_profile_repository.dart' as _i12;
 import 'infrastructure/auth/firebase_auth_facade.dart' as _i7;
-import 'infrastructure/core/firebase_injectable_module.dart' as _i24;
+import 'infrastructure/core/firebase_injectable_module.dart' as _i26;
 import 'infrastructure/data/chats/chat_repository.dart' as _i9;
 import 'infrastructure/data/forum/forum_repository.dart' as _i11;
 import 'infrastructure/data/profile/profile_repository.dart'
@@ -66,11 +69,15 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       () => _i20.ConvoActorBloc(get<_i8.IChatRepository>()));
   gh.factory<_i21.ConvoWatcherBloc>(
       () => _i21.ConvoWatcherBloc(get<_i8.IChatRepository>()));
-  gh.factory<_i22.ForumFormBloc>(() => _i22.ForumFormBloc(
+  gh.factory<_i22.ForumActorBloc>(
+      () => _i22.ForumActorBloc(get<_i10.IForumRepository>()));
+  gh.factory<_i23.ForumFormBloc>(() => _i23.ForumFormBloc(
       get<_i10.IForumRepository>(), get<_i12.IProfileRepository>()));
-  gh.factory<_i23.ForumWatcherBloc>(
-      () => _i23.ForumWatcherBloc(get<_i10.IForumRepository>()));
+  gh.factory<_i24.ForumPostWatcherBloc>(
+      () => _i24.ForumPostWatcherBloc(get<_i10.IForumRepository>()));
+  gh.factory<_i25.ForumWatcherBloc>(
+      () => _i25.ForumWatcherBloc(get<_i10.IForumRepository>()));
   return get;
 }
 
-class _$FirebaseInjectableModule extends _i24.FirebaseInjectableModule {}
+class _$FirebaseInjectableModule extends _i26.FirebaseInjectableModule {}

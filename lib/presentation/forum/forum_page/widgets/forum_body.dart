@@ -1,19 +1,40 @@
+import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:friendlinus/application/forum/forum_post_watcher/forum_post_watcher_bloc.dart';
 import 'package:friendlinus/domain/data/forum/forum_post.dart';
 import 'package:friendlinus/domain/data/forum/poll.dart';
+import 'package:friendlinus/injection.dart';
 import 'package:polls/polls.dart';
 
 class ForumBody extends StatelessWidget {
-  final ForumPost forum;
-  const ForumBody({Key? key, required this.forum}) : super(key: key);
+  const ForumBody({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        _BuildPost(forum: forum),
-      ],
-    );
+    return BlocBuilder<ForumPostWatcherBloc, ForumPostWatcherState>(
+        builder: (context, state) {
+      return state.map(
+        initial: (_) => Container(),
+        loadInProgress: (_) => const Scaffold(
+          body: Center(
+            child: CircularProgressIndicator(),
+          ),
+        ),
+        loadSuccess: (state) {
+          return Container();
+        },
+        loadFailure: (state) {
+          FlushbarHelper.createError(
+            message: state.dataFailure.map(
+                unexpected: (_) => 'Unexpected error',
+                insufficientPermission: (_) => 'Insufficient permission',
+                unableToUpdate: (_) => 'Unable to update'),
+          ).show(context);
+          return Container();
+        },
+      );
+    });
   }
 }
 
@@ -113,7 +134,8 @@ class _BuildPoll extends StatelessWidget {
       currentUser: '',
       creatorID: poll.creatorUuid,
       allowCreatorVote: true,
-      onVote: (choice) { //choice enums starts from 1
+      onVote: (choice) {
+        //choice enums starts from 1
         //context.read<ForumWatcherBloc>().add(ForumWatcherEvent.voted)
       },
     );

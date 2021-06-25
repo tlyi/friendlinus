@@ -50,9 +50,11 @@ extension FirestoreX on FirebaseFirestore {
     return FirebaseFirestore.instance.collection('forums');
   }
 
+  Future<DocumentReference> forumDocument(String forumId) async {
+    return FirebaseFirestore.instance.collection('forums').doc(forumId);
+  }
+
   Future<DocumentReference> pollDocument(String forumId) async {
-    return FirebaseFirestore.instance
-        .collection('polls')
-        .doc(forumId);
+    return FirebaseFirestore.instance.collection('polls').doc(forumId);
   }
 }

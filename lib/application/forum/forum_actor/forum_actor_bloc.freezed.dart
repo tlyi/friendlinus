@@ -19,6 +19,25 @@ class _$ForumActorEventTearOff {
   _Started started() {
     return const _Started();
   }
+
+  _Liked liked(String forumId) {
+    return _Liked(
+      forumId,
+    );
+  }
+
+  _Unliked unliked(String forumId) {
+    return _Unliked(
+      forumId,
+    );
+  }
+
+  _Voted voted(String forumId, int index) {
+    return _Voted(
+      forumId,
+      index,
+    );
+  }
 }
 
 /// @nodoc
@@ -29,22 +48,34 @@ mixin _$ForumActorEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
+    required TResult Function(String forumId) liked,
+    required TResult Function(String forumId) unliked,
+    required TResult Function(String forumId, int index) voted,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
+    TResult Function(String forumId)? liked,
+    TResult Function(String forumId)? unliked,
+    TResult Function(String forumId, int index)? voted,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
+    required TResult Function(_Liked value) liked,
+    required TResult Function(_Unliked value) unliked,
+    required TResult Function(_Voted value) voted,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
+    TResult Function(_Liked value)? liked,
+    TResult Function(_Unliked value)? unliked,
+    TResult Function(_Voted value)? voted,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -105,6 +136,9 @@ class _$_Started implements _Started {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
+    required TResult Function(String forumId) liked,
+    required TResult Function(String forumId) unliked,
+    required TResult Function(String forumId, int index) voted,
   }) {
     return started();
   }
@@ -113,6 +147,9 @@ class _$_Started implements _Started {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
+    TResult Function(String forumId)? liked,
+    TResult Function(String forumId)? unliked,
+    TResult Function(String forumId, int index)? voted,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -125,6 +162,9 @@ class _$_Started implements _Started {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
+    required TResult Function(_Liked value) liked,
+    required TResult Function(_Unliked value) unliked,
+    required TResult Function(_Voted value) voted,
   }) {
     return started(this);
   }
@@ -133,6 +173,9 @@ class _$_Started implements _Started {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
+    TResult Function(_Liked value)? liked,
+    TResult Function(_Unliked value)? unliked,
+    TResult Function(_Voted value)? voted,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -147,11 +190,387 @@ abstract class _Started implements ForumActorEvent {
 }
 
 /// @nodoc
+abstract class _$LikedCopyWith<$Res> {
+  factory _$LikedCopyWith(_Liked value, $Res Function(_Liked) then) =
+      __$LikedCopyWithImpl<$Res>;
+  $Res call({String forumId});
+}
+
+/// @nodoc
+class __$LikedCopyWithImpl<$Res> extends _$ForumActorEventCopyWithImpl<$Res>
+    implements _$LikedCopyWith<$Res> {
+  __$LikedCopyWithImpl(_Liked _value, $Res Function(_Liked) _then)
+      : super(_value, (v) => _then(v as _Liked));
+
+  @override
+  _Liked get _value => super._value as _Liked;
+
+  @override
+  $Res call({
+    Object? forumId = freezed,
+  }) {
+    return _then(_Liked(
+      forumId == freezed
+          ? _value.forumId
+          : forumId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_Liked implements _Liked {
+  const _$_Liked(this.forumId);
+
+  @override
+  final String forumId;
+
+  @override
+  String toString() {
+    return 'ForumActorEvent.liked(forumId: $forumId)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _Liked &&
+            (identical(other.forumId, forumId) ||
+                const DeepCollectionEquality().equals(other.forumId, forumId)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(forumId);
+
+  @JsonKey(ignore: true)
+  @override
+  _$LikedCopyWith<_Liked> get copyWith =>
+      __$LikedCopyWithImpl<_Liked>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function(String forumId) liked,
+    required TResult Function(String forumId) unliked,
+    required TResult Function(String forumId, int index) voted,
+  }) {
+    return liked(forumId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function(String forumId)? liked,
+    TResult Function(String forumId)? unliked,
+    TResult Function(String forumId, int index)? voted,
+    required TResult orElse(),
+  }) {
+    if (liked != null) {
+      return liked(forumId);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(_Liked value) liked,
+    required TResult Function(_Unliked value) unliked,
+    required TResult Function(_Voted value) voted,
+  }) {
+    return liked(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(_Liked value)? liked,
+    TResult Function(_Unliked value)? unliked,
+    TResult Function(_Voted value)? voted,
+    required TResult orElse(),
+  }) {
+    if (liked != null) {
+      return liked(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Liked implements ForumActorEvent {
+  const factory _Liked(String forumId) = _$_Liked;
+
+  String get forumId => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$LikedCopyWith<_Liked> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$UnlikedCopyWith<$Res> {
+  factory _$UnlikedCopyWith(_Unliked value, $Res Function(_Unliked) then) =
+      __$UnlikedCopyWithImpl<$Res>;
+  $Res call({String forumId});
+}
+
+/// @nodoc
+class __$UnlikedCopyWithImpl<$Res> extends _$ForumActorEventCopyWithImpl<$Res>
+    implements _$UnlikedCopyWith<$Res> {
+  __$UnlikedCopyWithImpl(_Unliked _value, $Res Function(_Unliked) _then)
+      : super(_value, (v) => _then(v as _Unliked));
+
+  @override
+  _Unliked get _value => super._value as _Unliked;
+
+  @override
+  $Res call({
+    Object? forumId = freezed,
+  }) {
+    return _then(_Unliked(
+      forumId == freezed
+          ? _value.forumId
+          : forumId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_Unliked implements _Unliked {
+  const _$_Unliked(this.forumId);
+
+  @override
+  final String forumId;
+
+  @override
+  String toString() {
+    return 'ForumActorEvent.unliked(forumId: $forumId)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _Unliked &&
+            (identical(other.forumId, forumId) ||
+                const DeepCollectionEquality().equals(other.forumId, forumId)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(forumId);
+
+  @JsonKey(ignore: true)
+  @override
+  _$UnlikedCopyWith<_Unliked> get copyWith =>
+      __$UnlikedCopyWithImpl<_Unliked>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function(String forumId) liked,
+    required TResult Function(String forumId) unliked,
+    required TResult Function(String forumId, int index) voted,
+  }) {
+    return unliked(forumId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function(String forumId)? liked,
+    TResult Function(String forumId)? unliked,
+    TResult Function(String forumId, int index)? voted,
+    required TResult orElse(),
+  }) {
+    if (unliked != null) {
+      return unliked(forumId);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(_Liked value) liked,
+    required TResult Function(_Unliked value) unliked,
+    required TResult Function(_Voted value) voted,
+  }) {
+    return unliked(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(_Liked value)? liked,
+    TResult Function(_Unliked value)? unliked,
+    TResult Function(_Voted value)? voted,
+    required TResult orElse(),
+  }) {
+    if (unliked != null) {
+      return unliked(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Unliked implements ForumActorEvent {
+  const factory _Unliked(String forumId) = _$_Unliked;
+
+  String get forumId => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$UnlikedCopyWith<_Unliked> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$VotedCopyWith<$Res> {
+  factory _$VotedCopyWith(_Voted value, $Res Function(_Voted) then) =
+      __$VotedCopyWithImpl<$Res>;
+  $Res call({String forumId, int index});
+}
+
+/// @nodoc
+class __$VotedCopyWithImpl<$Res> extends _$ForumActorEventCopyWithImpl<$Res>
+    implements _$VotedCopyWith<$Res> {
+  __$VotedCopyWithImpl(_Voted _value, $Res Function(_Voted) _then)
+      : super(_value, (v) => _then(v as _Voted));
+
+  @override
+  _Voted get _value => super._value as _Voted;
+
+  @override
+  $Res call({
+    Object? forumId = freezed,
+    Object? index = freezed,
+  }) {
+    return _then(_Voted(
+      forumId == freezed
+          ? _value.forumId
+          : forumId // ignore: cast_nullable_to_non_nullable
+              as String,
+      index == freezed
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_Voted implements _Voted {
+  const _$_Voted(this.forumId, this.index);
+
+  @override
+  final String forumId;
+  @override
+  final int index;
+
+  @override
+  String toString() {
+    return 'ForumActorEvent.voted(forumId: $forumId, index: $index)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _Voted &&
+            (identical(other.forumId, forumId) ||
+                const DeepCollectionEquality()
+                    .equals(other.forumId, forumId)) &&
+            (identical(other.index, index) ||
+                const DeepCollectionEquality().equals(other.index, index)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(forumId) ^
+      const DeepCollectionEquality().hash(index);
+
+  @JsonKey(ignore: true)
+  @override
+  _$VotedCopyWith<_Voted> get copyWith =>
+      __$VotedCopyWithImpl<_Voted>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function(String forumId) liked,
+    required TResult Function(String forumId) unliked,
+    required TResult Function(String forumId, int index) voted,
+  }) {
+    return voted(forumId, index);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function(String forumId)? liked,
+    TResult Function(String forumId)? unliked,
+    TResult Function(String forumId, int index)? voted,
+    required TResult orElse(),
+  }) {
+    if (voted != null) {
+      return voted(forumId, index);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(_Liked value) liked,
+    required TResult Function(_Unliked value) unliked,
+    required TResult Function(_Voted value) voted,
+  }) {
+    return voted(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(_Liked value)? liked,
+    TResult Function(_Unliked value)? unliked,
+    TResult Function(_Voted value)? voted,
+    required TResult orElse(),
+  }) {
+    if (voted != null) {
+      return voted(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Voted implements ForumActorEvent {
+  const factory _Voted(String forumId, int index) = _$_Voted;
+
+  String get forumId => throw _privateConstructorUsedError;
+  int get index => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$VotedCopyWith<_Voted> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 class _$ForumActorStateTearOff {
   const _$ForumActorStateTearOff();
 
-  _Initial initial() {
-    return const _Initial();
+  _ForumActorState call({required String userId}) {
+    return _ForumActorState(
+      userId: userId,
+    );
   }
 }
 
@@ -160,27 +579,10 @@ const $ForumActorState = _$ForumActorStateTearOff();
 
 /// @nodoc
 mixin _$ForumActorState {
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    required TResult orElse(),
-  }) =>
+  String get userId => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $ForumActorStateCopyWith<ForumActorState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -189,6 +591,7 @@ abstract class $ForumActorStateCopyWith<$Res> {
   factory $ForumActorStateCopyWith(
           ForumActorState value, $Res Function(ForumActorState) then) =
       _$ForumActorStateCopyWithImpl<$Res>;
+  $Res call({String userId});
 }
 
 /// @nodoc
@@ -199,83 +602,92 @@ class _$ForumActorStateCopyWithImpl<$Res>
   final ForumActorState _value;
   // ignore: unused_field
   final $Res Function(ForumActorState) _then;
-}
-
-/// @nodoc
-abstract class _$InitialCopyWith<$Res> {
-  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) then) =
-      __$InitialCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$InitialCopyWithImpl<$Res> extends _$ForumActorStateCopyWithImpl<$Res>
-    implements _$InitialCopyWith<$Res> {
-  __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
-      : super(_value, (v) => _then(v as _Initial));
 
   @override
-  _Initial get _value => super._value as _Initial;
+  $Res call({
+    Object? userId = freezed,
+  }) {
+    return _then(_value.copyWith(
+      userId: userId == freezed
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$ForumActorStateCopyWith<$Res>
+    implements $ForumActorStateCopyWith<$Res> {
+  factory _$ForumActorStateCopyWith(
+          _ForumActorState value, $Res Function(_ForumActorState) then) =
+      __$ForumActorStateCopyWithImpl<$Res>;
+  @override
+  $Res call({String userId});
+}
+
+/// @nodoc
+class __$ForumActorStateCopyWithImpl<$Res>
+    extends _$ForumActorStateCopyWithImpl<$Res>
+    implements _$ForumActorStateCopyWith<$Res> {
+  __$ForumActorStateCopyWithImpl(
+      _ForumActorState _value, $Res Function(_ForumActorState) _then)
+      : super(_value, (v) => _then(v as _ForumActorState));
+
+  @override
+  _ForumActorState get _value => super._value as _ForumActorState;
+
+  @override
+  $Res call({
+    Object? userId = freezed,
+  }) {
+    return _then(_ForumActorState(
+      userId: userId == freezed
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
-class _$_Initial implements _Initial {
-  const _$_Initial();
+class _$_ForumActorState implements _ForumActorState {
+  const _$_ForumActorState({required this.userId});
+
+  @override
+  final String userId;
 
   @override
   String toString() {
-    return 'ForumActorState.initial()';
+    return 'ForumActorState(userId: $userId)';
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _Initial);
+    return identical(this, other) ||
+        (other is _ForumActorState &&
+            (identical(other.userId, userId) ||
+                const DeepCollectionEquality().equals(other.userId, userId)));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(userId);
 
+  @JsonKey(ignore: true)
   @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-  }) {
-    return initial();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-  }) {
-    return initial(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial(this);
-    }
-    return orElse();
-  }
+  _$ForumActorStateCopyWith<_ForumActorState> get copyWith =>
+      __$ForumActorStateCopyWithImpl<_ForumActorState>(this, _$identity);
 }
 
-abstract class _Initial implements ForumActorState {
-  const factory _Initial() = _$_Initial;
+abstract class _ForumActorState implements ForumActorState {
+  const factory _ForumActorState({required String userId}) = _$_ForumActorState;
+
+  @override
+  String get userId => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$ForumActorStateCopyWith<_ForumActorState> get copyWith =>
+      throw _privateConstructorUsedError;
 }
