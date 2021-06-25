@@ -173,8 +173,8 @@ class _BuildImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        height: MediaQuery.of(context).size.height * 0.4,
+    return SizedBox(
+        height: MediaQuery.of(context).size.height * 0.5,
         child: Image(
           fit: BoxFit.contain,
           image: NetworkImage(
@@ -188,7 +188,9 @@ class _BuildPoll extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<int> optionList = [0, 1, 2, 3, 4];
+    List<int> dropList = [0, 2, 3, 4]; //Poll must minimally have 2 options
+
+    List<int> intList = [0, 1, 2, 3, 4];
     int numOptions = context.read<ForumFormBloc>().state.poll.numOptions;
     List<String> pollOptions = List.filled(numOptions, '');
     return Column(
@@ -199,7 +201,7 @@ class _BuildPoll extends StatelessWidget {
             const SizedBox(width: 20),
             DropdownButton<int>(
               value: numOptions,
-              items: optionList.map((int value) {
+              items: dropList.map((int value) {
                 return DropdownMenuItem<int>(
                     value: value, child: Text(value.toString()));
               }).toList(),
@@ -211,7 +213,38 @@ class _BuildPoll extends StatelessWidget {
             )
           ],
         ),
-        for (var i in optionList.take(numOptions))
+        Padding(
+          padding: const EdgeInsets.only(bottom: 15.0),
+          child: TextFormField(
+            decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              labelText: 'Poll Question',
+            ),
+            autocorrect: false,
+            onChanged: (value) => context
+                .read<ForumFormBloc>()
+                .add(ForumFormEvent.pollTitleChanged(value)),
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            validator: (_) {
+              return context
+                  .read<ForumFormBloc>()
+                  .state
+                  .poll
+                  .title
+                  .value
+                  .fold(
+                      (f) => f.maybeMap(
+                          emptyString: (_) => 'Poll optiion cannot be empty',
+                          exceedingLength: (_) =>
+                              'Option too long, maximum of 25 characters only',
+                          orElse: () => null),
+                      (_) => null);
+            },
+          ),
+        ),
+        for (var i in intList.take(numOptions))
           Padding(
             padding: const EdgeInsets.only(bottom: 15.0),
             child: TextFormField(
@@ -337,7 +370,7 @@ class _BuildAddImageButton extends StatelessWidget {
                   pickedImage = File(pickedFile.path);
                   context.read<ForumFormBloc>().add(ForumFormEvent.photoAdded(
                         pickedImage,
-                        context.read<ForumFormBloc>().state.forumId,
+                        context.read<ForumFormBloc>().state.forumPost.forumId,
                       ));
                 }
               }

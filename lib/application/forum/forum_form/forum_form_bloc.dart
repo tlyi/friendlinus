@@ -63,8 +63,8 @@ class ForumFormBloc extends Bloc<ForumFormEvent, ForumFormState> {
         }
       },
       photoAdded: (e) async* {
-        final failureOrString =
-            await _forumRepository.uploadPhoto(e.photo, state.forumId);
+        final failureOrString = await _forumRepository.uploadPhoto(
+            e.photo, state.forumPost.forumId);
         String url = '';
         failureOrString.fold(
           (f) => print(f),
@@ -95,6 +95,10 @@ class ForumFormBloc extends Bloc<ForumFormEvent, ForumFormState> {
           voteList: List.filled(e.numOptions, 0),
         ));
       },
+      pollTitleChanged: (e) async* {
+        yield state.copyWith(
+            poll: state.poll.copyWith(title: Title(e.pollTitleStr)));
+      },
       pollOptionChanged: (e) async* {
         List<PollOption> currOptionList = List.from(state.poll.optionList);
         currOptionList[e.index] = PollOption(e.optionStr);
@@ -117,19 +121,21 @@ class ForumFormBloc extends Bloc<ForumFormEvent, ForumFormState> {
         final String userID = user.id.getOrCrash();
         yield state.copyWith(
           isLoading: true,
-          forumPost: state.forumPost.copyWith(posterUserId: userID),
+          forumPost: state.forumPost.copyWith(posterUserId: userID,
+          timestamp: DateTime.now().millisecondsSinceEpoch.toString())
         );
 
         if (state.forumPost.pollAdded) {
           Either<DataFailure, Unit> pollFailureOrSuccess;
-          pollFailureOrSuccess =
-              await _forumRepository.createPoll(state.poll, state.forumId);
-          yield state.copyWith(createPollFailureOrSuccessOption: optionOf(pollFailureOrSuccess));
+          pollFailureOrSuccess = await _forumRepository.createPoll(
+              state.poll, state.forumPost.forumId);
+          yield state.copyWith(
+              createPollFailureOrSuccessOption: optionOf(pollFailureOrSuccess));
         }
-        _profileRepository.addForum(state.forumId);
+        _profileRepository.addForum(state.forumPost.forumId);
 
-        failureOrSuccess =
-            await _forumRepository.create(state.forumPost, state.forumId);
+        failureOrSuccess = await _forumRepository.create(
+            state.forumPost, state.forumPost.forumId);
 
         yield state.copyWith(
           isLoading: false,

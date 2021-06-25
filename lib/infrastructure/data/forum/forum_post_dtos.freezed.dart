@@ -21,7 +21,8 @@ class _$ForumPostDtoTearOff {
   const _$ForumPostDtoTearOff();
 
   _ForumPostDto call(
-      {required String title,
+      {required String forumId,
+      required String title,
       required String tag,
       required String body,
       required int likes,
@@ -29,8 +30,10 @@ class _$ForumPostDtoTearOff {
       required bool isAnon,
       required String photoUrl,
       required bool photoAdded,
-      required bool pollAdded}) {
+      required bool pollAdded,
+      required String timestamp}) {
     return _ForumPostDto(
+      forumId: forumId,
       title: title,
       tag: tag,
       body: body,
@@ -40,6 +43,7 @@ class _$ForumPostDtoTearOff {
       photoUrl: photoUrl,
       photoAdded: photoAdded,
       pollAdded: pollAdded,
+      timestamp: timestamp,
     );
   }
 
@@ -53,6 +57,7 @@ const $ForumPostDto = _$ForumPostDtoTearOff();
 
 /// @nodoc
 mixin _$ForumPostDto {
+  String get forumId => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get tag => throw _privateConstructorUsedError;
   String get body => throw _privateConstructorUsedError;
@@ -62,6 +67,7 @@ mixin _$ForumPostDto {
   String get photoUrl => throw _privateConstructorUsedError;
   bool get photoAdded => throw _privateConstructorUsedError;
   bool get pollAdded => throw _privateConstructorUsedError;
+  String get timestamp => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -75,7 +81,8 @@ abstract class $ForumPostDtoCopyWith<$Res> {
           ForumPostDto value, $Res Function(ForumPostDto) then) =
       _$ForumPostDtoCopyWithImpl<$Res>;
   $Res call(
-      {String title,
+      {String forumId,
+      String title,
       String tag,
       String body,
       int likes,
@@ -83,7 +90,8 @@ abstract class $ForumPostDtoCopyWith<$Res> {
       bool isAnon,
       String photoUrl,
       bool photoAdded,
-      bool pollAdded});
+      bool pollAdded,
+      String timestamp});
 }
 
 /// @nodoc
@@ -96,6 +104,7 @@ class _$ForumPostDtoCopyWithImpl<$Res> implements $ForumPostDtoCopyWith<$Res> {
 
   @override
   $Res call({
+    Object? forumId = freezed,
     Object? title = freezed,
     Object? tag = freezed,
     Object? body = freezed,
@@ -105,8 +114,13 @@ class _$ForumPostDtoCopyWithImpl<$Res> implements $ForumPostDtoCopyWith<$Res> {
     Object? photoUrl = freezed,
     Object? photoAdded = freezed,
     Object? pollAdded = freezed,
+    Object? timestamp = freezed,
   }) {
     return _then(_value.copyWith(
+      forumId: forumId == freezed
+          ? _value.forumId
+          : forumId // ignore: cast_nullable_to_non_nullable
+              as String,
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -143,6 +157,10 @@ class _$ForumPostDtoCopyWithImpl<$Res> implements $ForumPostDtoCopyWith<$Res> {
           ? _value.pollAdded
           : pollAdded // ignore: cast_nullable_to_non_nullable
               as bool,
+      timestamp: timestamp == freezed
+          ? _value.timestamp
+          : timestamp // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -155,7 +173,8 @@ abstract class _$ForumPostDtoCopyWith<$Res>
       __$ForumPostDtoCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String title,
+      {String forumId,
+      String title,
       String tag,
       String body,
       int likes,
@@ -163,7 +182,8 @@ abstract class _$ForumPostDtoCopyWith<$Res>
       bool isAnon,
       String photoUrl,
       bool photoAdded,
-      bool pollAdded});
+      bool pollAdded,
+      String timestamp});
 }
 
 /// @nodoc
@@ -178,6 +198,7 @@ class __$ForumPostDtoCopyWithImpl<$Res> extends _$ForumPostDtoCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? forumId = freezed,
     Object? title = freezed,
     Object? tag = freezed,
     Object? body = freezed,
@@ -187,8 +208,13 @@ class __$ForumPostDtoCopyWithImpl<$Res> extends _$ForumPostDtoCopyWithImpl<$Res>
     Object? photoUrl = freezed,
     Object? photoAdded = freezed,
     Object? pollAdded = freezed,
+    Object? timestamp = freezed,
   }) {
     return _then(_ForumPostDto(
+      forumId: forumId == freezed
+          ? _value.forumId
+          : forumId // ignore: cast_nullable_to_non_nullable
+              as String,
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -225,6 +251,10 @@ class __$ForumPostDtoCopyWithImpl<$Res> extends _$ForumPostDtoCopyWithImpl<$Res>
           ? _value.pollAdded
           : pollAdded // ignore: cast_nullable_to_non_nullable
               as bool,
+      timestamp: timestamp == freezed
+          ? _value.timestamp
+          : timestamp // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -233,7 +263,8 @@ class __$ForumPostDtoCopyWithImpl<$Res> extends _$ForumPostDtoCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_ForumPostDto extends _ForumPostDto {
   const _$_ForumPostDto(
-      {required this.title,
+      {required this.forumId,
+      required this.title,
       required this.tag,
       required this.body,
       required this.likes,
@@ -241,12 +272,15 @@ class _$_ForumPostDto extends _ForumPostDto {
       required this.isAnon,
       required this.photoUrl,
       required this.photoAdded,
-      required this.pollAdded})
+      required this.pollAdded,
+      required this.timestamp})
       : super._();
 
   factory _$_ForumPostDto.fromJson(Map<String, dynamic> json) =>
       _$_$_ForumPostDtoFromJson(json);
 
+  @override
+  final String forumId;
   @override
   final String title;
   @override
@@ -265,16 +299,21 @@ class _$_ForumPostDto extends _ForumPostDto {
   final bool photoAdded;
   @override
   final bool pollAdded;
+  @override
+  final String timestamp;
 
   @override
   String toString() {
-    return 'ForumPostDto(title: $title, tag: $tag, body: $body, likes: $likes, posterUserId: $posterUserId, isAnon: $isAnon, photoUrl: $photoUrl, photoAdded: $photoAdded, pollAdded: $pollAdded)';
+    return 'ForumPostDto(forumId: $forumId, title: $title, tag: $tag, body: $body, likes: $likes, posterUserId: $posterUserId, isAnon: $isAnon, photoUrl: $photoUrl, photoAdded: $photoAdded, pollAdded: $pollAdded, timestamp: $timestamp)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _ForumPostDto &&
+            (identical(other.forumId, forumId) ||
+                const DeepCollectionEquality()
+                    .equals(other.forumId, forumId)) &&
             (identical(other.title, title) ||
                 const DeepCollectionEquality().equals(other.title, title)) &&
             (identical(other.tag, tag) ||
@@ -296,12 +335,16 @@ class _$_ForumPostDto extends _ForumPostDto {
                     .equals(other.photoAdded, photoAdded)) &&
             (identical(other.pollAdded, pollAdded) ||
                 const DeepCollectionEquality()
-                    .equals(other.pollAdded, pollAdded)));
+                    .equals(other.pollAdded, pollAdded)) &&
+            (identical(other.timestamp, timestamp) ||
+                const DeepCollectionEquality()
+                    .equals(other.timestamp, timestamp)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(forumId) ^
       const DeepCollectionEquality().hash(title) ^
       const DeepCollectionEquality().hash(tag) ^
       const DeepCollectionEquality().hash(body) ^
@@ -310,7 +353,8 @@ class _$_ForumPostDto extends _ForumPostDto {
       const DeepCollectionEquality().hash(isAnon) ^
       const DeepCollectionEquality().hash(photoUrl) ^
       const DeepCollectionEquality().hash(photoAdded) ^
-      const DeepCollectionEquality().hash(pollAdded);
+      const DeepCollectionEquality().hash(pollAdded) ^
+      const DeepCollectionEquality().hash(timestamp);
 
   @JsonKey(ignore: true)
   @override
@@ -325,7 +369,8 @@ class _$_ForumPostDto extends _ForumPostDto {
 
 abstract class _ForumPostDto extends ForumPostDto {
   const factory _ForumPostDto(
-      {required String title,
+      {required String forumId,
+      required String title,
       required String tag,
       required String body,
       required int likes,
@@ -333,12 +378,15 @@ abstract class _ForumPostDto extends ForumPostDto {
       required bool isAnon,
       required String photoUrl,
       required bool photoAdded,
-      required bool pollAdded}) = _$_ForumPostDto;
+      required bool pollAdded,
+      required String timestamp}) = _$_ForumPostDto;
   const _ForumPostDto._() : super._();
 
   factory _ForumPostDto.fromJson(Map<String, dynamic> json) =
       _$_ForumPostDto.fromJson;
 
+  @override
+  String get forumId => throw _privateConstructorUsedError;
   @override
   String get title => throw _privateConstructorUsedError;
   @override
@@ -357,6 +405,8 @@ abstract class _ForumPostDto extends ForumPostDto {
   bool get photoAdded => throw _privateConstructorUsedError;
   @override
   bool get pollAdded => throw _privateConstructorUsedError;
+  @override
+  String get timestamp => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$ForumPostDtoCopyWith<_ForumPostDto> get copyWith =>
