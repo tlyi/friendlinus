@@ -64,31 +64,12 @@ class ConvoMessages extends StatelessWidget {
                         : BubbleNip.rightBottom,
                     showNip: index == 0 ||
                         state.messages[index - 1].senderId != message.senderId,
-                    child: Column(children: [
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            message.messageBody.getOrCrash(),
-                            style: const TextStyle(fontSize: 15),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10, top: 10),
-                            child: Text(
-                              getTime(message.timeSent),
-                              style: const TextStyle(fontSize: 10),
-                            ),
-                          ),
-                          if (!isOtherSender)
-                            Padding(
-                              padding: EdgeInsets.only(left: 5, top: 10),
-                              child: message.read
-                                  ? const Icon(MdiIcons.checkAll,
-                                      color: Colors.white, size: 15)
-                                  : const Icon(MdiIcons.check,
-                                      color: Colors.white, size: 15),
-                            ),
-                        ],
+                    child: Row(mainAxisSize: MainAxisSize.min, children: [
+                      Flexible(
+                        child: Text(
+                          message.messageBody.getOrCrash(),
+                          style: const TextStyle(fontSize: 15),
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 10, top: 10),
