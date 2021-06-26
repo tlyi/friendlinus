@@ -152,7 +152,7 @@ class _BuildPhoto extends StatelessWidget {
               fit: BoxFit.contain,
               image: NetworkImage(photoUrl),
             )),
-        const SizedBox(height: 20),
+        const SizedBox(height: 10),
       ],
     );
   }
@@ -182,7 +182,6 @@ class _BuildPoll extends StatelessWidget {
                 alignment: Alignment.center,
                 width: MediaQuery.of(context).size.width * 0.80,
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Polls(
                       children: [
@@ -198,8 +197,8 @@ class _BuildPoll extends StatelessWidget {
                       currentUser: context.read<ForumActorBloc>().state.userId,
                       creatorID: poll.creatorUuid,
                       allowCreatorVote: true,
-                      onVoteBackgroundColor: Colors.cyan,
-                      leadingBackgroundColor: Colors.cyan,
+                      onVoteBackgroundColor: const Color(0xFF97b8c9),
+                      leadingBackgroundColor: const Color(0xFF7BA5BB),
                       backgroundColor: Colors.white,
                       onVote: (choice) {
                         //choice enums starts from 1
@@ -208,7 +207,7 @@ class _BuildPoll extends StatelessWidget {
                             .add(ForumActorEvent.voted(forumId, choice - 1));
                       },
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 10),
                   ],
                 ),
               );
