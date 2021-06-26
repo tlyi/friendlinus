@@ -6,6 +6,7 @@ import 'package:friendlinus/presentation/core/app_bar.dart';
 import 'package:friendlinus/presentation/core/nav_bar.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:friendlinus/domain/core/constants.dart' as constants;
+import 'package:intl/intl.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -20,13 +21,42 @@ class HomePage extends StatelessWidget {
       child: Scaffold(
         appBar: appBar(context: context, header: 'Welcome'),
         body: Container(
-          alignment: Alignment.center,
+          alignment: Alignment.topCenter,
           child: SingleChildScrollView(
+            padding: const EdgeInsets.all(20.0),
             child: Column(
-              mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                _BuildSearchUsersButton(),
-                _BuildSignOutButton(),
+                Container(
+                  alignment: Alignment.topLeft,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(DateFormat('d MMMM').format(DateTime.now()),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 25,
+                          )),
+                      Text(DateFormat('EEEE').format(DateTime.now()),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 25,
+                          )),
+                    ],
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    SizedBox(height: 50),
+                    Image(
+                      image: const AssetImage('images/logo.png'),
+                      height: MediaQuery.of(context).size.height * 0.3,
+                    ),
+                    _BuildSearchUsersButton(),
+                    _BuildSignOutButton(),
+                  ],
+                ),
               ],
             ),
           ),

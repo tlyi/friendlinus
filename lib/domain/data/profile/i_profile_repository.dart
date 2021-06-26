@@ -15,6 +15,8 @@ abstract class IProfileRepository {
   Future<Either<DataFailure, String>> uploadPhoto(File photo);
 
   Future<Either<DataFailure, Profile>> readOwnProfile();
+  
+  Future<Either<DataFailure, String>> getUsername(String uuid);
 
   Future<Either<DataFailure, Profile>> readOtherProfile(String username);
 

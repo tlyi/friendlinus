@@ -115,7 +115,7 @@ class ForumFormBloc extends Bloc<ForumFormEvent, ForumFormState> {
       },
       createdPost: (e) async* {
         Either<DataFailure, Unit> failureOrSuccess;
-        final userId = await _forumRepository.getOwnId();
+        final String userId = await _forumRepository.getOwnId();
         yield state.copyWith(
             isLoading: true,
             forumPost: state.forumPost.copyWith(posterUserId: userId),
@@ -132,7 +132,8 @@ class ForumFormBloc extends Bloc<ForumFormEvent, ForumFormState> {
         }
 
         failureOrSuccess = await _forumRepository.create(
-            state.forumPost, state.forumPost.forumId);
+            state.forumPost.copyWith(posterUserId: userId),
+            state.forumPost.forumId);
 
         yield state.copyWith(
           isLoading: false,

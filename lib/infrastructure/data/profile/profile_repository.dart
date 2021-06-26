@@ -105,6 +105,18 @@ class ProfileRepository implements IProfileRepository {
   }
 
   @override
+  Future<Either<DataFailure, String>> getUsername(String uuid) async {
+    try {
+      final userDoc = await _firestore.userDocumentById(uuid);
+      return userDoc.get().then((DocumentSnapshot doc) => right(
+          ProfileDto.fromFirestore(doc).toDomain().username.getOrCrash()));
+    } on FirebaseException catch (e) {
+      print(e);
+      return left(const DataFailure.unexpected());
+    }
+  }
+
+  @override
   Future<Either<DataFailure, List<Profile>>> searchProfileByUsername(
       String username) async {
     final searchResults = <Profile>[];

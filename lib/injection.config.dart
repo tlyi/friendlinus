@@ -77,8 +77,8 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       () => _i23.ForumActorBloc(get<_i10.IForumRepository>()));
   gh.factory<_i24.ForumFormBloc>(() => _i24.ForumFormBloc(
       get<_i10.IForumRepository>(), get<_i12.IProfileRepository>()));
-  gh.factory<_i25.ForumPostWatcherBloc>(
-      () => _i25.ForumPostWatcherBloc(get<_i10.IForumRepository>()));
+  gh.factory<_i25.ForumPostWatcherBloc>(() => _i25.ForumPostWatcherBloc(
+      get<_i10.IForumRepository>(), get<_i12.IProfileRepository>()));
   gh.factory<_i26.ForumWatcherBloc>(
       () => _i26.ForumWatcherBloc(get<_i10.IForumRepository>()));
   return get;

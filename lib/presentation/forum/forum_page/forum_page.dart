@@ -24,11 +24,7 @@ class ForumPage extends StatelessWidget {
                 ..add(const ForumActorEvent.started())),
         ],
         child: Scaffold(
-            appBar: appBar(
-                context: context,
-                header: '??',
-                canGoBack:
-                    true), //Can't rly number it off like our original mockup
+            
             bottomNavigationBar: const NavigationBar(),
             body: Container(
                 alignment: Alignment.topCenter,
