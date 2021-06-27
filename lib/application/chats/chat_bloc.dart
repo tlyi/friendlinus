@@ -16,7 +16,7 @@ part 'chat_bloc.freezed.dart';
 class ChatBloc extends Bloc<ChatEvent, ChatState> {
   final IChatRepository _chatRepository;
 
-  ChatBloc(this._chatRepository) : super(ChatState.initial());
+  ChatBloc(this._chatRepository) : super(const ChatState.initial());
 
   @override
   Stream<ChatState> mapEventToState(
@@ -24,32 +24,27 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   ) async* {
     yield* event.map(
       chatStarted: (e) async* {
-        final ownId = await _chatRepository.getOwnId();
+        print("creating chat");
+        yield const ChatState.loadInProgress();
 
-        final userIdsCombined = ownId.compareTo(e.otherId) > 0
+        String ownId = await _chatRepository.getOwnId();
+
+        String userIdsCombined = ownId.compareTo(e.otherId) > 0
             ? '${ownId}_${e.otherId}'
             : '${e.otherId}_$ownId';
 
-        yield state.copyWith(
+        Chat chat = Chat.empty().copyWith(
+          userIdsCombined: userIdsCombined,
           userIds: [ownId, e.otherId],
-          isLoading: true,
-          failureOrChat: right(Chat.empty()),
         );
 
-        Either<DataFailure, Chat> failureOrChat;
-        failureOrChat = await _chatRepository.createChat(
-            state.chat.copyWith(
-              userIdsCombined: userIdsCombined,
-              userIds: [ownId, e.otherId],
-            ),
-            userIdsCombined,
-            e.otherId);
+        print(chat);
 
-        yield state.copyWith(
-          isLoading: false,
-          chat: failureOrChat.getOrElse(() => Chat.empty()),
-          failureOrChat: failureOrChat,
-        );
+        final failureOrChat =
+            await _chatRepository.createChat(chat, userIdsCombined, e.otherId);
+        print("created chat");
+        yield failureOrChat.fold((failure) => ChatState.loadFailure(failure),
+            (chat) => ChatState.loadSuccess(chat));
       },
     );
   }

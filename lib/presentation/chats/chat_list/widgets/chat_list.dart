@@ -18,16 +18,12 @@ class ChatList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<ChatWatcherBloc, ChatWatcherState>(
-        listener: (context, state) {
-      // TODO: implement listener: when click on chat, navigate
-    }, builder: (context, state) {
+    return BlocBuilder<ChatWatcherBloc, ChatWatcherState>(
+        builder: (context, state) {
       return state.map(
           initial: (_) => Container(),
-          loadInProgress: (_) => const Scaffold(
-                body: Center(
-                  child: CircularProgressIndicator(),
-                ),
+          loadInProgress: (_) => const Center(
+                child: CircularProgressIndicator(),
               ),
           loadSuccess: (state) {
             return ListView.builder(

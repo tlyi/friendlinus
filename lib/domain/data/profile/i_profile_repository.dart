@@ -26,4 +26,14 @@ abstract class IProfileRepository {
   Future<Either<DataFailure, bool>> verifyUserRegistered();
 
   Future<Either<DataFailure, Unit>> addForum(String forumId);
+
+  Future<bool> checkIfFollowing(String userId);
+
+  Future<Either<DataFailure, Unit>> addFollower(String userToFollowId);
+
+  Future<Either<DataFailure, Unit>> removeFollower(String userToFollowId);
+
+  Future<List<Profile>> retrieveFollowing(
+      String userId); //future consideration: Should this be a stream?
+
 }

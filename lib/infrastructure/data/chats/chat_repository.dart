@@ -41,7 +41,6 @@ class ChatRepository implements IChatRepository {
       final ownId = await getOwnId();
 
       DocumentSnapshot doc = await chatsRef.doc(userIdsCombined).get();
-
       if (!doc.exists) {
         try {
           //If chat does not exist, create chat
@@ -80,11 +79,12 @@ class ChatRepository implements IChatRepository {
   @override
   Stream<Either<DataFailure, List<Chat>>> retrieveUserChats(
       String userId) async* {
+    await deleteEmptyChats();
     final chatsRef = await _firestore.chatsRef();
-    print("here");
+
     yield* chatsRef
-        .orderBy('timestamp', descending: true)
         .where('userIds', arrayContains: userId)
+        .orderBy('timestamp', descending: true)
         .snapshots()
         .map(
           (snapshot) => right<DataFailure, List<Chat>>(
@@ -101,6 +101,28 @@ class ChatRepository implements IChatRepository {
         return left(const DataFailure.unexpected());
       }
     });
+  }
+
+  @override
+  Future<Either<DataFailure, Unit>> deleteEmptyChats() async {
+    try {
+      final chatsRef = await _firestore.chatsRef();
+      QuerySnapshot emptyChats =
+          await chatsRef.where('lastMessage', isEqualTo: '').get();
+      if (emptyChats.docs.isNotEmpty) {
+        for (final chat in emptyChats.docs) {
+          chat.reference.delete();
+          print('delete');
+        }
+      }
+      return right(unit);
+    } on FirebaseException catch (e) {
+      if (e.message!.contains('PERMISSION_DENIED')) {
+        return left(const DataFailure.insufficientPermission());
+      } else {
+        return left(const DataFailure.unexpected());
+      }
+    }
   }
 
   @override

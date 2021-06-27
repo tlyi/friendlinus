@@ -7,6 +7,7 @@ import 'package:friendlinus/application/chats/convo_watcher/convo_watcher_bloc.d
 import 'package:friendlinus/domain/data/chats/chat_message/chat_message.dart';
 import 'package:friendlinus/domain/data/profile/profile.dart';
 import 'package:friendlinus/domain/core/constants.dart' as constants;
+import 'package:friendlinus/presentation/core/get_time.dart';
 import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
@@ -23,10 +24,8 @@ class ConvoMessages extends StatelessWidget {
         builder: (context, state) {
       return state.map(
         initial: (_) => Container(),
-        loadMessagesInProgress: (_) => const Scaffold(
-          body: Center(
-            child: CircularProgressIndicator(),
-          ),
+        loadMessagesInProgress: (_) => const Center(
+          child: CircularProgressIndicator(),
         ),
         loadMessagesSuccess: (state) {
           return ListView.builder(
@@ -106,28 +105,4 @@ class ConvoMessages extends StatelessWidget {
       );
     });
   }
-}
-
-String getTime(String timestamp) {
-  final DateTime dateTime =
-      DateTime.fromMillisecondsSinceEpoch(int.parse(timestamp));
-
-  String timeAgo(DateTime d) {
-    Duration diff = DateTime.now().difference(d);
-    if (diff.inDays > 365) {
-      return "${(diff.inDays / 365).floor()} ${(diff.inDays / 365).floor() == 1 ? "year" : "years"} ago";
-    }
-    if (diff.inDays > 30) {
-      return "${(diff.inDays / 30).floor()} ${(diff.inDays / 30).floor() == 1 ? "month" : "months"} ago";
-    }
-    if (diff.inDays > 7) {
-      return "${(diff.inDays / 7).floor()} ${(diff.inDays / 7).floor() == 1 ? "week" : "weeks"} ago";
-    }
-    if (diff.inDays > 0) {
-      return "${diff.inDays} ${diff.inDays == 1 ? "day" : "days"} ago";
-    }
-    return DateFormat('jm').format(d);
-  }
-
-  return timeAgo(dateTime);
 }

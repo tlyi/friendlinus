@@ -47,11 +47,13 @@ class SearchProfileBloc extends Bloc<SearchProfileEvent, SearchProfileState> {
         );
       }
     }, profileSelected: (e) async* {
+      String ownId = await _profileRepository.getUserId();
       yield state.copyWith(
           isLoadingProfile: true,
           isSearching: false,
           displayResults: false,
-          isLoadedProfile: false);
+          isLoadedProfile: false,
+          ownId: ownId);
       final profile = await _profileRepository.readOtherProfile(e.username);
       yield state.copyWith(
         isLoadingProfile: false,

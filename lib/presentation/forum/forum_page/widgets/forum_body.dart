@@ -50,6 +50,7 @@ class _BuildPost extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String userId = context.read<ForumActorBloc>().state.userId;
+    print(userId);
     return Padding(
       padding: const EdgeInsets.only(top: 20.0, left: 8.0, right: 8),
       child: Container(

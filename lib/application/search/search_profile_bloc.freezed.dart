@@ -322,7 +322,8 @@ class _$SearchProfileStateTearOff {
       required bool displayResults,
       required bool isLoadingProfile,
       required bool isLoadedProfile,
-      required Either<DataFailure, Profile> selectedProfile}) {
+      required Either<DataFailure, Profile> selectedProfile,
+      required String ownId}) {
     return _SearchProfileState(
       searchProfileResults: searchProfileResults,
       isSearching: isSearching,
@@ -330,6 +331,7 @@ class _$SearchProfileStateTearOff {
       isLoadingProfile: isLoadingProfile,
       isLoadedProfile: isLoadedProfile,
       selectedProfile: selectedProfile,
+      ownId: ownId,
     );
   }
 }
@@ -347,6 +349,7 @@ mixin _$SearchProfileState {
   bool get isLoadedProfile => throw _privateConstructorUsedError;
   Either<DataFailure, Profile> get selectedProfile =>
       throw _privateConstructorUsedError;
+  String get ownId => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $SearchProfileStateCopyWith<SearchProfileState> get copyWith =>
@@ -364,7 +367,8 @@ abstract class $SearchProfileStateCopyWith<$Res> {
       bool displayResults,
       bool isLoadingProfile,
       bool isLoadedProfile,
-      Either<DataFailure, Profile> selectedProfile});
+      Either<DataFailure, Profile> selectedProfile,
+      String ownId});
 }
 
 /// @nodoc
@@ -384,6 +388,7 @@ class _$SearchProfileStateCopyWithImpl<$Res>
     Object? isLoadingProfile = freezed,
     Object? isLoadedProfile = freezed,
     Object? selectedProfile = freezed,
+    Object? ownId = freezed,
   }) {
     return _then(_value.copyWith(
       searchProfileResults: searchProfileResults == freezed
@@ -410,6 +415,10 @@ class _$SearchProfileStateCopyWithImpl<$Res>
           ? _value.selectedProfile
           : selectedProfile // ignore: cast_nullable_to_non_nullable
               as Either<DataFailure, Profile>,
+      ownId: ownId == freezed
+          ? _value.ownId
+          : ownId // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -427,7 +436,8 @@ abstract class _$SearchProfileStateCopyWith<$Res>
       bool displayResults,
       bool isLoadingProfile,
       bool isLoadedProfile,
-      Either<DataFailure, Profile> selectedProfile});
+      Either<DataFailure, Profile> selectedProfile,
+      String ownId});
 }
 
 /// @nodoc
@@ -449,6 +459,7 @@ class __$SearchProfileStateCopyWithImpl<$Res>
     Object? isLoadingProfile = freezed,
     Object? isLoadedProfile = freezed,
     Object? selectedProfile = freezed,
+    Object? ownId = freezed,
   }) {
     return _then(_SearchProfileState(
       searchProfileResults: searchProfileResults == freezed
@@ -475,6 +486,10 @@ class __$SearchProfileStateCopyWithImpl<$Res>
           ? _value.selectedProfile
           : selectedProfile // ignore: cast_nullable_to_non_nullable
               as Either<DataFailure, Profile>,
+      ownId: ownId == freezed
+          ? _value.ownId
+          : ownId // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -488,7 +503,8 @@ class _$_SearchProfileState implements _SearchProfileState {
       required this.displayResults,
       required this.isLoadingProfile,
       required this.isLoadedProfile,
-      required this.selectedProfile});
+      required this.selectedProfile,
+      required this.ownId});
 
   @override
   final Either<DataFailure, List<Profile>> searchProfileResults;
@@ -502,10 +518,12 @@ class _$_SearchProfileState implements _SearchProfileState {
   final bool isLoadedProfile;
   @override
   final Either<DataFailure, Profile> selectedProfile;
+  @override
+  final String ownId;
 
   @override
   String toString() {
-    return 'SearchProfileState(searchProfileResults: $searchProfileResults, isSearching: $isSearching, displayResults: $displayResults, isLoadingProfile: $isLoadingProfile, isLoadedProfile: $isLoadedProfile, selectedProfile: $selectedProfile)';
+    return 'SearchProfileState(searchProfileResults: $searchProfileResults, isSearching: $isSearching, displayResults: $displayResults, isLoadingProfile: $isLoadingProfile, isLoadedProfile: $isLoadedProfile, selectedProfile: $selectedProfile, ownId: $ownId)';
   }
 
   @override
@@ -529,7 +547,9 @@ class _$_SearchProfileState implements _SearchProfileState {
                     .equals(other.isLoadedProfile, isLoadedProfile)) &&
             (identical(other.selectedProfile, selectedProfile) ||
                 const DeepCollectionEquality()
-                    .equals(other.selectedProfile, selectedProfile)));
+                    .equals(other.selectedProfile, selectedProfile)) &&
+            (identical(other.ownId, ownId) ||
+                const DeepCollectionEquality().equals(other.ownId, ownId)));
   }
 
   @override
@@ -540,7 +560,8 @@ class _$_SearchProfileState implements _SearchProfileState {
       const DeepCollectionEquality().hash(displayResults) ^
       const DeepCollectionEquality().hash(isLoadingProfile) ^
       const DeepCollectionEquality().hash(isLoadedProfile) ^
-      const DeepCollectionEquality().hash(selectedProfile);
+      const DeepCollectionEquality().hash(selectedProfile) ^
+      const DeepCollectionEquality().hash(ownId);
 
   @JsonKey(ignore: true)
   @override
@@ -550,13 +571,13 @@ class _$_SearchProfileState implements _SearchProfileState {
 
 abstract class _SearchProfileState implements SearchProfileState {
   const factory _SearchProfileState(
-          {required Either<DataFailure, List<Profile>> searchProfileResults,
-          required bool isSearching,
-          required bool displayResults,
-          required bool isLoadingProfile,
-          required bool isLoadedProfile,
-          required Either<DataFailure, Profile> selectedProfile}) =
-      _$_SearchProfileState;
+      {required Either<DataFailure, List<Profile>> searchProfileResults,
+      required bool isSearching,
+      required bool displayResults,
+      required bool isLoadingProfile,
+      required bool isLoadedProfile,
+      required Either<DataFailure, Profile> selectedProfile,
+      required String ownId}) = _$_SearchProfileState;
 
   @override
   Either<DataFailure, List<Profile>> get searchProfileResults =>
@@ -572,6 +593,8 @@ abstract class _SearchProfileState implements SearchProfileState {
   @override
   Either<DataFailure, Profile> get selectedProfile =>
       throw _privateConstructorUsedError;
+  @override
+  String get ownId => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$SearchProfileStateCopyWith<_SearchProfileState> get copyWith =>

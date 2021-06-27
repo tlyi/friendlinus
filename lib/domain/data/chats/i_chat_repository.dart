@@ -14,6 +14,8 @@ abstract class IChatRepository {
   Future<Either<DataFailure, Chat>> createChat(
       Chat chat, String userIdsCombined, String otherId);
 
+  Future<Either<DataFailure, Unit>> deleteEmptyChats(); 
+
   Stream<Either<DataFailure, List<Chat>>> retrieveUserChats(String userId);
 
   Future<Either<DataFailure, Profile>> searchProfileByUuid(String uuid);

@@ -15,10 +15,8 @@ class ForumOverviewBody extends StatelessWidget {
         final userId = context.read<ForumActorBloc>().state.userId;
         return state.map(
             initial: (_) => Container(),
-            loadInProgress: (_) => const Scaffold(
-                  body: Center(
-                    child: CircularProgressIndicator(),
-                  ),
+            loadInProgress: (_) => const Center(
+                  child: CircularProgressIndicator(),
                 ),
             loadSuccess: (state) {
               return ListView.builder(
@@ -96,44 +94,3 @@ class ForumOverviewBody extends StatelessWidget {
     );
   }
 }
-
-
-/*
-leading: SizedBox(
-                          //DO NOT ADJUST SPACING :')
-                          height: 40,
-                          width: 40,
-                          child: Stack(
-                            children: <Widget>[
-                              SizedBox(
-                                height: 30,
-                                width: 30,
-                                child: IconButton(
-                                  padding: const EdgeInsets.all(0),
-                                  onPressed: () {
-                                    if (forum.likedUserIds.contains(userId)) {
-                                      context.read<ForumActorBloc>().add(
-                                          ForumActorEvent.unliked(
-                                              forum.forumId));
-                                    } else {
-                                      context.read<ForumActorBloc>().add(
-                                          ForumActorEvent.liked(forum.forumId));
-                                    }
-                                  },
-                                  icon: Icon(
-                                    Icons.arrow_drop_up,
-                                    color: forum.likedUserIds.contains(userId)
-                                        ? Colors.grey[800]
-                                        : Colors.grey[400],
-                                    size: 26,
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                  left: 8,
-                                  bottom: 3,
-                                  child: Text(forum.likes.toString())),
-                            ],
-                          ),
-
-                          */

@@ -6,10 +6,12 @@
 
 import 'package:auto_route/auto_route.dart' as _i1;
 import 'package:flutter/material.dart' as _i2;
-import 'package:friendlinus/domain/data/profile/profile.dart' as _i19;
+import 'package:friendlinus/domain/data/profile/profile.dart' as _i20;
 import 'package:friendlinus/presentation/chats/chat_list/chat_list_page.dart'
     as _i16;
 import 'package:friendlinus/presentation/chats/convos/convo_page.dart' as _i17;
+import 'package:friendlinus/presentation/chats/convos/convo_splash_page.dart'
+    as _i19;
 import 'package:friendlinus/presentation/forum/forum_form/forum_form_page.dart'
     as _i15;
 import 'package:friendlinus/presentation/forum/forum_overview/forum_overview_page.dart'
@@ -76,8 +78,9 @@ class AppRouter extends _i1.RootStackRouter {
         }),
     ProfileRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
         routeData: routeData,
-        builder: (_) {
-          return _i10.ProfilePage();
+        builder: (data) {
+          final args = data.argsAs<ProfileRouteArgs>();
+          return _i10.ProfilePage(key: args.key, canGoBack: args.canGoBack);
         }),
     SearchUsersRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
         routeData: routeData,
@@ -125,6 +128,13 @@ class AppRouter extends _i1.RootStackRouter {
         builder: (data) {
           final args = data.argsAs<ForumRouteArgs>();
           return _i18.ForumPage(key: args.key, forumId: args.forumId);
+        }),
+    ConvoSplashRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
+        routeData: routeData,
+        builder: (data) {
+          final args = data.argsAs<ConvoSplashRouteArgs>();
+          return _i19.ConvoSplashPage(
+              key: args.key, senderProfile: args.senderProfile);
         })
   };
 
@@ -146,7 +156,8 @@ class AppRouter extends _i1.RootStackRouter {
         _i1.RouteConfig(ForumFormRoute.name, path: '/forum-form-page'),
         _i1.RouteConfig(ChatListRoute.name, path: '/chat-list-page'),
         _i1.RouteConfig(ConvoRoute.name, path: '/convo-page'),
-        _i1.RouteConfig(ForumRoute.name, path: '/forum-page')
+        _i1.RouteConfig(ForumRoute.name, path: '/forum-page'),
+        _i1.RouteConfig(ConvoSplashRoute.name, path: '/convo-splash-page')
       ];
 }
 
@@ -192,10 +203,21 @@ class ResetPasswordRoute extends _i1.PageRouteInfo {
   static const String name = 'ResetPasswordRoute';
 }
 
-class ProfileRoute extends _i1.PageRouteInfo {
-  const ProfileRoute() : super(name, path: '/profile-page');
+class ProfileRoute extends _i1.PageRouteInfo<ProfileRouteArgs> {
+  ProfileRoute({_i2.Key? key, required bool canGoBack})
+      : super(name,
+            path: '/profile-page',
+            args: ProfileRouteArgs(key: key, canGoBack: canGoBack));
 
   static const String name = 'ProfileRoute';
+}
+
+class ProfileRouteArgs {
+  const ProfileRouteArgs({this.key, required this.canGoBack});
+
+  final _i2.Key? key;
+
+  final bool canGoBack;
 }
 
 class SearchUsersRoute extends _i1.PageRouteInfo {
@@ -211,7 +233,7 @@ class UpdateProfileRoute extends _i1.PageRouteInfo {
 }
 
 class OtherProfileRoute extends _i1.PageRouteInfo<OtherProfileRouteArgs> {
-  OtherProfileRoute({_i2.Key? key, required _i19.Profile userProfile})
+  OtherProfileRoute({_i2.Key? key, required _i20.Profile userProfile})
       : super(name,
             path: '/other-profile-page',
             args: OtherProfileRouteArgs(key: key, userProfile: userProfile));
@@ -224,7 +246,7 @@ class OtherProfileRouteArgs {
 
   final _i2.Key? key;
 
-  final _i19.Profile userProfile;
+  final _i20.Profile userProfile;
 }
 
 class ForumOverviewRoute extends _i1.PageRouteInfo {
@@ -249,7 +271,7 @@ class ConvoRoute extends _i1.PageRouteInfo<ConvoRouteArgs> {
   ConvoRoute(
       {_i2.Key? key,
       required String convoId,
-      required _i19.Profile senderProfile})
+      required _i20.Profile senderProfile})
       : super(name,
             path: '/convo-page',
             args: ConvoRouteArgs(
@@ -266,7 +288,7 @@ class ConvoRouteArgs {
 
   final String convoId;
 
-  final _i19.Profile senderProfile;
+  final _i20.Profile senderProfile;
 }
 
 class ForumRoute extends _i1.PageRouteInfo<ForumRouteArgs> {
@@ -284,4 +306,21 @@ class ForumRouteArgs {
   final _i2.Key? key;
 
   final String forumId;
+}
+
+class ConvoSplashRoute extends _i1.PageRouteInfo<ConvoSplashRouteArgs> {
+  ConvoSplashRoute({_i2.Key? key, required _i20.Profile senderProfile})
+      : super(name,
+            path: '/convo-splash-page',
+            args: ConvoSplashRouteArgs(key: key, senderProfile: senderProfile));
+
+  static const String name = 'ConvoSplashRoute';
+}
+
+class ConvoSplashRouteArgs {
+  const ConvoSplashRouteArgs({this.key, required this.senderProfile});
+
+  final _i2.Key? key;
+
+  final _i20.Profile senderProfile;
 }

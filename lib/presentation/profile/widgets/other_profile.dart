@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:friendlinus/application/chats/chat_bloc.dart';
+import 'package:friendlinus/application/profile/profile_actor/profile_actor_bloc.dart';
 import 'package:friendlinus/domain/data/profile/profile.dart';
+import 'package:friendlinus/presentation/profile/widgets/profile_elements.dart';
 
 class OtherProfile extends StatelessWidget {
   final Profile userProfile;
@@ -10,20 +11,16 @@ class OtherProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ChatBloc, ChatState>(
+    return BlocBuilder<ProfileActorBloc, ProfileActorState>(
       builder: (context, state) {
-        return Column(
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                context
-                    .read<ChatBloc>()
-                    .add(ChatEvent.chatStarted(userProfile.uuid));
-              }, //navigate to chat page
-              child: Text('Send chat to ${userProfile.username.getOrCrash()}'),
-            )
-          ],
-        );
+        if (state.isLoading) {
+          return const Center(
+            heightFactor: 18,
+            child: CircularProgressIndicator(),
+          );
+        } else {
+          return ProfileElements(userProfile: userProfile, isOwnProfile: false);
+        }
       },
     );
   }

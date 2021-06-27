@@ -26,7 +26,7 @@ class UpdateProfileForm extends StatelessWidget {
                         unableToUpdate: (_) => 'Unable to update'),
                   ).show(context);
                 }, (_) {
-                  context.replaceRoute(const ProfileRoute());
+                  context.replaceRoute(ProfileRoute(canGoBack: false));
                 }));
         state.photoUrl.fold(
             (f) => FlushbarHelper.createError(
@@ -38,7 +38,7 @@ class UpdateProfileForm extends StatelessWidget {
           context
               .read<ProfileFormBloc>()
               .add(const ProfileFormEvent.getProfile());
-          return const CircularProgressIndicator();
+          return const Center(child: CircularProgressIndicator());
         } else {
           Profile userProfile = context
               .read<ProfileFormBloc>()
@@ -84,7 +84,8 @@ class _BuildProfilePicButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String prevPhotoUrl = context.read<ProfileFormBloc>().state.photoUrl.getOrElse(() => '');
+    String prevPhotoUrl =
+        context.read<ProfileFormBloc>().state.photoUrl.getOrElse(() => '');
     return Stack(
       children: <Widget>[
         CircleAvatar(
@@ -249,9 +250,9 @@ class _BuildBio extends StatelessWidget {
                 .add(ProfileFormEvent.bioChanged(value));
           },
           validator: (_) =>
-              context.read<ProfileFormBloc>().state.profile.course.value.fold(
+              context.read<ProfileFormBloc>().state.profile.bio.value.fold(
                     (f) => f.maybeMap(
-                      exceedingLength: (_) => 'Maximum 200 characters only',
+                      exceedingLength: (_) => 'Maximum 80 characters only',
                       orElse: () => null,
                     ),
                     (_) => null,

@@ -68,7 +68,7 @@ class NavigationBar extends StatelessWidget {
             tooltip: 'Profile',
             onPressed: () {
               print('Nav to profile');
-              context.replaceRoute(const ProfileRoute());
+              context.replaceRoute(ProfileRoute(canGoBack: false));
             },
           ),
         ],

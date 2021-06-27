@@ -39,7 +39,7 @@ class Bio extends ValueObject<String> {
   @override
   final Either<ValueFailure<String>, String> value;
 
-  static const maxLength = 200;
+  static const maxLength = 80;
 
   factory Bio(String input) {
     return Bio._(validateMaxStringLength(input, maxLength));

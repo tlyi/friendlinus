@@ -9,6 +9,7 @@ class SearchProfileState with _$SearchProfileState {
     required bool isLoadingProfile,
     required bool isLoadedProfile,
     required Either<DataFailure, Profile> selectedProfile,
+    required String ownId,
   }) = _SearchProfileState;
   factory SearchProfileState.initial() => SearchProfileState(
         searchProfileResults: right([]),
@@ -17,5 +18,6 @@ class SearchProfileState with _$SearchProfileState {
         isLoadingProfile: false,
         isLoadedProfile: false,
         selectedProfile: right(Profile.empty()),
+        ownId: '',
       );
 }

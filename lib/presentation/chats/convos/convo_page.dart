@@ -13,7 +13,7 @@ class ConvoPage extends StatelessWidget {
   final Profile senderProfile;
   const ConvoPage(
       {Key? key, required this.convoId, required this.senderProfile})
-      : super(key: key); //yeet convoid in
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

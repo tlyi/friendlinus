@@ -88,6 +88,7 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
         saveFailureOrSuccessOption: optionOf(failureOrSuccess),
       );
     }, getProfile: (e) async* {
+      print("here at getprofile");
       Either<DataFailure, Profile> failureOrSuccess;
       failureOrSuccess = await _profileRepository.readOwnProfile();
       final profile = failureOrSuccess.getOrElse(() => Profile.empty());

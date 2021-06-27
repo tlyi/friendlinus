@@ -29,7 +29,8 @@ class _BuildFloatingSearchBar extends StatelessWidget {
     return FloatingSearchBar(
       automaticallyImplyBackButton: false,
       scrollPadding: const EdgeInsets.only(top: 16, bottom: 56),
-      progress: false, //set to true later
+      progress: context.read<SearchProfileBloc>().state.isLoadingProfile ||
+          context.read<SearchProfileBloc>().state.isSearching,
       elevation: 10,
       transitionDuration: const Duration(milliseconds: 800),
       transitionCurve: Curves.easeInOut,

@@ -188,4 +188,80 @@ class ProfileRepository implements IProfileRepository {
       return left(const DataFailure.unexpected());
     }
   }
+
+  @override
+  Future<bool> checkIfFollowing(String userId) async {
+    final usersRef = await _firestore.usersRef();
+    final ownId = await getUserId();
+    QuerySnapshot query = await usersRef
+        .where('uuid', isEqualTo: ownId)
+        .where('following', arrayContains: userId)
+        .get();
+
+    return query.docs.isNotEmpty;
+  }
+
+  @override
+  Future<Either<DataFailure, Unit>> addFollower(String userToFollowId) async {
+    try {
+      final ownId = await getUserId();
+      final ownDoc = await _firestore.userDocument();
+      final otherUserDoc = await _firestore.userDocumentById(userToFollowId);
+      WriteBatch batch = _firestore.batch();
+      batch.update(ownDoc, {
+        'following': FieldValue.arrayUnion([userToFollowId])
+      });
+      batch.update(otherUserDoc, {
+        'followedBy': FieldValue.arrayUnion([ownId])
+      });
+      await batch.commit();
+      return right(unit);
+    } on FirebaseException catch (e) {
+      print(e);
+      return left(const DataFailure.unexpected());
+    }
+  }
+
+  @override
+  Future<Either<DataFailure, Unit>> removeFollower(
+      String userToFollowId) async {
+    try {
+      final ownId = await getUserId();
+      final ownDoc = await _firestore.userDocument();
+      final otherUserDoc = await _firestore.userDocumentById(userToFollowId);
+      WriteBatch batch = _firestore.batch();
+      batch.update(ownDoc, {
+        'following': FieldValue.arrayRemove([userToFollowId])
+      });
+      batch.update(otherUserDoc, {
+        'followedBy': FieldValue.arrayRemove([ownId])
+      });
+      await batch.commit();
+      return right(unit);
+    } on FirebaseException catch (e) {
+      print(e);
+      return left(const DataFailure.unexpected());
+    }
+  }
+
+  @override
+  Future<List<Profile>> retrieveFollowing(String userId) async {
+    final following = <Profile>[];
+    final usersRef = await _firestore.usersRef();
+    try {
+      QuerySnapshot query =
+          await usersRef.where('followedBy', arrayContains: userId).get();
+      {
+        if (query.docs.isNotEmpty) {
+          for (final doc in query.docs) {
+            following.add(ProfileDto.fromFirestore(doc).toDomain());
+          }
+        }
+        return following;
+      }
+    } on FirebaseException catch (e) {
+      print(e);
+      return following;
+    }
+  }
 }

@@ -14,20 +14,18 @@ class SearchResults extends StatelessWidget {
     return BlocConsumer<SearchProfileBloc, SearchProfileState>(
       listener: (context, state) {
         if (state.isLoadedProfile) {
-          print("yeet");
           state.selectedProfile.fold(
               (f) => FlushbarHelper.createError(message: 'Server error')
                   .show(context),
-              (userProfile) => context
-                  .pushRoute(OtherProfileRoute(userProfile: userProfile)));
+              (userProfile) => state.ownId == userProfile.uuid
+                  ? context.pushRoute(ProfileRoute(canGoBack: true))
+                  : context
+                      .pushRoute(OtherProfileRoute(userProfile: userProfile)));
         }
       },
       builder: (context, state) {
         if (state.isSearching || state.isLoadingProfile) {
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[CircularProgressIndicator()],
-          );
+          return Container();
         } else if (state.displayResults) {
           final searchResults = context
               .read<SearchProfileBloc>()

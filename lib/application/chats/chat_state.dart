@@ -2,17 +2,8 @@ part of 'chat_bloc.dart';
 
 @freezed
 class ChatState with _$ChatState {
-  const factory ChatState({
-    required List<String> userIds,
-    required Chat chat,
-    required bool isLoading,
-    required Either<DataFailure, Chat> failureOrChat,
-  }) = _ChatState;
-
-  factory ChatState.initial() => ChatState(
-        userIds: [],
-        chat: Chat.empty(),
-        isLoading: false,
-        failureOrChat: right(Chat.empty()),
-      );
+  const factory ChatState.initial() = _Initial;
+  const factory ChatState.loadInProgress() = _LoadInProgress;
+  const factory ChatState.loadSuccess(Chat chat) = _LoadSuccess;
+  const factory ChatState.loadFailure(DataFailure dataFailure) = _LoadFailure;
 }

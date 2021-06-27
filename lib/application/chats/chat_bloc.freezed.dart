@@ -204,16 +204,23 @@ abstract class _ChatStarted implements ChatEvent {
 class _$ChatStateTearOff {
   const _$ChatStateTearOff();
 
-  _ChatState call(
-      {required List<String> userIds,
-      required Chat chat,
-      required bool isLoading,
-      required Either<DataFailure, Chat> failureOrChat}) {
-    return _ChatState(
-      userIds: userIds,
-      chat: chat,
-      isLoading: isLoading,
-      failureOrChat: failureOrChat,
+  _Initial initial() {
+    return const _Initial();
+  }
+
+  _LoadInProgress loadInProgress() {
+    return const _LoadInProgress();
+  }
+
+  _LoadSuccess loadSuccess(Chat chat) {
+    return _LoadSuccess(
+      chat,
+    );
+  }
+
+  _LoadFailure loadFailure(DataFailure dataFailure) {
+    return _LoadFailure(
+      dataFailure,
     );
   }
 }
@@ -223,14 +230,39 @@ const $ChatState = _$ChatStateTearOff();
 
 /// @nodoc
 mixin _$ChatState {
-  List<String> get userIds => throw _privateConstructorUsedError;
-  Chat get chat => throw _privateConstructorUsedError;
-  bool get isLoading => throw _privateConstructorUsedError;
-  Either<DataFailure, Chat> get failureOrChat =>
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loadInProgress,
+    required TResult Function(Chat chat) loadSuccess,
+    required TResult Function(DataFailure dataFailure) loadFailure,
+  }) =>
       throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $ChatStateCopyWith<ChatState> get copyWith =>
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loadInProgress,
+    TResult Function(Chat chat)? loadSuccess,
+    TResult Function(DataFailure dataFailure)? loadFailure,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_LoadInProgress value) loadInProgress,
+    required TResult Function(_LoadSuccess value) loadSuccess,
+    required TResult Function(_LoadFailure value) loadFailure,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_LoadInProgress value)? loadInProgress,
+    TResult Function(_LoadSuccess value)? loadSuccess,
+    TResult Function(_LoadFailure value)? loadFailure,
+    required TResult orElse(),
+  }) =>
       throw _privateConstructorUsedError;
 }
 
@@ -238,13 +270,6 @@ mixin _$ChatState {
 abstract class $ChatStateCopyWith<$Res> {
   factory $ChatStateCopyWith(ChatState value, $Res Function(ChatState) then) =
       _$ChatStateCopyWithImpl<$Res>;
-  $Res call(
-      {List<String> userIds,
-      Chat chat,
-      bool isLoading,
-      Either<DataFailure, Chat> failureOrChat});
-
-  $ChatCopyWith<$Res> get chat;
 }
 
 /// @nodoc
@@ -254,31 +279,221 @@ class _$ChatStateCopyWithImpl<$Res> implements $ChatStateCopyWith<$Res> {
   final ChatState _value;
   // ignore: unused_field
   final $Res Function(ChatState) _then;
+}
+
+/// @nodoc
+abstract class _$InitialCopyWith<$Res> {
+  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) then) =
+      __$InitialCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$InitialCopyWithImpl<$Res> extends _$ChatStateCopyWithImpl<$Res>
+    implements _$InitialCopyWith<$Res> {
+  __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
+      : super(_value, (v) => _then(v as _Initial));
+
+  @override
+  _Initial get _value => super._value as _Initial;
+}
+
+/// @nodoc
+
+class _$_Initial implements _Initial {
+  const _$_Initial();
+
+  @override
+  String toString() {
+    return 'ChatState.initial()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _Initial);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loadInProgress,
+    required TResult Function(Chat chat) loadSuccess,
+    required TResult Function(DataFailure dataFailure) loadFailure,
+  }) {
+    return initial();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loadInProgress,
+    TResult Function(Chat chat)? loadSuccess,
+    TResult Function(DataFailure dataFailure)? loadFailure,
+    required TResult orElse(),
+  }) {
+    if (initial != null) {
+      return initial();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_LoadInProgress value) loadInProgress,
+    required TResult Function(_LoadSuccess value) loadSuccess,
+    required TResult Function(_LoadFailure value) loadFailure,
+  }) {
+    return initial(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_LoadInProgress value)? loadInProgress,
+    TResult Function(_LoadSuccess value)? loadSuccess,
+    TResult Function(_LoadFailure value)? loadFailure,
+    required TResult orElse(),
+  }) {
+    if (initial != null) {
+      return initial(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Initial implements ChatState {
+  const factory _Initial() = _$_Initial;
+}
+
+/// @nodoc
+abstract class _$LoadInProgressCopyWith<$Res> {
+  factory _$LoadInProgressCopyWith(
+          _LoadInProgress value, $Res Function(_LoadInProgress) then) =
+      __$LoadInProgressCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$LoadInProgressCopyWithImpl<$Res> extends _$ChatStateCopyWithImpl<$Res>
+    implements _$LoadInProgressCopyWith<$Res> {
+  __$LoadInProgressCopyWithImpl(
+      _LoadInProgress _value, $Res Function(_LoadInProgress) _then)
+      : super(_value, (v) => _then(v as _LoadInProgress));
+
+  @override
+  _LoadInProgress get _value => super._value as _LoadInProgress;
+}
+
+/// @nodoc
+
+class _$_LoadInProgress implements _LoadInProgress {
+  const _$_LoadInProgress();
+
+  @override
+  String toString() {
+    return 'ChatState.loadInProgress()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _LoadInProgress);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loadInProgress,
+    required TResult Function(Chat chat) loadSuccess,
+    required TResult Function(DataFailure dataFailure) loadFailure,
+  }) {
+    return loadInProgress();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loadInProgress,
+    TResult Function(Chat chat)? loadSuccess,
+    TResult Function(DataFailure dataFailure)? loadFailure,
+    required TResult orElse(),
+  }) {
+    if (loadInProgress != null) {
+      return loadInProgress();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_LoadInProgress value) loadInProgress,
+    required TResult Function(_LoadSuccess value) loadSuccess,
+    required TResult Function(_LoadFailure value) loadFailure,
+  }) {
+    return loadInProgress(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_LoadInProgress value)? loadInProgress,
+    TResult Function(_LoadSuccess value)? loadSuccess,
+    TResult Function(_LoadFailure value)? loadFailure,
+    required TResult orElse(),
+  }) {
+    if (loadInProgress != null) {
+      return loadInProgress(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _LoadInProgress implements ChatState {
+  const factory _LoadInProgress() = _$_LoadInProgress;
+}
+
+/// @nodoc
+abstract class _$LoadSuccessCopyWith<$Res> {
+  factory _$LoadSuccessCopyWith(
+          _LoadSuccess value, $Res Function(_LoadSuccess) then) =
+      __$LoadSuccessCopyWithImpl<$Res>;
+  $Res call({Chat chat});
+
+  $ChatCopyWith<$Res> get chat;
+}
+
+/// @nodoc
+class __$LoadSuccessCopyWithImpl<$Res> extends _$ChatStateCopyWithImpl<$Res>
+    implements _$LoadSuccessCopyWith<$Res> {
+  __$LoadSuccessCopyWithImpl(
+      _LoadSuccess _value, $Res Function(_LoadSuccess) _then)
+      : super(_value, (v) => _then(v as _LoadSuccess));
+
+  @override
+  _LoadSuccess get _value => super._value as _LoadSuccess;
 
   @override
   $Res call({
-    Object? userIds = freezed,
     Object? chat = freezed,
-    Object? isLoading = freezed,
-    Object? failureOrChat = freezed,
   }) {
-    return _then(_value.copyWith(
-      userIds: userIds == freezed
-          ? _value.userIds
-          : userIds // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      chat: chat == freezed
+    return _then(_LoadSuccess(
+      chat == freezed
           ? _value.chat
           : chat // ignore: cast_nullable_to_non_nullable
               as Chat,
-      isLoading: isLoading == freezed
-          ? _value.isLoading
-          : isLoading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      failureOrChat: failureOrChat == freezed
-          ? _value.failureOrChat
-          : failureOrChat // ignore: cast_nullable_to_non_nullable
-              as Either<DataFailure, Chat>,
     ));
   }
 
@@ -291,130 +506,226 @@ class _$ChatStateCopyWithImpl<$Res> implements $ChatStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$ChatStateCopyWith<$Res> implements $ChatStateCopyWith<$Res> {
-  factory _$ChatStateCopyWith(
-          _ChatState value, $Res Function(_ChatState) then) =
-      __$ChatStateCopyWithImpl<$Res>;
-  @override
-  $Res call(
-      {List<String> userIds,
-      Chat chat,
-      bool isLoading,
-      Either<DataFailure, Chat> failureOrChat});
 
-  @override
-  $ChatCopyWith<$Res> get chat;
-}
+class _$_LoadSuccess implements _LoadSuccess {
+  const _$_LoadSuccess(this.chat);
 
-/// @nodoc
-class __$ChatStateCopyWithImpl<$Res> extends _$ChatStateCopyWithImpl<$Res>
-    implements _$ChatStateCopyWith<$Res> {
-  __$ChatStateCopyWithImpl(_ChatState _value, $Res Function(_ChatState) _then)
-      : super(_value, (v) => _then(v as _ChatState));
-
-  @override
-  _ChatState get _value => super._value as _ChatState;
-
-  @override
-  $Res call({
-    Object? userIds = freezed,
-    Object? chat = freezed,
-    Object? isLoading = freezed,
-    Object? failureOrChat = freezed,
-  }) {
-    return _then(_ChatState(
-      userIds: userIds == freezed
-          ? _value.userIds
-          : userIds // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      chat: chat == freezed
-          ? _value.chat
-          : chat // ignore: cast_nullable_to_non_nullable
-              as Chat,
-      isLoading: isLoading == freezed
-          ? _value.isLoading
-          : isLoading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      failureOrChat: failureOrChat == freezed
-          ? _value.failureOrChat
-          : failureOrChat // ignore: cast_nullable_to_non_nullable
-              as Either<DataFailure, Chat>,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$_ChatState implements _ChatState {
-  const _$_ChatState(
-      {required this.userIds,
-      required this.chat,
-      required this.isLoading,
-      required this.failureOrChat});
-
-  @override
-  final List<String> userIds;
   @override
   final Chat chat;
-  @override
-  final bool isLoading;
-  @override
-  final Either<DataFailure, Chat> failureOrChat;
 
   @override
   String toString() {
-    return 'ChatState(userIds: $userIds, chat: $chat, isLoading: $isLoading, failureOrChat: $failureOrChat)';
+    return 'ChatState.loadSuccess(chat: $chat)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _ChatState &&
-            (identical(other.userIds, userIds) ||
-                const DeepCollectionEquality()
-                    .equals(other.userIds, userIds)) &&
+        (other is _LoadSuccess &&
             (identical(other.chat, chat) ||
-                const DeepCollectionEquality().equals(other.chat, chat)) &&
-            (identical(other.isLoading, isLoading) ||
-                const DeepCollectionEquality()
-                    .equals(other.isLoading, isLoading)) &&
-            (identical(other.failureOrChat, failureOrChat) ||
-                const DeepCollectionEquality()
-                    .equals(other.failureOrChat, failureOrChat)));
+                const DeepCollectionEquality().equals(other.chat, chat)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(userIds) ^
-      const DeepCollectionEquality().hash(chat) ^
-      const DeepCollectionEquality().hash(isLoading) ^
-      const DeepCollectionEquality().hash(failureOrChat);
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(chat);
 
   @JsonKey(ignore: true)
   @override
-  _$ChatStateCopyWith<_ChatState> get copyWith =>
-      __$ChatStateCopyWithImpl<_ChatState>(this, _$identity);
+  _$LoadSuccessCopyWith<_LoadSuccess> get copyWith =>
+      __$LoadSuccessCopyWithImpl<_LoadSuccess>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loadInProgress,
+    required TResult Function(Chat chat) loadSuccess,
+    required TResult Function(DataFailure dataFailure) loadFailure,
+  }) {
+    return loadSuccess(chat);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loadInProgress,
+    TResult Function(Chat chat)? loadSuccess,
+    TResult Function(DataFailure dataFailure)? loadFailure,
+    required TResult orElse(),
+  }) {
+    if (loadSuccess != null) {
+      return loadSuccess(chat);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_LoadInProgress value) loadInProgress,
+    required TResult Function(_LoadSuccess value) loadSuccess,
+    required TResult Function(_LoadFailure value) loadFailure,
+  }) {
+    return loadSuccess(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_LoadInProgress value)? loadInProgress,
+    TResult Function(_LoadSuccess value)? loadSuccess,
+    TResult Function(_LoadFailure value)? loadFailure,
+    required TResult orElse(),
+  }) {
+    if (loadSuccess != null) {
+      return loadSuccess(this);
+    }
+    return orElse();
+  }
 }
 
-abstract class _ChatState implements ChatState {
-  const factory _ChatState(
-      {required List<String> userIds,
-      required Chat chat,
-      required bool isLoading,
-      required Either<DataFailure, Chat> failureOrChat}) = _$_ChatState;
+abstract class _LoadSuccess implements ChatState {
+  const factory _LoadSuccess(Chat chat) = _$_LoadSuccess;
+
+  Chat get chat => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$LoadSuccessCopyWith<_LoadSuccess> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$LoadFailureCopyWith<$Res> {
+  factory _$LoadFailureCopyWith(
+          _LoadFailure value, $Res Function(_LoadFailure) then) =
+      __$LoadFailureCopyWithImpl<$Res>;
+  $Res call({DataFailure dataFailure});
+
+  $DataFailureCopyWith<$Res> get dataFailure;
+}
+
+/// @nodoc
+class __$LoadFailureCopyWithImpl<$Res> extends _$ChatStateCopyWithImpl<$Res>
+    implements _$LoadFailureCopyWith<$Res> {
+  __$LoadFailureCopyWithImpl(
+      _LoadFailure _value, $Res Function(_LoadFailure) _then)
+      : super(_value, (v) => _then(v as _LoadFailure));
 
   @override
-  List<String> get userIds => throw _privateConstructorUsedError;
+  _LoadFailure get _value => super._value as _LoadFailure;
+
   @override
-  Chat get chat => throw _privateConstructorUsedError;
+  $Res call({
+    Object? dataFailure = freezed,
+  }) {
+    return _then(_LoadFailure(
+      dataFailure == freezed
+          ? _value.dataFailure
+          : dataFailure // ignore: cast_nullable_to_non_nullable
+              as DataFailure,
+    ));
+  }
+
   @override
-  bool get isLoading => throw _privateConstructorUsedError;
+  $DataFailureCopyWith<$Res> get dataFailure {
+    return $DataFailureCopyWith<$Res>(_value.dataFailure, (value) {
+      return _then(_value.copyWith(dataFailure: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$_LoadFailure implements _LoadFailure {
+  const _$_LoadFailure(this.dataFailure);
+
   @override
-  Either<DataFailure, Chat> get failureOrChat =>
-      throw _privateConstructorUsedError;
+  final DataFailure dataFailure;
+
   @override
+  String toString() {
+    return 'ChatState.loadFailure(dataFailure: $dataFailure)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _LoadFailure &&
+            (identical(other.dataFailure, dataFailure) ||
+                const DeepCollectionEquality()
+                    .equals(other.dataFailure, dataFailure)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(dataFailure);
+
   @JsonKey(ignore: true)
-  _$ChatStateCopyWith<_ChatState> get copyWith =>
+  @override
+  _$LoadFailureCopyWith<_LoadFailure> get copyWith =>
+      __$LoadFailureCopyWithImpl<_LoadFailure>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loadInProgress,
+    required TResult Function(Chat chat) loadSuccess,
+    required TResult Function(DataFailure dataFailure) loadFailure,
+  }) {
+    return loadFailure(dataFailure);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loadInProgress,
+    TResult Function(Chat chat)? loadSuccess,
+    TResult Function(DataFailure dataFailure)? loadFailure,
+    required TResult orElse(),
+  }) {
+    if (loadFailure != null) {
+      return loadFailure(dataFailure);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_LoadInProgress value) loadInProgress,
+    required TResult Function(_LoadSuccess value) loadSuccess,
+    required TResult Function(_LoadFailure value) loadFailure,
+  }) {
+    return loadFailure(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_LoadInProgress value)? loadInProgress,
+    TResult Function(_LoadSuccess value)? loadSuccess,
+    TResult Function(_LoadFailure value)? loadFailure,
+    required TResult orElse(),
+  }) {
+    if (loadFailure != null) {
+      return loadFailure(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _LoadFailure implements ChatState {
+  const factory _LoadFailure(DataFailure dataFailure) = _$_LoadFailure;
+
+  DataFailure get dataFailure => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$LoadFailureCopyWith<_LoadFailure> get copyWith =>
       throw _privateConstructorUsedError;
 }
