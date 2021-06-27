@@ -8,6 +8,7 @@ import 'package:friendlinus/application/forum/forum_post_watcher/poll_watcher/po
 import 'package:friendlinus/domain/data/forum/comment/comment.dart';
 import 'package:friendlinus/domain/data/forum/forum_post/forum_post.dart';
 import 'package:friendlinus/domain/data/forum/poll/poll.dart';
+import 'package:friendlinus/domain/data/profile/profile.dart';
 import 'package:friendlinus/injection.dart';
 import 'package:friendlinus/presentation/core/app_bar.dart';
 import 'package:friendlinus/presentation/core/get_time.dart';
@@ -49,8 +50,7 @@ class ForumBody extends StatelessWidget {
               bottomNavigationBar: const NavigationBar(),
               body: Column(
                 children: <Widget>[
-                  _BuildPost(
-                      forum: forum),
+                  _BuildPost(forum: forum),
                   _BuildCommentButton(forumId: forum.forumId),
                   Expanded(
                       child: ClipRRect(
@@ -74,9 +74,7 @@ class ForumBody extends StatelessWidget {
 
 class _BuildPost extends StatelessWidget {
   final ForumPost forum;
-  const _BuildPost(
-      {Key? key, required this.forum})
-      : super(key: key);
+  const _BuildPost({Key? key, required this.forum}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -290,50 +288,61 @@ class _BuildComments extends StatelessWidget {
                       itemCount: state.comments.length,
                       itemBuilder: (context, index) {
                         final Comment comment = state.comments[index];
-                        return Card(
-                          shape: RoundedRectangleBorder(
-                            side: const BorderSide(
-                                color: Color(0xFF7BA5BB), width: 2.0),
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
-                          child: ListTile(
-                            /*leading: Column(
-                              //DO NOT ADJUST SPACING :')
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                Stack(
-                                  children: [
-                                    IconButton(
-                                      padding: const EdgeInsets.all(0),
-                                      onPressed: () {
-                                        if (forum.likedUserIds.contains(userId)) {
-                                          context.read<ForumActorBloc>().add(
-                                              ForumActorEvent.unliked(
-                                                  forum.forumId));
-                                        } else {
-                                          context.read<ForumActorBloc>().add(
-                                              ForumActorEvent.liked(forum.forumId));
-                                        }
-                                      },
-                                      icon: Icon(
-                                        Icons.arrow_drop_up,
-                                        color: forum.likedUserIds.contains(userId)
-                                            ? Colors.grey[800]
-                                            : Colors.grey[400],
-                                        size: 35,
-                                      ),
-                                    ),
-                                    Positioned(
-                                        left: 20,
-                                        bottom: -1,
-                                        child: Text(forum.likes.toString())),
-                                  ],
-                                ),
-                              ],
+                        final Profile profile = state.profileList[index];
+                        return Padding(
+                          padding: const EdgeInsets.all(6.0),
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              side: const BorderSide(color: Color(0xFF7BA5BB)),
+                              borderRadius: BorderRadius.circular(15.0),
                             ),
-                            */
-                            title: Text(comment.commentText.getOrCrash()),
-                            trailing: Text(getTime(comment.timestamp)),
+                            child: ListTile(
+                              /*leading: Column(
+                                //DO NOT ADJUST SPACING :')
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  Stack(
+                                    children: [
+                                      IconButton(
+                                        padding: const EdgeInsets.all(0),
+                                        onPressed: () {
+                                          if (forum.likedUserIds.contains(userId)) {
+                                            context.read<ForumActorBloc>().add(
+                                                ForumActorEvent.unliked(
+                                                    forum.forumId));
+                                          } else {
+                                            context.read<ForumActorBloc>().add(
+                                                ForumActorEvent.liked(forum.forumId));
+                                          }
+                                        },
+                                        icon: Icon(
+                                          Icons.arrow_drop_up,
+                                          color: forum.likedUserIds.contains(userId)
+                                              ? Colors.grey[800]
+                                              : Colors.grey[400],
+                                          size: 35,
+                                        ),
+                                      ),
+                                      Positioned(
+                                          left: 20,
+                                          bottom: -1,
+                                          child: Text(forum.likes.toString())),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              */
+                              leading: CircleAvatar(
+                                radius: 20,
+                                backgroundImage: NetworkImage(profile.photoUrl),
+                              ),
+                              title: Text(comment.commentText.getOrCrash()),
+                              subtitle: Text(comment.isAnon
+                                  ? 'Anonymous'
+                                  : profile.username.getOrCrash()),
+                              trailing: Text(getTime(comment.timestamp)),
+                              isThreeLine: true,
+                            ),
                           ),
                         );
                       });

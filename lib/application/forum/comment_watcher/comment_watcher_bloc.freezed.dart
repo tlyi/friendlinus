@@ -28,6 +28,12 @@ class _$CommentWatcherEventTearOff {
       failureOrComments,
     );
   }
+
+  _RetrieveProfilesStarted retrieveProfilesStarted(List<Comment> comments) {
+    return _RetrieveProfilesStarted(
+      comments,
+    );
+  }
 }
 
 /// @nodoc
@@ -41,6 +47,7 @@ mixin _$CommentWatcherEvent {
     required TResult Function(
             Either<DataFailure, List<Comment>> failureOrComments)
         commentsReceived,
+    required TResult Function(List<Comment> comments) retrieveProfilesStarted,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -48,6 +55,7 @@ mixin _$CommentWatcherEvent {
     TResult Function(String forumId)? retrieveCommentsStarted,
     TResult Function(Either<DataFailure, List<Comment>> failureOrComments)?
         commentsReceived,
+    TResult Function(List<Comment> comments)? retrieveProfilesStarted,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -56,12 +64,15 @@ mixin _$CommentWatcherEvent {
     required TResult Function(_RetrieveCommentsStarted value)
         retrieveCommentsStarted,
     required TResult Function(_CommentsReceived value) commentsReceived,
+    required TResult Function(_RetrieveProfilesStarted value)
+        retrieveProfilesStarted,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_RetrieveCommentsStarted value)? retrieveCommentsStarted,
     TResult Function(_CommentsReceived value)? commentsReceived,
+    TResult Function(_RetrieveProfilesStarted value)? retrieveProfilesStarted,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -155,6 +166,7 @@ class _$_RetrieveCommentsStarted implements _RetrieveCommentsStarted {
     required TResult Function(
             Either<DataFailure, List<Comment>> failureOrComments)
         commentsReceived,
+    required TResult Function(List<Comment> comments) retrieveProfilesStarted,
   }) {
     return retrieveCommentsStarted(forumId);
   }
@@ -165,6 +177,7 @@ class _$_RetrieveCommentsStarted implements _RetrieveCommentsStarted {
     TResult Function(String forumId)? retrieveCommentsStarted,
     TResult Function(Either<DataFailure, List<Comment>> failureOrComments)?
         commentsReceived,
+    TResult Function(List<Comment> comments)? retrieveProfilesStarted,
     required TResult orElse(),
   }) {
     if (retrieveCommentsStarted != null) {
@@ -179,6 +192,8 @@ class _$_RetrieveCommentsStarted implements _RetrieveCommentsStarted {
     required TResult Function(_RetrieveCommentsStarted value)
         retrieveCommentsStarted,
     required TResult Function(_CommentsReceived value) commentsReceived,
+    required TResult Function(_RetrieveProfilesStarted value)
+        retrieveProfilesStarted,
   }) {
     return retrieveCommentsStarted(this);
   }
@@ -188,6 +203,7 @@ class _$_RetrieveCommentsStarted implements _RetrieveCommentsStarted {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_RetrieveCommentsStarted value)? retrieveCommentsStarted,
     TResult Function(_CommentsReceived value)? commentsReceived,
+    TResult Function(_RetrieveProfilesStarted value)? retrieveProfilesStarted,
     required TResult orElse(),
   }) {
     if (retrieveCommentsStarted != null) {
@@ -278,6 +294,7 @@ class _$_CommentsReceived implements _CommentsReceived {
     required TResult Function(
             Either<DataFailure, List<Comment>> failureOrComments)
         commentsReceived,
+    required TResult Function(List<Comment> comments) retrieveProfilesStarted,
   }) {
     return commentsReceived(failureOrComments);
   }
@@ -288,6 +305,7 @@ class _$_CommentsReceived implements _CommentsReceived {
     TResult Function(String forumId)? retrieveCommentsStarted,
     TResult Function(Either<DataFailure, List<Comment>> failureOrComments)?
         commentsReceived,
+    TResult Function(List<Comment> comments)? retrieveProfilesStarted,
     required TResult orElse(),
   }) {
     if (commentsReceived != null) {
@@ -302,6 +320,8 @@ class _$_CommentsReceived implements _CommentsReceived {
     required TResult Function(_RetrieveCommentsStarted value)
         retrieveCommentsStarted,
     required TResult Function(_CommentsReceived value) commentsReceived,
+    required TResult Function(_RetrieveProfilesStarted value)
+        retrieveProfilesStarted,
   }) {
     return commentsReceived(this);
   }
@@ -311,6 +331,7 @@ class _$_CommentsReceived implements _CommentsReceived {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_RetrieveCommentsStarted value)? retrieveCommentsStarted,
     TResult Function(_CommentsReceived value)? commentsReceived,
+    TResult Function(_RetrieveProfilesStarted value)? retrieveProfilesStarted,
     required TResult orElse(),
   }) {
     if (commentsReceived != null) {
@@ -333,6 +354,135 @@ abstract class _CommentsReceived implements CommentWatcherEvent {
 }
 
 /// @nodoc
+abstract class _$RetrieveProfilesStartedCopyWith<$Res> {
+  factory _$RetrieveProfilesStartedCopyWith(_RetrieveProfilesStarted value,
+          $Res Function(_RetrieveProfilesStarted) then) =
+      __$RetrieveProfilesStartedCopyWithImpl<$Res>;
+  $Res call({List<Comment> comments});
+}
+
+/// @nodoc
+class __$RetrieveProfilesStartedCopyWithImpl<$Res>
+    extends _$CommentWatcherEventCopyWithImpl<$Res>
+    implements _$RetrieveProfilesStartedCopyWith<$Res> {
+  __$RetrieveProfilesStartedCopyWithImpl(_RetrieveProfilesStarted _value,
+      $Res Function(_RetrieveProfilesStarted) _then)
+      : super(_value, (v) => _then(v as _RetrieveProfilesStarted));
+
+  @override
+  _RetrieveProfilesStarted get _value =>
+      super._value as _RetrieveProfilesStarted;
+
+  @override
+  $Res call({
+    Object? comments = freezed,
+  }) {
+    return _then(_RetrieveProfilesStarted(
+      comments == freezed
+          ? _value.comments
+          : comments // ignore: cast_nullable_to_non_nullable
+              as List<Comment>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_RetrieveProfilesStarted implements _RetrieveProfilesStarted {
+  const _$_RetrieveProfilesStarted(this.comments);
+
+  @override
+  final List<Comment> comments;
+
+  @override
+  String toString() {
+    return 'CommentWatcherEvent.retrieveProfilesStarted(comments: $comments)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _RetrieveProfilesStarted &&
+            (identical(other.comments, comments) ||
+                const DeepCollectionEquality()
+                    .equals(other.comments, comments)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(comments);
+
+  @JsonKey(ignore: true)
+  @override
+  _$RetrieveProfilesStartedCopyWith<_RetrieveProfilesStarted> get copyWith =>
+      __$RetrieveProfilesStartedCopyWithImpl<_RetrieveProfilesStarted>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String forumId) retrieveCommentsStarted,
+    required TResult Function(
+            Either<DataFailure, List<Comment>> failureOrComments)
+        commentsReceived,
+    required TResult Function(List<Comment> comments) retrieveProfilesStarted,
+  }) {
+    return retrieveProfilesStarted(comments);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String forumId)? retrieveCommentsStarted,
+    TResult Function(Either<DataFailure, List<Comment>> failureOrComments)?
+        commentsReceived,
+    TResult Function(List<Comment> comments)? retrieveProfilesStarted,
+    required TResult orElse(),
+  }) {
+    if (retrieveProfilesStarted != null) {
+      return retrieveProfilesStarted(comments);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_RetrieveCommentsStarted value)
+        retrieveCommentsStarted,
+    required TResult Function(_CommentsReceived value) commentsReceived,
+    required TResult Function(_RetrieveProfilesStarted value)
+        retrieveProfilesStarted,
+  }) {
+    return retrieveProfilesStarted(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_RetrieveCommentsStarted value)? retrieveCommentsStarted,
+    TResult Function(_CommentsReceived value)? commentsReceived,
+    TResult Function(_RetrieveProfilesStarted value)? retrieveProfilesStarted,
+    required TResult orElse(),
+  }) {
+    if (retrieveProfilesStarted != null) {
+      return retrieveProfilesStarted(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _RetrieveProfilesStarted implements CommentWatcherEvent {
+  const factory _RetrieveProfilesStarted(List<Comment> comments) =
+      _$_RetrieveProfilesStarted;
+
+  List<Comment> get comments => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$RetrieveProfilesStartedCopyWith<_RetrieveProfilesStarted> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 class _$CommentWatcherStateTearOff {
   const _$CommentWatcherStateTearOff();
 
@@ -344,9 +494,10 @@ class _$CommentWatcherStateTearOff {
     return const _LoadInProgress();
   }
 
-  _LoadSuccess loadSuccess(List<Comment> comments) {
+  _LoadSuccess loadSuccess(List<Comment> comments, List<Profile> profileList) {
     return _LoadSuccess(
       comments,
+      profileList,
     );
   }
 
@@ -366,7 +517,8 @@ mixin _$CommentWatcherState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<Comment> comments) loadSuccess,
+    required TResult Function(List<Comment> comments, List<Profile> profileList)
+        loadSuccess,
     required TResult Function(DataFailure dataFailure) loadFailure,
   }) =>
       throw _privateConstructorUsedError;
@@ -374,7 +526,8 @@ mixin _$CommentWatcherState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<Comment> comments)? loadSuccess,
+    TResult Function(List<Comment> comments, List<Profile> profileList)?
+        loadSuccess,
     TResult Function(DataFailure dataFailure)? loadFailure,
     required TResult orElse(),
   }) =>
@@ -455,7 +608,8 @@ class _$_Initial implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<Comment> comments) loadSuccess,
+    required TResult Function(List<Comment> comments, List<Profile> profileList)
+        loadSuccess,
     required TResult Function(DataFailure dataFailure) loadFailure,
   }) {
     return initial();
@@ -466,7 +620,8 @@ class _$_Initial implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<Comment> comments)? loadSuccess,
+    TResult Function(List<Comment> comments, List<Profile> profileList)?
+        loadSuccess,
     TResult Function(DataFailure dataFailure)? loadFailure,
     required TResult orElse(),
   }) {
@@ -549,7 +704,8 @@ class _$_LoadInProgress implements _LoadInProgress {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<Comment> comments) loadSuccess,
+    required TResult Function(List<Comment> comments, List<Profile> profileList)
+        loadSuccess,
     required TResult Function(DataFailure dataFailure) loadFailure,
   }) {
     return loadInProgress();
@@ -560,7 +716,8 @@ class _$_LoadInProgress implements _LoadInProgress {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<Comment> comments)? loadSuccess,
+    TResult Function(List<Comment> comments, List<Profile> profileList)?
+        loadSuccess,
     TResult Function(DataFailure dataFailure)? loadFailure,
     required TResult orElse(),
   }) {
@@ -606,7 +763,7 @@ abstract class _$LoadSuccessCopyWith<$Res> {
   factory _$LoadSuccessCopyWith(
           _LoadSuccess value, $Res Function(_LoadSuccess) then) =
       __$LoadSuccessCopyWithImpl<$Res>;
-  $Res call({List<Comment> comments});
+  $Res call({List<Comment> comments, List<Profile> profileList});
 }
 
 /// @nodoc
@@ -623,12 +780,17 @@ class __$LoadSuccessCopyWithImpl<$Res>
   @override
   $Res call({
     Object? comments = freezed,
+    Object? profileList = freezed,
   }) {
     return _then(_LoadSuccess(
       comments == freezed
           ? _value.comments
           : comments // ignore: cast_nullable_to_non_nullable
               as List<Comment>,
+      profileList == freezed
+          ? _value.profileList
+          : profileList // ignore: cast_nullable_to_non_nullable
+              as List<Profile>,
     ));
   }
 }
@@ -636,14 +798,16 @@ class __$LoadSuccessCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_LoadSuccess implements _LoadSuccess {
-  const _$_LoadSuccess(this.comments);
+  const _$_LoadSuccess(this.comments, this.profileList);
 
   @override
   final List<Comment> comments;
+  @override
+  final List<Profile> profileList;
 
   @override
   String toString() {
-    return 'CommentWatcherState.loadSuccess(comments: $comments)';
+    return 'CommentWatcherState.loadSuccess(comments: $comments, profileList: $profileList)';
   }
 
   @override
@@ -652,12 +816,17 @@ class _$_LoadSuccess implements _LoadSuccess {
         (other is _LoadSuccess &&
             (identical(other.comments, comments) ||
                 const DeepCollectionEquality()
-                    .equals(other.comments, comments)));
+                    .equals(other.comments, comments)) &&
+            (identical(other.profileList, profileList) ||
+                const DeepCollectionEquality()
+                    .equals(other.profileList, profileList)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(comments);
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(comments) ^
+      const DeepCollectionEquality().hash(profileList);
 
   @JsonKey(ignore: true)
   @override
@@ -669,10 +838,11 @@ class _$_LoadSuccess implements _LoadSuccess {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<Comment> comments) loadSuccess,
+    required TResult Function(List<Comment> comments, List<Profile> profileList)
+        loadSuccess,
     required TResult Function(DataFailure dataFailure) loadFailure,
   }) {
-    return loadSuccess(comments);
+    return loadSuccess(comments, profileList);
   }
 
   @override
@@ -680,12 +850,13 @@ class _$_LoadSuccess implements _LoadSuccess {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<Comment> comments)? loadSuccess,
+    TResult Function(List<Comment> comments, List<Profile> profileList)?
+        loadSuccess,
     TResult Function(DataFailure dataFailure)? loadFailure,
     required TResult orElse(),
   }) {
     if (loadSuccess != null) {
-      return loadSuccess(comments);
+      return loadSuccess(comments, profileList);
     }
     return orElse();
   }
@@ -718,9 +889,11 @@ class _$_LoadSuccess implements _LoadSuccess {
 }
 
 abstract class _LoadSuccess implements CommentWatcherState {
-  const factory _LoadSuccess(List<Comment> comments) = _$_LoadSuccess;
+  const factory _LoadSuccess(
+      List<Comment> comments, List<Profile> profileList) = _$_LoadSuccess;
 
   List<Comment> get comments => throw _privateConstructorUsedError;
+  List<Profile> get profileList => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$LoadSuccessCopyWith<_LoadSuccess> get copyWith =>
       throw _privateConstructorUsedError;
@@ -803,7 +976,8 @@ class _$_LoadFailure implements _LoadFailure {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<Comment> comments) loadSuccess,
+    required TResult Function(List<Comment> comments, List<Profile> profileList)
+        loadSuccess,
     required TResult Function(DataFailure dataFailure) loadFailure,
   }) {
     return loadFailure(dataFailure);
@@ -814,7 +988,8 @@ class _$_LoadFailure implements _LoadFailure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<Comment> comments)? loadSuccess,
+    TResult Function(List<Comment> comments, List<Profile> profileList)?
+        loadSuccess,
     TResult Function(DataFailure dataFailure)? loadFailure,
     required TResult orElse(),
   }) {

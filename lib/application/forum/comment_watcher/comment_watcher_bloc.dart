@@ -6,6 +6,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:friendlinus/domain/data/data_failure.dart';
 import 'package:friendlinus/domain/data/forum/comment/comment.dart';
 import 'package:friendlinus/domain/data/forum/i_forum_repository.dart';
+import 'package:friendlinus/domain/data/profile/i_profile_repository.dart';
+import 'package:friendlinus/domain/data/profile/profile.dart';
 import 'package:injectable/injectable.dart';
 
 part 'comment_watcher_event.dart';
@@ -16,8 +18,9 @@ part 'comment_watcher_bloc.freezed.dart';
 class CommentWatcherBloc
     extends Bloc<CommentWatcherEvent, CommentWatcherState> {
   final IForumRepository _forumRepository;
+  final IProfileRepository _profileRepository;
 
-  CommentWatcherBloc(this._forumRepository)
+  CommentWatcherBloc(this._forumRepository, this._profileRepository)
       : super(CommentWatcherState.initial());
 
   StreamSubscription<Either<DataFailure, List<Comment>>>?
@@ -31,14 +34,44 @@ class CommentWatcherBloc
       retrieveCommentsStarted: (e) async* {
         yield const CommentWatcherState.loadInProgress();
         await _commentStreamSubscription?.cancel();
-        _commentStreamSubscription = _forumRepository.retrieveComments(e.forumId).listen(
-            (failureOrComments) =>
+        _commentStreamSubscription = _forumRepository
+            .retrieveComments(e.forumId)
+            .listen((failureOrComments) =>
                 add(CommentWatcherEvent.commentsReceived(failureOrComments)));
       },
       commentsReceived: (e) async* {
-        yield e.failureOrComments.fold(
-            (f) => CommentWatcherState.loadFailure(f),
-            (comments) => CommentWatcherState.loadSuccess(comments));
+        DataFailure? failure;
+        List<Comment>? comments;
+        e.failureOrComments.fold((f) => failure = f, (c) => comments = c);
+
+        if (failure != null) {
+          yield CommentWatcherState.loadFailure(failure!);
+        } else {
+          add(CommentWatcherEvent.retrieveProfilesStarted(comments!));
+        }
+      },
+      retrieveProfilesStarted: (e) async* {
+        final List<Profile> profileList = [];
+        for (final comment in e.comments) {
+          if (comment.isAnon) {
+            profileList.add(Profile.empty());
+          } else {
+            final String userId = comment.userId;
+            final Either<DataFailure, Profile> failureOrProfile =
+                await _profileRepository.searchProfileByUuid(userId);
+
+            DataFailure? failure;
+            Profile? profile;
+
+            failureOrProfile.fold((f) => failure = f, (p) => profile = p);
+            if (failure != null) {
+              yield CommentWatcherState.loadFailure(failure!);
+            } else {
+              profileList.add(profile!);
+            }
+          }
+        }
+        yield CommentWatcherState.loadSuccess(e.comments, profileList);
       },
     );
   }

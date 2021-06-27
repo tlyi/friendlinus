@@ -160,6 +160,18 @@ class ProfileRepository implements IProfileRepository {
   }
 
   @override
+  Future<Either<DataFailure, Profile>> searchProfileByUuid(String uuid) async {
+    try {
+      final usersRef = await _firestore.usersRef();
+      return usersRef.doc(uuid).get().then((DocumentSnapshot doc) =>
+          right(ProfileDto.fromFirestore(doc).toDomain()));
+    } on FirebaseException catch (e) {
+      print(e);
+      return left(const DataFailure.unexpected());
+    }
+  }
+
+  @override
   Future<Either<DataFailure, bool>> verifyUsernameUnique(
       String username) async {
     final otherProfile = await readOtherProfile(username);

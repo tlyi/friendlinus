@@ -70,8 +70,8 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
   gh.factory<_i19.ChatBloc>(() => _i19.ChatBloc(get<_i8.IChatRepository>()));
   gh.factory<_i20.ChatWatcherBloc>(
       () => _i20.ChatWatcherBloc(get<_i8.IChatRepository>()));
-  gh.factory<_i21.CommentWatcherBloc>(
-      () => _i21.CommentWatcherBloc(get<_i10.IForumRepository>()));
+  gh.factory<_i21.CommentWatcherBloc>(() => _i21.CommentWatcherBloc(
+      get<_i10.IForumRepository>(), get<_i12.IProfileRepository>()));
   gh.factory<_i22.ConvoActorBloc>(
       () => _i22.ConvoActorBloc(get<_i8.IChatRepository>()));
   gh.factory<_i23.ConvoWatcherBloc>(
