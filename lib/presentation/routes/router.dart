@@ -5,6 +5,7 @@ import 'package:friendlinus/presentation/chats/convos/convo_page.dart';
 import 'package:friendlinus/presentation/chats/convos/convo_splash_page.dart';
 import 'package:friendlinus/presentation/forum/forum_form/forum_form_page.dart';
 import 'package:friendlinus/presentation/forum/forum_overview/forum_overview_page.dart';
+import 'package:friendlinus/presentation/forum/forum_page/comment_page.dart';
 import 'package:friendlinus/presentation/forum/forum_page/forum_page.dart';
 import 'package:friendlinus/presentation/home_page.dart';
 import 'package:friendlinus/presentation/profile/other_profile_page.dart';
@@ -38,6 +39,7 @@ import 'package:friendlinus/presentation/splash/splash_page.dart';
     AutoRoute(page: ConvoPage),
     AutoRoute(page: ForumPage),
     AutoRoute(page: ConvoSplashPage),
+    AutoRoute(page: CommentPage),
   ],
 )
 class $AppRouter {}

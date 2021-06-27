@@ -56,3 +56,17 @@ class PollOption extends ValueObject<String> {
 
   const PollOption._(this.value);
 }
+
+class CommentText extends ValueObject<String> {
+  @override
+  final Either<ValueFailure<String>, String> value;
+
+  static const maxLength = 100;
+
+  factory CommentText(String input) {
+    return CommentText._(validateMaxStringLength(input, maxLength)
+        .flatMap(validateStringNotEmpty));
+  }
+
+  const CommentText._(this.value);
+}

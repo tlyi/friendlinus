@@ -6,7 +6,7 @@
 
 import 'package:auto_route/auto_route.dart' as _i1;
 import 'package:flutter/material.dart' as _i2;
-import 'package:friendlinus/domain/data/profile/profile.dart' as _i20;
+import 'package:friendlinus/domain/data/profile/profile.dart' as _i21;
 import 'package:friendlinus/presentation/chats/chat_list/chat_list_page.dart'
     as _i16;
 import 'package:friendlinus/presentation/chats/convos/convo_page.dart' as _i17;
@@ -16,6 +16,8 @@ import 'package:friendlinus/presentation/forum/forum_form/forum_form_page.dart'
     as _i15;
 import 'package:friendlinus/presentation/forum/forum_overview/forum_overview_page.dart'
     as _i14;
+import 'package:friendlinus/presentation/forum/forum_page/comment_page.dart'
+    as _i20;
 import 'package:friendlinus/presentation/forum/forum_page/forum_page.dart'
     as _i18;
 import 'package:friendlinus/presentation/home_page.dart' as _i5;
@@ -135,6 +137,12 @@ class AppRouter extends _i1.RootStackRouter {
           final args = data.argsAs<ConvoSplashRouteArgs>();
           return _i19.ConvoSplashPage(
               key: args.key, senderProfile: args.senderProfile);
+        }),
+    CommentRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
+        routeData: routeData,
+        builder: (data) {
+          final args = data.argsAs<CommentRouteArgs>();
+          return _i20.CommentPage(key: args.key, forumId: args.forumId);
         })
   };
 
@@ -157,7 +165,8 @@ class AppRouter extends _i1.RootStackRouter {
         _i1.RouteConfig(ChatListRoute.name, path: '/chat-list-page'),
         _i1.RouteConfig(ConvoRoute.name, path: '/convo-page'),
         _i1.RouteConfig(ForumRoute.name, path: '/forum-page'),
-        _i1.RouteConfig(ConvoSplashRoute.name, path: '/convo-splash-page')
+        _i1.RouteConfig(ConvoSplashRoute.name, path: '/convo-splash-page'),
+        _i1.RouteConfig(CommentRoute.name, path: '/comment-page')
       ];
 }
 
@@ -233,7 +242,7 @@ class UpdateProfileRoute extends _i1.PageRouteInfo {
 }
 
 class OtherProfileRoute extends _i1.PageRouteInfo<OtherProfileRouteArgs> {
-  OtherProfileRoute({_i2.Key? key, required _i20.Profile userProfile})
+  OtherProfileRoute({_i2.Key? key, required _i21.Profile userProfile})
       : super(name,
             path: '/other-profile-page',
             args: OtherProfileRouteArgs(key: key, userProfile: userProfile));
@@ -246,7 +255,7 @@ class OtherProfileRouteArgs {
 
   final _i2.Key? key;
 
-  final _i20.Profile userProfile;
+  final _i21.Profile userProfile;
 }
 
 class ForumOverviewRoute extends _i1.PageRouteInfo {
@@ -271,7 +280,7 @@ class ConvoRoute extends _i1.PageRouteInfo<ConvoRouteArgs> {
   ConvoRoute(
       {_i2.Key? key,
       required String convoId,
-      required _i20.Profile senderProfile})
+      required _i21.Profile senderProfile})
       : super(name,
             path: '/convo-page',
             args: ConvoRouteArgs(
@@ -288,7 +297,7 @@ class ConvoRouteArgs {
 
   final String convoId;
 
-  final _i20.Profile senderProfile;
+  final _i21.Profile senderProfile;
 }
 
 class ForumRoute extends _i1.PageRouteInfo<ForumRouteArgs> {
@@ -309,7 +318,7 @@ class ForumRouteArgs {
 }
 
 class ConvoSplashRoute extends _i1.PageRouteInfo<ConvoSplashRouteArgs> {
-  ConvoSplashRoute({_i2.Key? key, required _i20.Profile senderProfile})
+  ConvoSplashRoute({_i2.Key? key, required _i21.Profile senderProfile})
       : super(name,
             path: '/convo-splash-page',
             args: ConvoSplashRouteArgs(key: key, senderProfile: senderProfile));
@@ -322,5 +331,22 @@ class ConvoSplashRouteArgs {
 
   final _i2.Key? key;
 
-  final _i20.Profile senderProfile;
+  final _i21.Profile senderProfile;
+}
+
+class CommentRoute extends _i1.PageRouteInfo<CommentRouteArgs> {
+  CommentRoute({_i2.Key? key, required String forumId})
+      : super(name,
+            path: '/comment-page',
+            args: CommentRouteArgs(key: key, forumId: forumId));
+
+  static const String name = 'CommentRoute';
+}
+
+class CommentRouteArgs {
+  const CommentRouteArgs({this.key, required this.forumId});
+
+  final _i2.Key? key;
+
+  final String forumId;
 }

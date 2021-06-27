@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
-part of 'forum_post_watcher_bloc.dart';
+part of 'comment_watcher_bloc.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,108 +13,113 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$ForumPostWatcherEventTearOff {
-  const _$ForumPostWatcherEventTearOff();
+class _$CommentWatcherEventTearOff {
+  const _$CommentWatcherEventTearOff();
 
-  _Started retrieveForumPostStarted(String forumId) {
-    return _Started(
+  _RetrieveCommentsStarted retrieveCommentsStarted(String forumId) {
+    return _RetrieveCommentsStarted(
       forumId,
     );
   }
 
-  _ForumPostReceived forumPostReceived(
-      Either<DataFailure, ForumPost> failureOrForumPost) {
-    return _ForumPostReceived(
-      failureOrForumPost,
+  _CommentsReceived commentsReceived(
+      Either<DataFailure, List<Comment>> failureOrComments) {
+    return _CommentsReceived(
+      failureOrComments,
     );
   }
 
-  _PosterUsernameRetrieved posterUsernameRetrieved(ForumPost forum) {
-    return _PosterUsernameRetrieved(
-      forum,
+  _RetrieveProfilesStarted retrieveProfilesStarted(List<Comment> comments) {
+    return _RetrieveProfilesStarted(
+      comments,
     );
   }
 }
 
 /// @nodoc
-const $ForumPostWatcherEvent = _$ForumPostWatcherEventTearOff();
+const $CommentWatcherEvent = _$CommentWatcherEventTearOff();
 
 /// @nodoc
-mixin _$ForumPostWatcherEvent {
+mixin _$CommentWatcherEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String forumId) retrieveForumPostStarted,
-    required TResult Function(Either<DataFailure, ForumPost> failureOrForumPost)
-        forumPostReceived,
-    required TResult Function(ForumPost forum) posterUsernameRetrieved,
+    required TResult Function(String forumId) retrieveCommentsStarted,
+    required TResult Function(
+            Either<DataFailure, List<Comment>> failureOrComments)
+        commentsReceived,
+    required TResult Function(List<Comment> comments) retrieveProfilesStarted,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String forumId)? retrieveForumPostStarted,
-    TResult Function(Either<DataFailure, ForumPost> failureOrForumPost)?
-        forumPostReceived,
-    TResult Function(ForumPost forum)? posterUsernameRetrieved,
+    TResult Function(String forumId)? retrieveCommentsStarted,
+    TResult Function(Either<DataFailure, List<Comment>> failureOrComments)?
+        commentsReceived,
+    TResult Function(List<Comment> comments)? retrieveProfilesStarted,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) retrieveForumPostStarted,
-    required TResult Function(_ForumPostReceived value) forumPostReceived,
-    required TResult Function(_PosterUsernameRetrieved value)
-        posterUsernameRetrieved,
+    required TResult Function(_RetrieveCommentsStarted value)
+        retrieveCommentsStarted,
+    required TResult Function(_CommentsReceived value) commentsReceived,
+    required TResult Function(_RetrieveProfilesStarted value)
+        retrieveProfilesStarted,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? retrieveForumPostStarted,
-    TResult Function(_ForumPostReceived value)? forumPostReceived,
-    TResult Function(_PosterUsernameRetrieved value)? posterUsernameRetrieved,
+    TResult Function(_RetrieveCommentsStarted value)? retrieveCommentsStarted,
+    TResult Function(_CommentsReceived value)? commentsReceived,
+    TResult Function(_RetrieveProfilesStarted value)? retrieveProfilesStarted,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ForumPostWatcherEventCopyWith<$Res> {
-  factory $ForumPostWatcherEventCopyWith(ForumPostWatcherEvent value,
-          $Res Function(ForumPostWatcherEvent) then) =
-      _$ForumPostWatcherEventCopyWithImpl<$Res>;
+abstract class $CommentWatcherEventCopyWith<$Res> {
+  factory $CommentWatcherEventCopyWith(
+          CommentWatcherEvent value, $Res Function(CommentWatcherEvent) then) =
+      _$CommentWatcherEventCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$ForumPostWatcherEventCopyWithImpl<$Res>
-    implements $ForumPostWatcherEventCopyWith<$Res> {
-  _$ForumPostWatcherEventCopyWithImpl(this._value, this._then);
+class _$CommentWatcherEventCopyWithImpl<$Res>
+    implements $CommentWatcherEventCopyWith<$Res> {
+  _$CommentWatcherEventCopyWithImpl(this._value, this._then);
 
-  final ForumPostWatcherEvent _value;
+  final CommentWatcherEvent _value;
   // ignore: unused_field
-  final $Res Function(ForumPostWatcherEvent) _then;
+  final $Res Function(CommentWatcherEvent) _then;
 }
 
 /// @nodoc
-abstract class _$StartedCopyWith<$Res> {
-  factory _$StartedCopyWith(_Started value, $Res Function(_Started) then) =
-      __$StartedCopyWithImpl<$Res>;
+abstract class _$RetrieveCommentsStartedCopyWith<$Res> {
+  factory _$RetrieveCommentsStartedCopyWith(_RetrieveCommentsStarted value,
+          $Res Function(_RetrieveCommentsStarted) then) =
+      __$RetrieveCommentsStartedCopyWithImpl<$Res>;
   $Res call({String forumId});
 }
 
 /// @nodoc
-class __$StartedCopyWithImpl<$Res>
-    extends _$ForumPostWatcherEventCopyWithImpl<$Res>
-    implements _$StartedCopyWith<$Res> {
-  __$StartedCopyWithImpl(_Started _value, $Res Function(_Started) _then)
-      : super(_value, (v) => _then(v as _Started));
+class __$RetrieveCommentsStartedCopyWithImpl<$Res>
+    extends _$CommentWatcherEventCopyWithImpl<$Res>
+    implements _$RetrieveCommentsStartedCopyWith<$Res> {
+  __$RetrieveCommentsStartedCopyWithImpl(_RetrieveCommentsStarted _value,
+      $Res Function(_RetrieveCommentsStarted) _then)
+      : super(_value, (v) => _then(v as _RetrieveCommentsStarted));
 
   @override
-  _Started get _value => super._value as _Started;
+  _RetrieveCommentsStarted get _value =>
+      super._value as _RetrieveCommentsStarted;
 
   @override
   $Res call({
     Object? forumId = freezed,
   }) {
-    return _then(_Started(
+    return _then(_RetrieveCommentsStarted(
       forumId == freezed
           ? _value.forumId
           : forumId // ignore: cast_nullable_to_non_nullable
@@ -125,21 +130,21 @@ class __$StartedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Started implements _Started {
-  const _$_Started(this.forumId);
+class _$_RetrieveCommentsStarted implements _RetrieveCommentsStarted {
+  const _$_RetrieveCommentsStarted(this.forumId);
 
   @override
   final String forumId;
 
   @override
   String toString() {
-    return 'ForumPostWatcherEvent.retrieveForumPostStarted(forumId: $forumId)';
+    return 'CommentWatcherEvent.retrieveCommentsStarted(forumId: $forumId)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _Started &&
+        (other is _RetrieveCommentsStarted &&
             (identical(other.forumId, forumId) ||
                 const DeepCollectionEquality().equals(other.forumId, forumId)));
   }
@@ -150,292 +155,33 @@ class _$_Started implements _Started {
 
   @JsonKey(ignore: true)
   @override
-  _$StartedCopyWith<_Started> get copyWith =>
-      __$StartedCopyWithImpl<_Started>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(String forumId) retrieveForumPostStarted,
-    required TResult Function(Either<DataFailure, ForumPost> failureOrForumPost)
-        forumPostReceived,
-    required TResult Function(ForumPost forum) posterUsernameRetrieved,
-  }) {
-    return retrieveForumPostStarted(forumId);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String forumId)? retrieveForumPostStarted,
-    TResult Function(Either<DataFailure, ForumPost> failureOrForumPost)?
-        forumPostReceived,
-    TResult Function(ForumPost forum)? posterUsernameRetrieved,
-    required TResult orElse(),
-  }) {
-    if (retrieveForumPostStarted != null) {
-      return retrieveForumPostStarted(forumId);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) retrieveForumPostStarted,
-    required TResult Function(_ForumPostReceived value) forumPostReceived,
-    required TResult Function(_PosterUsernameRetrieved value)
-        posterUsernameRetrieved,
-  }) {
-    return retrieveForumPostStarted(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? retrieveForumPostStarted,
-    TResult Function(_ForumPostReceived value)? forumPostReceived,
-    TResult Function(_PosterUsernameRetrieved value)? posterUsernameRetrieved,
-    required TResult orElse(),
-  }) {
-    if (retrieveForumPostStarted != null) {
-      return retrieveForumPostStarted(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Started implements ForumPostWatcherEvent {
-  const factory _Started(String forumId) = _$_Started;
-
-  String get forumId => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  _$StartedCopyWith<_Started> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$ForumPostReceivedCopyWith<$Res> {
-  factory _$ForumPostReceivedCopyWith(
-          _ForumPostReceived value, $Res Function(_ForumPostReceived) then) =
-      __$ForumPostReceivedCopyWithImpl<$Res>;
-  $Res call({Either<DataFailure, ForumPost> failureOrForumPost});
-}
-
-/// @nodoc
-class __$ForumPostReceivedCopyWithImpl<$Res>
-    extends _$ForumPostWatcherEventCopyWithImpl<$Res>
-    implements _$ForumPostReceivedCopyWith<$Res> {
-  __$ForumPostReceivedCopyWithImpl(
-      _ForumPostReceived _value, $Res Function(_ForumPostReceived) _then)
-      : super(_value, (v) => _then(v as _ForumPostReceived));
-
-  @override
-  _ForumPostReceived get _value => super._value as _ForumPostReceived;
-
-  @override
-  $Res call({
-    Object? failureOrForumPost = freezed,
-  }) {
-    return _then(_ForumPostReceived(
-      failureOrForumPost == freezed
-          ? _value.failureOrForumPost
-          : failureOrForumPost // ignore: cast_nullable_to_non_nullable
-              as Either<DataFailure, ForumPost>,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$_ForumPostReceived implements _ForumPostReceived {
-  const _$_ForumPostReceived(this.failureOrForumPost);
-
-  @override
-  final Either<DataFailure, ForumPost> failureOrForumPost;
-
-  @override
-  String toString() {
-    return 'ForumPostWatcherEvent.forumPostReceived(failureOrForumPost: $failureOrForumPost)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is _ForumPostReceived &&
-            (identical(other.failureOrForumPost, failureOrForumPost) ||
-                const DeepCollectionEquality()
-                    .equals(other.failureOrForumPost, failureOrForumPost)));
-  }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(failureOrForumPost);
-
-  @JsonKey(ignore: true)
-  @override
-  _$ForumPostReceivedCopyWith<_ForumPostReceived> get copyWith =>
-      __$ForumPostReceivedCopyWithImpl<_ForumPostReceived>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(String forumId) retrieveForumPostStarted,
-    required TResult Function(Either<DataFailure, ForumPost> failureOrForumPost)
-        forumPostReceived,
-    required TResult Function(ForumPost forum) posterUsernameRetrieved,
-  }) {
-    return forumPostReceived(failureOrForumPost);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String forumId)? retrieveForumPostStarted,
-    TResult Function(Either<DataFailure, ForumPost> failureOrForumPost)?
-        forumPostReceived,
-    TResult Function(ForumPost forum)? posterUsernameRetrieved,
-    required TResult orElse(),
-  }) {
-    if (forumPostReceived != null) {
-      return forumPostReceived(failureOrForumPost);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) retrieveForumPostStarted,
-    required TResult Function(_ForumPostReceived value) forumPostReceived,
-    required TResult Function(_PosterUsernameRetrieved value)
-        posterUsernameRetrieved,
-  }) {
-    return forumPostReceived(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? retrieveForumPostStarted,
-    TResult Function(_ForumPostReceived value)? forumPostReceived,
-    TResult Function(_PosterUsernameRetrieved value)? posterUsernameRetrieved,
-    required TResult orElse(),
-  }) {
-    if (forumPostReceived != null) {
-      return forumPostReceived(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _ForumPostReceived implements ForumPostWatcherEvent {
-  const factory _ForumPostReceived(
-      Either<DataFailure, ForumPost> failureOrForumPost) = _$_ForumPostReceived;
-
-  Either<DataFailure, ForumPost> get failureOrForumPost =>
-      throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  _$ForumPostReceivedCopyWith<_ForumPostReceived> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$PosterUsernameRetrievedCopyWith<$Res> {
-  factory _$PosterUsernameRetrievedCopyWith(_PosterUsernameRetrieved value,
-          $Res Function(_PosterUsernameRetrieved) then) =
-      __$PosterUsernameRetrievedCopyWithImpl<$Res>;
-  $Res call({ForumPost forum});
-
-  $ForumPostCopyWith<$Res> get forum;
-}
-
-/// @nodoc
-class __$PosterUsernameRetrievedCopyWithImpl<$Res>
-    extends _$ForumPostWatcherEventCopyWithImpl<$Res>
-    implements _$PosterUsernameRetrievedCopyWith<$Res> {
-  __$PosterUsernameRetrievedCopyWithImpl(_PosterUsernameRetrieved _value,
-      $Res Function(_PosterUsernameRetrieved) _then)
-      : super(_value, (v) => _then(v as _PosterUsernameRetrieved));
-
-  @override
-  _PosterUsernameRetrieved get _value =>
-      super._value as _PosterUsernameRetrieved;
-
-  @override
-  $Res call({
-    Object? forum = freezed,
-  }) {
-    return _then(_PosterUsernameRetrieved(
-      forum == freezed
-          ? _value.forum
-          : forum // ignore: cast_nullable_to_non_nullable
-              as ForumPost,
-    ));
-  }
-
-  @override
-  $ForumPostCopyWith<$Res> get forum {
-    return $ForumPostCopyWith<$Res>(_value.forum, (value) {
-      return _then(_value.copyWith(forum: value));
-    });
-  }
-}
-
-/// @nodoc
-
-class _$_PosterUsernameRetrieved implements _PosterUsernameRetrieved {
-  const _$_PosterUsernameRetrieved(this.forum);
-
-  @override
-  final ForumPost forum;
-
-  @override
-  String toString() {
-    return 'ForumPostWatcherEvent.posterUsernameRetrieved(forum: $forum)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is _PosterUsernameRetrieved &&
-            (identical(other.forum, forum) ||
-                const DeepCollectionEquality().equals(other.forum, forum)));
-  }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(forum);
-
-  @JsonKey(ignore: true)
-  @override
-  _$PosterUsernameRetrievedCopyWith<_PosterUsernameRetrieved> get copyWith =>
-      __$PosterUsernameRetrievedCopyWithImpl<_PosterUsernameRetrieved>(
+  _$RetrieveCommentsStartedCopyWith<_RetrieveCommentsStarted> get copyWith =>
+      __$RetrieveCommentsStartedCopyWithImpl<_RetrieveCommentsStarted>(
           this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String forumId) retrieveForumPostStarted,
-    required TResult Function(Either<DataFailure, ForumPost> failureOrForumPost)
-        forumPostReceived,
-    required TResult Function(ForumPost forum) posterUsernameRetrieved,
+    required TResult Function(String forumId) retrieveCommentsStarted,
+    required TResult Function(
+            Either<DataFailure, List<Comment>> failureOrComments)
+        commentsReceived,
+    required TResult Function(List<Comment> comments) retrieveProfilesStarted,
   }) {
-    return posterUsernameRetrieved(forum);
+    return retrieveCommentsStarted(forumId);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String forumId)? retrieveForumPostStarted,
-    TResult Function(Either<DataFailure, ForumPost> failureOrForumPost)?
-        forumPostReceived,
-    TResult Function(ForumPost forum)? posterUsernameRetrieved,
+    TResult Function(String forumId)? retrieveCommentsStarted,
+    TResult Function(Either<DataFailure, List<Comment>> failureOrComments)?
+        commentsReceived,
+    TResult Function(List<Comment> comments)? retrieveProfilesStarted,
     required TResult orElse(),
   }) {
-    if (posterUsernameRetrieved != null) {
-      return posterUsernameRetrieved(forum);
+    if (retrieveCommentsStarted != null) {
+      return retrieveCommentsStarted(forumId);
     }
     return orElse();
   }
@@ -443,42 +189,302 @@ class _$_PosterUsernameRetrieved implements _PosterUsernameRetrieved {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) retrieveForumPostStarted,
-    required TResult Function(_ForumPostReceived value) forumPostReceived,
-    required TResult Function(_PosterUsernameRetrieved value)
-        posterUsernameRetrieved,
+    required TResult Function(_RetrieveCommentsStarted value)
+        retrieveCommentsStarted,
+    required TResult Function(_CommentsReceived value) commentsReceived,
+    required TResult Function(_RetrieveProfilesStarted value)
+        retrieveProfilesStarted,
   }) {
-    return posterUsernameRetrieved(this);
+    return retrieveCommentsStarted(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? retrieveForumPostStarted,
-    TResult Function(_ForumPostReceived value)? forumPostReceived,
-    TResult Function(_PosterUsernameRetrieved value)? posterUsernameRetrieved,
+    TResult Function(_RetrieveCommentsStarted value)? retrieveCommentsStarted,
+    TResult Function(_CommentsReceived value)? commentsReceived,
+    TResult Function(_RetrieveProfilesStarted value)? retrieveProfilesStarted,
     required TResult orElse(),
   }) {
-    if (posterUsernameRetrieved != null) {
-      return posterUsernameRetrieved(this);
+    if (retrieveCommentsStarted != null) {
+      return retrieveCommentsStarted(this);
     }
     return orElse();
   }
 }
 
-abstract class _PosterUsernameRetrieved implements ForumPostWatcherEvent {
-  const factory _PosterUsernameRetrieved(ForumPost forum) =
-      _$_PosterUsernameRetrieved;
+abstract class _RetrieveCommentsStarted implements CommentWatcherEvent {
+  const factory _RetrieveCommentsStarted(String forumId) =
+      _$_RetrieveCommentsStarted;
 
-  ForumPost get forum => throw _privateConstructorUsedError;
+  String get forumId => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  _$PosterUsernameRetrievedCopyWith<_PosterUsernameRetrieved> get copyWith =>
+  _$RetrieveCommentsStartedCopyWith<_RetrieveCommentsStarted> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-class _$ForumPostWatcherStateTearOff {
-  const _$ForumPostWatcherStateTearOff();
+abstract class _$CommentsReceivedCopyWith<$Res> {
+  factory _$CommentsReceivedCopyWith(
+          _CommentsReceived value, $Res Function(_CommentsReceived) then) =
+      __$CommentsReceivedCopyWithImpl<$Res>;
+  $Res call({Either<DataFailure, List<Comment>> failureOrComments});
+}
+
+/// @nodoc
+class __$CommentsReceivedCopyWithImpl<$Res>
+    extends _$CommentWatcherEventCopyWithImpl<$Res>
+    implements _$CommentsReceivedCopyWith<$Res> {
+  __$CommentsReceivedCopyWithImpl(
+      _CommentsReceived _value, $Res Function(_CommentsReceived) _then)
+      : super(_value, (v) => _then(v as _CommentsReceived));
+
+  @override
+  _CommentsReceived get _value => super._value as _CommentsReceived;
+
+  @override
+  $Res call({
+    Object? failureOrComments = freezed,
+  }) {
+    return _then(_CommentsReceived(
+      failureOrComments == freezed
+          ? _value.failureOrComments
+          : failureOrComments // ignore: cast_nullable_to_non_nullable
+              as Either<DataFailure, List<Comment>>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_CommentsReceived implements _CommentsReceived {
+  const _$_CommentsReceived(this.failureOrComments);
+
+  @override
+  final Either<DataFailure, List<Comment>> failureOrComments;
+
+  @override
+  String toString() {
+    return 'CommentWatcherEvent.commentsReceived(failureOrComments: $failureOrComments)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _CommentsReceived &&
+            (identical(other.failureOrComments, failureOrComments) ||
+                const DeepCollectionEquality()
+                    .equals(other.failureOrComments, failureOrComments)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(failureOrComments);
+
+  @JsonKey(ignore: true)
+  @override
+  _$CommentsReceivedCopyWith<_CommentsReceived> get copyWith =>
+      __$CommentsReceivedCopyWithImpl<_CommentsReceived>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String forumId) retrieveCommentsStarted,
+    required TResult Function(
+            Either<DataFailure, List<Comment>> failureOrComments)
+        commentsReceived,
+    required TResult Function(List<Comment> comments) retrieveProfilesStarted,
+  }) {
+    return commentsReceived(failureOrComments);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String forumId)? retrieveCommentsStarted,
+    TResult Function(Either<DataFailure, List<Comment>> failureOrComments)?
+        commentsReceived,
+    TResult Function(List<Comment> comments)? retrieveProfilesStarted,
+    required TResult orElse(),
+  }) {
+    if (commentsReceived != null) {
+      return commentsReceived(failureOrComments);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_RetrieveCommentsStarted value)
+        retrieveCommentsStarted,
+    required TResult Function(_CommentsReceived value) commentsReceived,
+    required TResult Function(_RetrieveProfilesStarted value)
+        retrieveProfilesStarted,
+  }) {
+    return commentsReceived(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_RetrieveCommentsStarted value)? retrieveCommentsStarted,
+    TResult Function(_CommentsReceived value)? commentsReceived,
+    TResult Function(_RetrieveProfilesStarted value)? retrieveProfilesStarted,
+    required TResult orElse(),
+  }) {
+    if (commentsReceived != null) {
+      return commentsReceived(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _CommentsReceived implements CommentWatcherEvent {
+  const factory _CommentsReceived(
+          Either<DataFailure, List<Comment>> failureOrComments) =
+      _$_CommentsReceived;
+
+  Either<DataFailure, List<Comment>> get failureOrComments =>
+      throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$CommentsReceivedCopyWith<_CommentsReceived> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$RetrieveProfilesStartedCopyWith<$Res> {
+  factory _$RetrieveProfilesStartedCopyWith(_RetrieveProfilesStarted value,
+          $Res Function(_RetrieveProfilesStarted) then) =
+      __$RetrieveProfilesStartedCopyWithImpl<$Res>;
+  $Res call({List<Comment> comments});
+}
+
+/// @nodoc
+class __$RetrieveProfilesStartedCopyWithImpl<$Res>
+    extends _$CommentWatcherEventCopyWithImpl<$Res>
+    implements _$RetrieveProfilesStartedCopyWith<$Res> {
+  __$RetrieveProfilesStartedCopyWithImpl(_RetrieveProfilesStarted _value,
+      $Res Function(_RetrieveProfilesStarted) _then)
+      : super(_value, (v) => _then(v as _RetrieveProfilesStarted));
+
+  @override
+  _RetrieveProfilesStarted get _value =>
+      super._value as _RetrieveProfilesStarted;
+
+  @override
+  $Res call({
+    Object? comments = freezed,
+  }) {
+    return _then(_RetrieveProfilesStarted(
+      comments == freezed
+          ? _value.comments
+          : comments // ignore: cast_nullable_to_non_nullable
+              as List<Comment>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_RetrieveProfilesStarted implements _RetrieveProfilesStarted {
+  const _$_RetrieveProfilesStarted(this.comments);
+
+  @override
+  final List<Comment> comments;
+
+  @override
+  String toString() {
+    return 'CommentWatcherEvent.retrieveProfilesStarted(comments: $comments)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _RetrieveProfilesStarted &&
+            (identical(other.comments, comments) ||
+                const DeepCollectionEquality()
+                    .equals(other.comments, comments)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(comments);
+
+  @JsonKey(ignore: true)
+  @override
+  _$RetrieveProfilesStartedCopyWith<_RetrieveProfilesStarted> get copyWith =>
+      __$RetrieveProfilesStartedCopyWithImpl<_RetrieveProfilesStarted>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String forumId) retrieveCommentsStarted,
+    required TResult Function(
+            Either<DataFailure, List<Comment>> failureOrComments)
+        commentsReceived,
+    required TResult Function(List<Comment> comments) retrieveProfilesStarted,
+  }) {
+    return retrieveProfilesStarted(comments);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String forumId)? retrieveCommentsStarted,
+    TResult Function(Either<DataFailure, List<Comment>> failureOrComments)?
+        commentsReceived,
+    TResult Function(List<Comment> comments)? retrieveProfilesStarted,
+    required TResult orElse(),
+  }) {
+    if (retrieveProfilesStarted != null) {
+      return retrieveProfilesStarted(comments);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_RetrieveCommentsStarted value)
+        retrieveCommentsStarted,
+    required TResult Function(_CommentsReceived value) commentsReceived,
+    required TResult Function(_RetrieveProfilesStarted value)
+        retrieveProfilesStarted,
+  }) {
+    return retrieveProfilesStarted(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_RetrieveCommentsStarted value)? retrieveCommentsStarted,
+    TResult Function(_CommentsReceived value)? commentsReceived,
+    TResult Function(_RetrieveProfilesStarted value)? retrieveProfilesStarted,
+    required TResult orElse(),
+  }) {
+    if (retrieveProfilesStarted != null) {
+      return retrieveProfilesStarted(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _RetrieveProfilesStarted implements CommentWatcherEvent {
+  const factory _RetrieveProfilesStarted(List<Comment> comments) =
+      _$_RetrieveProfilesStarted;
+
+  List<Comment> get comments => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$RetrieveProfilesStartedCopyWith<_RetrieveProfilesStarted> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+class _$CommentWatcherStateTearOff {
+  const _$CommentWatcherStateTearOff();
 
   _Initial initial() {
     return const _Initial();
@@ -488,10 +494,10 @@ class _$ForumPostWatcherStateTearOff {
     return const _LoadInProgress();
   }
 
-  _LoadSuccess loadSuccess(ForumPost forum, String posterUsername) {
+  _LoadSuccess loadSuccess(List<Comment> comments, List<Profile> profileList) {
     return _LoadSuccess(
-      forum,
-      posterUsername,
+      comments,
+      profileList,
     );
   }
 
@@ -503,15 +509,15 @@ class _$ForumPostWatcherStateTearOff {
 }
 
 /// @nodoc
-const $ForumPostWatcherState = _$ForumPostWatcherStateTearOff();
+const $CommentWatcherState = _$CommentWatcherStateTearOff();
 
 /// @nodoc
-mixin _$ForumPostWatcherState {
+mixin _$CommentWatcherState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(ForumPost forum, String posterUsername)
+    required TResult Function(List<Comment> comments, List<Profile> profileList)
         loadSuccess,
     required TResult Function(DataFailure dataFailure) loadFailure,
   }) =>
@@ -520,7 +526,8 @@ mixin _$ForumPostWatcherState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(ForumPost forum, String posterUsername)? loadSuccess,
+    TResult Function(List<Comment> comments, List<Profile> profileList)?
+        loadSuccess,
     TResult Function(DataFailure dataFailure)? loadFailure,
     required TResult orElse(),
   }) =>
@@ -545,20 +552,20 @@ mixin _$ForumPostWatcherState {
 }
 
 /// @nodoc
-abstract class $ForumPostWatcherStateCopyWith<$Res> {
-  factory $ForumPostWatcherStateCopyWith(ForumPostWatcherState value,
-          $Res Function(ForumPostWatcherState) then) =
-      _$ForumPostWatcherStateCopyWithImpl<$Res>;
+abstract class $CommentWatcherStateCopyWith<$Res> {
+  factory $CommentWatcherStateCopyWith(
+          CommentWatcherState value, $Res Function(CommentWatcherState) then) =
+      _$CommentWatcherStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$ForumPostWatcherStateCopyWithImpl<$Res>
-    implements $ForumPostWatcherStateCopyWith<$Res> {
-  _$ForumPostWatcherStateCopyWithImpl(this._value, this._then);
+class _$CommentWatcherStateCopyWithImpl<$Res>
+    implements $CommentWatcherStateCopyWith<$Res> {
+  _$CommentWatcherStateCopyWithImpl(this._value, this._then);
 
-  final ForumPostWatcherState _value;
+  final CommentWatcherState _value;
   // ignore: unused_field
-  final $Res Function(ForumPostWatcherState) _then;
+  final $Res Function(CommentWatcherState) _then;
 }
 
 /// @nodoc
@@ -569,7 +576,7 @@ abstract class _$InitialCopyWith<$Res> {
 
 /// @nodoc
 class __$InitialCopyWithImpl<$Res>
-    extends _$ForumPostWatcherStateCopyWithImpl<$Res>
+    extends _$CommentWatcherStateCopyWithImpl<$Res>
     implements _$InitialCopyWith<$Res> {
   __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
       : super(_value, (v) => _then(v as _Initial));
@@ -585,7 +592,7 @@ class _$_Initial implements _Initial {
 
   @override
   String toString() {
-    return 'ForumPostWatcherState.initial()';
+    return 'CommentWatcherState.initial()';
   }
 
   @override
@@ -601,7 +608,7 @@ class _$_Initial implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(ForumPost forum, String posterUsername)
+    required TResult Function(List<Comment> comments, List<Profile> profileList)
         loadSuccess,
     required TResult Function(DataFailure dataFailure) loadFailure,
   }) {
@@ -613,7 +620,8 @@ class _$_Initial implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(ForumPost forum, String posterUsername)? loadSuccess,
+    TResult Function(List<Comment> comments, List<Profile> profileList)?
+        loadSuccess,
     TResult Function(DataFailure dataFailure)? loadFailure,
     required TResult orElse(),
   }) {
@@ -650,7 +658,7 @@ class _$_Initial implements _Initial {
   }
 }
 
-abstract class _Initial implements ForumPostWatcherState {
+abstract class _Initial implements CommentWatcherState {
   const factory _Initial() = _$_Initial;
 }
 
@@ -663,7 +671,7 @@ abstract class _$LoadInProgressCopyWith<$Res> {
 
 /// @nodoc
 class __$LoadInProgressCopyWithImpl<$Res>
-    extends _$ForumPostWatcherStateCopyWithImpl<$Res>
+    extends _$CommentWatcherStateCopyWithImpl<$Res>
     implements _$LoadInProgressCopyWith<$Res> {
   __$LoadInProgressCopyWithImpl(
       _LoadInProgress _value, $Res Function(_LoadInProgress) _then)
@@ -680,7 +688,7 @@ class _$_LoadInProgress implements _LoadInProgress {
 
   @override
   String toString() {
-    return 'ForumPostWatcherState.loadInProgress()';
+    return 'CommentWatcherState.loadInProgress()';
   }
 
   @override
@@ -696,7 +704,7 @@ class _$_LoadInProgress implements _LoadInProgress {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(ForumPost forum, String posterUsername)
+    required TResult Function(List<Comment> comments, List<Profile> profileList)
         loadSuccess,
     required TResult Function(DataFailure dataFailure) loadFailure,
   }) {
@@ -708,7 +716,8 @@ class _$_LoadInProgress implements _LoadInProgress {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(ForumPost forum, String posterUsername)? loadSuccess,
+    TResult Function(List<Comment> comments, List<Profile> profileList)?
+        loadSuccess,
     TResult Function(DataFailure dataFailure)? loadFailure,
     required TResult orElse(),
   }) {
@@ -745,7 +754,7 @@ class _$_LoadInProgress implements _LoadInProgress {
   }
 }
 
-abstract class _LoadInProgress implements ForumPostWatcherState {
+abstract class _LoadInProgress implements CommentWatcherState {
   const factory _LoadInProgress() = _$_LoadInProgress;
 }
 
@@ -754,14 +763,12 @@ abstract class _$LoadSuccessCopyWith<$Res> {
   factory _$LoadSuccessCopyWith(
           _LoadSuccess value, $Res Function(_LoadSuccess) then) =
       __$LoadSuccessCopyWithImpl<$Res>;
-  $Res call({ForumPost forum, String posterUsername});
-
-  $ForumPostCopyWith<$Res> get forum;
+  $Res call({List<Comment> comments, List<Profile> profileList});
 }
 
 /// @nodoc
 class __$LoadSuccessCopyWithImpl<$Res>
-    extends _$ForumPostWatcherStateCopyWithImpl<$Res>
+    extends _$CommentWatcherStateCopyWithImpl<$Res>
     implements _$LoadSuccessCopyWith<$Res> {
   __$LoadSuccessCopyWithImpl(
       _LoadSuccess _value, $Res Function(_LoadSuccess) _then)
@@ -772,60 +779,54 @@ class __$LoadSuccessCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? forum = freezed,
-    Object? posterUsername = freezed,
+    Object? comments = freezed,
+    Object? profileList = freezed,
   }) {
     return _then(_LoadSuccess(
-      forum == freezed
-          ? _value.forum
-          : forum // ignore: cast_nullable_to_non_nullable
-              as ForumPost,
-      posterUsername == freezed
-          ? _value.posterUsername
-          : posterUsername // ignore: cast_nullable_to_non_nullable
-              as String,
+      comments == freezed
+          ? _value.comments
+          : comments // ignore: cast_nullable_to_non_nullable
+              as List<Comment>,
+      profileList == freezed
+          ? _value.profileList
+          : profileList // ignore: cast_nullable_to_non_nullable
+              as List<Profile>,
     ));
-  }
-
-  @override
-  $ForumPostCopyWith<$Res> get forum {
-    return $ForumPostCopyWith<$Res>(_value.forum, (value) {
-      return _then(_value.copyWith(forum: value));
-    });
   }
 }
 
 /// @nodoc
 
 class _$_LoadSuccess implements _LoadSuccess {
-  const _$_LoadSuccess(this.forum, this.posterUsername);
+  const _$_LoadSuccess(this.comments, this.profileList);
 
   @override
-  final ForumPost forum;
+  final List<Comment> comments;
   @override
-  final String posterUsername;
+  final List<Profile> profileList;
 
   @override
   String toString() {
-    return 'ForumPostWatcherState.loadSuccess(forum: $forum, posterUsername: $posterUsername)';
+    return 'CommentWatcherState.loadSuccess(comments: $comments, profileList: $profileList)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _LoadSuccess &&
-            (identical(other.forum, forum) ||
-                const DeepCollectionEquality().equals(other.forum, forum)) &&
-            (identical(other.posterUsername, posterUsername) ||
+            (identical(other.comments, comments) ||
                 const DeepCollectionEquality()
-                    .equals(other.posterUsername, posterUsername)));
+                    .equals(other.comments, comments)) &&
+            (identical(other.profileList, profileList) ||
+                const DeepCollectionEquality()
+                    .equals(other.profileList, profileList)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(forum) ^
-      const DeepCollectionEquality().hash(posterUsername);
+      const DeepCollectionEquality().hash(comments) ^
+      const DeepCollectionEquality().hash(profileList);
 
   @JsonKey(ignore: true)
   @override
@@ -837,11 +838,11 @@ class _$_LoadSuccess implements _LoadSuccess {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(ForumPost forum, String posterUsername)
+    required TResult Function(List<Comment> comments, List<Profile> profileList)
         loadSuccess,
     required TResult Function(DataFailure dataFailure) loadFailure,
   }) {
-    return loadSuccess(forum, posterUsername);
+    return loadSuccess(comments, profileList);
   }
 
   @override
@@ -849,12 +850,13 @@ class _$_LoadSuccess implements _LoadSuccess {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(ForumPost forum, String posterUsername)? loadSuccess,
+    TResult Function(List<Comment> comments, List<Profile> profileList)?
+        loadSuccess,
     TResult Function(DataFailure dataFailure)? loadFailure,
     required TResult orElse(),
   }) {
     if (loadSuccess != null) {
-      return loadSuccess(forum, posterUsername);
+      return loadSuccess(comments, profileList);
     }
     return orElse();
   }
@@ -886,12 +888,12 @@ class _$_LoadSuccess implements _LoadSuccess {
   }
 }
 
-abstract class _LoadSuccess implements ForumPostWatcherState {
-  const factory _LoadSuccess(ForumPost forum, String posterUsername) =
-      _$_LoadSuccess;
+abstract class _LoadSuccess implements CommentWatcherState {
+  const factory _LoadSuccess(
+      List<Comment> comments, List<Profile> profileList) = _$_LoadSuccess;
 
-  ForumPost get forum => throw _privateConstructorUsedError;
-  String get posterUsername => throw _privateConstructorUsedError;
+  List<Comment> get comments => throw _privateConstructorUsedError;
+  List<Profile> get profileList => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$LoadSuccessCopyWith<_LoadSuccess> get copyWith =>
       throw _privateConstructorUsedError;
@@ -909,7 +911,7 @@ abstract class _$LoadFailureCopyWith<$Res> {
 
 /// @nodoc
 class __$LoadFailureCopyWithImpl<$Res>
-    extends _$ForumPostWatcherStateCopyWithImpl<$Res>
+    extends _$CommentWatcherStateCopyWithImpl<$Res>
     implements _$LoadFailureCopyWith<$Res> {
   __$LoadFailureCopyWithImpl(
       _LoadFailure _value, $Res Function(_LoadFailure) _then)
@@ -948,7 +950,7 @@ class _$_LoadFailure implements _LoadFailure {
 
   @override
   String toString() {
-    return 'ForumPostWatcherState.loadFailure(dataFailure: $dataFailure)';
+    return 'CommentWatcherState.loadFailure(dataFailure: $dataFailure)';
   }
 
   @override
@@ -974,7 +976,7 @@ class _$_LoadFailure implements _LoadFailure {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(ForumPost forum, String posterUsername)
+    required TResult Function(List<Comment> comments, List<Profile> profileList)
         loadSuccess,
     required TResult Function(DataFailure dataFailure) loadFailure,
   }) {
@@ -986,7 +988,8 @@ class _$_LoadFailure implements _LoadFailure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(ForumPost forum, String posterUsername)? loadSuccess,
+    TResult Function(List<Comment> comments, List<Profile> profileList)?
+        loadSuccess,
     TResult Function(DataFailure dataFailure)? loadFailure,
     required TResult orElse(),
   }) {
@@ -1023,7 +1026,7 @@ class _$_LoadFailure implements _LoadFailure {
   }
 }
 
-abstract class _LoadFailure implements ForumPostWatcherState {
+abstract class _LoadFailure implements CommentWatcherState {
   const factory _LoadFailure(DataFailure dataFailure) = _$_LoadFailure;
 
   DataFailure get dataFailure => throw _privateConstructorUsedError;

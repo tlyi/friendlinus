@@ -1,7 +1,7 @@
 import 'dart:core';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:friendlinus/domain/core/value_objects.dart';
-import 'package:friendlinus/domain/data/forum/forum_post.dart';
+import 'package:friendlinus/domain/data/forum/forum_post/forum_post.dart';
 import 'package:friendlinus/domain/data/profile/value_objects.dart';
 import 'package:friendlinus/domain/core/constants.dart' as constants;
 

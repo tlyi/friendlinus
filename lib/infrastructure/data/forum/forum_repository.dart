@@ -3,12 +3,14 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:friendlinus/domain/data/forum/forum_post.dart';
+import 'package:friendlinus/domain/data/forum/comment/comment.dart';
+import 'package:friendlinus/domain/data/forum/forum_post/forum_post.dart';
 import 'package:friendlinus/domain/data/data_failure.dart';
 import 'package:friendlinus/domain/data/forum/i_forum_repository.dart';
-import 'package:friendlinus/domain/data/forum/poll.dart';
-import 'package:friendlinus/infrastructure/data/forum/forum_post_dtos.dart';
-import 'package:friendlinus/infrastructure/data/forum/poll_dtos.dart';
+import 'package:friendlinus/domain/data/forum/poll/poll.dart';
+import 'package:friendlinus/infrastructure/data/forum/comment_dtos/comment_dtos.dart';
+import 'package:friendlinus/infrastructure/data/forum/forum_post_dtos/forum_post_dtos.dart';
+import 'package:friendlinus/infrastructure/data/forum/poll_dtos/poll_dtos.dart';
 import 'package:injectable/injectable.dart';
 import 'package:friendlinus/infrastructure/core/firestore_helpers.dart';
 
@@ -214,4 +216,46 @@ class ForumPostRepository implements IForumRepository {
       }
     }
   }
+
+  @override
+  Future<Either<DataFailure, Unit>> createComment(Comment comment, String forumId) async{
+    try {
+      final commentRef = await _firestore.commentsForumRef(forumId);
+      final commentDto = CommentDto.fromDomain(comment);
+
+      await commentRef.doc(comment.commentId).set(commentDto.toJson());
+
+      return right(unit);
+    } on FirebaseException catch (e) {
+      if (e.message!.contains('PERMISSION_DENIED')) {
+        return left(const DataFailure.insufficientPermission());
+      } else {
+        return left(const DataFailure.unexpected());
+      }
+    }
+  }
+
+
+  @override
+Stream<Either<DataFailure, List<Comment>>> retrieveComments(String forumId) async* {
+  final commentsRef = await _firestore.commentsForumRef(forumId);
+  yield* commentsRef
+      .orderBy('timestamp', descending: true)
+      .snapshots()
+      .map(
+        (snapshot) => right<DataFailure, List<Comment>>(
+          snapshot.docs
+              .map((doc) => CommentDto.fromFirestore(doc).toDomain())
+              .toList(),
+        ),
+      )
+      .handleError((e) {
+    if (e is FirebaseException && e.message!.contains('PERMISSION_DENIED')) {
+      return left(const DataFailure.insufficientPermission());
+    } else {
+      print(e);
+      return left(const DataFailure.unexpected());
+    }
+  });
+}
 }

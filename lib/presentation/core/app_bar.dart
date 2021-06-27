@@ -10,6 +10,7 @@ AppBar appBar({
   bool canGoBack = false,
   bool canClose = false,
   bool notifications = true,
+  double fontSize = 20.0,
 }) {
   return AppBar(
     leading: canGoBack
@@ -29,7 +30,7 @@ AppBar appBar({
         : Container(),
     title: Text(
       header,
-      style: const TextStyle(color: Colors.black),
+      style: TextStyle(color: Colors.black, fontSize: fontSize,)
     ),
     backgroundColor: Colors.white,
     centerTitle: true,

@@ -105,6 +105,18 @@ class ProfileRepository implements IProfileRepository {
   }
 
   @override
+  Future<Either<DataFailure, String>> getUsername(String uuid) async {
+    try {
+      final userDoc = await _firestore.userDocumentById(uuid);
+      return userDoc.get().then((DocumentSnapshot doc) => right(
+          ProfileDto.fromFirestore(doc).toDomain().username.getOrCrash()));
+    } on FirebaseException catch (e) {
+      print(e);
+      return left(const DataFailure.unexpected());
+    }
+  }
+
+  @override
   Future<Either<DataFailure, List<Profile>>> searchProfileByUsername(
       String username) async {
     final searchResults = <Profile>[];
@@ -141,6 +153,18 @@ class ProfileRepository implements IProfileRepository {
           return right(Profile.empty());
         }
       }
+    } on FirebaseException catch (e) {
+      print(e);
+      return left(const DataFailure.unexpected());
+    }
+  }
+
+  @override
+  Future<Either<DataFailure, Profile>> searchProfileByUuid(String uuid) async {
+    try {
+      final usersRef = await _firestore.usersRef();
+      return usersRef.doc(uuid).get().then((DocumentSnapshot doc) =>
+          right(ProfileDto.fromFirestore(doc).toDomain()));
     } on FirebaseException catch (e) {
       print(e);
       return left(const DataFailure.unexpected());
