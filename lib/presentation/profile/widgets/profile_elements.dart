@@ -33,7 +33,7 @@ class ProfileElements extends StatelessWidget {
           children: <Widget>[
             ProfileHeader(userProfile: userProfile, isOwnProfile: isOwnProfile),
             ModulesOfInterest(userProfile: userProfile),
-            FriendList(userProfile: userProfile),
+            FriendList(userProfile: userProfile, isOwnProfile: isOwnProfile),
             RecentPosts(userProfile: userProfile),
           ],
         ),
@@ -240,69 +240,103 @@ class ModulesOfInterest extends StatelessWidget {
 
 class FriendList extends StatelessWidget {
   final Profile userProfile;
+  final bool isOwnProfile;
 
-  const FriendList({Key? key, required this.userProfile}) : super(key: key);
+  const FriendList(
+      {Key? key, required this.userProfile, required this.isOwnProfile})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileActorBloc, ProfileActorState>(
       builder: (context, state) {
         return SizedBox(
-          height: 150,
-          width: MediaQuery.of(context).size.width,
-          child: Align(
-            alignment: Alignment.topLeft,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+            height: 150,
+            width: MediaQuery.of(context).size.width,
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: Stack(children: [
                 const Text('Following',
                     style:
                         TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-                Expanded(
-                  child: ListView.builder(
-                      shrinkWrap: true,
-                      physics: const ScrollPhysics(),
-                      padding: const EdgeInsets.only(top: 20),
-                      scrollDirection: Axis.horizontal,
-                      itemCount: context
-                          .read<ProfileActorBloc>()
-                          .state
-                          .following
-                          .length,
-                      itemBuilder: (context, index) {
-                        final Profile profile = context
-                            .read<ProfileActorBloc>()
-                            .state
-                            .following[index];
-                        return GestureDetector(
-                          onTap: () async {
-                            await context.pushRoute(
-                                OtherProfileRoute(userProfile: profile));
-                            context.read<ProfileActorBloc>().add(
-                                const ProfileActorEvent.loadingOwnProfile());
-                          },
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.only(left: 5.0, right: 5.0),
-                            child: Column(children: [
-                              ClipOval(
-                                child: Image.network(
-                                  profile.photoUrl,
-                                  width: 60.0,
-                                  height: 60.0,
-                                  fit: BoxFit.cover,
-                                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 25.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (isOwnProfile)
+                        Padding(
+                          padding: EdgeInsets.only(top: 15, right: 10),
+                          child: GestureDetector(
+                            onTap: () async {
+                              await context.pushRoute(SearchUsersRoute());
+                              context.read<ProfileActorBloc>().add(
+                                  const ProfileActorEvent.loadingOwnProfile());
+                            },
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Container(
+                                padding: EdgeInsets.only(),
+                                height: 40,
+                                width: 40,
+                                child: Icon(Icons.person_add_rounded),
+                                color: Colors.grey[400],
                               ),
-                              Text(profile.username.getOrCrash()),
-                            ]),
+                            ),
                           ),
-                        );
-                      }),
+                        ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: ListView.builder(
+                                shrinkWrap: true,
+                                physics: const ScrollPhysics(),
+                                padding: const EdgeInsets.only(top: 5.0),
+                                scrollDirection: Axis.horizontal,
+                                itemCount: context
+                                    .read<ProfileActorBloc>()
+                                    .state
+                                    .following
+                                    .length,
+                                itemBuilder: (context, index) {
+                                  final Profile profile = context
+                                      .read<ProfileActorBloc>()
+                                      .state
+                                      .following[index];
+                                  return GestureDetector(
+                                    onTap: () async {
+                                      await context.pushRoute(OtherProfileRoute(
+                                          userProfile: profile));
+                                      context.read<ProfileActorBloc>().add(
+                                          const ProfileActorEvent
+                                              .loadingOwnProfile());
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 5.0, right: 5.0),
+                                      child: Column(children: [
+                                        ClipOval(
+                                          child: Image.network(
+                                            profile.photoUrl,
+                                            width: 60.0,
+                                            height: 60.0,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                        Text(profile.username.getOrCrash()),
+                                      ]),
+                                    ),
+                                  );
+                                }),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ],
-            ),
-          ),
-        );
+              ]),
+            ));
       },
     );
   }
@@ -354,7 +388,7 @@ class WaveClipper extends CustomClipper<Path> {
     path.lineTo(0.0, size.height - 65);
 
     final firstControlPoint = Offset(size.width / 4.3, size.height - 80);
-    final firstEndPoint = Offset(size.width / 2.7, size.height - 120);
+    final firstEndPoint = Offset(size.width / 2.4, size.height - 120);
     path.quadraticBezierTo(firstControlPoint.dx, firstControlPoint.dy,
         firstEndPoint.dx, firstEndPoint.dy);
 
