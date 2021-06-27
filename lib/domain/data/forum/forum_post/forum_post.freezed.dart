@@ -61,8 +61,7 @@ mixin _$ForumPost {
   bool get isAnon => throw _privateConstructorUsedError;
   String get photoUrl => throw _privateConstructorUsedError;
   bool get photoAdded => throw _privateConstructorUsedError;
-  bool get pollAdded =>
-      throw _privateConstructorUsedError; //Use this bool to check if poll exists and navigate to poll via forumId in firestore
+  bool get pollAdded => throw _privateConstructorUsedError;
   String get timestamp => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -303,7 +302,7 @@ class _$_ForumPost extends _ForumPost {
   final bool photoAdded;
   @override
   final bool pollAdded;
-  @override //Use this bool to check if poll exists and navigate to poll via forumId in firestore
+  @override
   final String timestamp;
 
   @override
@@ -408,7 +407,7 @@ abstract class _ForumPost extends ForumPost {
   bool get photoAdded => throw _privateConstructorUsedError;
   @override
   bool get pollAdded => throw _privateConstructorUsedError;
-  @override //Use this bool to check if poll exists and navigate to poll via forumId in firestore
+  @override
   String get timestamp => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)

@@ -238,7 +238,7 @@ class _BuildPoll extends StatelessWidget {
                   .value
                   .fold(
                       (f) => f.maybeMap(
-                          emptyString: (_) => 'Poll optiion cannot be empty',
+                          emptyString: (_) => 'Poll title cannot be empty',
                           exceedingLength: (_) =>
                               'Option too long, maximum of 25 characters only',
                           orElse: () => null),
@@ -270,7 +270,7 @@ class _BuildPoll extends StatelessWidget {
                     .value
                     .fold(
                         (f) => f.maybeMap(
-                            emptyString: (_) => 'Poll optiion cannot be empty',
+                            emptyString: (_) => 'Poll option cannot be empty',
                             exceedingLength: (_) =>
                                 'Option too long, maximum of 15 characters only',
                             orElse: () => null),

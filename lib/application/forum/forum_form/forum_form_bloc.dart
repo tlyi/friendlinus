@@ -9,9 +9,9 @@ import 'package:friendlinus/domain/auth/i_auth_facade.dart';
 import 'package:friendlinus/domain/core/errors.dart';
 import 'package:friendlinus/domain/core/value_objects.dart';
 import 'package:friendlinus/domain/data/data_failure.dart';
-import 'package:friendlinus/domain/data/forum/forum_post.dart';
+import 'package:friendlinus/domain/data/forum/forum_post/forum_post.dart';
 import 'package:friendlinus/domain/data/forum/i_forum_repository.dart';
-import 'package:friendlinus/domain/data/forum/poll.dart';
+import 'package:friendlinus/domain/data/forum/poll/poll.dart';
 import 'package:friendlinus/domain/data/forum/value_objects.dart';
 import 'package:friendlinus/domain/data/profile/i_profile_repository.dart';
 import 'package:friendlinus/injection.dart';
@@ -115,7 +115,7 @@ class ForumFormBloc extends Bloc<ForumFormEvent, ForumFormState> {
       },
       createdPost: (e) async* {
         Either<DataFailure, Unit> failureOrSuccess;
-        final String userId = await _forumRepository.getOwnId();
+        String userId = await _forumRepository.getOwnId();
         yield state.copyWith(
             isLoading: true,
             forumPost: state.forumPost.copyWith(posterUserId: userId),

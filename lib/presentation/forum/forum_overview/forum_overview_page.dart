@@ -35,17 +35,8 @@ class ForumOverviewPage extends StatelessWidget {
           backgroundColor: const Color(0xFF7BA5BB),
           child: const Icon(Icons.create),
         ),
-        body: Container(
-          alignment: Alignment.topCenter,
-          child: SingleChildScrollView(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                maxHeight: MediaQuery.of(context).size.height -
-                    (MediaQuery.of(context).padding.top + kToolbarHeight),
-              ),
-              child: ForumOverviewBody(),
-            ),
-          ),
+        body: ClipRRect(
+          child: ForumOverviewBody(),
         ),
       ),
     );

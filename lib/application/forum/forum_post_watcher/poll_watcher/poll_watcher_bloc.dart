@@ -5,7 +5,7 @@ import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:friendlinus/domain/data/data_failure.dart';
 import 'package:friendlinus/domain/data/forum/i_forum_repository.dart';
-import 'package:friendlinus/domain/data/forum/poll.dart';
+import 'package:friendlinus/domain/data/forum/poll/poll.dart';
 import 'package:friendlinus/domain/data/profile/i_profile_repository.dart';
 import 'package:injectable/injectable.dart';
 

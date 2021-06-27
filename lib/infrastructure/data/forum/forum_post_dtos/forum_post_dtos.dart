@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:friendlinus/domain/data/forum/forum_post.dart';
+import 'package:friendlinus/domain/data/forum/forum_post/forum_post.dart';
 import 'package:friendlinus/domain/data/forum/value_objects.dart';
 
 part 'forum_post_dtos.freezed.dart';

@@ -2,8 +2,9 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:friendlinus/domain/data/data_failure.dart';
-import 'package:friendlinus/domain/data/forum/forum_post.dart';
-import 'package:friendlinus/domain/data/forum/poll.dart';
+import 'package:friendlinus/domain/data/forum/comment/comment.dart';
+import 'package:friendlinus/domain/data/forum/forum_post/forum_post.dart';
+import 'package:friendlinus/domain/data/forum/poll/poll.dart';
 
 abstract class IForumRepository {
   Future<String> getOwnId();
@@ -17,4 +18,7 @@ abstract class IForumRepository {
   Future<Either<DataFailure, Unit>> unlike(String forumId, String userId);
   Future<Either<DataFailure, Unit>> vote(
       String forumId, int index, String userId);
+  Future<Either<DataFailure, Unit>> createComment(
+      Comment comment, String forumId);
+  Stream<Either<DataFailure, List<Comment>>> retrieveComments(String forumId);
 }
