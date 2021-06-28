@@ -39,7 +39,9 @@ class RegisterForm extends StatelessWidget {
       );
     }, builder: (context, state) {
       return Form(
-        autovalidateMode: AutovalidateMode.always,
+        autovalidateMode: state.showErrorMessages
+            ? AutovalidateMode.always
+            : AutovalidateMode.disabled,
         child: Scaffold(
           body: Container(
             margin: const EdgeInsets.all(30.0),
