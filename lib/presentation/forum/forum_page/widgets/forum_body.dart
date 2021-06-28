@@ -334,7 +334,7 @@ class _BuildComments extends StatelessWidget {
                               title: Text(comment.commentText.getOrCrash()),
                               subtitle: Text(comment.isAnon
                                   ? 'Anonymous'
-                                  : profile.username.getOrCrash()),
+                                  : '@${profile.username.getOrCrash()}'),
                               trailing: Text(getTime(comment.timestamp)),
                               isThreeLine: true,
                             ),

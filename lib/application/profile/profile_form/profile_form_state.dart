@@ -10,6 +10,7 @@ class ProfileFormState with _$ProfileFormState {
     required bool isLoading,
     required Either<DataFailure, Profile> currentProfile,
     required String currentUsername,
+    required bool showErrorMessages,
   }) = _ProfileFormState;
 
   factory ProfileFormState.initial() => ProfileFormState(
@@ -20,5 +21,6 @@ class ProfileFormState with _$ProfileFormState {
         isLoading: true,
         currentProfile: right(Profile.empty()),
         currentUsername: '',
+        showErrorMessages: false,
       );
 }

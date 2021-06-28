@@ -57,6 +57,7 @@ class ForumActorBloc extends Bloc<ForumActorEvent, ForumActorState> {
         if (isCommentValid) {
           yield state.copyWith(
               isLoading: true,
+              createFailureOrSuccessOption: none(),
               comment: state.comment.copyWith(userId: state.userId));
           failureOrSuccess = await _forumRepository.createComment(
               state.comment.copyWith(userId: state.userId), e.forumId);

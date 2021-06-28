@@ -36,7 +36,9 @@ class ForumForm extends StatelessWidget {
         bool pollAdded =
             context.read<ForumFormBloc>().state.forumPost.pollAdded;
         return Form(
-          autovalidateMode: AutovalidateMode.always,
+          autovalidateMode: state.showErrorMessages
+              ? AutovalidateMode.always
+              : AutovalidateMode.disabled,
           child: Container(
             margin: const EdgeInsets.all(30.0),
             child: Column(
@@ -175,7 +177,7 @@ class _BuildImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
         height: 200, // MediaQuery.of(context).size.height * 0.4,
-                ///width: MediaQuery.of(context).size.width *0.8,
+        ///width: MediaQuery.of(context).size.width *0.8,
 
         child: Image(
           fit: BoxFit.contain,
@@ -230,19 +232,13 @@ class _BuildPoll extends StatelessWidget {
                 .add(ForumFormEvent.pollTitleChanged(value)),
             autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (_) {
-              return context
-                  .read<ForumFormBloc>()
-                  .state
-                  .poll
-                  .title
-                  .value
-                  .fold(
-                      (f) => f.maybeMap(
-                          emptyString: (_) => 'Poll title cannot be empty',
-                          exceedingLength: (_) =>
-                              'Option too long, maximum of 25 characters only',
-                          orElse: () => null),
-                      (_) => null);
+              return context.read<ForumFormBloc>().state.poll.title.value.fold(
+                  (f) => f.maybeMap(
+                      emptyString: (_) => 'Poll title cannot be empty',
+                      exceedingLength: (_) =>
+                          'Option too long, maximum of 25 characters only',
+                      orElse: () => null),
+                  (_) => null);
             },
           ),
         ),

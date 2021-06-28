@@ -1028,7 +1028,8 @@ class _$ProfileFormStateTearOff {
       required Option<Either<DataFailure, Unit>> saveFailureOrSuccessOption,
       required bool isLoading,
       required Either<DataFailure, Profile> currentProfile,
-      required String currentUsername}) {
+      required String currentUsername,
+      required bool showErrorMessages}) {
     return _ProfileFormState(
       photoUrl: photoUrl,
       profile: profile,
@@ -1037,6 +1038,7 @@ class _$ProfileFormStateTearOff {
       isLoading: isLoading,
       currentProfile: currentProfile,
       currentUsername: currentUsername,
+      showErrorMessages: showErrorMessages,
     );
   }
 }
@@ -1056,6 +1058,7 @@ mixin _$ProfileFormState {
   Either<DataFailure, Profile> get currentProfile =>
       throw _privateConstructorUsedError;
   String get currentUsername => throw _privateConstructorUsedError;
+  bool get showErrorMessages => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ProfileFormStateCopyWith<ProfileFormState> get copyWith =>
@@ -1074,7 +1077,8 @@ abstract class $ProfileFormStateCopyWith<$Res> {
       Option<Either<DataFailure, Unit>> saveFailureOrSuccessOption,
       bool isLoading,
       Either<DataFailure, Profile> currentProfile,
-      String currentUsername});
+      String currentUsername,
+      bool showErrorMessages});
 
   $ProfileCopyWith<$Res> get profile;
 }
@@ -1097,6 +1101,7 @@ class _$ProfileFormStateCopyWithImpl<$Res>
     Object? isLoading = freezed,
     Object? currentProfile = freezed,
     Object? currentUsername = freezed,
+    Object? showErrorMessages = freezed,
   }) {
     return _then(_value.copyWith(
       photoUrl: photoUrl == freezed
@@ -1127,6 +1132,10 @@ class _$ProfileFormStateCopyWithImpl<$Res>
           ? _value.currentUsername
           : currentUsername // ignore: cast_nullable_to_non_nullable
               as String,
+      showErrorMessages: showErrorMessages == freezed
+          ? _value.showErrorMessages
+          : showErrorMessages // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 
@@ -1152,7 +1161,8 @@ abstract class _$ProfileFormStateCopyWith<$Res>
       Option<Either<DataFailure, Unit>> saveFailureOrSuccessOption,
       bool isLoading,
       Either<DataFailure, Profile> currentProfile,
-      String currentUsername});
+      String currentUsername,
+      bool showErrorMessages});
 
   @override
   $ProfileCopyWith<$Res> get profile;
@@ -1178,6 +1188,7 @@ class __$ProfileFormStateCopyWithImpl<$Res>
     Object? isLoading = freezed,
     Object? currentProfile = freezed,
     Object? currentUsername = freezed,
+    Object? showErrorMessages = freezed,
   }) {
     return _then(_ProfileFormState(
       photoUrl: photoUrl == freezed
@@ -1208,6 +1219,10 @@ class __$ProfileFormStateCopyWithImpl<$Res>
           ? _value.currentUsername
           : currentUsername // ignore: cast_nullable_to_non_nullable
               as String,
+      showErrorMessages: showErrorMessages == freezed
+          ? _value.showErrorMessages
+          : showErrorMessages // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -1222,7 +1237,8 @@ class _$_ProfileFormState implements _ProfileFormState {
       required this.saveFailureOrSuccessOption,
       required this.isLoading,
       required this.currentProfile,
-      required this.currentUsername});
+      required this.currentUsername,
+      required this.showErrorMessages});
 
   @override
   final Either<DataFailure, String> photoUrl;
@@ -1238,10 +1254,12 @@ class _$_ProfileFormState implements _ProfileFormState {
   final Either<DataFailure, Profile> currentProfile;
   @override
   final String currentUsername;
+  @override
+  final bool showErrorMessages;
 
   @override
   String toString() {
-    return 'ProfileFormState(photoUrl: $photoUrl, profile: $profile, isSaving: $isSaving, saveFailureOrSuccessOption: $saveFailureOrSuccessOption, isLoading: $isLoading, currentProfile: $currentProfile, currentUsername: $currentUsername)';
+    return 'ProfileFormState(photoUrl: $photoUrl, profile: $profile, isSaving: $isSaving, saveFailureOrSuccessOption: $saveFailureOrSuccessOption, isLoading: $isLoading, currentProfile: $currentProfile, currentUsername: $currentUsername, showErrorMessages: $showErrorMessages)';
   }
 
   @override
@@ -1270,7 +1288,10 @@ class _$_ProfileFormState implements _ProfileFormState {
                     .equals(other.currentProfile, currentProfile)) &&
             (identical(other.currentUsername, currentUsername) ||
                 const DeepCollectionEquality()
-                    .equals(other.currentUsername, currentUsername)));
+                    .equals(other.currentUsername, currentUsername)) &&
+            (identical(other.showErrorMessages, showErrorMessages) ||
+                const DeepCollectionEquality()
+                    .equals(other.showErrorMessages, showErrorMessages)));
   }
 
   @override
@@ -1282,7 +1303,8 @@ class _$_ProfileFormState implements _ProfileFormState {
       const DeepCollectionEquality().hash(saveFailureOrSuccessOption) ^
       const DeepCollectionEquality().hash(isLoading) ^
       const DeepCollectionEquality().hash(currentProfile) ^
-      const DeepCollectionEquality().hash(currentUsername);
+      const DeepCollectionEquality().hash(currentUsername) ^
+      const DeepCollectionEquality().hash(showErrorMessages);
 
   @JsonKey(ignore: true)
   @override
@@ -1298,7 +1320,8 @@ abstract class _ProfileFormState implements ProfileFormState {
       required Option<Either<DataFailure, Unit>> saveFailureOrSuccessOption,
       required bool isLoading,
       required Either<DataFailure, Profile> currentProfile,
-      required String currentUsername}) = _$_ProfileFormState;
+      required String currentUsername,
+      required bool showErrorMessages}) = _$_ProfileFormState;
 
   @override
   Either<DataFailure, String> get photoUrl =>
@@ -1317,6 +1340,8 @@ abstract class _ProfileFormState implements ProfileFormState {
       throw _privateConstructorUsedError;
   @override
   String get currentUsername => throw _privateConstructorUsedError;
+  @override
+  bool get showErrorMessages => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$ProfileFormStateCopyWith<_ProfileFormState> get copyWith =>

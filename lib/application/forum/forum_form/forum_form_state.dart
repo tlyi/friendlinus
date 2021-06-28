@@ -9,6 +9,7 @@ class ForumFormState with _$ForumFormState {
     required Option<Either<DataFailure, Unit>> createPollFailureOrSuccessOption,
     required Option<Either<DataFailure, Unit>> createFailureOrSuccessOption,
     required bool isLoading,
+    required bool showErrorMessages,
   }) = _ForumFormState;
 
   factory ForumFormState.initial() => ForumFormState(
@@ -18,5 +19,6 @@ class ForumFormState with _$ForumFormState {
         createFailureOrSuccessOption: none(),
         createPollFailureOrSuccessOption: none(),
         isLoading: false,
+        showErrorMessages: false,
       );
 }

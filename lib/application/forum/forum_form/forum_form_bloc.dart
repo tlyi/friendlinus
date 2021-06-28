@@ -114,29 +114,50 @@ class ForumFormBloc extends Bloc<ForumFormEvent, ForumFormState> {
             forumPost: state.forumPost.copyWith(pollAdded: false));
       },
       createdPost: (e) async* {
-        Either<DataFailure, Unit> failureOrSuccess;
-        String userId = await _forumRepository.getOwnId();
-        yield state.copyWith(
-            isLoading: true,
-            forumPost: state.forumPost.copyWith(posterUserId: userId),
-            poll: state.poll.copyWith(creatorUuid: userId));
+        Either<DataFailure, Unit>? failureOrSuccess;
+        Either<DataFailure, Unit>? pollFailureOrSuccess;
 
-        _profileRepository.addForum(state.forumPost.forumId);
-        if (state.forumPost.pollAdded) {
-          Either<DataFailure, Unit> pollFailureOrSuccess;
-          pollFailureOrSuccess = await _forumRepository.createPoll(
-              state.poll.copyWith(creatorUuid: userId),
-              state.forumPost.forumId);
+        bool isTitleValid = state.forumPost.title.isValid();
+        bool isTagValid = state.forumPost.tag.isValid();
+        bool isBodyValid = state.forumPost.body.isValid();
+        bool isForumPostValid = isTitleValid && isTagValid && isBodyValid;
+
+        if (isForumPostValid) {
+          String userId = await _forumRepository.getOwnId();
           yield state.copyWith(
-              createPollFailureOrSuccessOption: optionOf(pollFailureOrSuccess));
-        }
+              isLoading: true,
+              createFailureOrSuccessOption: none(),
+              createPollFailureOrSuccessOption: none(),
+              forumPost: state.forumPost.copyWith(posterUserId: userId),
+              poll: state.poll.copyWith(creatorUuid: userId));
 
-        failureOrSuccess = await _forumRepository.create(
-            state.forumPost.copyWith(posterUserId: userId),
-            state.forumPost.forumId);
+          _profileRepository.addForum(state.forumPost.forumId);
+          if (state.forumPost.pollAdded) {
+            bool arePollOptionsValid = state.poll.optionList
+                .map((pollOption) => pollOption.isValid())
+                .reduce((a, b) => a || b);
+            if (arePollOptionsValid) {
+              pollFailureOrSuccess = await _forumRepository.createPoll(
+                  state.poll.copyWith(creatorUuid: userId),
+                  state.forumPost.forumId);
+
+              failureOrSuccess = await _forumRepository.create(
+                  state.forumPost.copyWith(posterUserId: userId),
+                  state.forumPost.forumId);
+            }
+            yield state.copyWith(
+                createPollFailureOrSuccessOption:
+                    optionOf(pollFailureOrSuccess));
+          } else {
+            failureOrSuccess = await _forumRepository.create(
+                state.forumPost.copyWith(posterUserId: userId),
+                state.forumPost.forumId);
+          }
+        }
 
         yield state.copyWith(
           isLoading: false,
+          showErrorMessages: true,
           createFailureOrSuccessOption: optionOf(failureOrSuccess),
         );
       },

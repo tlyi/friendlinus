@@ -2041,7 +2041,8 @@ class _$ForumFormStateTearOff {
       required Option<Either<DataFailure, Unit>>
           createPollFailureOrSuccessOption,
       required Option<Either<DataFailure, Unit>> createFailureOrSuccessOption,
-      required bool isLoading}) {
+      required bool isLoading,
+      required bool showErrorMessages}) {
     return _ForumFormState(
       forumPost: forumPost,
       photoUrl: photoUrl,
@@ -2049,6 +2050,7 @@ class _$ForumFormStateTearOff {
       createPollFailureOrSuccessOption: createPollFailureOrSuccessOption,
       createFailureOrSuccessOption: createFailureOrSuccessOption,
       isLoading: isLoading,
+      showErrorMessages: showErrorMessages,
     );
   }
 }
@@ -2067,6 +2069,7 @@ mixin _$ForumFormState {
   Option<Either<DataFailure, Unit>> get createFailureOrSuccessOption =>
       throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
+  bool get showErrorMessages => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ForumFormStateCopyWith<ForumFormState> get copyWith =>
@@ -2084,7 +2087,8 @@ abstract class $ForumFormStateCopyWith<$Res> {
       Poll poll,
       Option<Either<DataFailure, Unit>> createPollFailureOrSuccessOption,
       Option<Either<DataFailure, Unit>> createFailureOrSuccessOption,
-      bool isLoading});
+      bool isLoading,
+      bool showErrorMessages});
 
   $ForumPostCopyWith<$Res> get forumPost;
   $PollCopyWith<$Res> get poll;
@@ -2107,6 +2111,7 @@ class _$ForumFormStateCopyWithImpl<$Res>
     Object? createPollFailureOrSuccessOption = freezed,
     Object? createFailureOrSuccessOption = freezed,
     Object? isLoading = freezed,
+    Object? showErrorMessages = freezed,
   }) {
     return _then(_value.copyWith(
       forumPost: forumPost == freezed
@@ -2133,6 +2138,10 @@ class _$ForumFormStateCopyWithImpl<$Res>
       isLoading: isLoading == freezed
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      showErrorMessages: showErrorMessages == freezed
+          ? _value.showErrorMessages
+          : showErrorMessages // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -2165,7 +2174,8 @@ abstract class _$ForumFormStateCopyWith<$Res>
       Poll poll,
       Option<Either<DataFailure, Unit>> createPollFailureOrSuccessOption,
       Option<Either<DataFailure, Unit>> createFailureOrSuccessOption,
-      bool isLoading});
+      bool isLoading,
+      bool showErrorMessages});
 
   @override
   $ForumPostCopyWith<$Res> get forumPost;
@@ -2192,6 +2202,7 @@ class __$ForumFormStateCopyWithImpl<$Res>
     Object? createPollFailureOrSuccessOption = freezed,
     Object? createFailureOrSuccessOption = freezed,
     Object? isLoading = freezed,
+    Object? showErrorMessages = freezed,
   }) {
     return _then(_ForumFormState(
       forumPost: forumPost == freezed
@@ -2219,6 +2230,10 @@ class __$ForumFormStateCopyWithImpl<$Res>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      showErrorMessages: showErrorMessages == freezed
+          ? _value.showErrorMessages
+          : showErrorMessages // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -2234,7 +2249,8 @@ class _$_ForumFormState
       required this.poll,
       required this.createPollFailureOrSuccessOption,
       required this.createFailureOrSuccessOption,
-      required this.isLoading});
+      required this.isLoading,
+      required this.showErrorMessages});
 
   @override
   final ForumPost forumPost;
@@ -2248,10 +2264,12 @@ class _$_ForumFormState
   final Option<Either<DataFailure, Unit>> createFailureOrSuccessOption;
   @override
   final bool isLoading;
+  @override
+  final bool showErrorMessages;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ForumFormState(forumPost: $forumPost, photoUrl: $photoUrl, poll: $poll, createPollFailureOrSuccessOption: $createPollFailureOrSuccessOption, createFailureOrSuccessOption: $createFailureOrSuccessOption, isLoading: $isLoading)';
+    return 'ForumFormState(forumPost: $forumPost, photoUrl: $photoUrl, poll: $poll, createPollFailureOrSuccessOption: $createPollFailureOrSuccessOption, createFailureOrSuccessOption: $createFailureOrSuccessOption, isLoading: $isLoading, showErrorMessages: $showErrorMessages)';
   }
 
   @override
@@ -2266,7 +2284,8 @@ class _$_ForumFormState
           'createPollFailureOrSuccessOption', createPollFailureOrSuccessOption))
       ..add(DiagnosticsProperty(
           'createFailureOrSuccessOption', createFailureOrSuccessOption))
-      ..add(DiagnosticsProperty('isLoading', isLoading));
+      ..add(DiagnosticsProperty('isLoading', isLoading))
+      ..add(DiagnosticsProperty('showErrorMessages', showErrorMessages));
   }
 
   @override
@@ -2293,7 +2312,10 @@ class _$_ForumFormState
                     createFailureOrSuccessOption)) &&
             (identical(other.isLoading, isLoading) ||
                 const DeepCollectionEquality()
-                    .equals(other.isLoading, isLoading)));
+                    .equals(other.isLoading, isLoading)) &&
+            (identical(other.showErrorMessages, showErrorMessages) ||
+                const DeepCollectionEquality()
+                    .equals(other.showErrorMessages, showErrorMessages)));
   }
 
   @override
@@ -2304,7 +2326,8 @@ class _$_ForumFormState
       const DeepCollectionEquality().hash(poll) ^
       const DeepCollectionEquality().hash(createPollFailureOrSuccessOption) ^
       const DeepCollectionEquality().hash(createFailureOrSuccessOption) ^
-      const DeepCollectionEquality().hash(isLoading);
+      const DeepCollectionEquality().hash(isLoading) ^
+      const DeepCollectionEquality().hash(showErrorMessages);
 
   @JsonKey(ignore: true)
   @override
@@ -2320,7 +2343,8 @@ abstract class _ForumFormState implements ForumFormState {
       required Option<Either<DataFailure, Unit>>
           createPollFailureOrSuccessOption,
       required Option<Either<DataFailure, Unit>> createFailureOrSuccessOption,
-      required bool isLoading}) = _$_ForumFormState;
+      required bool isLoading,
+      required bool showErrorMessages}) = _$_ForumFormState;
 
   @override
   ForumPost get forumPost => throw _privateConstructorUsedError;
@@ -2337,6 +2361,8 @@ abstract class _ForumFormState implements ForumFormState {
       throw _privateConstructorUsedError;
   @override
   bool get isLoading => throw _privateConstructorUsedError;
+  @override
+  bool get showErrorMessages => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$ForumFormStateCopyWith<_ForumFormState> get copyWith =>

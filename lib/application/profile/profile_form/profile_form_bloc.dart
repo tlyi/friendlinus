@@ -71,9 +71,16 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
         profile: state.profile.copyWith(module: Mod(e.moduleStr)),
       );
     }, saved: (e) async* {
-      Either<DataFailure, Unit> failureOrSuccess;
-
-      final uuid = await _profileRepository.getUserId();
+      Either<DataFailure, Unit>? failureOrSuccess;
+      bool isUsernameValid = state.profile.username.isValid();
+      bool isCourseValid = state.profile.course.isValid();
+      bool isBioValid = state.profile.bio.isValid();
+      bool isModuleValid = state.profile.module.isValid();
+      bool isProfileValid =
+          isUsernameValid && isCourseValid && isBioValid && isModuleValid;
+     
+      if (isProfileValid) {
+        final uuid = await _profileRepository.getUserId();
 
       yield state.copyWith(
         isSaving: true,
@@ -82,9 +89,11 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
 
       failureOrSuccess =
           await _profileRepository.create(state.profile.copyWith(uuid: uuid));
-
+      }
+      
       yield state.copyWith(
         isSaving: false,
+        showErrorMessages: true,
         saveFailureOrSuccessOption: optionOf(failureOrSuccess),
       );
     }, getProfile: (e) async* {
