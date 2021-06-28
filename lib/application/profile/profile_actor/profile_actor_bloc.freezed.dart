@@ -505,15 +505,19 @@ class _$ProfileActorStateTearOff {
   const _$ProfileActorStateTearOff();
 
   _ProfileActorState call(
-      {required String userId,
+      {required String ownId,
+      required String userId,
       required bool isLoading,
       required bool isFollowing,
-      required List<Profile> following}) {
+      required Either<DataFailure, List<Profile>> failureOrFollowing,
+      required Either<DataFailure, List<ForumPost>> failureOrForumsPosted}) {
     return _ProfileActorState(
+      ownId: ownId,
       userId: userId,
       isLoading: isLoading,
       isFollowing: isFollowing,
-      following: following,
+      failureOrFollowing: failureOrFollowing,
+      failureOrForumsPosted: failureOrForumsPosted,
     );
   }
 }
@@ -523,10 +527,14 @@ const $ProfileActorState = _$ProfileActorStateTearOff();
 
 /// @nodoc
 mixin _$ProfileActorState {
+  String get ownId => throw _privateConstructorUsedError;
   String get userId => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   bool get isFollowing => throw _privateConstructorUsedError;
-  List<Profile> get following => throw _privateConstructorUsedError;
+  Either<DataFailure, List<Profile>> get failureOrFollowing =>
+      throw _privateConstructorUsedError;
+  Either<DataFailure, List<ForumPost>> get failureOrForumsPosted =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ProfileActorStateCopyWith<ProfileActorState> get copyWith =>
@@ -539,10 +547,12 @@ abstract class $ProfileActorStateCopyWith<$Res> {
           ProfileActorState value, $Res Function(ProfileActorState) then) =
       _$ProfileActorStateCopyWithImpl<$Res>;
   $Res call(
-      {String userId,
+      {String ownId,
+      String userId,
       bool isLoading,
       bool isFollowing,
-      List<Profile> following});
+      Either<DataFailure, List<Profile>> failureOrFollowing,
+      Either<DataFailure, List<ForumPost>> failureOrForumsPosted});
 }
 
 /// @nodoc
@@ -556,12 +566,18 @@ class _$ProfileActorStateCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? ownId = freezed,
     Object? userId = freezed,
     Object? isLoading = freezed,
     Object? isFollowing = freezed,
-    Object? following = freezed,
+    Object? failureOrFollowing = freezed,
+    Object? failureOrForumsPosted = freezed,
   }) {
     return _then(_value.copyWith(
+      ownId: ownId == freezed
+          ? _value.ownId
+          : ownId // ignore: cast_nullable_to_non_nullable
+              as String,
       userId: userId == freezed
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
@@ -574,10 +590,14 @@ class _$ProfileActorStateCopyWithImpl<$Res>
           ? _value.isFollowing
           : isFollowing // ignore: cast_nullable_to_non_nullable
               as bool,
-      following: following == freezed
-          ? _value.following
-          : following // ignore: cast_nullable_to_non_nullable
-              as List<Profile>,
+      failureOrFollowing: failureOrFollowing == freezed
+          ? _value.failureOrFollowing
+          : failureOrFollowing // ignore: cast_nullable_to_non_nullable
+              as Either<DataFailure, List<Profile>>,
+      failureOrForumsPosted: failureOrForumsPosted == freezed
+          ? _value.failureOrForumsPosted
+          : failureOrForumsPosted // ignore: cast_nullable_to_non_nullable
+              as Either<DataFailure, List<ForumPost>>,
     ));
   }
 }
@@ -590,10 +610,12 @@ abstract class _$ProfileActorStateCopyWith<$Res>
       __$ProfileActorStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String userId,
+      {String ownId,
+      String userId,
       bool isLoading,
       bool isFollowing,
-      List<Profile> following});
+      Either<DataFailure, List<Profile>> failureOrFollowing,
+      Either<DataFailure, List<ForumPost>> failureOrForumsPosted});
 }
 
 /// @nodoc
@@ -609,12 +631,18 @@ class __$ProfileActorStateCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? ownId = freezed,
     Object? userId = freezed,
     Object? isLoading = freezed,
     Object? isFollowing = freezed,
-    Object? following = freezed,
+    Object? failureOrFollowing = freezed,
+    Object? failureOrForumsPosted = freezed,
   }) {
     return _then(_ProfileActorState(
+      ownId: ownId == freezed
+          ? _value.ownId
+          : ownId // ignore: cast_nullable_to_non_nullable
+              as String,
       userId: userId == freezed
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
@@ -627,10 +655,14 @@ class __$ProfileActorStateCopyWithImpl<$Res>
           ? _value.isFollowing
           : isFollowing // ignore: cast_nullable_to_non_nullable
               as bool,
-      following: following == freezed
-          ? _value.following
-          : following // ignore: cast_nullable_to_non_nullable
-              as List<Profile>,
+      failureOrFollowing: failureOrFollowing == freezed
+          ? _value.failureOrFollowing
+          : failureOrFollowing // ignore: cast_nullable_to_non_nullable
+              as Either<DataFailure, List<Profile>>,
+      failureOrForumsPosted: failureOrForumsPosted == freezed
+          ? _value.failureOrForumsPosted
+          : failureOrForumsPosted // ignore: cast_nullable_to_non_nullable
+              as Either<DataFailure, List<ForumPost>>,
     ));
   }
 }
@@ -639,11 +671,15 @@ class __$ProfileActorStateCopyWithImpl<$Res>
 
 class _$_ProfileActorState implements _ProfileActorState {
   const _$_ProfileActorState(
-      {required this.userId,
+      {required this.ownId,
+      required this.userId,
       required this.isLoading,
       required this.isFollowing,
-      required this.following});
+      required this.failureOrFollowing,
+      required this.failureOrForumsPosted});
 
+  @override
+  final String ownId;
   @override
   final String userId;
   @override
@@ -651,17 +687,21 @@ class _$_ProfileActorState implements _ProfileActorState {
   @override
   final bool isFollowing;
   @override
-  final List<Profile> following;
+  final Either<DataFailure, List<Profile>> failureOrFollowing;
+  @override
+  final Either<DataFailure, List<ForumPost>> failureOrForumsPosted;
 
   @override
   String toString() {
-    return 'ProfileActorState(userId: $userId, isLoading: $isLoading, isFollowing: $isFollowing, following: $following)';
+    return 'ProfileActorState(ownId: $ownId, userId: $userId, isLoading: $isLoading, isFollowing: $isFollowing, failureOrFollowing: $failureOrFollowing, failureOrForumsPosted: $failureOrForumsPosted)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _ProfileActorState &&
+            (identical(other.ownId, ownId) ||
+                const DeepCollectionEquality().equals(other.ownId, ownId)) &&
             (identical(other.userId, userId) ||
                 const DeepCollectionEquality().equals(other.userId, userId)) &&
             (identical(other.isLoading, isLoading) ||
@@ -670,18 +710,23 @@ class _$_ProfileActorState implements _ProfileActorState {
             (identical(other.isFollowing, isFollowing) ||
                 const DeepCollectionEquality()
                     .equals(other.isFollowing, isFollowing)) &&
-            (identical(other.following, following) ||
+            (identical(other.failureOrFollowing, failureOrFollowing) ||
                 const DeepCollectionEquality()
-                    .equals(other.following, following)));
+                    .equals(other.failureOrFollowing, failureOrFollowing)) &&
+            (identical(other.failureOrForumsPosted, failureOrForumsPosted) ||
+                const DeepCollectionEquality().equals(
+                    other.failureOrForumsPosted, failureOrForumsPosted)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(ownId) ^
       const DeepCollectionEquality().hash(userId) ^
       const DeepCollectionEquality().hash(isLoading) ^
       const DeepCollectionEquality().hash(isFollowing) ^
-      const DeepCollectionEquality().hash(following);
+      const DeepCollectionEquality().hash(failureOrFollowing) ^
+      const DeepCollectionEquality().hash(failureOrForumsPosted);
 
   @JsonKey(ignore: true)
   @override
@@ -691,11 +736,16 @@ class _$_ProfileActorState implements _ProfileActorState {
 
 abstract class _ProfileActorState implements ProfileActorState {
   const factory _ProfileActorState(
-      {required String userId,
+      {required String ownId,
+      required String userId,
       required bool isLoading,
       required bool isFollowing,
-      required List<Profile> following}) = _$_ProfileActorState;
+      required Either<DataFailure, List<Profile>> failureOrFollowing,
+      required Either<DataFailure, List<ForumPost>>
+          failureOrForumsPosted}) = _$_ProfileActorState;
 
+  @override
+  String get ownId => throw _privateConstructorUsedError;
   @override
   String get userId => throw _privateConstructorUsedError;
   @override
@@ -703,7 +753,11 @@ abstract class _ProfileActorState implements ProfileActorState {
   @override
   bool get isFollowing => throw _privateConstructorUsedError;
   @override
-  List<Profile> get following => throw _privateConstructorUsedError;
+  Either<DataFailure, List<Profile>> get failureOrFollowing =>
+      throw _privateConstructorUsedError;
+  @override
+  Either<DataFailure, List<ForumPost>> get failureOrForumsPosted =>
+      throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$ProfileActorStateCopyWith<_ProfileActorState> get copyWith =>

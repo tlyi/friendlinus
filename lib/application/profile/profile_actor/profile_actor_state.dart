@@ -3,16 +3,20 @@ part of 'profile_actor_bloc.dart';
 @freezed
 class ProfileActorState with _$ProfileActorState {
   const factory ProfileActorState({
+    required String ownId,
     required String userId,
     required bool isLoading,
     required bool isFollowing,
-    required List<Profile> following,
+    required Either<DataFailure, List<Profile>> failureOrFollowing,
+    required Either<DataFailure, List<ForumPost>> failureOrForumsPosted,
   }) = _ProfileActorState;
 
   factory ProfileActorState.initial() => ProfileActorState(
+        ownId: '',
         userId: '',
         isLoading: true,
         isFollowing: false,
-        following: [],
+        failureOrFollowing: right([]),
+        failureOrForumsPosted: right([]),
       );
 }

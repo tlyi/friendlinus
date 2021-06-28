@@ -78,76 +78,76 @@ class _BuildPost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String userId = context.read<ForumActorBloc>().state.userId;
-    print(userId);
-    return Padding(
-      padding: const EdgeInsets.only(top: 20.0, left: 8.0, right: 8),
-      child: Container(
-        padding: EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          border: Border.all(color: const Color(0xFF7BA5BB)),
-          borderRadius: BorderRadius.circular(15.0),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Row(children: <Widget>[
-              Column(
-                //DO NOT ADJUST SPACING :')
+    return BlocBuilder<ForumActorBloc, ForumActorState>(
+      builder: (context, state) {
+        final String userId = context.read<ForumActorBloc>().state.userId;
+        return Padding(
+            padding: const EdgeInsets.only(top: 20.0, left: 8.0, right: 8),
+            child: Container(
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                border: Border.all(color: const Color(0xFF7BA5BB)),
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Stack(
-                    children: [
-                      IconButton(
-                        padding: const EdgeInsets.all(0),
-                        onPressed: () {
-                          if (forum.likedUserIds.contains(userId)) {
-                            context
-                                .read<ForumActorBloc>()
-                                .add(ForumActorEvent.unliked(forum.forumId));
-                          } else {
-                            context
-                                .read<ForumActorBloc>()
-                                .add(ForumActorEvent.liked(forum.forumId));
-                          }
-                        },
-                        icon: Icon(
-                          Icons.arrow_drop_up,
-                          color: forum.likedUserIds.contains(userId)
-                              ? Colors.grey[800]
-                              : Colors.grey[400],
-                          size: 35,
+                  Row(children: <Widget>[
+                    Column(
+                      //DO NOT ADJUST SPACING :')
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Stack(
+                          children: [
+                            IconButton(
+                              padding: const EdgeInsets.all(0),
+                              onPressed: () {
+                                if (forum.likedUserIds.contains(userId)) {
+                                  context.read<ForumActorBloc>().add(
+                                      ForumActorEvent.unliked(forum.forumId));
+                                } else {
+                                  context.read<ForumActorBloc>().add(
+                                      ForumActorEvent.liked(forum.forumId));
+                                }
+                              },
+                              icon: Icon(
+                                Icons.arrow_drop_up,
+                                color: forum.likedUserIds.contains(userId)
+                                    ? Colors.grey[800]
+                                    : Colors.grey[400],
+                                size: 35,
+                              ),
+                            ),
+                            Positioned(
+                                left: 20,
+                                bottom: -1,
+                                child: Text(forum.likes.toString())),
+                          ],
                         ),
-                      ),
-                      Positioned(
-                          left: 20,
-                          bottom: -1,
-                          child: Text(forum.likes.toString())),
-                    ],
-                  ),
+                      ],
+                    ),
+                    const SizedBox(width: 20),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        const SizedBox(height: 15),
+                        Text(forum.title.getOrCrash(),
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 17)),
+                        const SizedBox(height: 15),
+                        Text(forum.body.getOrCrash(),
+                            style: const TextStyle(fontSize: 15)),
+                      ],
+                    )
+                  ]),
+                  const SizedBox(height: 30),
+                  if (forum.photoAdded) _BuildPhoto(photoUrl: forum.photoUrl),
+                  if (forum.pollAdded) _BuildPoll(forumId: forum.forumId),
                 ],
               ),
-              const SizedBox(width: 20),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  const SizedBox(height: 15),
-                  Text(forum.title.getOrCrash(),
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 17)),
-                  const SizedBox(height: 15),
-                  Text(forum.body.getOrCrash(),
-                      style: const TextStyle(fontSize: 15)),
-                ],
-              )
-            ]),
-            const SizedBox(height: 30),
-            if (forum.photoAdded) _BuildPhoto(photoUrl: forum.photoUrl),
-            if (forum.pollAdded) _BuildPoll(forumId: forum.forumId),
-          ],
-        ),
-      ),
+            ));
+      },
     );
   }
 }
@@ -280,53 +280,21 @@ class _BuildComments extends StatelessWidget {
                     ),
                 loadSuccess: (state) {
                   return ListView.builder(
+                      physics: const ScrollPhysics(),
+                      shrinkWrap: true,
                       itemCount: state.comments.length,
                       itemBuilder: (context, index) {
                         final Comment comment = state.comments[index];
                         final Profile profile = state.profileList[index];
                         return Padding(
-                          padding: const EdgeInsets.all(6.0),
+                          padding: const EdgeInsets.only(left: 4, right: 4),
                           child: Card(
+                            elevation: 0,
                             shape: RoundedRectangleBorder(
                               side: const BorderSide(color: Color(0xFF7BA5BB)),
                               borderRadius: BorderRadius.circular(15.0),
                             ),
                             child: ListTile(
-                              /*leading: Column(
-                                //DO NOT ADJUST SPACING :')
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  Stack(
-                                    children: [
-                                      IconButton(
-                                        padding: const EdgeInsets.all(0),
-                                        onPressed: () {
-                                          if (forum.likedUserIds.contains(userId)) {
-                                            context.read<ForumActorBloc>().add(
-                                                ForumActorEvent.unliked(
-                                                    forum.forumId));
-                                          } else {
-                                            context.read<ForumActorBloc>().add(
-                                                ForumActorEvent.liked(forum.forumId));
-                                          }
-                                        },
-                                        icon: Icon(
-                                          Icons.arrow_drop_up,
-                                          color: forum.likedUserIds.contains(userId)
-                                              ? Colors.grey[800]
-                                              : Colors.grey[400],
-                                          size: 35,
-                                        ),
-                                      ),
-                                      Positioned(
-                                          left: 20,
-                                          bottom: -1,
-                                          child: Text(forum.likes.toString())),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              */
                               leading: CircleAvatar(
                                 radius: 20,
                                 backgroundImage: NetworkImage(profile.photoUrl),

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:friendlinus/domain/core/value_objects.dart';
 import 'package:friendlinus/domain/data/data_failure.dart';
+import 'package:friendlinus/domain/data/forum/forum_post/forum_post.dart';
 import 'package:friendlinus/domain/data/profile/profile.dart';
 
 abstract class IProfileRepository {
@@ -37,7 +38,8 @@ abstract class IProfileRepository {
 
   Future<Either<DataFailure, Unit>> removeFollower(String userToFollowId);
 
-  Future<List<Profile>> retrieveFollowing(
-      String userId); //future consideration: Should this be a stream?
+  Future<Either<DataFailure, List<Profile>>> retrieveFollowing(
+      String userId); 
 
+  Future<Either<DataFailure, List<ForumPost>>> retrieveMyForums(String userId);
 }

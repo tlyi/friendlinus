@@ -3,10 +3,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:friendlinus/application/chats/chat_bloc.dart';
+import 'package:friendlinus/application/forum/forum_actor/forum_actor_bloc.dart';
+import 'package:friendlinus/application/forum/forum_watcher/forum_watcher_bloc.dart';
 import 'package:friendlinus/application/profile/profile_actor/profile_actor_bloc.dart';
 import 'package:friendlinus/application/profile/profile_form/profile_form_bloc.dart';
+import 'package:friendlinus/domain/data/data_failure.dart';
+import 'package:friendlinus/domain/data/forum/forum_post/forum_post.dart';
 import 'package:friendlinus/domain/data/profile/profile.dart';
 import 'package:friendlinus/injection.dart';
+import 'package:friendlinus/presentation/core/get_time.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:friendlinus/domain/core/constants.dart' as constants;
@@ -34,7 +39,7 @@ class ProfileElements extends StatelessWidget {
             ProfileHeader(userProfile: userProfile, isOwnProfile: isOwnProfile),
             ModulesOfInterest(userProfile: userProfile),
             FriendList(userProfile: userProfile, isOwnProfile: isOwnProfile),
-            RecentPosts(userProfile: userProfile),
+            RecentPosts(userProfile: userProfile, isOwnProfile: isOwnProfile),
           ],
         ),
       ),
@@ -80,7 +85,7 @@ class ProfileHeader extends StatelessWidget {
                     //mainAxisSize: MainAxisSize.min,
                     children: [
                       MessageProfileButton(userProfile: userProfile),
-                      const Padding(padding: const EdgeInsets.only(left: 5)),
+                      const Padding(padding: EdgeInsets.only(left: 5)),
                       FollowProfileButton(userProfile: userProfile),
                     ],
                   )
@@ -227,7 +232,7 @@ class ModulesOfInterest extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100,
+      height: 60,
       width: MediaQuery.of(context).size.width,
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -250,8 +255,15 @@ class FriendList extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileActorBloc, ProfileActorState>(
       builder: (context, state) {
+        String ownId = context.read<ProfileActorBloc>().state.ownId;
+        List<Profile> following = [];
+        DataFailure? failure;
+        context.read<ProfileActorBloc>().state.failureOrFollowing.fold(
+              (f) => failure = f,
+              (list) => following = list,
+            );
         return SizedBox(
-            height: 150,
+            height: 130,
             width: MediaQuery.of(context).size.width,
             child: Align(
               alignment: Alignment.topLeft,
@@ -260,7 +272,7 @@ class FriendList extends StatelessWidget {
                     style:
                         TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
                 Padding(
-                  padding: const EdgeInsets.only(top: 25.0),
+                  padding: const EdgeInsets.only(top: 30.0),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -289,46 +301,47 @@ class FriendList extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Expanded(
-                            child: ListView.builder(
-                                shrinkWrap: true,
-                                physics: const ScrollPhysics(),
-                                padding: const EdgeInsets.only(top: 5.0),
-                                scrollDirection: Axis.horizontal,
-                                itemCount: context
-                                    .read<ProfileActorBloc>()
-                                    .state
-                                    .following
-                                    .length,
-                                itemBuilder: (context, index) {
-                                  final Profile profile = context
-                                      .read<ProfileActorBloc>()
-                                      .state
-                                      .following[index];
-                                  return GestureDetector(
-                                    onTap: () async {
-                                      await context.pushRoute(OtherProfileRoute(
-                                          userProfile: profile));
-                                      context.read<ProfileActorBloc>().add(
-                                          const ProfileActorEvent
-                                              .loadingOwnProfile());
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 5.0, right: 5.0),
-                                      child: Column(children: [
-                                        ClipOval(
-                                          child: Image.network(
-                                            profile.photoUrl,
-                                            width: 60.0,
-                                            height: 60.0,
-                                            fit: BoxFit.cover,
-                                          ),
+                            child: failure != null
+                                ? Text(failure!.maybeMap(
+                                    unexpected: (_) => 'Unexpected Error',
+                                    orElse: () => ''))
+                                : ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: const ScrollPhysics(),
+                                    padding: const EdgeInsets.only(top: 5.0),
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: following.length,
+                                    itemBuilder: (context, index) {
+                                      final Profile profile = following[index];
+                                      return GestureDetector(
+                                        onTap: () async {
+                                          ownId == profile.uuid
+                                              ? await context.pushRoute(
+                                                  ProfileRoute(canGoBack: true))
+                                              : await context.pushRoute(
+                                                  OtherProfileRoute(
+                                                      userProfile: profile));
+                                          context.read<ProfileActorBloc>().add(
+                                              const ProfileActorEvent
+                                                  .loadingOwnProfile());
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 5.0, right: 5.0),
+                                          child: Column(children: [
+                                            ClipOval(
+                                              child: Image.network(
+                                                profile.photoUrl,
+                                                width: 60.0,
+                                                height: 60.0,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                            Text(profile.username.getOrCrash()),
+                                          ]),
                                         ),
-                                        Text(profile.username.getOrCrash()),
-                                      ]),
-                                    ),
-                                  );
-                                }),
+                                      );
+                                    }),
                           ),
                         ],
                       ),
@@ -344,20 +357,64 @@ class FriendList extends StatelessWidget {
 
 class RecentPosts extends StatelessWidget {
   final Profile userProfile;
+  final bool isOwnProfile;
 
-  const RecentPosts({Key? key, required this.userProfile}) : super(key: key);
+  const RecentPosts(
+      {Key? key, required this.userProfile, required this.isOwnProfile})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 100,
-      width: MediaQuery.of(context).size.width * 0.8,
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(10)),
-      ),
-      child: const Text('Recent Posts',
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-    );
+    List<ForumPost> forums = [];
+    DataFailure? failure;
+    context.read<ProfileActorBloc>().state.failureOrForumsPosted.fold(
+          (f) => failure = f,
+          (list) => forums = list,
+        );
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          const Text('Recent Posts',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+          if (failure != null)
+            Text(failure!.maybeMap(
+                unexpected: (_) => 'Unexppected Error', orElse: () => 'Error'))
+          else
+            ListView.builder(
+                physics: const ScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: forums.length,
+                itemBuilder: (context, index) {
+                  final forum = forums[index];
+
+                  if (isOwnProfile || (!isOwnProfile && !forum.isAnon)) {
+                    return Card(
+                      shape: RoundedRectangleBorder(
+                        side: const BorderSide(
+                            color: Color(0xFF7BA5BB), width: 2.0),
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      child: ListTile(
+                        title: Text(forum.title.getOrCrash()),
+                        subtitle: Text(
+                          forum.body.getOrCrash(),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        trailing: Text(getTime(forum.timestamp)),
+                        isThreeLine: true,
+                        onTap: () {
+                          context.pushRoute(ForumRoute(
+                              forumId: forum.forumId,
+                              pollAdded: forum.pollAdded));
+                        },
+                      ),
+                    );
+                  } else {
+                    return Container();
+                  }
+                })
+        ]);
   }
 }
 

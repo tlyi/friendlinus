@@ -20,6 +20,8 @@ class ForumOverviewBody extends StatelessWidget {
                 ),
             loadSuccess: (state) {
               return ListView.builder(
+                  physics: const ScrollPhysics(),
+                  shrinkWrap: true,
                   itemCount: state.forums.length,
                   itemBuilder: (context, index) {
                     final forum = state.forums[index];

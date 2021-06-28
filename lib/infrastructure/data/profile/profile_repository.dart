@@ -6,8 +6,10 @@ import 'package:friendlinus/domain/core/errors.dart';
 import 'package:friendlinus/domain/core/value_objects.dart';
 import 'package:friendlinus/domain/data/data_failure.dart';
 import 'package:dartz/dartz.dart';
+import 'package:friendlinus/domain/data/forum/forum_post/forum_post.dart';
 import 'package:friendlinus/domain/data/profile/i_profile_repository.dart';
 import 'package:friendlinus/domain/data/profile/profile.dart';
+import 'package:friendlinus/infrastructure/data/forum/forum_post_dtos/forum_post_dtos.dart';
 import 'package:friendlinus/infrastructure/data/profile/profile_dtos.dart';
 import 'package:friendlinus/injection.dart';
 import 'package:injectable/injectable.dart';
@@ -269,7 +271,8 @@ class ProfileRepository implements IProfileRepository {
   }
 
   @override
-  Future<List<Profile>> retrieveFollowing(String userId) async {
+  Future<Either<DataFailure, List<Profile>>> retrieveFollowing(
+      String userId) async {
     final following = <Profile>[];
     final usersRef = await _firestore.usersRef();
     try {
@@ -281,11 +284,41 @@ class ProfileRepository implements IProfileRepository {
             following.add(ProfileDto.fromFirestore(doc).toDomain());
           }
         }
-        return following;
+        return right(following);
       }
     } on FirebaseException catch (e) {
-      print(e);
-      return following;
+      if (e.message!.contains('PERMISSION_DENIED')) {
+        return left(const DataFailure.insufficientPermission());
+      } else {
+        return left(const DataFailure.unexpected());
+      }
+    }
+  }
+
+  @override
+  Future<Either<DataFailure, List<ForumPost>>> retrieveMyForums(
+      String userId) async {
+    final forumPosts = <ForumPost>[];
+    final forumsRef = await _firestore.forumsRef();
+    try {
+      QuerySnapshot query = await forumsRef
+          .where('posterUserId', isEqualTo: userId)
+          .orderBy('timestamp', descending: true)
+          .get();
+      {
+        if (query.docs.isNotEmpty) {
+          for (final doc in query.docs) {
+            forumPosts.add(ForumPostDto.fromFirestore(doc).toDomain());
+          }
+        }
+        return right(forumPosts);
+      }
+    } on FirebaseException catch (e) {
+      if (e.message!.contains('PERMISSION_DENIED')) {
+        return left(const DataFailure.insufficientPermission());
+      } else {
+        return left(const DataFailure.unexpected());
+      }
     }
   }
 }

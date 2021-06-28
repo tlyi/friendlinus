@@ -218,7 +218,8 @@ class ForumPostRepository implements IForumRepository {
   }
 
   @override
-  Future<Either<DataFailure, Unit>> createComment(Comment comment, String forumId) async{
+  Future<Either<DataFailure, Unit>> createComment(
+      Comment comment, String forumId) async {
     try {
       final commentRef = await _firestore.commentsForumRef(forumId);
       final commentDto = CommentDto.fromDomain(comment);
@@ -235,27 +236,27 @@ class ForumPostRepository implements IForumRepository {
     }
   }
 
-
   @override
-Stream<Either<DataFailure, List<Comment>>> retrieveComments(String forumId) async* {
-  final commentsRef = await _firestore.commentsForumRef(forumId);
-  yield* commentsRef
-      .orderBy('timestamp', descending: true)
-      .snapshots()
-      .map(
-        (snapshot) => right<DataFailure, List<Comment>>(
-          snapshot.docs
-              .map((doc) => CommentDto.fromFirestore(doc).toDomain())
-              .toList(),
-        ),
-      )
-      .handleError((e) {
-    if (e is FirebaseException && e.message!.contains('PERMISSION_DENIED')) {
-      return left(const DataFailure.insufficientPermission());
-    } else {
-      print(e);
-      return left(const DataFailure.unexpected());
-    }
-  });
-}
+  Stream<Either<DataFailure, List<Comment>>> retrieveComments(
+      String forumId) async* {
+    final commentsRef = await _firestore.commentsForumRef(forumId);
+    yield* commentsRef
+        .orderBy('timestamp', descending: true)
+        .snapshots()
+        .map(
+          (snapshot) => right<DataFailure, List<Comment>>(
+            snapshot.docs
+                .map((doc) => CommentDto.fromFirestore(doc).toDomain())
+                .toList(),
+          ),
+        )
+        .handleError((e) {
+      if (e is FirebaseException && e.message!.contains('PERMISSION_DENIED')) {
+        return left(const DataFailure.insufficientPermission());
+      } else {
+        print(e);
+        return left(const DataFailure.unexpected());
+      }
+    });
+  }
 }
