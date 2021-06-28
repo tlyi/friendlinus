@@ -181,66 +181,60 @@ class _BuildPoll extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt<PollWatcherBloc>()
-        ..add(PollWatcherEvent.retrievePollStarted(forumId)),
-      child: BlocBuilder<PollWatcherBloc, PollWatcherState>(
-        builder: (context, state) {
-          return state.map(
-            initial: (_) => Container(),
-            loadInProgress: (_) => const Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(),
+    return BlocBuilder<PollWatcherBloc, PollWatcherState>(
+      builder: (context, state) {
+        return state.map(
+          initial: (_) => Container(),
+          loadInProgress: (_) => const Center(
+            child: CircularProgressIndicator(),
+          ),
+          loadSuccess: (state) {
+            Poll poll = state.poll;
+            return Container(
+              alignment: Alignment.center,
+              width: MediaQuery.of(context).size.width * 0.80,
+              child: Column(
+                children: <Widget>[
+                  Polls(
+                    children: [
+                      for (int i = 0; i < poll.numOptions; i++)
+                        Polls.options(
+                            title: poll.optionList[i].getOrCrash(),
+                            value: poll.voteList[i])
+                    ],
+                    question: Text('Question: ${poll.title.getOrCrash()}',
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15)),
+                    voteData: poll.usersWhoVoted,
+                    currentUser: context.read<ForumActorBloc>().state.userId,
+                    creatorID: poll.creatorUuid,
+                    allowCreatorVote: true,
+                    onVoteBackgroundColor: const Color(0xFF97b8c9),
+                    leadingBackgroundColor: const Color(0xFF7BA5BB),
+                    backgroundColor: Colors.white,
+                    onVote: (choice) {
+                      //choice enums starts from 1
+                      context
+                          .read<ForumActorBloc>()
+                          .add(ForumActorEvent.voted(forumId, choice - 1));
+                    },
+                  ),
+                  const SizedBox(height: 10),
+                ],
               ),
-            ),
-            loadSuccess: (state) {
-              Poll poll = state.poll;
-              return Container(
-                alignment: Alignment.center,
-                width: MediaQuery.of(context).size.width * 0.80,
-                child: Column(
-                  children: <Widget>[
-                    Polls(
-                      children: [
-                        for (int i = 0; i < poll.numOptions; i++)
-                          Polls.options(
-                              title: poll.optionList[i].getOrCrash(),
-                              value: poll.voteList[i])
-                      ],
-                      question: Text('Question: ${poll.title.getOrCrash()}',
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 15)),
-                      voteData: poll.usersWhoVoted,
-                      currentUser: context.read<ForumActorBloc>().state.userId,
-                      creatorID: poll.creatorUuid,
-                      allowCreatorVote: true,
-                      onVoteBackgroundColor: const Color(0xFF97b8c9),
-                      leadingBackgroundColor: const Color(0xFF7BA5BB),
-                      backgroundColor: Colors.white,
-                      onVote: (choice) {
-                        //choice enums starts from 1
-                        context
-                            .read<ForumActorBloc>()
-                            .add(ForumActorEvent.voted(forumId, choice - 1));
-                      },
-                    ),
-                    const SizedBox(height: 10),
-                  ],
-                ),
-              );
-            },
-            loadFailure: (state) {
-              FlushbarHelper.createError(
-                message: state.dataFailure.map(
-                    unexpected: (_) => 'Unexpected error',
-                    insufficientPermission: (_) => 'Insufficient permission',
-                    unableToUpdate: (_) => 'Unable to update'),
-              ).show(context);
-              return Container();
-            },
-          );
-        },
-      ),
+            );
+          },
+          loadFailure: (state) {
+            FlushbarHelper.createError(
+              message: state.dataFailure.map(
+                  unexpected: (_) => 'Unexpected error',
+                  insufficientPermission: (_) => 'Insufficient permission',
+                  unableToUpdate: (_) => 'Unable to update'),
+            ).show(context);
+            return Container();
+          },
+        );
+      },
     );
   }
 }

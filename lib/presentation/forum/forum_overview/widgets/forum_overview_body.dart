@@ -74,8 +74,13 @@ class ForumOverviewBody extends StatelessWidget {
                         trailing: Text(getTime(forum.timestamp)),
                         isThreeLine: true,
 
-                        onTap: () {
-                          context.pushRoute(ForumRoute(forumId: forum.forumId));
+                        onTap: () async {
+                          await context.pushRoute(ForumRoute(
+                              forumId: forum.forumId,
+                              pollAdded: forum.pollAdded));
+                          context
+                              .read<ForumWatcherBloc>()
+                              .add(ForumWatcherEvent.retrieveForumsStarted());
                         },
                       ),
                     );

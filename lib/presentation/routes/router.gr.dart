@@ -129,7 +129,8 @@ class AppRouter extends _i1.RootStackRouter {
         routeData: routeData,
         builder: (data) {
           final args = data.argsAs<ForumRouteArgs>();
-          return _i18.ForumPage(key: args.key, forumId: args.forumId);
+          return _i18.ForumPage(
+              key: args.key, forumId: args.forumId, pollAdded: args.pollAdded);
         }),
     ConvoSplashRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
         routeData: routeData,
@@ -301,20 +302,24 @@ class ConvoRouteArgs {
 }
 
 class ForumRoute extends _i1.PageRouteInfo<ForumRouteArgs> {
-  ForumRoute({_i2.Key? key, required String forumId})
+  ForumRoute({_i2.Key? key, required String forumId, required bool pollAdded})
       : super(name,
             path: '/forum-page',
-            args: ForumRouteArgs(key: key, forumId: forumId));
+            args: ForumRouteArgs(
+                key: key, forumId: forumId, pollAdded: pollAdded));
 
   static const String name = 'ForumRoute';
 }
 
 class ForumRouteArgs {
-  const ForumRouteArgs({this.key, required this.forumId});
+  const ForumRouteArgs(
+      {this.key, required this.forumId, required this.pollAdded});
 
   final _i2.Key? key;
 
   final String forumId;
+
+  final bool pollAdded;
 }
 
 class ConvoSplashRoute extends _i1.PageRouteInfo<ConvoSplashRouteArgs> {
