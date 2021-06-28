@@ -23,7 +23,7 @@ class HomePage extends StatelessWidget {
         body: Container(
           alignment: Alignment.topCenter,
           child: SingleChildScrollView(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(30.0),
             child: Column(
               children: <Widget>[
                 Container(
@@ -35,11 +35,13 @@ class HomePage extends StatelessWidget {
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 25,
+                            color: Colors.black87,
                           )),
                       Text(DateFormat('EEEE').format(DateTime.now()),
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 25,
+                            color: Colors.grey[600],
                           )),
                     ],
                   ),

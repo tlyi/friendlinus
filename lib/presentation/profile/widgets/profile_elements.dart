@@ -450,8 +450,8 @@ class WaveClipper extends CustomClipper<Path> {
         firstEndPoint.dx, firstEndPoint.dy);
 
     final secondControlPoint =
-        Offset(size.width - (size.width / 3.1), size.height - 160);
-    final secondEndPoint = Offset(size.width, size.height - 120);
+        Offset(size.width - (size.width / 3.1), size.height - 165);
+    final secondEndPoint = Offset(size.width, size.height - 125);
     path.quadraticBezierTo(secondControlPoint.dx, secondControlPoint.dy,
         secondEndPoint.dx, secondEndPoint.dy);
 

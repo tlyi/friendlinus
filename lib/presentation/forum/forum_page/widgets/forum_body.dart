@@ -128,17 +128,20 @@ class _BuildPost extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(width: 20),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        const SizedBox(height: 15),
-                        Text(forum.title.getOrCrash(),
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 17)),
-                        const SizedBox(height: 15),
-                        Text(forum.body.getOrCrash(),
-                            style: const TextStyle(fontSize: 15)),
-                      ],
+                    Expanded(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          const SizedBox(height: 15),
+                          Text(forum.title.getOrCrash(),
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 17)),
+                          const SizedBox(height: 15),
+                          Text(forum.body.getOrCrash(),
+                              style: const TextStyle(fontSize: 15)),
+                        ],
+                      ),
                     )
                   ]),
                   const SizedBox(height: 30),
@@ -209,6 +212,7 @@ class _BuildPoll extends StatelessWidget {
                     currentUser: context.read<ForumActorBloc>().state.userId,
                     creatorID: poll.creatorUuid,
                     allowCreatorVote: true,
+                    outlineColor: const Color(0xFFC8C8C8),
                     onVoteBackgroundColor: const Color(0xFF97b8c9),
                     leadingBackgroundColor: const Color(0xFF7BA5BB),
                     backgroundColor: Colors.white,
@@ -266,29 +270,78 @@ class _BuildComments extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (context) => getIt<CommentWatcherBloc>()
-          ..add(CommentWatcherEvent.retrieveCommentsStarted(forumId)),
-        child: BlocBuilder<CommentWatcherBloc, CommentWatcherState>(
-          builder: (context, state) {
-            return state.map(
-                initial: (_) => Container(),
-                loadInProgress: (_) => const Scaffold(
-                      body: Center(
-                        child: CircularProgressIndicator(),
+    return BlocBuilder<CommentWatcherBloc, CommentWatcherState>(
+      builder: (context, state) {
+        return state.map(
+            initial: (_) => Container(),
+            loadInProgress: (_) => const Scaffold(
+                  body: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
+            loadSuccess: (state) {
+              return ListView.builder(
+                  physics: const ScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: state.comments.length,
+                  itemBuilder: (context, index) {
+                    final Comment comment = state.comments[index];
+                    final Profile profile = state.profileList[index];
+                    return Padding(
+                      padding: const EdgeInsets.only(
+                          left: 8, right: 8, top: 10, bottom: 10),
+                      child: Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: const BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              width: 0.7,
+                              color: Color(0xFFC8C8C8),
+                            ),
+                          ),
+                        ),
+                        alignment: Alignment.topLeft,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                CircleAvatar(
+                                  radius: 20,
+                                  backgroundImage:
+                                      NetworkImage(profile.photoUrl),
+                                ),
+                                const SizedBox(width: 10),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(height: 2),
+                                    Text(
+                                        comment.isAnon
+                                            ? 'Anonymous'
+                                            : '@${profile.username.getOrCrash()}',
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.w600)),
+                                    const SizedBox(height: 2),
+                                    Text(getTime(comment.timestamp)),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 8),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 2.0),
+                              child: Text(comment.commentText.getOrCrash(),
+                                  style: const TextStyle(fontSize: 16)),
+                            ),
+                            const SizedBox(height: 5),
+                          ],
+                        ),
                       ),
-                    ),
-                loadSuccess: (state) {
-                  return ListView.builder(
-                      physics: const ScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: state.comments.length,
-                      itemBuilder: (context, index) {
-                        final Comment comment = state.comments[index];
-                        final Profile profile = state.profileList[index];
-                        return Padding(
-                          padding: const EdgeInsets.only(left: 4, right: 4),
-                          child: Card(
+                    );
+
+                    /* Card(
                             elevation: 0,
                             shape: RoundedRectangleBorder(
                               side: const BorderSide(color: Color(0xFF7BA5BB)),
@@ -306,21 +359,19 @@ class _BuildComments extends StatelessWidget {
                               trailing: Text(getTime(comment.timestamp)),
                               isThreeLine: true,
                             ),
-                          ),
-                        );
-                      });
-                },
-                loadFailure: (state) {
-                  FlushbarHelper.createError(
-                    message: state.dataFailure.map(
-                        unexpected: (_) => 'Unexpected error',
-                        insufficientPermission: (_) =>
-                            'Insufficient permission',
-                        unableToUpdate: (_) => 'Unable to update'),
-                  ).show(context);
-                  return Container();
-                });
-          },
-        ));
+                          ), */
+                  });
+            },
+            loadFailure: (state) {
+              FlushbarHelper.createError(
+                message: state.dataFailure.map(
+                    unexpected: (_) => 'Unexpected error',
+                    insufficientPermission: (_) => 'Insufficient permission',
+                    unableToUpdate: (_) => 'Unable to update'),
+              ).show(context);
+              return Container();
+            });
+      },
+    );
   }
 }

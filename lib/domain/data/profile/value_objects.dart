@@ -25,7 +25,7 @@ class Course extends ValueObject<String> {
   @override
   final Either<ValueFailure<String>, String> value;
 
-  static const maxLength = 20;
+  static const maxLength = 30;
 
   factory Course(String input) {
     return Course._(validateMaxStringLength(input, maxLength)
