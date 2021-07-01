@@ -74,7 +74,7 @@ class _BuildIDField extends StatelessWidget {
       validator: (_) =>
           context.read<SignInFormBloc>().state.emailAddress.value.fold(
                 (f) => f.maybeMap(
-                  invalidEmail: (_) => 'Invalid NUSNET ID',
+                  invalidEmail: (_) => 'Invalid NUSNET ID, please use format eXXXXXXX',
                   orElse: () => null,
                 ),
                 (_) => null,

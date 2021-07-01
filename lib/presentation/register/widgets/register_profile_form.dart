@@ -9,7 +9,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:friendlinus/domain/core/constants.dart' as constants;
 
-
 class RegisterProfileForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -144,7 +143,7 @@ class _BuildUsername extends StatelessWidget {
                 .fold(
                   (f) => f.maybeMap(
                       invalidUsernameFormat: (_) =>
-                          'No special characters except _ and .',
+                          'Only lowercase alphanumeric, . and _ characters allowed',
                       usernameTaken: (_) =>
                           'Username has been taken, please input another',
                       emptyString: (_) => 'Username cannot be empty',
