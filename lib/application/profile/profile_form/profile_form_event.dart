@@ -8,8 +8,11 @@ class ProfileFormEvent with _$ProfileFormEvent {
   const factory ProfileFormEvent.courseChanged(String courseStr) =
       _CourseChanged;
   const factory ProfileFormEvent.bioChanged(String bioStr) = _BioChanged;
-  const factory ProfileFormEvent.moduleChanged(String moduleStr) =
-      _ModuleChanged;
   const factory ProfileFormEvent.saved() = _Saved;
   const factory ProfileFormEvent.getProfile() = _GetProfile;
+  const factory ProfileFormEvent.searchedModule(String searchStr) =
+      _SearchedModule;
+  const factory ProfileFormEvent.addedModule(String moduleStr) = _AddedModule;
+  const factory ProfileFormEvent.removedModule(String moduleStr) =
+      _RemovedModule;
 }

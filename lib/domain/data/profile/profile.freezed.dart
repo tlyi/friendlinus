@@ -21,7 +21,7 @@ class _$ProfileTearOff {
       required Username username,
       required Course course,
       required Bio bio,
-      required Mod module,
+      required List<String> modules,
       required String uuid,
       required List<String> forumsPosted}) {
     return _Profile(
@@ -29,7 +29,7 @@ class _$ProfileTearOff {
       username: username,
       course: course,
       bio: bio,
-      module: module,
+      modules: modules,
       uuid: uuid,
       forumsPosted: forumsPosted,
     );
@@ -45,7 +45,7 @@ mixin _$Profile {
   Username get username => throw _privateConstructorUsedError;
   Course get course => throw _privateConstructorUsedError;
   Bio get bio => throw _privateConstructorUsedError;
-  Mod get module => throw _privateConstructorUsedError;
+  List<String> get modules => throw _privateConstructorUsedError;
   String get uuid => throw _privateConstructorUsedError;
   List<String> get forumsPosted => throw _privateConstructorUsedError;
 
@@ -62,7 +62,7 @@ abstract class $ProfileCopyWith<$Res> {
       Username username,
       Course course,
       Bio bio,
-      Mod module,
+      List<String> modules,
       String uuid,
       List<String> forumsPosted});
 }
@@ -81,7 +81,7 @@ class _$ProfileCopyWithImpl<$Res> implements $ProfileCopyWith<$Res> {
     Object? username = freezed,
     Object? course = freezed,
     Object? bio = freezed,
-    Object? module = freezed,
+    Object? modules = freezed,
     Object? uuid = freezed,
     Object? forumsPosted = freezed,
   }) {
@@ -102,10 +102,10 @@ class _$ProfileCopyWithImpl<$Res> implements $ProfileCopyWith<$Res> {
           ? _value.bio
           : bio // ignore: cast_nullable_to_non_nullable
               as Bio,
-      module: module == freezed
-          ? _value.module
-          : module // ignore: cast_nullable_to_non_nullable
-              as Mod,
+      modules: modules == freezed
+          ? _value.modules
+          : modules // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       uuid: uuid == freezed
           ? _value.uuid
           : uuid // ignore: cast_nullable_to_non_nullable
@@ -128,7 +128,7 @@ abstract class _$ProfileCopyWith<$Res> implements $ProfileCopyWith<$Res> {
       Username username,
       Course course,
       Bio bio,
-      Mod module,
+      List<String> modules,
       String uuid,
       List<String> forumsPosted});
 }
@@ -148,7 +148,7 @@ class __$ProfileCopyWithImpl<$Res> extends _$ProfileCopyWithImpl<$Res>
     Object? username = freezed,
     Object? course = freezed,
     Object? bio = freezed,
-    Object? module = freezed,
+    Object? modules = freezed,
     Object? uuid = freezed,
     Object? forumsPosted = freezed,
   }) {
@@ -169,10 +169,10 @@ class __$ProfileCopyWithImpl<$Res> extends _$ProfileCopyWithImpl<$Res>
           ? _value.bio
           : bio // ignore: cast_nullable_to_non_nullable
               as Bio,
-      module: module == freezed
-          ? _value.module
-          : module // ignore: cast_nullable_to_non_nullable
-              as Mod,
+      modules: modules == freezed
+          ? _value.modules
+          : modules // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       uuid: uuid == freezed
           ? _value.uuid
           : uuid // ignore: cast_nullable_to_non_nullable
@@ -193,7 +193,7 @@ class _$_Profile extends _Profile {
       required this.username,
       required this.course,
       required this.bio,
-      required this.module,
+      required this.modules,
       required this.uuid,
       required this.forumsPosted})
       : super._();
@@ -207,7 +207,7 @@ class _$_Profile extends _Profile {
   @override
   final Bio bio;
   @override
-  final Mod module;
+  final List<String> modules;
   @override
   final String uuid;
   @override
@@ -215,7 +215,7 @@ class _$_Profile extends _Profile {
 
   @override
   String toString() {
-    return 'Profile(photoUrl: $photoUrl, username: $username, course: $course, bio: $bio, module: $module, uuid: $uuid, forumsPosted: $forumsPosted)';
+    return 'Profile(photoUrl: $photoUrl, username: $username, course: $course, bio: $bio, modules: $modules, uuid: $uuid, forumsPosted: $forumsPosted)';
   }
 
   @override
@@ -232,8 +232,9 @@ class _$_Profile extends _Profile {
                 const DeepCollectionEquality().equals(other.course, course)) &&
             (identical(other.bio, bio) ||
                 const DeepCollectionEquality().equals(other.bio, bio)) &&
-            (identical(other.module, module) ||
-                const DeepCollectionEquality().equals(other.module, module)) &&
+            (identical(other.modules, modules) ||
+                const DeepCollectionEquality()
+                    .equals(other.modules, modules)) &&
             (identical(other.uuid, uuid) ||
                 const DeepCollectionEquality().equals(other.uuid, uuid)) &&
             (identical(other.forumsPosted, forumsPosted) ||
@@ -248,7 +249,7 @@ class _$_Profile extends _Profile {
       const DeepCollectionEquality().hash(username) ^
       const DeepCollectionEquality().hash(course) ^
       const DeepCollectionEquality().hash(bio) ^
-      const DeepCollectionEquality().hash(module) ^
+      const DeepCollectionEquality().hash(modules) ^
       const DeepCollectionEquality().hash(uuid) ^
       const DeepCollectionEquality().hash(forumsPosted);
 
@@ -264,7 +265,7 @@ abstract class _Profile extends Profile {
       required Username username,
       required Course course,
       required Bio bio,
-      required Mod module,
+      required List<String> modules,
       required String uuid,
       required List<String> forumsPosted}) = _$_Profile;
   const _Profile._() : super._();
@@ -278,7 +279,7 @@ abstract class _Profile extends Profile {
   @override
   Bio get bio => throw _privateConstructorUsedError;
   @override
-  Mod get module => throw _privateConstructorUsedError;
+  List<String> get modules => throw _privateConstructorUsedError;
   @override
   String get uuid => throw _privateConstructorUsedError;
   @override

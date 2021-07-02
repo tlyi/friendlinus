@@ -321,4 +321,31 @@ class ProfileRepository implements IProfileRepository {
       }
     }
   }
+
+  @override
+  Future<Either<DataFailure, List<String>>> searchModulesByModuleCode(
+      String moduleCode) async {
+    print("Searching for $moduleCode");
+    final List<String> searchResults = [];
+    final modRef = await _firestore.modulesRef();
+    try {
+      QuerySnapshot query = await modRef
+          .where('moduleCode', isGreaterThanOrEqualTo: moduleCode.toUpperCase())
+          // .where('moduleCode',
+          //     isLessThanOrEqualTo: '${moduleCode.toUpperCase()}~')
+          .limit(15)
+          .get();
+      {
+        if (query.docs.isNotEmpty) {
+          for (final doc in query.docs) {
+            searchResults.add(doc.id);
+          }
+        }
+        return right(searchResults);
+      }
+    } on FirebaseException catch (e) {
+      print(e);
+      return left(const DataFailure.unexpected());
+    }
+  }
 }

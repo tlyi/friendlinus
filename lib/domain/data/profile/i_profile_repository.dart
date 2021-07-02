@@ -38,8 +38,10 @@ abstract class IProfileRepository {
 
   Future<Either<DataFailure, Unit>> removeFollower(String userToFollowId);
 
-  Future<Either<DataFailure, List<Profile>>> retrieveFollowing(
-      String userId); 
+  Future<Either<DataFailure, List<Profile>>> retrieveFollowing(String userId);
 
   Future<Either<DataFailure, List<ForumPost>>> retrieveMyForums(String userId);
+
+  Future<Either<DataFailure, List<String>>> searchModulesByModuleCode(
+      String moduleCode);
 }

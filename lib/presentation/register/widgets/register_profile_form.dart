@@ -34,7 +34,9 @@ class RegisterProfileForm extends StatelessWidget {
       },
       builder: (context, state) {
         return Form(
-          autovalidateMode: AutovalidateMode.always,
+          autovalidateMode: state.showErrorMessages
+              ? AutovalidateMode.always
+              : AutovalidateMode.disabled,
           child: Scaffold(
             body: Container(
               margin: const EdgeInsets.all(30.0),
@@ -230,35 +232,29 @@ class _BuildBio extends StatelessWidget {
 class _BuildModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProfileFormBloc, ProfileFormState>(
-      builder: (context, state) {
-        return TextFormField(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              labelText: 'Module',
-            ),
-            autocorrect: false,
-            onChanged: (value) {
-              context
-                  .read<ProfileFormBloc>()
-                  .add(ProfileFormEvent.moduleChanged(value));
-            },
-            validator: (_) =>
-                context.read<ProfileFormBloc>().state.profile.module.value.fold(
-                      (f) => f.maybeMap(
-                        exceedingLength: (_) => 'Invalid module',
-                        orElse: () => null,
-                      ),
-                      (_) => null,
-                    ),
-            inputFormatters: [
-              FilteringTextInputFormatter.deny(
-                  RegExp(r"\s\b|\b\s")) //Prevents whitespace
-            ]);
-      },
-    );
+    return Container();
+    // return BlocBuilder<ProfileFormBloc, ProfileFormState>(
+    //   builder: (context, state) {
+    //     return TextFormField(
+    //         decoration: InputDecoration(
+    //           border: OutlineInputBorder(
+    //             borderRadius: BorderRadius.circular(10.0),
+    //           ),
+    //           labelText: 'Module',
+    //         ),
+    //         autocorrect: false,
+    //         onChanged: (value) {
+    //           context
+    //               .read<ProfileFormBloc>()
+    //               .add(ProfileFormEvent.moduleChanged(value));
+    //         },
+    //         validator: (_) {},
+    //         inputFormatters: [
+    //           FilteringTextInputFormatter.deny(
+    //               RegExp(r"\s\b|\b\s")) //Prevents whitespace
+    //         ]);
+    //   },
+    // );
   }
 }
 

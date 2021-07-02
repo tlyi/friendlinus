@@ -109,3 +109,23 @@ class _ConvoActionsState extends State<ConvoActions> {
     );
   }
 }
+
+/*oid pickPhoto() async {
+                final picker = ImagePicker();
+                File? pickedImage;
+                final pickedFile = await picker.getImage(
+                  source: ImageSource.gallery,
+                  imageQuality: 70,
+                );
+                if (pickedFile == null) {
+                  FlushbarHelper.createError(message: 'No image picked')
+                      .show(context);
+                } else {
+                  pickedImage = File(pickedFile.path);
+                  context.read<ForumFormBloc>().add(ForumFormEvent.photoAdded(
+                        pickedImage,
+                        context.read<ForumFormBloc>().state.forumPost.forumId,
+                      ));
+                }
+
+                */

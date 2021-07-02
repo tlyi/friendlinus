@@ -35,6 +35,10 @@ class _$AuthEventTearOff {
   RegisteredCheckRequested registeredCheckRequested() {
     return const RegisteredCheckRequested();
   }
+
+  NusModsUpdateRequested nusModsUpdateRequested() {
+    return const NusModsUpdateRequested();
+  }
 }
 
 /// @nodoc
@@ -49,6 +53,7 @@ mixin _$AuthEvent {
     required TResult Function() sentEmailVerification,
     required TResult Function() verifiedCheckRequested,
     required TResult Function() registeredCheckRequested,
+    required TResult Function() nusModsUpdateRequested,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -58,6 +63,7 @@ mixin _$AuthEvent {
     TResult Function()? sentEmailVerification,
     TResult Function()? verifiedCheckRequested,
     TResult Function()? registeredCheckRequested,
+    TResult Function()? nusModsUpdateRequested,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -71,6 +77,8 @@ mixin _$AuthEvent {
         verifiedCheckRequested,
     required TResult Function(RegisteredCheckRequested value)
         registeredCheckRequested,
+    required TResult Function(NusModsUpdateRequested value)
+        nusModsUpdateRequested,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -80,6 +88,7 @@ mixin _$AuthEvent {
     TResult Function(SentEmailVerification value)? sentEmailVerification,
     TResult Function(VerifiedCheckRequested value)? verifiedCheckRequested,
     TResult Function(RegisteredCheckRequested value)? registeredCheckRequested,
+    TResult Function(NusModsUpdateRequested value)? nusModsUpdateRequested,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -145,6 +154,7 @@ class _$AuthCheckRequested implements AuthCheckRequested {
     required TResult Function() sentEmailVerification,
     required TResult Function() verifiedCheckRequested,
     required TResult Function() registeredCheckRequested,
+    required TResult Function() nusModsUpdateRequested,
   }) {
     return authCheckRequested();
   }
@@ -157,6 +167,7 @@ class _$AuthCheckRequested implements AuthCheckRequested {
     TResult Function()? sentEmailVerification,
     TResult Function()? verifiedCheckRequested,
     TResult Function()? registeredCheckRequested,
+    TResult Function()? nusModsUpdateRequested,
     required TResult orElse(),
   }) {
     if (authCheckRequested != null) {
@@ -176,6 +187,8 @@ class _$AuthCheckRequested implements AuthCheckRequested {
         verifiedCheckRequested,
     required TResult Function(RegisteredCheckRequested value)
         registeredCheckRequested,
+    required TResult Function(NusModsUpdateRequested value)
+        nusModsUpdateRequested,
   }) {
     return authCheckRequested(this);
   }
@@ -188,6 +201,7 @@ class _$AuthCheckRequested implements AuthCheckRequested {
     TResult Function(SentEmailVerification value)? sentEmailVerification,
     TResult Function(VerifiedCheckRequested value)? verifiedCheckRequested,
     TResult Function(RegisteredCheckRequested value)? registeredCheckRequested,
+    TResult Function(NusModsUpdateRequested value)? nusModsUpdateRequested,
     required TResult orElse(),
   }) {
     if (authCheckRequested != null) {
@@ -243,6 +257,7 @@ class _$SignedOut implements SignedOut {
     required TResult Function() sentEmailVerification,
     required TResult Function() verifiedCheckRequested,
     required TResult Function() registeredCheckRequested,
+    required TResult Function() nusModsUpdateRequested,
   }) {
     return signedOut();
   }
@@ -255,6 +270,7 @@ class _$SignedOut implements SignedOut {
     TResult Function()? sentEmailVerification,
     TResult Function()? verifiedCheckRequested,
     TResult Function()? registeredCheckRequested,
+    TResult Function()? nusModsUpdateRequested,
     required TResult orElse(),
   }) {
     if (signedOut != null) {
@@ -274,6 +290,8 @@ class _$SignedOut implements SignedOut {
         verifiedCheckRequested,
     required TResult Function(RegisteredCheckRequested value)
         registeredCheckRequested,
+    required TResult Function(NusModsUpdateRequested value)
+        nusModsUpdateRequested,
   }) {
     return signedOut(this);
   }
@@ -286,6 +304,7 @@ class _$SignedOut implements SignedOut {
     TResult Function(SentEmailVerification value)? sentEmailVerification,
     TResult Function(VerifiedCheckRequested value)? verifiedCheckRequested,
     TResult Function(RegisteredCheckRequested value)? registeredCheckRequested,
+    TResult Function(NusModsUpdateRequested value)? nusModsUpdateRequested,
     required TResult orElse(),
   }) {
     if (signedOut != null) {
@@ -344,6 +363,7 @@ class _$SentEmailVerification implements SentEmailVerification {
     required TResult Function() sentEmailVerification,
     required TResult Function() verifiedCheckRequested,
     required TResult Function() registeredCheckRequested,
+    required TResult Function() nusModsUpdateRequested,
   }) {
     return sentEmailVerification();
   }
@@ -356,6 +376,7 @@ class _$SentEmailVerification implements SentEmailVerification {
     TResult Function()? sentEmailVerification,
     TResult Function()? verifiedCheckRequested,
     TResult Function()? registeredCheckRequested,
+    TResult Function()? nusModsUpdateRequested,
     required TResult orElse(),
   }) {
     if (sentEmailVerification != null) {
@@ -375,6 +396,8 @@ class _$SentEmailVerification implements SentEmailVerification {
         verifiedCheckRequested,
     required TResult Function(RegisteredCheckRequested value)
         registeredCheckRequested,
+    required TResult Function(NusModsUpdateRequested value)
+        nusModsUpdateRequested,
   }) {
     return sentEmailVerification(this);
   }
@@ -387,6 +410,7 @@ class _$SentEmailVerification implements SentEmailVerification {
     TResult Function(SentEmailVerification value)? sentEmailVerification,
     TResult Function(VerifiedCheckRequested value)? verifiedCheckRequested,
     TResult Function(RegisteredCheckRequested value)? registeredCheckRequested,
+    TResult Function(NusModsUpdateRequested value)? nusModsUpdateRequested,
     required TResult orElse(),
   }) {
     if (sentEmailVerification != null) {
@@ -445,6 +469,7 @@ class _$VerifiedCheckRequested implements VerifiedCheckRequested {
     required TResult Function() sentEmailVerification,
     required TResult Function() verifiedCheckRequested,
     required TResult Function() registeredCheckRequested,
+    required TResult Function() nusModsUpdateRequested,
   }) {
     return verifiedCheckRequested();
   }
@@ -457,6 +482,7 @@ class _$VerifiedCheckRequested implements VerifiedCheckRequested {
     TResult Function()? sentEmailVerification,
     TResult Function()? verifiedCheckRequested,
     TResult Function()? registeredCheckRequested,
+    TResult Function()? nusModsUpdateRequested,
     required TResult orElse(),
   }) {
     if (verifiedCheckRequested != null) {
@@ -476,6 +502,8 @@ class _$VerifiedCheckRequested implements VerifiedCheckRequested {
         verifiedCheckRequested,
     required TResult Function(RegisteredCheckRequested value)
         registeredCheckRequested,
+    required TResult Function(NusModsUpdateRequested value)
+        nusModsUpdateRequested,
   }) {
     return verifiedCheckRequested(this);
   }
@@ -488,6 +516,7 @@ class _$VerifiedCheckRequested implements VerifiedCheckRequested {
     TResult Function(SentEmailVerification value)? sentEmailVerification,
     TResult Function(VerifiedCheckRequested value)? verifiedCheckRequested,
     TResult Function(RegisteredCheckRequested value)? registeredCheckRequested,
+    TResult Function(NusModsUpdateRequested value)? nusModsUpdateRequested,
     required TResult orElse(),
   }) {
     if (verifiedCheckRequested != null) {
@@ -547,6 +576,7 @@ class _$RegisteredCheckRequested implements RegisteredCheckRequested {
     required TResult Function() sentEmailVerification,
     required TResult Function() verifiedCheckRequested,
     required TResult Function() registeredCheckRequested,
+    required TResult Function() nusModsUpdateRequested,
   }) {
     return registeredCheckRequested();
   }
@@ -559,6 +589,7 @@ class _$RegisteredCheckRequested implements RegisteredCheckRequested {
     TResult Function()? sentEmailVerification,
     TResult Function()? verifiedCheckRequested,
     TResult Function()? registeredCheckRequested,
+    TResult Function()? nusModsUpdateRequested,
     required TResult orElse(),
   }) {
     if (registeredCheckRequested != null) {
@@ -578,6 +609,8 @@ class _$RegisteredCheckRequested implements RegisteredCheckRequested {
         verifiedCheckRequested,
     required TResult Function(RegisteredCheckRequested value)
         registeredCheckRequested,
+    required TResult Function(NusModsUpdateRequested value)
+        nusModsUpdateRequested,
   }) {
     return registeredCheckRequested(this);
   }
@@ -590,6 +623,7 @@ class _$RegisteredCheckRequested implements RegisteredCheckRequested {
     TResult Function(SentEmailVerification value)? sentEmailVerification,
     TResult Function(VerifiedCheckRequested value)? verifiedCheckRequested,
     TResult Function(RegisteredCheckRequested value)? registeredCheckRequested,
+    TResult Function(NusModsUpdateRequested value)? nusModsUpdateRequested,
     required TResult orElse(),
   }) {
     if (registeredCheckRequested != null) {
@@ -601,6 +635,112 @@ class _$RegisteredCheckRequested implements RegisteredCheckRequested {
 
 abstract class RegisteredCheckRequested implements AuthEvent {
   const factory RegisteredCheckRequested() = _$RegisteredCheckRequested;
+}
+
+/// @nodoc
+abstract class $NusModsUpdateRequestedCopyWith<$Res> {
+  factory $NusModsUpdateRequestedCopyWith(NusModsUpdateRequested value,
+          $Res Function(NusModsUpdateRequested) then) =
+      _$NusModsUpdateRequestedCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class _$NusModsUpdateRequestedCopyWithImpl<$Res>
+    extends _$AuthEventCopyWithImpl<$Res>
+    implements $NusModsUpdateRequestedCopyWith<$Res> {
+  _$NusModsUpdateRequestedCopyWithImpl(NusModsUpdateRequested _value,
+      $Res Function(NusModsUpdateRequested) _then)
+      : super(_value, (v) => _then(v as NusModsUpdateRequested));
+
+  @override
+  NusModsUpdateRequested get _value => super._value as NusModsUpdateRequested;
+}
+
+/// @nodoc
+
+class _$NusModsUpdateRequested implements NusModsUpdateRequested {
+  const _$NusModsUpdateRequested();
+
+  @override
+  String toString() {
+    return 'AuthEvent.nusModsUpdateRequested()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is NusModsUpdateRequested);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() authCheckRequested,
+    required TResult Function() signedOut,
+    required TResult Function() sentEmailVerification,
+    required TResult Function() verifiedCheckRequested,
+    required TResult Function() registeredCheckRequested,
+    required TResult Function() nusModsUpdateRequested,
+  }) {
+    return nusModsUpdateRequested();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? authCheckRequested,
+    TResult Function()? signedOut,
+    TResult Function()? sentEmailVerification,
+    TResult Function()? verifiedCheckRequested,
+    TResult Function()? registeredCheckRequested,
+    TResult Function()? nusModsUpdateRequested,
+    required TResult orElse(),
+  }) {
+    if (nusModsUpdateRequested != null) {
+      return nusModsUpdateRequested();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(AuthCheckRequested value) authCheckRequested,
+    required TResult Function(SignedOut value) signedOut,
+    required TResult Function(SentEmailVerification value)
+        sentEmailVerification,
+    required TResult Function(VerifiedCheckRequested value)
+        verifiedCheckRequested,
+    required TResult Function(RegisteredCheckRequested value)
+        registeredCheckRequested,
+    required TResult Function(NusModsUpdateRequested value)
+        nusModsUpdateRequested,
+  }) {
+    return nusModsUpdateRequested(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(AuthCheckRequested value)? authCheckRequested,
+    TResult Function(SignedOut value)? signedOut,
+    TResult Function(SentEmailVerification value)? sentEmailVerification,
+    TResult Function(VerifiedCheckRequested value)? verifiedCheckRequested,
+    TResult Function(RegisteredCheckRequested value)? registeredCheckRequested,
+    TResult Function(NusModsUpdateRequested value)? nusModsUpdateRequested,
+    required TResult orElse(),
+  }) {
+    if (nusModsUpdateRequested != null) {
+      return nusModsUpdateRequested(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class NusModsUpdateRequested implements AuthEvent {
+  const factory NusModsUpdateRequested() = _$NusModsUpdateRequested;
 }
 
 /// @nodoc

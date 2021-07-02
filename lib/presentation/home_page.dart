@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:friendlinus/application/auth/auth_bloc.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:friendlinus/domain/mods/i_mod_repository.dart';
 import 'package:friendlinus/presentation/core/app_bar.dart';
 import 'package:friendlinus/presentation/core/nav_bar.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';

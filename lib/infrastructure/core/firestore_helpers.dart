@@ -64,4 +64,8 @@ extension FirestoreX on FirebaseFirestore {
         .doc(forumId)
         .collection('comments');
   }
+
+  Future<CollectionReference> modulesRef() async {
+    return FirebaseFirestore.instance.collection('modules');
+  }
 }

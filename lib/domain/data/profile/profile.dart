@@ -16,7 +16,7 @@ abstract class Profile implements _$Profile {
     required Username username,
     required Course course,
     required Bio bio,
-    required Mod module,
+    required List<String> modules,
     required String uuid,
     required List<String> forumsPosted,
   }) = _Profile;
@@ -26,7 +26,7 @@ abstract class Profile implements _$Profile {
         username: Username(''),
         course: Course(''),
         bio: Bio(''),
-        module: Mod(''),
+        modules: [],
         uuid: '',
         forumsPosted: [],
       );

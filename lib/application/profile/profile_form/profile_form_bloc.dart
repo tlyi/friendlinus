@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:friendlinus/domain/core/failures.dart';
 import 'package:friendlinus/domain/core/value_objects.dart';
@@ -66,38 +67,31 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
       yield state.copyWith(
         profile: state.profile.copyWith(bio: Bio(e.bioStr)),
       );
-    }, moduleChanged: (e) async* {
-      yield state.copyWith(
-        profile: state.profile.copyWith(module: Mod(e.moduleStr)),
-      );
     }, saved: (e) async* {
       Either<DataFailure, Unit>? failureOrSuccess;
       bool isUsernameValid = state.profile.username.isValid();
       bool isCourseValid = state.profile.course.isValid();
       bool isBioValid = state.profile.bio.isValid();
-      bool isModuleValid = state.profile.module.isValid();
-      bool isProfileValid =
-          isUsernameValid && isCourseValid && isBioValid && isModuleValid;
-     
+      bool isProfileValid = isUsernameValid && isCourseValid && isBioValid;
+
       if (isProfileValid) {
         final uuid = await _profileRepository.getUserId();
 
-      yield state.copyWith(
-        isSaving: true,
-        saveFailureOrSuccessOption: none(),
-      );
+        yield state.copyWith(
+          isSaving: true,
+          saveFailureOrSuccessOption: none(),
+        );
 
-      failureOrSuccess =
-          await _profileRepository.create(state.profile.copyWith(uuid: uuid));
+        failureOrSuccess =
+            await _profileRepository.create(state.profile.copyWith(uuid: uuid));
       }
-      
+
       yield state.copyWith(
         isSaving: false,
         showErrorMessages: true,
         saveFailureOrSuccessOption: optionOf(failureOrSuccess),
       );
     }, getProfile: (e) async* {
-      print("here at getprofile");
       Either<DataFailure, Profile> failureOrSuccess;
       failureOrSuccess = await _profileRepository.readOwnProfile();
       final profile = failureOrSuccess.getOrElse(() => Profile.empty());
@@ -107,6 +101,32 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
         profile: profile,
         currentUsername: profile.username.getOrCrash(),
         photoUrl: right(profile.photoUrl),
+      );
+    }, searchedModule: (e) async* {
+      final moduleSuggestions =
+          await _profileRepository.searchModulesByModuleCode(e.searchStr);
+
+      yield state.copyWith(
+        moduleSuggestions: moduleSuggestions,
+      );
+    }, addedModule: (e) async* {
+      List<String> moduleList = state.profile.modules;
+
+      moduleList.add(e.moduleStr);
+
+      yield state.copyWith(
+        profile: state.profile.copyWith(modules: moduleList),
+      );
+    }, removedModule: (e) async* {
+      List<String> moduleList = state.profile.modules;
+      if (moduleList.length == 1) {
+        moduleList = [];
+      } else {
+        moduleList.remove(e.moduleStr);
+      }
+
+      yield state.copyWith(
+        profile: state.profile.copyWith(modules: moduleList),
       );
     });
   }

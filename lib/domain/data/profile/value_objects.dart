@@ -47,17 +47,3 @@ class Bio extends ValueObject<String> {
 
   const Bio._(this.value);
 }
-
-//module; TO DO: Validate against database of modules (NUSMods API)
-class Mod extends ValueObject<String> {
-  @override
-  final Either<ValueFailure<String>, String> value;
-
-  static const maxLength = 6;
-
-  factory Mod(String input) {
-    return Mod._(validateMaxStringLength(input, maxLength));
-  }
-
-  const Mod._(this.value);
-}

@@ -19,7 +19,7 @@ abstract class ProfileDto implements _$ProfileDto {
     required String username,
     required String course,
     required String bio,
-    required String module,
+    required List<String> modules,
     required String uuid,
     required List<String> forumsPosted,
   }) = _ProfileDto;
@@ -30,7 +30,7 @@ abstract class ProfileDto implements _$ProfileDto {
       username: profile.username.getOrCrash(),
       course: profile.course.getOrCrash(),
       bio: profile.bio.getOrCrash(),
-      module: profile.module.getOrCrash(),
+      modules: profile.modules,
       uuid: profile.uuid,
       forumsPosted: profile.forumsPosted,
     );
@@ -42,7 +42,7 @@ abstract class ProfileDto implements _$ProfileDto {
       username: Username(username),
       course: Course(course),
       bio: Bio(bio),
-      module: Mod(module),
+      modules: modules,
       uuid: uuid,
       forumsPosted: forumsPosted,
     );

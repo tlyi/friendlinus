@@ -7,6 +7,7 @@ import 'package:friendlinus/domain/auth/i_auth_facade.dart';
 import 'package:friendlinus/domain/core/errors.dart';
 import 'package:friendlinus/domain/data/data_failure.dart';
 import 'package:friendlinus/domain/data/profile/i_profile_repository.dart';
+import 'package:friendlinus/domain/mods/i_mod_repository.dart';
 import 'package:injectable/injectable.dart';
 
 part 'auth_event.dart';
@@ -18,8 +19,9 @@ part 'auth_bloc.freezed.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final IAuthFacade _authFacade;
   final IProfileRepository _profileRepository;
+  final IModRepository _modRepository;
 
-  AuthBloc(this._authFacade, this._profileRepository)
+  AuthBloc(this._authFacade, this._profileRepository, this._modRepository)
       : super(const AuthState.initial());
 
   @override
@@ -61,6 +63,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         } else {
           yield const AuthState.unregistered();
         }
+      },
+      nusModsUpdateRequested: (e) async* {
+        _modRepository.uploadMods();
       },
     );
   }

@@ -25,7 +25,7 @@ class _$ProfileDtoTearOff {
       required String username,
       required String course,
       required String bio,
-      required String module,
+      required List<String> modules,
       required String uuid,
       required List<String> forumsPosted}) {
     return _ProfileDto(
@@ -33,7 +33,7 @@ class _$ProfileDtoTearOff {
       username: username,
       course: course,
       bio: bio,
-      module: module,
+      modules: modules,
       uuid: uuid,
       forumsPosted: forumsPosted,
     );
@@ -53,7 +53,7 @@ mixin _$ProfileDto {
   String get username => throw _privateConstructorUsedError;
   String get course => throw _privateConstructorUsedError;
   String get bio => throw _privateConstructorUsedError;
-  String get module => throw _privateConstructorUsedError;
+  List<String> get modules => throw _privateConstructorUsedError;
   String get uuid => throw _privateConstructorUsedError;
   List<String> get forumsPosted => throw _privateConstructorUsedError;
 
@@ -73,7 +73,7 @@ abstract class $ProfileDtoCopyWith<$Res> {
       String username,
       String course,
       String bio,
-      String module,
+      List<String> modules,
       String uuid,
       List<String> forumsPosted});
 }
@@ -92,7 +92,7 @@ class _$ProfileDtoCopyWithImpl<$Res> implements $ProfileDtoCopyWith<$Res> {
     Object? username = freezed,
     Object? course = freezed,
     Object? bio = freezed,
-    Object? module = freezed,
+    Object? modules = freezed,
     Object? uuid = freezed,
     Object? forumsPosted = freezed,
   }) {
@@ -113,10 +113,10 @@ class _$ProfileDtoCopyWithImpl<$Res> implements $ProfileDtoCopyWith<$Res> {
           ? _value.bio
           : bio // ignore: cast_nullable_to_non_nullable
               as String,
-      module: module == freezed
-          ? _value.module
-          : module // ignore: cast_nullable_to_non_nullable
-              as String,
+      modules: modules == freezed
+          ? _value.modules
+          : modules // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       uuid: uuid == freezed
           ? _value.uuid
           : uuid // ignore: cast_nullable_to_non_nullable
@@ -140,7 +140,7 @@ abstract class _$ProfileDtoCopyWith<$Res> implements $ProfileDtoCopyWith<$Res> {
       String username,
       String course,
       String bio,
-      String module,
+      List<String> modules,
       String uuid,
       List<String> forumsPosted});
 }
@@ -161,7 +161,7 @@ class __$ProfileDtoCopyWithImpl<$Res> extends _$ProfileDtoCopyWithImpl<$Res>
     Object? username = freezed,
     Object? course = freezed,
     Object? bio = freezed,
-    Object? module = freezed,
+    Object? modules = freezed,
     Object? uuid = freezed,
     Object? forumsPosted = freezed,
   }) {
@@ -182,10 +182,10 @@ class __$ProfileDtoCopyWithImpl<$Res> extends _$ProfileDtoCopyWithImpl<$Res>
           ? _value.bio
           : bio // ignore: cast_nullable_to_non_nullable
               as String,
-      module: module == freezed
-          ? _value.module
-          : module // ignore: cast_nullable_to_non_nullable
-              as String,
+      modules: modules == freezed
+          ? _value.modules
+          : modules // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       uuid: uuid == freezed
           ? _value.uuid
           : uuid // ignore: cast_nullable_to_non_nullable
@@ -206,7 +206,7 @@ class _$_ProfileDto extends _ProfileDto {
       required this.username,
       required this.course,
       required this.bio,
-      required this.module,
+      required this.modules,
       required this.uuid,
       required this.forumsPosted})
       : super._();
@@ -223,7 +223,7 @@ class _$_ProfileDto extends _ProfileDto {
   @override
   final String bio;
   @override
-  final String module;
+  final List<String> modules;
   @override
   final String uuid;
   @override
@@ -231,7 +231,7 @@ class _$_ProfileDto extends _ProfileDto {
 
   @override
   String toString() {
-    return 'ProfileDto(photoUrl: $photoUrl, username: $username, course: $course, bio: $bio, module: $module, uuid: $uuid, forumsPosted: $forumsPosted)';
+    return 'ProfileDto(photoUrl: $photoUrl, username: $username, course: $course, bio: $bio, modules: $modules, uuid: $uuid, forumsPosted: $forumsPosted)';
   }
 
   @override
@@ -248,8 +248,9 @@ class _$_ProfileDto extends _ProfileDto {
                 const DeepCollectionEquality().equals(other.course, course)) &&
             (identical(other.bio, bio) ||
                 const DeepCollectionEquality().equals(other.bio, bio)) &&
-            (identical(other.module, module) ||
-                const DeepCollectionEquality().equals(other.module, module)) &&
+            (identical(other.modules, modules) ||
+                const DeepCollectionEquality()
+                    .equals(other.modules, modules)) &&
             (identical(other.uuid, uuid) ||
                 const DeepCollectionEquality().equals(other.uuid, uuid)) &&
             (identical(other.forumsPosted, forumsPosted) ||
@@ -264,7 +265,7 @@ class _$_ProfileDto extends _ProfileDto {
       const DeepCollectionEquality().hash(username) ^
       const DeepCollectionEquality().hash(course) ^
       const DeepCollectionEquality().hash(bio) ^
-      const DeepCollectionEquality().hash(module) ^
+      const DeepCollectionEquality().hash(modules) ^
       const DeepCollectionEquality().hash(uuid) ^
       const DeepCollectionEquality().hash(forumsPosted);
 
@@ -285,7 +286,7 @@ abstract class _ProfileDto extends ProfileDto {
       required String username,
       required String course,
       required String bio,
-      required String module,
+      required List<String> modules,
       required String uuid,
       required List<String> forumsPosted}) = _$_ProfileDto;
   const _ProfileDto._() : super._();
@@ -302,7 +303,7 @@ abstract class _ProfileDto extends ProfileDto {
   @override
   String get bio => throw _privateConstructorUsedError;
   @override
-  String get module => throw _privateConstructorUsedError;
+  List<String> get modules => throw _privateConstructorUsedError;
   @override
   String get uuid => throw _privateConstructorUsedError;
   @override

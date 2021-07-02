@@ -25,25 +25,29 @@ class ProfileElements extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(alignment: Alignment.topLeft, children: [
-      WaveHeader(),
-      Container(
-        alignment: Alignment.topLeft,
-        padding: const EdgeInsets.only(
-          left: 40,
-          right: 40,
-          bottom: 50,
+    return Stack(
+      alignment: Alignment.topLeft,
+      children: [
+        WaveHeader(),
+        Container(
+          alignment: Alignment.topLeft,
+          padding: const EdgeInsets.only(
+            left: 40,
+            right: 40,
+            bottom: 50,
+          ),
+          child: Column(
+            children: <Widget>[
+              ProfileHeader(
+                  userProfile: userProfile, isOwnProfile: isOwnProfile),
+              ModulesOfInterest(userProfile: userProfile),
+              FriendList(userProfile: userProfile, isOwnProfile: isOwnProfile),
+              RecentPosts(userProfile: userProfile, isOwnProfile: isOwnProfile),
+            ],
+          ),
         ),
-        child: Column(
-          children: <Widget>[
-            ProfileHeader(userProfile: userProfile, isOwnProfile: isOwnProfile),
-            ModulesOfInterest(userProfile: userProfile),
-            FriendList(userProfile: userProfile, isOwnProfile: isOwnProfile),
-            RecentPosts(userProfile: userProfile, isOwnProfile: isOwnProfile),
-          ],
-        ),
-      ),
-    ]);
+      ],
+    );
   }
 }
 
@@ -297,53 +301,55 @@ class FriendList extends StatelessWidget {
                             ),
                           ),
                         ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: failure != null
-                                ? Text(failure!.maybeMap(
-                                    unexpected: (_) => 'Unexpected Error',
-                                    orElse: () => ''))
-                                : ListView.builder(
-                                    shrinkWrap: true,
-                                    physics: const ScrollPhysics(),
-                                    padding: const EdgeInsets.only(top: 5.0),
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: following.length,
-                                    itemBuilder: (context, index) {
-                                      final Profile profile = following[index];
-                                      return GestureDetector(
-                                        onTap: () async {
-                                          ownId == profile.uuid
-                                              ? await context.pushRoute(
-                                                  ProfileRoute(canGoBack: true))
-                                              : await context.pushRoute(
-                                                  OtherProfileRoute(
-                                                      userProfile: profile));
-                                          context.read<ProfileActorBloc>().add(
-                                              const ProfileActorEvent
-                                                  .loadingOwnProfile());
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 5.0, right: 5.0),
-                                          child: Column(children: [
-                                            ClipOval(
-                                              child: Image.network(
-                                                profile.photoUrl,
-                                                width: 60.0,
-                                                height: 60.0,
-                                                fit: BoxFit.cover,
-                                              ),
+                      if (failure != null)
+                        Text(failure!.maybeMap(
+                            unexpected: (_) => 'Unexpected Error',
+                            orElse: () => '')),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const ScrollPhysics(),
+                                  padding: const EdgeInsets.only(top: 5.0),
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: following.length,
+                                  itemBuilder: (context, index) {
+                                    final Profile profile = following[index];
+                                    return GestureDetector(
+                                      onTap: () async {
+                                        ownId == profile.uuid
+                                            ? await context.pushRoute(
+                                                ProfileRoute(canGoBack: true))
+                                            : await context.pushRoute(
+                                                OtherProfileRoute(
+                                                    userProfile: profile));
+                                        context.read<ProfileActorBloc>().add(
+                                            const ProfileActorEvent
+                                                .loadingOwnProfile());
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 5.0, right: 5.0),
+                                        child: Column(children: [
+                                          ClipOval(
+                                            child: Image.network(
+                                              profile.photoUrl,
+                                              width: 60.0,
+                                              height: 60.0,
+                                              fit: BoxFit.cover,
                                             ),
-                                            Text(profile.username.getOrCrash()),
-                                          ]),
-                                        ),
-                                      );
-                                    }),
-                          ),
-                        ],
+                                          ),
+                                          Text(profile.username.getOrCrash()),
+                                        ]),
+                                      ),
+                                    );
+                                  }),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -381,7 +387,7 @@ class RecentPosts extends StatelessWidget {
                 unexpected: (_) => 'Unexppected Error', orElse: () => 'Error'))
           else
             ListView.builder(
-                physics: const ScrollPhysics(),
+                physics: const AlwaysScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: forums.length,
                 itemBuilder: (context, index) {

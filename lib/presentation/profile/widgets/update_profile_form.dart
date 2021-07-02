@@ -3,6 +3,8 @@ import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_tagging/flutter_tagging.dart';
+import 'package:flutter_tags/flutter_tags.dart';
 import 'package:friendlinus/application/profile/profile_form/profile_form_bloc.dart';
 import 'package:friendlinus/domain/data/profile/profile.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
@@ -49,7 +51,9 @@ class UpdateProfileForm extends StatelessWidget {
             return Profile.empty();
           });
           return Form(
-            autovalidateMode: AutovalidateMode.always,
+            autovalidateMode: state.showErrorMessages
+                ? AutovalidateMode.always
+                : AutovalidateMode.disabled,
             child: Container(
               margin: const EdgeInsets.all(30.0),
               child: Column(
@@ -57,14 +61,15 @@ class UpdateProfileForm extends StatelessWidget {
                 children: <Widget>[
                   _BuildProfilePicButton(userProfile: userProfile),
                   const SizedBox(height: 20),
-                  _BuildUsername(userProfile: userProfile),
-                  const SizedBox(height: 15),
-                  _BuildCourse(userProfile: userProfile),
-                  const SizedBox(height: 15),
-                  _BuildBio(userProfile: userProfile),
-                  const SizedBox(height: 15),
+                  //        _BuildUsername(userProfile: userProfile),
+                  //        const SizedBox(height: 15),
+                  //         _BuildCourse(userProfile: userProfile),
+                  //       const SizedBox(height: 15),
+                  //       _BuildBio(userProfile: userProfile),
+                  //      const SizedBox(height: 15),
                   _BuildModule(userProfile: userProfile),
                   const SizedBox(height: 15),
+                  _BuildTags(userProfile: userProfile),
                   _BuildSaveButton(),
                 ],
               ),
@@ -143,30 +148,23 @@ class _BuildUsername extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProfileFormBloc, ProfileFormState>(
-      builder: (context, state) {
-        return TextFormField(
-            initialValue: userProfile.username.getOrCrash(),
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              labelText: 'Username',
-            ),
-            autocorrect: false,
-            onChanged: (value) {
-              context
-                  .read<ProfileFormBloc>()
-                  .add(ProfileFormEvent.usernameChanged(value));
-            },
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: (_) => context
-                .read<ProfileFormBloc>()
-                .state
-                .profile
-                .username
-                .value
-                .fold(
+    return TextFormField(
+        initialValue: userProfile.username.getOrCrash(),
+        decoration: InputDecoration(
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          labelText: 'Username',
+        ),
+        autocorrect: false,
+        onChanged: (value) {
+          context
+              .read<ProfileFormBloc>()
+              .add(ProfileFormEvent.usernameChanged(value));
+        },
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        validator: (_) =>
+            context.read<ProfileFormBloc>().state.profile.username.value.fold(
                   (f) => f.maybeMap(
                       invalidUsernameFormat: (_) =>
                           'Only lowercase alphanumeric, . and _ characters allowed',
@@ -178,12 +176,10 @@ class _BuildUsername extends StatelessWidget {
                       orElse: () => null),
                   (_) => null,
                 ),
-            inputFormatters: [
-              FilteringTextInputFormatter.deny(
-                  RegExp(r"\s\b|\b\s")) //Prevents whitespace
-            ]);
-      },
-    );
+        inputFormatters: [
+          FilteringTextInputFormatter.deny(
+              RegExp(r"\s\b|\b\s")) //Prevents whitespace
+        ]);
   }
 }
 
@@ -194,34 +190,30 @@ class _BuildCourse extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProfileFormBloc, ProfileFormState>(
-      builder: (context, state) {
-        return TextFormField(
-          initialValue: userProfile.course.getOrCrash(),
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            labelText: 'Course',
-          ),
-          autocorrect: false,
-          onChanged: (value) {
-            context
-                .read<ProfileFormBloc>()
-                .add(ProfileFormEvent.courseChanged(value));
-          },
-          validator: (_) =>
-              context.read<ProfileFormBloc>().state.profile.course.value.fold(
-                    (f) => f.maybeMap(
-                      emptyString: (_) => 'Please input your course of study',
-                      exceedingLength: (_) =>
-                          'Course name is too long, maximum of 20 characters only',
-                      orElse: () => null,
-                    ),
-                    (_) => null,
-                  ),
-        );
+    return TextFormField(
+      initialValue: userProfile.course.getOrCrash(),
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        labelText: 'Course',
+      ),
+      autocorrect: false,
+      onChanged: (value) {
+        context
+            .read<ProfileFormBloc>()
+            .add(ProfileFormEvent.courseChanged(value));
       },
+      validator: (_) =>
+          context.read<ProfileFormBloc>().state.profile.course.value.fold(
+                (f) => f.maybeMap(
+                  emptyString: (_) => 'Please input your course of study',
+                  exceedingLength: (_) =>
+                      'Course name is too long, maximum of 20 characters only',
+                  orElse: () => null,
+                ),
+                (_) => null,
+              ),
     );
   }
 }
@@ -233,32 +225,26 @@ class _BuildBio extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProfileFormBloc, ProfileFormState>(
-      builder: (context, state) {
-        return TextFormField(
-          initialValue: userProfile.bio.getOrCrash(),
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            labelText: 'Bio',
-          ),
-          autocorrect: false,
-          onChanged: (value) {
-            context
-                .read<ProfileFormBloc>()
-                .add(ProfileFormEvent.bioChanged(value));
-          },
-          validator: (_) =>
-              context.read<ProfileFormBloc>().state.profile.bio.value.fold(
-                    (f) => f.maybeMap(
-                      exceedingLength: (_) => 'Maximum 80 characters only',
-                      orElse: () => null,
-                    ),
-                    (_) => null,
-                  ),
-        );
+    return TextFormField(
+      initialValue: userProfile.bio.getOrCrash(),
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        labelText: 'Bio',
+      ),
+      autocorrect: false,
+      onChanged: (value) {
+        context.read<ProfileFormBloc>().add(ProfileFormEvent.bioChanged(value));
       },
+      validator: (_) =>
+          context.read<ProfileFormBloc>().state.profile.bio.value.fold(
+                (f) => f.maybeMap(
+                  exceedingLength: (_) => 'Maximum 80 characters only',
+                  orElse: () => null,
+                ),
+                (_) => null,
+              ),
     );
   }
 }
@@ -270,36 +256,99 @@ class _BuildModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProfileFormBloc, ProfileFormState>(
-      builder: (context, state) {
-        return TextFormField(
-            initialValue: userProfile.module.getOrCrash(),
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              labelText: 'Module',
-            ),
-            autocorrect: false,
-            onChanged: (value) {
-              context
-                  .read<ProfileFormBloc>()
-                  .add(ProfileFormEvent.moduleChanged(value));
-            },
-            validator: (_) =>
-                context.read<ProfileFormBloc>().state.profile.module.value.fold(
-                      (f) => f.maybeMap(
-                        exceedingLength: (_) => 'Invalid module',
-                        orElse: () => null,
-                      ),
-                      (_) => null,
-                    ),
-            inputFormatters: [
-              FilteringTextInputFormatter.deny(
-                  RegExp(r"\s\b|\b\s")) //Prevents whitespace
-            ]);
+    return TypeAheadField(
+      suggestionsCallback: (value) {
+        context
+            .read<ProfileFormBloc>()
+            .add(ProfileFormEvent.searchedModule(value));
+        return context
+            .read<ProfileFormBloc>()
+            .state
+            .moduleSuggestions
+            .getOrElse(() => []);
+      },
+      itemBuilder: (context, suggestion) {
+        return ListTile(title: Text(suggestion.toString()));
+      },
+      onSuggestionSelected: (String value) {
+        print("selected");
+        if (!context
+            .read<ProfileFormBloc>()
+            .state
+            .profile
+            .modules
+            .contains(value)) {
+          print("adding to list");
+          context
+              .read<ProfileFormBloc>()
+              .add(ProfileFormEvent.addedModule(value));
+        }
       },
     );
+  }
+}
+
+class _BuildTags extends StatelessWidget {
+  final Profile userProfile;
+
+  const _BuildTags({Key? key, required this.userProfile}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ProfileFormBloc, ProfileFormState>(
+        builder: (context, state) {
+      if (context.read<ProfileFormBloc>().state.profile.modules.isEmpty) {
+        print("is empt");
+        return Container();
+      } else {
+        return Container(
+          alignment: Alignment.topLeft,
+          child: Tags(
+            alignment: WrapAlignment.center,
+            itemCount:
+                context.read<ProfileFormBloc>().state.profile.modules.length,
+            itemBuilder: (index) {
+              return ItemTags(
+                index: index,
+                title: context
+                    .read<ProfileFormBloc>()
+                    .state
+                    .profile
+                    .modules[index],
+                color: Colors.blue,
+                activeColor: Colors.red,
+                onPressed: (Item item) {
+                  print('pressed');
+                },
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
+                elevation: 0.0,
+                borderRadius: BorderRadius.all(Radius.circular(7.0)),
+//                textColor: ,
+                textColor: Colors.white,
+                textActiveColor: Colors.white,
+                removeButton: ItemTagsRemoveButton(
+                    color: Colors.black,
+                    backgroundColor: Colors.transparent,
+                    size: 14,
+                    onRemoved: () {
+                      print("removing");
+                      context.read<ProfileFormBloc>().add(
+                          ProfileFormEvent.removedModule(context
+                              .read<ProfileFormBloc>()
+                              .state
+                              .profile
+                              .modules[index]));
+
+                      return true;
+                    }),
+                textOverflow: TextOverflow.ellipsis,
+              );
+            },
+          ),
+        );
+      }
+    });
   }
 }
 

@@ -11,6 +11,7 @@ class ProfileFormState with _$ProfileFormState {
     required Either<DataFailure, Profile> currentProfile,
     required String currentUsername,
     required bool showErrorMessages,
+    required Either<DataFailure, List<String>> moduleSuggestions,
   }) = _ProfileFormState;
 
   factory ProfileFormState.initial() => ProfileFormState(
@@ -22,5 +23,6 @@ class ProfileFormState with _$ProfileFormState {
         currentProfile: right(Profile.empty()),
         currentUsername: '',
         showErrorMessages: false,
+        moduleSuggestions: right([]),
       );
 }
