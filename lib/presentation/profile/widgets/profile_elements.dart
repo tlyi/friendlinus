@@ -2,6 +2,7 @@ import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_tags/flutter_tags.dart';
 import 'package:friendlinus/application/chats/chat_bloc.dart';
 import 'package:friendlinus/application/forum/forum_actor/forum_actor_bloc.dart';
 import 'package:friendlinus/application/forum/forum_watcher/forum_watcher_bloc.dart';
@@ -41,7 +42,10 @@ class ProfileElements extends StatelessWidget {
               ProfileHeader(
                   userProfile: userProfile, isOwnProfile: isOwnProfile),
               ModulesOfInterest(userProfile: userProfile),
-              FriendList(userProfile: userProfile, isOwnProfile: isOwnProfile),
+              FollowersList(
+                  userProfile: userProfile, isOwnProfile: isOwnProfile),
+              FollowingList(
+                  userProfile: userProfile, isOwnProfile: isOwnProfile),
               RecentPosts(userProfile: userProfile, isOwnProfile: isOwnProfile),
             ],
           ),
@@ -235,23 +239,164 @@ class ModulesOfInterest extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 60,
-      width: MediaQuery.of(context).size.width,
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(10)),
+    return Align(
+      alignment: Alignment.topLeft,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text('Modules Of Interest',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+          if (userProfile.modules.isEmpty)
+            const Padding(
+                padding: EdgeInsets.only(top: 10.0, bottom: 15.0),
+                child: Text('No modules indicated yet :('))
+          else
+            Flexible(
+              child: Container(
+                padding: EdgeInsets.only(top: 15, bottom: 20),
+                alignment: Alignment.topLeft,
+                child: Tags(
+                  alignment: WrapAlignment.start,
+                  itemCount: userProfile.modules.length,
+                  itemBuilder: (index) {
+                    final module = userProfile.modules[index];
+                    return ItemTags(
+                      key: Key(index.toString()),
+                      index: index,
+                      title: module,
+                      activeColor: Colors.grey.shade500,
+                      pressEnabled: false, //TODO: Press to go into module forum
+                      highlightColor: Colors.transparent,
+                      splashColor: Colors.transparent,
+                      elevation: 0.0,
+                      borderRadius: BorderRadius.all(Radius.circular(7.0)),
+                      textColor: Colors.white,
+                      textActiveColor: Colors.white,
+                      textOverflow: TextOverflow.ellipsis,
+                    );
+                  },
+                ),
+              ),
+            )
+        ],
       ),
-      child: const Text('Modules Of Interest',
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
     );
   }
 }
 
-class FriendList extends StatelessWidget {
+class FollowersList extends StatelessWidget {
   final Profile userProfile;
   final bool isOwnProfile;
 
-  const FriendList(
+  const FollowersList(
+      {Key? key, required this.userProfile, required this.isOwnProfile})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ProfileActorBloc, ProfileActorState>(
+      builder: (context, state) {
+        String ownId = context.read<ProfileActorBloc>().state.ownId;
+        List<Profile> followers = [];
+        DataFailure? failure;
+        context.read<ProfileActorBloc>().state.failureOrFollowers.fold(
+              (f) => failure = f,
+              (list) => followers = list,
+            );
+
+        return Align(
+          alignment: Alignment.topLeft,
+          child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text('Followers',
+                    style:
+                        TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                if (failure != null)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0, bottom: 15.0),
+                    child: Text(failure!.maybeMap(
+                        unexpected: (_) => 'Unexpected Error',
+                        orElse: () => '')),
+                  )
+                else if (followers.isEmpty)
+                  const Padding(
+                    padding: EdgeInsets.only(top: 10.0, bottom: 15.0),
+                    child: Text('No followers yet :('),
+                  )
+                else
+                  SizedBox(
+                    height: 120,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: const ScrollPhysics(),
+                                    padding: const EdgeInsets.only(top: 15.0),
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: followers.length,
+                                    itemBuilder: (context, index) {
+                                      final Profile profile = followers[index];
+                                      return GestureDetector(
+                                        onTap: () async {
+                                          await context.pushRoute(
+                                              OtherProfileRoute(
+                                                  userProfile: profile));
+                                          isOwnProfile
+                                              ? context
+                                                  .read<ProfileActorBloc>()
+                                                  .add(const ProfileActorEvent
+                                                      .loadingOwnProfile())
+                                              : context
+                                                  .read<ProfileActorBloc>()
+                                                  .add(ProfileActorEvent
+                                                      .loadingOtherProfile(
+                                                          userProfile.uuid));
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 5.0, right: 5.0),
+                                          child: Column(children: [
+                                            ClipOval(
+                                              child: Image.network(
+                                                profile.photoUrl,
+                                                width: 60.0,
+                                                height: 60.0,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                            Text(profile.username.getOrCrash()),
+                                          ]),
+                                        ),
+                                      );
+                                    }),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+              ]),
+        );
+      },
+    );
+  }
+}
+
+class FollowingList extends StatelessWidget {
+  final Profile userProfile;
+  final bool isOwnProfile;
+
+  const FollowingList(
       {Key? key, required this.userProfile, required this.isOwnProfile})
       : super(key: key);
 
@@ -266,103 +411,113 @@ class FriendList extends StatelessWidget {
               (f) => failure = f,
               (list) => following = list,
             );
-        return SizedBox(
-            height: 130,
-            width: MediaQuery.of(context).size.width,
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: Stack(children: [
+        return Align(
+          alignment: Alignment.topLeft,
+          child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
                 const Text('Following',
                     style:
                         TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-                Padding(
-                  padding: const EdgeInsets.only(top: 30.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (isOwnProfile)
-                        Padding(
-                          padding: EdgeInsets.only(top: 15, right: 10),
-                          child: GestureDetector(
-                            onTap: () async {
-                              await context.pushRoute(SearchUsersRoute());
-                              context.read<ProfileActorBloc>().add(
-                                  const ProfileActorEvent.loadingOwnProfile());
-                            },
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: Container(
-                                padding: EdgeInsets.only(),
-                                height: 40,
-                                width: 40,
-                                child: Icon(Icons.person_add_rounded),
-                                color: Colors.grey[400],
+                if (failure != null)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0, bottom: 15.0),
+                    child: Text(failure!.maybeMap(
+                        unexpected: (_) => 'Unexpected Error',
+                        orElse: () => '')),
+                  )
+                else if (following.isEmpty)
+                  const Padding(
+                    padding: EdgeInsets.only(top: 10.0, bottom: 15.0),
+                    child: Text('Not following anyone yet :('),
+                  )
+                else
+                  SizedBox(
+                    height: 120,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (isOwnProfile)
+                          Padding(
+                            padding: EdgeInsets.only(top: 25, right: 10),
+                            child: GestureDetector(
+                              onTap: () async {
+                                await context.pushRoute(SearchUsersRoute());
+                                context.read<ProfileActorBloc>().add(
+                                    const ProfileActorEvent
+                                        .loadingOwnProfile());
+                              },
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: Container(
+                                  padding: EdgeInsets.only(),
+                                  height: 40,
+                                  width: 40,
+                                  child: Icon(Icons.person_add_rounded),
+                                  color: Colors.grey[400],
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      if (failure != null)
-                        Text(failure!.maybeMap(
-                            unexpected: (_) => 'Unexpected Error',
-                            orElse: () => '')),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              child: ListView.builder(
-                                  shrinkWrap: true,
-                                  physics: const ScrollPhysics(),
-                                  padding: const EdgeInsets.only(top: 5.0),
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: following.length,
-                                  itemBuilder: (context, index) {
-                                    final Profile profile = following[index];
-                                    return GestureDetector(
-                                      onTap: () async {
-                                        ownId == profile.uuid
-                                            ? await context.pushRoute(
-                                                ProfileRoute(canGoBack: true))
-                                            : await context.pushRoute(
-                                                OtherProfileRoute(
-                                                    userProfile: profile));
-                                        isOwnProfile
-                                            ? context
-                                                .read<ProfileActorBloc>()
-                                                .add(const ProfileActorEvent
-                                                    .loadingOwnProfile())
-                                            : context
-                                                .read<ProfileActorBloc>()
-                                                .add(ProfileActorEvent
-                                                    .loadingOtherProfile(
-                                                        userProfile.uuid));
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 5.0, right: 5.0),
-                                        child: Column(children: [
-                                          ClipOval(
-                                            child: Image.network(
-                                              profile.photoUrl,
-                                              width: 60.0,
-                                              height: 60.0,
-                                              fit: BoxFit.cover,
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: const ScrollPhysics(),
+                                    padding: const EdgeInsets.only(top: 15.0),
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: following.length,
+                                    itemBuilder: (context, index) {
+                                      final Profile profile = following[index];
+                                      return GestureDetector(
+                                        onTap: () async {
+                                          ownId == profile.uuid
+                                              ? await context.pushRoute(
+                                                  ProfileRoute(canGoBack: true))
+                                              : await context.pushRoute(
+                                                  OtherProfileRoute(
+                                                      userProfile: profile));
+                                          isOwnProfile
+                                              ? context
+                                                  .read<ProfileActorBloc>()
+                                                  .add(const ProfileActorEvent
+                                                      .loadingOwnProfile())
+                                              : context
+                                                  .read<ProfileActorBloc>()
+                                                  .add(ProfileActorEvent
+                                                      .loadingOtherProfile(
+                                                          userProfile.uuid));
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 5.0, right: 5.0),
+                                          child: Column(children: [
+                                            ClipOval(
+                                              child: Image.network(
+                                                profile.photoUrl,
+                                                width: 60.0,
+                                                height: 60.0,
+                                                fit: BoxFit.cover,
+                                              ),
                                             ),
-                                          ),
-                                          Text(profile.username.getOrCrash()),
-                                        ]),
-                                      ),
-                                    );
-                                  }),
-                            ),
-                          ],
+                                            Text(profile.username.getOrCrash()),
+                                          ]),
+                                        ),
+                                      );
+                                    }),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
               ]),
-            ));
+        );
       },
     );
   }
@@ -384,50 +539,62 @@ class RecentPosts extends StatelessWidget {
           (f) => failure = f,
           (list) => forums = list,
         );
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          const Text('Recent Posts',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-          if (failure != null)
-            Text(failure!.maybeMap(
-                unexpected: (_) => 'Unexppected Error', orElse: () => 'Error'))
-          else
-            ListView.builder(
-                physics: const AlwaysScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: forums.length,
-                itemBuilder: (context, index) {
-                  final forum = forums[index];
+    return Align(
+      alignment: Alignment.topLeft,
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            const Text('Recent Posts',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+            if (failure != null)
+              Padding(
+                padding: const EdgeInsets.only(top: 10.0, bottom: 15.0),
+                child: Text(failure!.maybeMap(
+                    unexpected: (_) => 'Unexpected Error',
+                    orElse: () => 'Error')),
+              )
+            else if (forums.isEmpty)
+              const Padding(
+                padding: EdgeInsets.only(top: 10.0, bottom: 15.0),
+                child: Text('No forums posted yet :('),
+              )
+            else
+              ListView.builder(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: forums.length,
+                  itemBuilder: (context, index) {
+                    final forum = forums[index];
 
-                  if (isOwnProfile || (!isOwnProfile && !forum.isAnon)) {
-                    return Card(
-                      shape: RoundedRectangleBorder(
-                        side: const BorderSide(
-                            color: Color(0xFF7BA5BB), width: 2.0),
-                        borderRadius: BorderRadius.circular(15.0),
-                      ),
-                      child: ListTile(
-                        title: Text(forum.title.getOrCrash()),
-                        subtitle: Text(
-                          forum.body.getOrCrash(),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
+                    if (isOwnProfile || (!isOwnProfile && !forum.isAnon)) {
+                      return Card(
+                        shape: RoundedRectangleBorder(
+                          side: const BorderSide(
+                              color: Color(0xFF7BA5BB), width: 2.0),
+                          borderRadius: BorderRadius.circular(15.0),
                         ),
-                        trailing: Text(getTime(forum.timestamp)),
-                        isThreeLine: true,
-                        onTap: () {
-                          context.pushRoute(ForumRoute(
-                              forumId: forum.forumId,
-                              pollAdded: forum.pollAdded));
-                        },
-                      ),
-                    );
-                  } else {
-                    return Container();
-                  }
-                })
-        ]);
+                        child: ListTile(
+                          title: Text(forum.title.getOrCrash()),
+                          subtitle: Text(
+                            forum.body.getOrCrash(),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          trailing: Text(getTime(forum.timestamp)),
+                          isThreeLine: true,
+                          onTap: () {
+                            context.pushRoute(ForumRoute(
+                                forumId: forum.forumId,
+                                pollAdded: forum.pollAdded));
+                          },
+                        ),
+                      );
+                    } else {
+                      return Container();
+                    }
+                  })
+          ]),
+    );
   }
 }
 
