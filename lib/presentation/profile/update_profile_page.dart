@@ -12,21 +12,14 @@ class UpdateProfilePage extends StatelessWidget {
     return BlocProvider(
       create: (context) => getIt<ProfileFormBloc>(),
       child: Scaffold(
+        resizeToAvoidBottomInset: true,
         appBar:
             appBar(context: context, header: 'Update Profile', canGoBack: true),
-        body: //Container(
-            //   alignment: Alignment.topCenter,
-
-            SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              maxHeight: MediaQuery.of(context).size.height -
-                  (MediaQuery.of(context).padding.top + kToolbarHeight),
-            ),
+        body: SingleChildScrollView(
+          child: Container(
             child: UpdateProfileForm(),
           ),
         ),
-        //),
       ),
     );
   }
