@@ -28,7 +28,7 @@ class _$ConvoActorEventTearOff {
     );
   }
 
-  _PhotoChanged photoChanged(File photo) {
+  _PhotoChanged photoSent(File photo) {
     return _PhotoChanged(
       photo,
     );
@@ -58,7 +58,7 @@ mixin _$ConvoActorEvent {
   TResult when<TResult extends Object?>({
     required TResult Function(String convoId) convoOpened,
     required TResult Function(String message) messageChanged,
-    required TResult Function(File photo) photoChanged,
+    required TResult Function(File photo) photoSent,
     required TResult Function() messageSent,
     required TResult Function(String messageId) messageRead,
     required TResult Function() lastMessageRead,
@@ -68,7 +68,7 @@ mixin _$ConvoActorEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String convoId)? convoOpened,
     TResult Function(String message)? messageChanged,
-    TResult Function(File photo)? photoChanged,
+    TResult Function(File photo)? photoSent,
     TResult Function()? messageSent,
     TResult Function(String messageId)? messageRead,
     TResult Function()? lastMessageRead,
@@ -79,7 +79,7 @@ mixin _$ConvoActorEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(_ConvoOpened value) convoOpened,
     required TResult Function(_MessageChanged value) messageChanged,
-    required TResult Function(_PhotoChanged value) photoChanged,
+    required TResult Function(_PhotoChanged value) photoSent,
     required TResult Function(_MessageSent value) messageSent,
     required TResult Function(_MessageRead value) messageRead,
     required TResult Function(_LastMessageRead value) lastMessageRead,
@@ -89,7 +89,7 @@ mixin _$ConvoActorEvent {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_ConvoOpened value)? convoOpened,
     TResult Function(_MessageChanged value)? messageChanged,
-    TResult Function(_PhotoChanged value)? photoChanged,
+    TResult Function(_PhotoChanged value)? photoSent,
     TResult Function(_MessageSent value)? messageSent,
     TResult Function(_MessageRead value)? messageRead,
     TResult Function(_LastMessageRead value)? lastMessageRead,
@@ -182,7 +182,7 @@ class _$_ConvoOpened implements _ConvoOpened {
   TResult when<TResult extends Object?>({
     required TResult Function(String convoId) convoOpened,
     required TResult Function(String message) messageChanged,
-    required TResult Function(File photo) photoChanged,
+    required TResult Function(File photo) photoSent,
     required TResult Function() messageSent,
     required TResult Function(String messageId) messageRead,
     required TResult Function() lastMessageRead,
@@ -195,7 +195,7 @@ class _$_ConvoOpened implements _ConvoOpened {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String convoId)? convoOpened,
     TResult Function(String message)? messageChanged,
-    TResult Function(File photo)? photoChanged,
+    TResult Function(File photo)? photoSent,
     TResult Function()? messageSent,
     TResult Function(String messageId)? messageRead,
     TResult Function()? lastMessageRead,
@@ -212,7 +212,7 @@ class _$_ConvoOpened implements _ConvoOpened {
   TResult map<TResult extends Object?>({
     required TResult Function(_ConvoOpened value) convoOpened,
     required TResult Function(_MessageChanged value) messageChanged,
-    required TResult Function(_PhotoChanged value) photoChanged,
+    required TResult Function(_PhotoChanged value) photoSent,
     required TResult Function(_MessageSent value) messageSent,
     required TResult Function(_MessageRead value) messageRead,
     required TResult Function(_LastMessageRead value) lastMessageRead,
@@ -225,7 +225,7 @@ class _$_ConvoOpened implements _ConvoOpened {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_ConvoOpened value)? convoOpened,
     TResult Function(_MessageChanged value)? messageChanged,
-    TResult Function(_PhotoChanged value)? photoChanged,
+    TResult Function(_PhotoChanged value)? photoSent,
     TResult Function(_MessageSent value)? messageSent,
     TResult Function(_MessageRead value)? messageRead,
     TResult Function(_LastMessageRead value)? lastMessageRead,
@@ -314,7 +314,7 @@ class _$_MessageChanged implements _MessageChanged {
   TResult when<TResult extends Object?>({
     required TResult Function(String convoId) convoOpened,
     required TResult Function(String message) messageChanged,
-    required TResult Function(File photo) photoChanged,
+    required TResult Function(File photo) photoSent,
     required TResult Function() messageSent,
     required TResult Function(String messageId) messageRead,
     required TResult Function() lastMessageRead,
@@ -327,7 +327,7 @@ class _$_MessageChanged implements _MessageChanged {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String convoId)? convoOpened,
     TResult Function(String message)? messageChanged,
-    TResult Function(File photo)? photoChanged,
+    TResult Function(File photo)? photoSent,
     TResult Function()? messageSent,
     TResult Function(String messageId)? messageRead,
     TResult Function()? lastMessageRead,
@@ -344,7 +344,7 @@ class _$_MessageChanged implements _MessageChanged {
   TResult map<TResult extends Object?>({
     required TResult Function(_ConvoOpened value) convoOpened,
     required TResult Function(_MessageChanged value) messageChanged,
-    required TResult Function(_PhotoChanged value) photoChanged,
+    required TResult Function(_PhotoChanged value) photoSent,
     required TResult Function(_MessageSent value) messageSent,
     required TResult Function(_MessageRead value) messageRead,
     required TResult Function(_LastMessageRead value) lastMessageRead,
@@ -357,7 +357,7 @@ class _$_MessageChanged implements _MessageChanged {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_ConvoOpened value)? convoOpened,
     TResult Function(_MessageChanged value)? messageChanged,
-    TResult Function(_PhotoChanged value)? photoChanged,
+    TResult Function(_PhotoChanged value)? photoSent,
     TResult Function(_MessageSent value)? messageSent,
     TResult Function(_MessageRead value)? messageRead,
     TResult Function(_LastMessageRead value)? lastMessageRead,
@@ -421,7 +421,7 @@ class _$_PhotoChanged implements _PhotoChanged {
 
   @override
   String toString() {
-    return 'ConvoActorEvent.photoChanged(photo: $photo)';
+    return 'ConvoActorEvent.photoSent(photo: $photo)';
   }
 
   @override
@@ -446,12 +446,12 @@ class _$_PhotoChanged implements _PhotoChanged {
   TResult when<TResult extends Object?>({
     required TResult Function(String convoId) convoOpened,
     required TResult Function(String message) messageChanged,
-    required TResult Function(File photo) photoChanged,
+    required TResult Function(File photo) photoSent,
     required TResult Function() messageSent,
     required TResult Function(String messageId) messageRead,
     required TResult Function() lastMessageRead,
   }) {
-    return photoChanged(photo);
+    return photoSent(photo);
   }
 
   @override
@@ -459,14 +459,14 @@ class _$_PhotoChanged implements _PhotoChanged {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String convoId)? convoOpened,
     TResult Function(String message)? messageChanged,
-    TResult Function(File photo)? photoChanged,
+    TResult Function(File photo)? photoSent,
     TResult Function()? messageSent,
     TResult Function(String messageId)? messageRead,
     TResult Function()? lastMessageRead,
     required TResult orElse(),
   }) {
-    if (photoChanged != null) {
-      return photoChanged(photo);
+    if (photoSent != null) {
+      return photoSent(photo);
     }
     return orElse();
   }
@@ -476,12 +476,12 @@ class _$_PhotoChanged implements _PhotoChanged {
   TResult map<TResult extends Object?>({
     required TResult Function(_ConvoOpened value) convoOpened,
     required TResult Function(_MessageChanged value) messageChanged,
-    required TResult Function(_PhotoChanged value) photoChanged,
+    required TResult Function(_PhotoChanged value) photoSent,
     required TResult Function(_MessageSent value) messageSent,
     required TResult Function(_MessageRead value) messageRead,
     required TResult Function(_LastMessageRead value) lastMessageRead,
   }) {
-    return photoChanged(this);
+    return photoSent(this);
   }
 
   @override
@@ -489,14 +489,14 @@ class _$_PhotoChanged implements _PhotoChanged {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_ConvoOpened value)? convoOpened,
     TResult Function(_MessageChanged value)? messageChanged,
-    TResult Function(_PhotoChanged value)? photoChanged,
+    TResult Function(_PhotoChanged value)? photoSent,
     TResult Function(_MessageSent value)? messageSent,
     TResult Function(_MessageRead value)? messageRead,
     TResult Function(_LastMessageRead value)? lastMessageRead,
     required TResult orElse(),
   }) {
-    if (photoChanged != null) {
-      return photoChanged(this);
+    if (photoSent != null) {
+      return photoSent(this);
     }
     return orElse();
   }
@@ -553,7 +553,7 @@ class _$_MessageSent implements _MessageSent {
   TResult when<TResult extends Object?>({
     required TResult Function(String convoId) convoOpened,
     required TResult Function(String message) messageChanged,
-    required TResult Function(File photo) photoChanged,
+    required TResult Function(File photo) photoSent,
     required TResult Function() messageSent,
     required TResult Function(String messageId) messageRead,
     required TResult Function() lastMessageRead,
@@ -566,7 +566,7 @@ class _$_MessageSent implements _MessageSent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String convoId)? convoOpened,
     TResult Function(String message)? messageChanged,
-    TResult Function(File photo)? photoChanged,
+    TResult Function(File photo)? photoSent,
     TResult Function()? messageSent,
     TResult Function(String messageId)? messageRead,
     TResult Function()? lastMessageRead,
@@ -583,7 +583,7 @@ class _$_MessageSent implements _MessageSent {
   TResult map<TResult extends Object?>({
     required TResult Function(_ConvoOpened value) convoOpened,
     required TResult Function(_MessageChanged value) messageChanged,
-    required TResult Function(_PhotoChanged value) photoChanged,
+    required TResult Function(_PhotoChanged value) photoSent,
     required TResult Function(_MessageSent value) messageSent,
     required TResult Function(_MessageRead value) messageRead,
     required TResult Function(_LastMessageRead value) lastMessageRead,
@@ -596,7 +596,7 @@ class _$_MessageSent implements _MessageSent {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_ConvoOpened value)? convoOpened,
     TResult Function(_MessageChanged value)? messageChanged,
-    TResult Function(_PhotoChanged value)? photoChanged,
+    TResult Function(_PhotoChanged value)? photoSent,
     TResult Function(_MessageSent value)? messageSent,
     TResult Function(_MessageRead value)? messageRead,
     TResult Function(_LastMessageRead value)? lastMessageRead,
@@ -681,7 +681,7 @@ class _$_MessageRead implements _MessageRead {
   TResult when<TResult extends Object?>({
     required TResult Function(String convoId) convoOpened,
     required TResult Function(String message) messageChanged,
-    required TResult Function(File photo) photoChanged,
+    required TResult Function(File photo) photoSent,
     required TResult Function() messageSent,
     required TResult Function(String messageId) messageRead,
     required TResult Function() lastMessageRead,
@@ -694,7 +694,7 @@ class _$_MessageRead implements _MessageRead {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String convoId)? convoOpened,
     TResult Function(String message)? messageChanged,
-    TResult Function(File photo)? photoChanged,
+    TResult Function(File photo)? photoSent,
     TResult Function()? messageSent,
     TResult Function(String messageId)? messageRead,
     TResult Function()? lastMessageRead,
@@ -711,7 +711,7 @@ class _$_MessageRead implements _MessageRead {
   TResult map<TResult extends Object?>({
     required TResult Function(_ConvoOpened value) convoOpened,
     required TResult Function(_MessageChanged value) messageChanged,
-    required TResult Function(_PhotoChanged value) photoChanged,
+    required TResult Function(_PhotoChanged value) photoSent,
     required TResult Function(_MessageSent value) messageSent,
     required TResult Function(_MessageRead value) messageRead,
     required TResult Function(_LastMessageRead value) lastMessageRead,
@@ -724,7 +724,7 @@ class _$_MessageRead implements _MessageRead {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_ConvoOpened value)? convoOpened,
     TResult Function(_MessageChanged value)? messageChanged,
-    TResult Function(_PhotoChanged value)? photoChanged,
+    TResult Function(_PhotoChanged value)? photoSent,
     TResult Function(_MessageSent value)? messageSent,
     TResult Function(_MessageRead value)? messageRead,
     TResult Function(_LastMessageRead value)? lastMessageRead,
@@ -788,7 +788,7 @@ class _$_LastMessageRead implements _LastMessageRead {
   TResult when<TResult extends Object?>({
     required TResult Function(String convoId) convoOpened,
     required TResult Function(String message) messageChanged,
-    required TResult Function(File photo) photoChanged,
+    required TResult Function(File photo) photoSent,
     required TResult Function() messageSent,
     required TResult Function(String messageId) messageRead,
     required TResult Function() lastMessageRead,
@@ -801,7 +801,7 @@ class _$_LastMessageRead implements _LastMessageRead {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String convoId)? convoOpened,
     TResult Function(String message)? messageChanged,
-    TResult Function(File photo)? photoChanged,
+    TResult Function(File photo)? photoSent,
     TResult Function()? messageSent,
     TResult Function(String messageId)? messageRead,
     TResult Function()? lastMessageRead,
@@ -818,7 +818,7 @@ class _$_LastMessageRead implements _LastMessageRead {
   TResult map<TResult extends Object?>({
     required TResult Function(_ConvoOpened value) convoOpened,
     required TResult Function(_MessageChanged value) messageChanged,
-    required TResult Function(_PhotoChanged value) photoChanged,
+    required TResult Function(_PhotoChanged value) photoSent,
     required TResult Function(_MessageSent value) messageSent,
     required TResult Function(_MessageRead value) messageRead,
     required TResult Function(_LastMessageRead value) lastMessageRead,
@@ -831,7 +831,7 @@ class _$_LastMessageRead implements _LastMessageRead {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_ConvoOpened value)? convoOpened,
     TResult Function(_MessageChanged value)? messageChanged,
-    TResult Function(_PhotoChanged value)? photoChanged,
+    TResult Function(_PhotoChanged value)? photoSent,
     TResult Function(_MessageSent value)? messageSent,
     TResult Function(_MessageRead value)? messageRead,
     TResult Function(_LastMessageRead value)? lastMessageRead,

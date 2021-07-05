@@ -151,7 +151,9 @@ class ChatRepository implements IChatRepository {
         transaction.update(
           chatDoc,
           {
-            'lastMessage': chatMessageDto.messageBody,
+            'lastMessage': chatMessageDto.photoUrl == ''
+                ? chatMessageDto.messageBody
+                : 'Photo',
             'lastSenderId': chatMessageDto.senderId,
             'lastMessageRead': false,
             'timestamp': chatMessageDto.timeSent,
@@ -174,7 +176,7 @@ class ChatRepository implements IChatRepository {
     UploadTask storageUploadTask;
     storageUploadTask = _firebaseStorage
         .ref()
-        .child('forumPictures')
+        .child('chatPictures')
         .child(convoId)
         .child(messageId)
         .putFile(photo);

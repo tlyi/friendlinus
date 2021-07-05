@@ -110,23 +110,27 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
         moduleSuggestions: moduleSuggestions,
       );
     }, addedModule: (e) async* {
+      yield state.copyWith(refreshTags: false);
       List<String> moduleList = state.profile.modules;
 
       moduleList.add(e.moduleStr);
 
       yield state.copyWith(
         profile: state.profile.copyWith(modules: moduleList),
+        refreshTags: true,
       );
     }, removedModule: (e) async* {
+      yield state.copyWith(refreshTags: false);
       List<String> moduleList = state.profile.modules;
       if (moduleList.length == 1) {
         moduleList = [];
       } else {
-        moduleList.remove(e.moduleStr);
+        moduleList.removeAt(e.index);
       }
 
       yield state.copyWith(
         profile: state.profile.copyWith(modules: moduleList),
+        refreshTags: true,
       );
     });
   }

@@ -13,6 +13,5 @@ class ProfileFormEvent with _$ProfileFormEvent {
   const factory ProfileFormEvent.searchedModule(String searchStr) =
       _SearchedModule;
   const factory ProfileFormEvent.addedModule(String moduleStr) = _AddedModule;
-  const factory ProfileFormEvent.removedModule(String moduleStr) =
-      _RemovedModule;
+  const factory ProfileFormEvent.removedModule(int index) = _RemovedModule;
 }

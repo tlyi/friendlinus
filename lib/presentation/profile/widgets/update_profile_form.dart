@@ -61,13 +61,13 @@ class UpdateProfileForm extends StatelessWidget {
                 children: <Widget>[
                   _BuildProfilePicButton(userProfile: userProfile),
                   const SizedBox(height: 20),
-                  //        _BuildUsername(userProfile: userProfile),
-                  //        const SizedBox(height: 15),
-                  //         _BuildCourse(userProfile: userProfile),
-                  //       const SizedBox(height: 15),
-                  //       _BuildBio(userProfile: userProfile),
-                  //      const SizedBox(height: 15),
-                  _BuildModule(userProfile: userProfile),
+                  _BuildUsername(userProfile: userProfile),
+                  const SizedBox(height: 15),
+                  _BuildCourse(userProfile: userProfile),
+                  const SizedBox(height: 15),
+                  _BuildBio(userProfile: userProfile),
+                  const SizedBox(height: 15),
+                  Expanded(child: _BuildModule(userProfile: userProfile)),
                   const SizedBox(height: 15),
                   _BuildTags(userProfile: userProfile),
                   _BuildSaveButton(),
@@ -256,34 +256,51 @@ class _BuildModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TypeAheadField(
-      suggestionsCallback: (value) {
-        context
-            .read<ProfileFormBloc>()
-            .add(ProfileFormEvent.searchedModule(value));
-        return context
-            .read<ProfileFormBloc>()
-            .state
-            .moduleSuggestions
-            .getOrElse(() => []);
-      },
-      itemBuilder: (context, suggestion) {
-        return ListTile(title: Text(suggestion.toString()));
-      },
-      onSuggestionSelected: (String value) {
-        print("selected");
-        if (!context
-            .read<ProfileFormBloc>()
-            .state
-            .profile
-            .modules
-            .contains(value)) {
-          print("adding to list");
-          context
-              .read<ProfileFormBloc>()
-              .add(ProfileFormEvent.addedModule(value));
-        }
-      },
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Select modules of interest'),
+        TypeAheadField(
+          suggestionsCallback: (value) async {
+            context
+                .read<ProfileFormBloc>()
+                .add(ProfileFormEvent.searchedModule(value));
+
+            return context
+                .read<ProfileFormBloc>()
+                .state
+                .moduleSuggestions
+                .getOrElse(() => []);
+          },
+          itemBuilder: (context, suggestion) {
+            return ListTile(title: Text(suggestion.toString()));
+          },
+          onSuggestionSelected: (String value) {
+            if (context.read<ProfileFormBloc>().state.profile.modules.length >=
+                10) {
+              FlushbarHelper.createError(
+                      message: 'Maximum number of modules is 10')
+                  .show(context);
+            } else if (context
+                .read<ProfileFormBloc>()
+                .state
+                .profile
+                .modules
+                .contains(value)) {
+              print("module alr selected");
+              FlushbarHelper.createError(
+                      message: 'Module has already been selected')
+                  .show(context);
+            } else {
+              print("adding to list");
+              context
+                  .read<ProfileFormBloc>()
+                  .add(ProfileFormEvent.addedModule(value));
+            }
+          },
+        ),
+      ],
     );
   }
 }
@@ -300,54 +317,53 @@ class _BuildTags extends StatelessWidget {
       if (context.read<ProfileFormBloc>().state.profile.modules.isEmpty) {
         print("is empt");
         return Container();
-      } else {
-        return Container(
-          alignment: Alignment.topLeft,
-          child: Tags(
-            alignment: WrapAlignment.center,
-            itemCount:
-                context.read<ProfileFormBloc>().state.profile.modules.length,
-            itemBuilder: (index) {
-              return ItemTags(
-                index: index,
-                title: context
+      } else if (context.read<ProfileFormBloc>().state.refreshTags) {
+        if (context.read<ProfileFormBloc>().state.refreshTags) {
+          return Container(
+            alignment: Alignment.topLeft,
+            child: Tags(
+              alignment: WrapAlignment.start,
+              itemCount:
+                  context.read<ProfileFormBloc>().state.profile.modules.length,
+              itemBuilder: (index) {
+                final module = context
                     .read<ProfileFormBloc>()
                     .state
                     .profile
-                    .modules[index],
-                color: Colors.blue,
-                activeColor: Colors.red,
-                onPressed: (Item item) {
-                  print('pressed');
-                },
-                highlightColor: Colors.transparent,
-                splashColor: Colors.transparent,
-                elevation: 0.0,
-                borderRadius: BorderRadius.all(Radius.circular(7.0)),
+                    .modules[index];
+                return ItemTags(
+                  key: Key(index.toString()),
+                  index: index,
+                  title: module,
+                  activeColor: Colors.grey.shade500,
+                  pressEnabled: false,
+                  highlightColor: Colors.transparent,
+                  splashColor: Colors.transparent,
+                  elevation: 0.0,
+                  borderRadius: BorderRadius.all(Radius.circular(7.0)),
 //                textColor: ,
-                textColor: Colors.white,
-                textActiveColor: Colors.white,
-                removeButton: ItemTagsRemoveButton(
-                    color: Colors.black,
-                    backgroundColor: Colors.transparent,
-                    size: 14,
-                    onRemoved: () {
-                      print("removing");
-                      context.read<ProfileFormBloc>().add(
-                          ProfileFormEvent.removedModule(context
-                              .read<ProfileFormBloc>()
-                              .state
-                              .profile
-                              .modules[index]));
+                  textColor: Colors.white,
+                  textActiveColor: Colors.white,
+                  removeButton: ItemTagsRemoveButton(
+                      color: Colors.black,
+                      backgroundColor: Colors.transparent,
+                      size: 14,
+                      onRemoved: () {
+                        print("removing");
+                        context
+                            .read<ProfileFormBloc>()
+                            .add(ProfileFormEvent.removedModule(index));
 
-                      return true;
-                    }),
-                textOverflow: TextOverflow.ellipsis,
-              );
-            },
-          ),
-        );
+                        return true;
+                      }),
+                  textOverflow: TextOverflow.ellipsis,
+                );
+              },
+            ),
+          );
+        }
       }
+      return Container();
     });
   }
 }

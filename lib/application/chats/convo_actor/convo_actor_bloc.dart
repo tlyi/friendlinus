@@ -35,7 +35,7 @@ class ConvoActorBloc extends Bloc<ConvoActorEvent, ConvoActorState> {
       yield state.copyWith(
           chatMessage:
               state.chatMessage.copyWith(messageBody: MessageBody(e.message)));
-    }, photoChanged: (e) async* {
+    }, photoSent: (e) async* {
       final failureOrString = await _chatRepository.uploadPhoto(
           e.photo, state.convoId, state.messageId);
       String url = '';
@@ -48,6 +48,7 @@ class ConvoActorBloc extends Bloc<ConvoActorEvent, ConvoActorState> {
       yield state.copyWith(
           photoUrl: failureOrString,
           chatMessage: state.chatMessage.copyWith(photoUrl: url));
+      add(const ConvoActorEvent.messageSent());
     }, messageSent: (e) async* {
       Either<DataFailure, Unit> failureOrSuccess;
       failureOrSuccess = await _chatRepository.createMessage(
@@ -55,7 +56,8 @@ class ConvoActorBloc extends Bloc<ConvoActorEvent, ConvoActorState> {
           messageId: state.messageId,
           chatMessage: state.chatMessage.copyWith(messageId: state.messageId));
       yield state.copyWith(
-          chatMessage: state.chatMessage.copyWith(messageBody: MessageBody('')),
+          chatMessage: state.chatMessage
+              .copyWith(messageBody: MessageBody(''), photoUrl: ''),
           sentFailureOrSuccessOption: optionOf(failureOrSuccess),
           messageId: UniqueId('').getOrCrash());
     }, messageRead: (e) async* {

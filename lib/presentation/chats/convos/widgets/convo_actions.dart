@@ -1,8 +1,12 @@
+import 'dart:io';
+
+import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:friendlinus/application/chats/convo_actor/convo_actor_bloc.dart';
 import 'package:friendlinus/domain/data/profile/profile.dart';
 import 'package:friendlinus/presentation/chats/convos/widgets/convo_messages.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ConvoActions extends StatefulWidget {
   final String convoId;
@@ -50,7 +54,90 @@ class _ConvoActionsState extends State<ConvoActions> {
                       color: Colors.white,
                       size: 20,
                     ),
-                    onPressed: () {},
+                    onPressed: () async {
+                      final picker = ImagePicker();
+                      File? pickedImage;
+                      final pickedFile = await picker.getImage(
+                        source: ImageSource.gallery,
+                        imageQuality: 70,
+                      );
+                      if (pickedFile == null) {
+                        FlushbarHelper.createError(message: 'No image picked')
+                            .show(context);
+                      } else {
+                        pickedImage = File(pickedFile.path);
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext innerContext) {
+                              return AlertDialog(
+                                  content: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Align(
+                                    alignment: Alignment.topRight,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.pop(innerContext);
+                                      },
+                                      child: const Icon(
+                                        Icons.close,
+                                        color: Colors.grey,
+                                        size: 30,
+                                      ),
+                                    ),
+                                  ),
+                                  Image.file(pickedImage!, fit: BoxFit.contain),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: TextField(
+                                          decoration: const InputDecoration(
+                                            hintText: "Add a caption",
+                                            hintStyle: TextStyle(
+                                                color: Colors.black54),
+                                            border: InputBorder.none,
+                                          ),
+                                          onChanged: (message) {
+                                            context.read<ConvoActorBloc>().add(
+                                                ConvoActorEvent.messageChanged(
+                                                    message));
+                                          },
+                                          onSubmitted: (_) {
+                                            context.read<ConvoActorBloc>().add(
+                                                ConvoActorEvent.photoSent(
+                                                    pickedImage!));
+                                          },
+                                        ),
+                                      ),
+                                      Container(
+                                        height: 35,
+                                        width: 35,
+                                        decoration: BoxDecoration(
+                                          color: Colors.blueGrey,
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                        ),
+                                        child: IconButton(
+                                          icon: const Icon(
+                                            Icons.send,
+                                            color: Colors.white,
+                                            size: 18,
+                                          ),
+                                          onPressed: () {
+                                            context.read<ConvoActorBloc>().add(
+                                                ConvoActorEvent.photoSent(
+                                                    pickedImage!));
+                                            Navigator.pop(innerContext);
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ));
+                            });
+                      }
+                    },
                   ),
                 ),
                 const SizedBox(
@@ -70,10 +157,18 @@ class _ConvoActionsState extends State<ConvoActions> {
                     },
                     controller: textController,
                     onSubmitted: (_) {
-                      context
-                          .read<ConvoActorBloc>()
-                          .add(const ConvoActorEvent.messageSent());
-                      clearText();
+                      if (context
+                              .read<ConvoActorBloc>()
+                              .state
+                              .chatMessage
+                              .messageBody
+                              .getOrCrash() !=
+                          '') {
+                        context
+                            .read<ConvoActorBloc>()
+                            .add(const ConvoActorEvent.messageSent());
+                        clearText();
+                      }
                     },
                   ),
                 ),
@@ -94,10 +189,29 @@ class _ConvoActionsState extends State<ConvoActions> {
                       size: 18,
                     ),
                     onPressed: () {
-                      context
+                      if (context
                           .read<ConvoActorBloc>()
-                          .add(const ConvoActorEvent.messageSent());
-                      clearText();
+                          .state
+                          .chatMessage
+                          .messageBody
+                          .value
+                          .isLeft()) {
+                        FlushbarHelper.createError(
+                                message:
+                                    'Message exceeds maximum characters of 4096')
+                            .show(context);
+                      } else if (context
+                              .read<ConvoActorBloc>()
+                              .state
+                              .chatMessage
+                              .messageBody
+                              .getOrCrash() !=
+                          '') {
+                        context
+                            .read<ConvoActorBloc>()
+                            .add(const ConvoActorEvent.messageSent());
+                        clearText();
+                      }
                     },
                   ),
                 ),
@@ -109,23 +223,3 @@ class _ConvoActionsState extends State<ConvoActions> {
     );
   }
 }
-
-/*oid pickPhoto() async {
-                final picker = ImagePicker();
-                File? pickedImage;
-                final pickedFile = await picker.getImage(
-                  source: ImageSource.gallery,
-                  imageQuality: 70,
-                );
-                if (pickedFile == null) {
-                  FlushbarHelper.createError(message: 'No image picked')
-                      .show(context);
-                } else {
-                  pickedImage = File(pickedFile.path);
-                  context.read<ForumFormBloc>().add(ForumFormEvent.photoAdded(
-                        pickedImage,
-                        context.read<ForumFormBloc>().state.forumPost.forumId,
-                      ));
-                }
-
-                */

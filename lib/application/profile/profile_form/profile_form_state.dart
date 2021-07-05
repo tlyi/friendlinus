@@ -12,6 +12,7 @@ class ProfileFormState with _$ProfileFormState {
     required String currentUsername,
     required bool showErrorMessages,
     required Either<DataFailure, List<String>> moduleSuggestions,
+    required bool refreshTags,
   }) = _ProfileFormState;
 
   factory ProfileFormState.initial() => ProfileFormState(
@@ -24,5 +25,6 @@ class ProfileFormState with _$ProfileFormState {
         currentUsername: '',
         showErrorMessages: false,
         moduleSuggestions: right([]),
+        refreshTags: true,
       );
 }

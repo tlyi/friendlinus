@@ -9,23 +9,24 @@ import 'package:friendlinus/presentation/profile/widgets/update_profile_form.dar
 class UpdateProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar:
-          appBar(context: context, header: 'Update Profile', canGoBack: true),
-      body: Container(
-        alignment: Alignment.topCenter,
-        child: SingleChildScrollView(
+    return BlocProvider(
+      create: (context) => getIt<ProfileFormBloc>(),
+      child: Scaffold(
+        appBar:
+            appBar(context: context, header: 'Update Profile', canGoBack: true),
+        body: //Container(
+            //   alignment: Alignment.topCenter,
+
+            SingleChildScrollView(
           child: ConstrainedBox(
             constraints: BoxConstraints(
               maxHeight: MediaQuery.of(context).size.height -
                   (MediaQuery.of(context).padding.top + kToolbarHeight),
             ),
-            child: BlocProvider(
-              create: (context) => getIt<ProfileFormBloc>(),
-              child: UpdateProfileForm(),
-            ),
+            child: UpdateProfileForm(),
           ),
         ),
+        //),
       ),
     );
   }

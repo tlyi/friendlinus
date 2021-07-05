@@ -60,9 +60,9 @@ class _$ProfileFormEventTearOff {
     );
   }
 
-  _RemovedModule removedModule(String moduleStr) {
+  _RemovedModule removedModule(int index) {
     return _RemovedModule(
-      moduleStr,
+      index,
     );
   }
 }
@@ -82,7 +82,7 @@ mixin _$ProfileFormEvent {
     required TResult Function() getProfile,
     required TResult Function(String searchStr) searchedModule,
     required TResult Function(String moduleStr) addedModule,
-    required TResult Function(String moduleStr) removedModule,
+    required TResult Function(int index) removedModule,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -95,7 +95,7 @@ mixin _$ProfileFormEvent {
     TResult Function()? getProfile,
     TResult Function(String searchStr)? searchedModule,
     TResult Function(String moduleStr)? addedModule,
-    TResult Function(String moduleStr)? removedModule,
+    TResult Function(int index)? removedModule,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -226,7 +226,7 @@ class _$_PhotoChanged with DiagnosticableTreeMixin implements _PhotoChanged {
     required TResult Function() getProfile,
     required TResult Function(String searchStr) searchedModule,
     required TResult Function(String moduleStr) addedModule,
-    required TResult Function(String moduleStr) removedModule,
+    required TResult Function(int index) removedModule,
   }) {
     return photoChanged(photo);
   }
@@ -242,7 +242,7 @@ class _$_PhotoChanged with DiagnosticableTreeMixin implements _PhotoChanged {
     TResult Function()? getProfile,
     TResult Function(String searchStr)? searchedModule,
     TResult Function(String moduleStr)? addedModule,
-    TResult Function(String moduleStr)? removedModule,
+    TResult Function(int index)? removedModule,
     required TResult orElse(),
   }) {
     if (photoChanged != null) {
@@ -381,7 +381,7 @@ class _$_UsernameChanged
     required TResult Function() getProfile,
     required TResult Function(String searchStr) searchedModule,
     required TResult Function(String moduleStr) addedModule,
-    required TResult Function(String moduleStr) removedModule,
+    required TResult Function(int index) removedModule,
   }) {
     return usernameChanged(usernameStr);
   }
@@ -397,7 +397,7 @@ class _$_UsernameChanged
     TResult Function()? getProfile,
     TResult Function(String searchStr)? searchedModule,
     TResult Function(String moduleStr)? addedModule,
-    TResult Function(String moduleStr)? removedModule,
+    TResult Function(int index)? removedModule,
     required TResult orElse(),
   }) {
     if (usernameChanged != null) {
@@ -534,7 +534,7 @@ class _$_CourseChanged with DiagnosticableTreeMixin implements _CourseChanged {
     required TResult Function() getProfile,
     required TResult Function(String searchStr) searchedModule,
     required TResult Function(String moduleStr) addedModule,
-    required TResult Function(String moduleStr) removedModule,
+    required TResult Function(int index) removedModule,
   }) {
     return courseChanged(courseStr);
   }
@@ -550,7 +550,7 @@ class _$_CourseChanged with DiagnosticableTreeMixin implements _CourseChanged {
     TResult Function()? getProfile,
     TResult Function(String searchStr)? searchedModule,
     TResult Function(String moduleStr)? addedModule,
-    TResult Function(String moduleStr)? removedModule,
+    TResult Function(int index)? removedModule,
     required TResult orElse(),
   }) {
     if (courseChanged != null) {
@@ -686,7 +686,7 @@ class _$_BioChanged with DiagnosticableTreeMixin implements _BioChanged {
     required TResult Function() getProfile,
     required TResult Function(String searchStr) searchedModule,
     required TResult Function(String moduleStr) addedModule,
-    required TResult Function(String moduleStr) removedModule,
+    required TResult Function(int index) removedModule,
   }) {
     return bioChanged(bioStr);
   }
@@ -702,7 +702,7 @@ class _$_BioChanged with DiagnosticableTreeMixin implements _BioChanged {
     TResult Function()? getProfile,
     TResult Function(String searchStr)? searchedModule,
     TResult Function(String moduleStr)? addedModule,
-    TResult Function(String moduleStr)? removedModule,
+    TResult Function(int index)? removedModule,
     required TResult orElse(),
   }) {
     if (bioChanged != null) {
@@ -808,7 +808,7 @@ class _$_Saved with DiagnosticableTreeMixin implements _Saved {
     required TResult Function() getProfile,
     required TResult Function(String searchStr) searchedModule,
     required TResult Function(String moduleStr) addedModule,
-    required TResult Function(String moduleStr) removedModule,
+    required TResult Function(int index) removedModule,
   }) {
     return saved();
   }
@@ -824,7 +824,7 @@ class _$_Saved with DiagnosticableTreeMixin implements _Saved {
     TResult Function()? getProfile,
     TResult Function(String searchStr)? searchedModule,
     TResult Function(String moduleStr)? addedModule,
-    TResult Function(String moduleStr)? removedModule,
+    TResult Function(int index)? removedModule,
     required TResult orElse(),
   }) {
     if (saved != null) {
@@ -928,7 +928,7 @@ class _$_GetProfile with DiagnosticableTreeMixin implements _GetProfile {
     required TResult Function() getProfile,
     required TResult Function(String searchStr) searchedModule,
     required TResult Function(String moduleStr) addedModule,
-    required TResult Function(String moduleStr) removedModule,
+    required TResult Function(int index) removedModule,
   }) {
     return getProfile();
   }
@@ -944,7 +944,7 @@ class _$_GetProfile with DiagnosticableTreeMixin implements _GetProfile {
     TResult Function()? getProfile,
     TResult Function(String searchStr)? searchedModule,
     TResult Function(String moduleStr)? addedModule,
-    TResult Function(String moduleStr)? removedModule,
+    TResult Function(int index)? removedModule,
     required TResult orElse(),
   }) {
     if (getProfile != null) {
@@ -1078,7 +1078,7 @@ class _$_SearchedModule
     required TResult Function() getProfile,
     required TResult Function(String searchStr) searchedModule,
     required TResult Function(String moduleStr) addedModule,
-    required TResult Function(String moduleStr) removedModule,
+    required TResult Function(int index) removedModule,
   }) {
     return searchedModule(searchStr);
   }
@@ -1094,7 +1094,7 @@ class _$_SearchedModule
     TResult Function()? getProfile,
     TResult Function(String searchStr)? searchedModule,
     TResult Function(String moduleStr)? addedModule,
-    TResult Function(String moduleStr)? removedModule,
+    TResult Function(int index)? removedModule,
     required TResult orElse(),
   }) {
     if (searchedModule != null) {
@@ -1231,7 +1231,7 @@ class _$_AddedModule with DiagnosticableTreeMixin implements _AddedModule {
     required TResult Function() getProfile,
     required TResult Function(String searchStr) searchedModule,
     required TResult Function(String moduleStr) addedModule,
-    required TResult Function(String moduleStr) removedModule,
+    required TResult Function(int index) removedModule,
   }) {
     return addedModule(moduleStr);
   }
@@ -1247,7 +1247,7 @@ class _$_AddedModule with DiagnosticableTreeMixin implements _AddedModule {
     TResult Function()? getProfile,
     TResult Function(String searchStr)? searchedModule,
     TResult Function(String moduleStr)? addedModule,
-    TResult Function(String moduleStr)? removedModule,
+    TResult Function(int index)? removedModule,
     required TResult orElse(),
   }) {
     if (addedModule != null) {
@@ -1307,7 +1307,7 @@ abstract class _$RemovedModuleCopyWith<$Res> {
   factory _$RemovedModuleCopyWith(
           _RemovedModule value, $Res Function(_RemovedModule) then) =
       __$RemovedModuleCopyWithImpl<$Res>;
-  $Res call({String moduleStr});
+  $Res call({int index});
 }
 
 /// @nodoc
@@ -1323,13 +1323,13 @@ class __$RemovedModuleCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? moduleStr = freezed,
+    Object? index = freezed,
   }) {
     return _then(_RemovedModule(
-      moduleStr == freezed
-          ? _value.moduleStr
-          : moduleStr // ignore: cast_nullable_to_non_nullable
-              as String,
+      index == freezed
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -1337,14 +1337,14 @@ class __$RemovedModuleCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_RemovedModule with DiagnosticableTreeMixin implements _RemovedModule {
-  const _$_RemovedModule(this.moduleStr);
+  const _$_RemovedModule(this.index);
 
   @override
-  final String moduleStr;
+  final int index;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ProfileFormEvent.removedModule(moduleStr: $moduleStr)';
+    return 'ProfileFormEvent.removedModule(index: $index)';
   }
 
   @override
@@ -1352,21 +1352,20 @@ class _$_RemovedModule with DiagnosticableTreeMixin implements _RemovedModule {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'ProfileFormEvent.removedModule'))
-      ..add(DiagnosticsProperty('moduleStr', moduleStr));
+      ..add(DiagnosticsProperty('index', index));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _RemovedModule &&
-            (identical(other.moduleStr, moduleStr) ||
-                const DeepCollectionEquality()
-                    .equals(other.moduleStr, moduleStr)));
+            (identical(other.index, index) ||
+                const DeepCollectionEquality().equals(other.index, index)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(moduleStr);
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(index);
 
   @JsonKey(ignore: true)
   @override
@@ -1384,9 +1383,9 @@ class _$_RemovedModule with DiagnosticableTreeMixin implements _RemovedModule {
     required TResult Function() getProfile,
     required TResult Function(String searchStr) searchedModule,
     required TResult Function(String moduleStr) addedModule,
-    required TResult Function(String moduleStr) removedModule,
+    required TResult Function(int index) removedModule,
   }) {
-    return removedModule(moduleStr);
+    return removedModule(index);
   }
 
   @override
@@ -1400,11 +1399,11 @@ class _$_RemovedModule with DiagnosticableTreeMixin implements _RemovedModule {
     TResult Function()? getProfile,
     TResult Function(String searchStr)? searchedModule,
     TResult Function(String moduleStr)? addedModule,
-    TResult Function(String moduleStr)? removedModule,
+    TResult Function(int index)? removedModule,
     required TResult orElse(),
   }) {
     if (removedModule != null) {
-      return removedModule(moduleStr);
+      return removedModule(index);
     }
     return orElse();
   }
@@ -1447,9 +1446,9 @@ class _$_RemovedModule with DiagnosticableTreeMixin implements _RemovedModule {
 }
 
 abstract class _RemovedModule implements ProfileFormEvent {
-  const factory _RemovedModule(String moduleStr) = _$_RemovedModule;
+  const factory _RemovedModule(int index) = _$_RemovedModule;
 
-  String get moduleStr => throw _privateConstructorUsedError;
+  int get index => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$RemovedModuleCopyWith<_RemovedModule> get copyWith =>
       throw _privateConstructorUsedError;
@@ -1468,7 +1467,8 @@ class _$ProfileFormStateTearOff {
       required Either<DataFailure, Profile> currentProfile,
       required String currentUsername,
       required bool showErrorMessages,
-      required Either<DataFailure, List<String>> moduleSuggestions}) {
+      required Either<DataFailure, List<String>> moduleSuggestions,
+      required bool refreshTags}) {
     return _ProfileFormState(
       photoUrl: photoUrl,
       profile: profile,
@@ -1479,6 +1479,7 @@ class _$ProfileFormStateTearOff {
       currentUsername: currentUsername,
       showErrorMessages: showErrorMessages,
       moduleSuggestions: moduleSuggestions,
+      refreshTags: refreshTags,
     );
   }
 }
@@ -1501,6 +1502,7 @@ mixin _$ProfileFormState {
   bool get showErrorMessages => throw _privateConstructorUsedError;
   Either<DataFailure, List<String>> get moduleSuggestions =>
       throw _privateConstructorUsedError;
+  bool get refreshTags => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ProfileFormStateCopyWith<ProfileFormState> get copyWith =>
@@ -1521,7 +1523,8 @@ abstract class $ProfileFormStateCopyWith<$Res> {
       Either<DataFailure, Profile> currentProfile,
       String currentUsername,
       bool showErrorMessages,
-      Either<DataFailure, List<String>> moduleSuggestions});
+      Either<DataFailure, List<String>> moduleSuggestions,
+      bool refreshTags});
 
   $ProfileCopyWith<$Res> get profile;
 }
@@ -1546,6 +1549,7 @@ class _$ProfileFormStateCopyWithImpl<$Res>
     Object? currentUsername = freezed,
     Object? showErrorMessages = freezed,
     Object? moduleSuggestions = freezed,
+    Object? refreshTags = freezed,
   }) {
     return _then(_value.copyWith(
       photoUrl: photoUrl == freezed
@@ -1584,6 +1588,10 @@ class _$ProfileFormStateCopyWithImpl<$Res>
           ? _value.moduleSuggestions
           : moduleSuggestions // ignore: cast_nullable_to_non_nullable
               as Either<DataFailure, List<String>>,
+      refreshTags: refreshTags == freezed
+          ? _value.refreshTags
+          : refreshTags // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 
@@ -1611,7 +1619,8 @@ abstract class _$ProfileFormStateCopyWith<$Res>
       Either<DataFailure, Profile> currentProfile,
       String currentUsername,
       bool showErrorMessages,
-      Either<DataFailure, List<String>> moduleSuggestions});
+      Either<DataFailure, List<String>> moduleSuggestions,
+      bool refreshTags});
 
   @override
   $ProfileCopyWith<$Res> get profile;
@@ -1639,6 +1648,7 @@ class __$ProfileFormStateCopyWithImpl<$Res>
     Object? currentUsername = freezed,
     Object? showErrorMessages = freezed,
     Object? moduleSuggestions = freezed,
+    Object? refreshTags = freezed,
   }) {
     return _then(_ProfileFormState(
       photoUrl: photoUrl == freezed
@@ -1677,6 +1687,10 @@ class __$ProfileFormStateCopyWithImpl<$Res>
           ? _value.moduleSuggestions
           : moduleSuggestions // ignore: cast_nullable_to_non_nullable
               as Either<DataFailure, List<String>>,
+      refreshTags: refreshTags == freezed
+          ? _value.refreshTags
+          : refreshTags // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -1695,7 +1709,8 @@ class _$_ProfileFormState
       required this.currentProfile,
       required this.currentUsername,
       required this.showErrorMessages,
-      required this.moduleSuggestions});
+      required this.moduleSuggestions,
+      required this.refreshTags});
 
   @override
   final Either<DataFailure, String> photoUrl;
@@ -1715,10 +1730,12 @@ class _$_ProfileFormState
   final bool showErrorMessages;
   @override
   final Either<DataFailure, List<String>> moduleSuggestions;
+  @override
+  final bool refreshTags;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ProfileFormState(photoUrl: $photoUrl, profile: $profile, isSaving: $isSaving, saveFailureOrSuccessOption: $saveFailureOrSuccessOption, isLoading: $isLoading, currentProfile: $currentProfile, currentUsername: $currentUsername, showErrorMessages: $showErrorMessages, moduleSuggestions: $moduleSuggestions)';
+    return 'ProfileFormState(photoUrl: $photoUrl, profile: $profile, isSaving: $isSaving, saveFailureOrSuccessOption: $saveFailureOrSuccessOption, isLoading: $isLoading, currentProfile: $currentProfile, currentUsername: $currentUsername, showErrorMessages: $showErrorMessages, moduleSuggestions: $moduleSuggestions, refreshTags: $refreshTags)';
   }
 
   @override
@@ -1735,7 +1752,8 @@ class _$_ProfileFormState
       ..add(DiagnosticsProperty('currentProfile', currentProfile))
       ..add(DiagnosticsProperty('currentUsername', currentUsername))
       ..add(DiagnosticsProperty('showErrorMessages', showErrorMessages))
-      ..add(DiagnosticsProperty('moduleSuggestions', moduleSuggestions));
+      ..add(DiagnosticsProperty('moduleSuggestions', moduleSuggestions))
+      ..add(DiagnosticsProperty('refreshTags', refreshTags));
   }
 
   @override
@@ -1770,7 +1788,10 @@ class _$_ProfileFormState
                     .equals(other.showErrorMessages, showErrorMessages)) &&
             (identical(other.moduleSuggestions, moduleSuggestions) ||
                 const DeepCollectionEquality()
-                    .equals(other.moduleSuggestions, moduleSuggestions)));
+                    .equals(other.moduleSuggestions, moduleSuggestions)) &&
+            (identical(other.refreshTags, refreshTags) ||
+                const DeepCollectionEquality()
+                    .equals(other.refreshTags, refreshTags)));
   }
 
   @override
@@ -1784,7 +1805,8 @@ class _$_ProfileFormState
       const DeepCollectionEquality().hash(currentProfile) ^
       const DeepCollectionEquality().hash(currentUsername) ^
       const DeepCollectionEquality().hash(showErrorMessages) ^
-      const DeepCollectionEquality().hash(moduleSuggestions);
+      const DeepCollectionEquality().hash(moduleSuggestions) ^
+      const DeepCollectionEquality().hash(refreshTags);
 
   @JsonKey(ignore: true)
   @override
@@ -1794,16 +1816,16 @@ class _$_ProfileFormState
 
 abstract class _ProfileFormState implements ProfileFormState {
   const factory _ProfileFormState(
-          {required Either<DataFailure, String> photoUrl,
-          required Profile profile,
-          required bool isSaving,
-          required Option<Either<DataFailure, Unit>> saveFailureOrSuccessOption,
-          required bool isLoading,
-          required Either<DataFailure, Profile> currentProfile,
-          required String currentUsername,
-          required bool showErrorMessages,
-          required Either<DataFailure, List<String>> moduleSuggestions}) =
-      _$_ProfileFormState;
+      {required Either<DataFailure, String> photoUrl,
+      required Profile profile,
+      required bool isSaving,
+      required Option<Either<DataFailure, Unit>> saveFailureOrSuccessOption,
+      required bool isLoading,
+      required Either<DataFailure, Profile> currentProfile,
+      required String currentUsername,
+      required bool showErrorMessages,
+      required Either<DataFailure, List<String>> moduleSuggestions,
+      required bool refreshTags}) = _$_ProfileFormState;
 
   @override
   Either<DataFailure, String> get photoUrl =>
@@ -1827,6 +1849,8 @@ abstract class _ProfileFormState implements ProfileFormState {
   @override
   Either<DataFailure, List<String>> get moduleSuggestions =>
       throw _privateConstructorUsedError;
+  @override
+  bool get refreshTags => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$ProfileFormStateCopyWith<_ProfileFormState> get copyWith =>

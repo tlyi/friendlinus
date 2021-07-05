@@ -10,23 +10,8 @@ class MessageBody extends ValueObject<String> {
   static const maxLength = 4096;
 
   factory MessageBody(String input) {
-    return MessageBody._(validateMaxStringLength(input, maxLength)
-        .flatMap(validateStringNotEmpty));
+    return MessageBody._(validateMaxStringLength(input, maxLength));
   }
 
   const MessageBody._(this.value);
-}
-
-class MessagePreview extends ValueObject<String> {
-  @override
-  final Either<ValueFailure<String>, String> value;
-
-  static const maxLength = 30;
-
-  factory MessagePreview(String input) {
-    return MessagePreview._(validateMaxStringLength(input, maxLength)
-        .flatMap(validateStringNotEmpty));
-  }
-
-  const MessagePreview._(this.value);
 }

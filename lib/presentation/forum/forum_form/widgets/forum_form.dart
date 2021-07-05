@@ -181,8 +181,7 @@ class _BuildImage extends StatelessWidget {
 
         child: Image(
           fit: BoxFit.contain,
-          image: NetworkImage(
-              context.read<ForumFormBloc>().state.forumPost.photoUrl),
+          image: FileImage(context.read<ForumFormBloc>().state.photoFile),
         ));
   }
 }
@@ -304,9 +303,15 @@ class _BuildSaveButton extends StatelessWidget {
               backgroundColor:
                   MaterialStateProperty.all(const Color(0xFF7BA5BB))),
           onPressed: () {
-            context
-                .read<ForumFormBloc>()
-                .add(const ForumFormEvent.createdPost());
+            if (context.read<ForumFormBloc>().state.forumPost.photoAdded) {
+              context
+                  .read<ForumFormBloc>()
+                  .add(const ForumFormEvent.photoAdded());
+            } else {
+              context
+                  .read<ForumFormBloc>()
+                  .add(const ForumFormEvent.createdPost());
+            }
           },
           child: const Text(
             "Post",
@@ -366,9 +371,8 @@ class _BuildAddImageButton extends StatelessWidget {
                       .show(context);
                 } else {
                   pickedImage = File(pickedFile.path);
-                  context.read<ForumFormBloc>().add(ForumFormEvent.photoAdded(
+                  context.read<ForumFormBloc>().add(ForumFormEvent.photoChanged(
                         pickedImage,
-                        context.read<ForumFormBloc>().state.forumPost.forumId,
                       ));
                 }
               }
@@ -447,13 +451,13 @@ class _BuildAddPollButton extends StatelessWidget {
               if (context.read<ForumFormBloc>().state.forumPost.photoAdded) {
                 showDialog(
                     context: context,
-                    builder: (BuildContext context) => AlertDialog(
+                    builder: (BuildContext innerContext) => AlertDialog(
                           title: const Text('Delete Photo?'),
                           content: const Text(
                               'Press OK to delete the uploaded photo and add a poll.'),
                           actions: <Widget>[
                             TextButton(
-                                onPressed: () => Navigator.pop(context),
+                                onPressed: () => Navigator.pop(innerContext),
                                 child: const Text('Cancel')),
                             TextButton(
                                 onPressed: () {
@@ -461,7 +465,7 @@ class _BuildAddPollButton extends StatelessWidget {
                                       .read<ForumFormBloc>()
                                       .add(const ForumFormEvent.pollAdded());
 
-                                  Navigator.pop(context);
+                                  Navigator.pop(innerContext);
                                 },
                                 child: const Text('OK'))
                           ],

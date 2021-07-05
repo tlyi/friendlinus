@@ -38,7 +38,7 @@ class ProfileRepository implements IProfileRepository {
       final profileDto = ProfileDto.fromDomain(profile);
 
       await userDoc.set(profileDto.toJson());
-
+      //TODO: Update modules of interest with userId
       return right(unit);
     } on FirebaseException catch (e) {
       if (e.message!.contains('PERMISSION_DENIED')) {
@@ -52,6 +52,7 @@ class ProfileRepository implements IProfileRepository {
   @override
   Future<Either<DataFailure, Unit>> update(Profile profile) async {
     try {
+      final modRef = await _firestore.modulesRef();
       final userDoc = await _firestore.userDocument();
       final profileDto = ProfileDto.fromDomain(profile);
 
@@ -325,22 +326,23 @@ class ProfileRepository implements IProfileRepository {
   @override
   Future<Either<DataFailure, List<String>>> searchModulesByModuleCode(
       String moduleCode) async {
-    print("Searching for $moduleCode");
+    print("Searching for ${moduleCode.toUpperCase()}");
     final List<String> searchResults = [];
     final modRef = await _firestore.modulesRef();
     try {
       QuerySnapshot query = await modRef
           .where('moduleCode', isGreaterThanOrEqualTo: moduleCode.toUpperCase())
-          // .where('moduleCode',
-          //     isLessThanOrEqualTo: '${moduleCode.toUpperCase()}~')
           .limit(15)
           .get();
       {
         if (query.docs.isNotEmpty) {
           for (final doc in query.docs) {
-            searchResults.add(doc.id);
+            if (doc.id.contains(moduleCode.toUpperCase())) {
+              searchResults.add(doc.id);
+            }
           }
         }
+
         return right(searchResults);
       }
     } on FirebaseException catch (e) {

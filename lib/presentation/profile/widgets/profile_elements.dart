@@ -326,9 +326,16 @@ class FriendList extends StatelessWidget {
                                             : await context.pushRoute(
                                                 OtherProfileRoute(
                                                     userProfile: profile));
-                                        context.read<ProfileActorBloc>().add(
-                                            const ProfileActorEvent
-                                                .loadingOwnProfile());
+                                        isOwnProfile
+                                            ? context
+                                                .read<ProfileActorBloc>()
+                                                .add(const ProfileActorEvent
+                                                    .loadingOwnProfile())
+                                            : context
+                                                .read<ProfileActorBloc>()
+                                                .add(ProfileActorEvent
+                                                    .loadingOtherProfile(
+                                                        userProfile.uuid));
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.only(

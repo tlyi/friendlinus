@@ -62,9 +62,18 @@ class ForumFormBloc extends Bloc<ForumFormEvent, ForumFormState> {
               forumPost: state.forumPost.copyWith(isAnon: true));
         }
       },
+      photoChanged: (e) async* {
+        yield state.copyWith(
+          photoFile: e.photo,
+          forumPost: state.forumPost.copyWith(
+            photoAdded: true,
+            pollAdded: false,
+          ),
+        );
+      },
       photoAdded: (e) async* {
         final failureOrString = await _forumRepository.uploadPhoto(
-            e.photo, state.forumPost.forumId);
+            state.photoFile, state.forumPost.forumId);
         String url = '';
         failureOrString.fold(
           (f) => print(f),
@@ -79,13 +88,15 @@ class ForumFormBloc extends Bloc<ForumFormEvent, ForumFormState> {
               photoAdded: true,
               pollAdded: false,
             ));
+        add(const ForumFormEvent.createdPost());
       },
       pollAdded: (e) async* {
         yield state.copyWith(
+            photoFile: File(''),
             forumPost: state.forumPost.copyWith(
-          pollAdded: true,
-          photoAdded: false,
-        ));
+              pollAdded: true,
+              photoAdded: false,
+            ));
       },
       pollNumOptionsChanged: (e) async* {
         yield state.copyWith(
@@ -107,6 +118,7 @@ class ForumFormBloc extends Bloc<ForumFormEvent, ForumFormState> {
       },
       photoRemoved: (e) async* {
         yield state.copyWith(
+            photoFile: File(''),
             forumPost: state.forumPost.copyWith(photoAdded: false));
       },
       pollRemoved: (e) async* {
