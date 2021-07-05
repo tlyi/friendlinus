@@ -106,6 +106,7 @@ class _ConvoActionsState extends State<ConvoActions> {
                                             context.read<ConvoActorBloc>().add(
                                                 ConvoActorEvent.photoSent(
                                                     pickedImage!));
+                                            Navigator.pop(innerContext);
                                           },
                                         ),
                                       ),

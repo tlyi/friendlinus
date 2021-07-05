@@ -79,7 +79,7 @@ class ProfileHeader extends StatelessWidget {
                 CircleAvatar(
                   radius: MediaQuery.of(context).size.width * 0.15,
                   backgroundImage: NetworkImage(userProfile.photoUrl),
-                  backgroundColor: Colors.transparent,
+                  backgroundColor: Colors.white,
                 ),
                 const SizedBox(height: 10),
                 if (isOwnProfile)

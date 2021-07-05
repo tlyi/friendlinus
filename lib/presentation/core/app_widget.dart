@@ -11,20 +11,27 @@ class AppWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => getIt<AuthBloc>()
-            ..add(const AuthEvent
-                .authCheckRequested()), //Request for auth check on start up
-        )
-      ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: MaterialApp.router(
-          routerDelegate: _appRouter.delegate(),
-          routeInformationParser: _appRouter.defaultRouteParser(),
-        ),
-      ),
-    );
+        providers: [
+          BlocProvider(
+            create: (context) => getIt<AuthBloc>()
+              ..add(const AuthEvent
+                  .authCheckRequested()), //Request for auth check on start up
+          )
+        ],
+        child: GestureDetector(
+          onTap: () {
+            FocusScopeNode currentFocus = FocusScope.of(context);
+            if (!currentFocus.hasPrimaryFocus) {
+              currentFocus.unfocus();
+            }
+          },
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            home: MaterialApp.router(
+              routerDelegate: _appRouter.delegate(),
+              routeInformationParser: _appRouter.defaultRouteParser(),
+            ),
+          ),
+        ));
   }
 }

@@ -48,6 +48,7 @@ class SearchResults extends StatelessWidget {
                     leading: CircleAvatar(
                       radius: 20,
                       backgroundImage: NetworkImage(user.photoUrl),
+                      backgroundColor: Colors.white,
                     ),
                     title: Text(user.username.getOrCrash()),
                     onTap: () {

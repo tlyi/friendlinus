@@ -6,6 +6,6 @@ class ForumPostWatcherEvent with _$ForumPostWatcherEvent {
       _Started;
   const factory ForumPostWatcherEvent.forumPostReceived(
       Either<DataFailure, ForumPost> failureOrForumPost) = _ForumPostReceived;
-  const factory ForumPostWatcherEvent.posterUsernameRetrieved(
-      ForumPost forum) = _PosterUsernameRetrieved; 
+  const factory ForumPostWatcherEvent.posterProfileRetrieved(ForumPost forum) =
+      _PosterProfileRetrieved;
 }

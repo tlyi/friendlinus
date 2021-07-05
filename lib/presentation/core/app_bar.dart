@@ -31,19 +31,40 @@ AppBar appBar({
                 },
               )
             : canSignOut
-                ? BlocBuilder<AuthBloc, AuthState>(
-                    builder: (context, state) {
-                      return IconButton(
-                        icon: const Icon(Icons.logout, color: Colors.grey),
-                        onPressed: () {
-                          context.read<AuthBloc>().add(
-                                const AuthEvent.signedOut(),
-                              );
-                          context.replaceRoute(const SplashRoute());
-                        },
-                      );
-                    },
-                  )
+                ? BlocConsumer<AuthBloc, AuthState>(listener: (context, state) {
+                    state.maybeMap(
+                      unauthenticated: (_) =>
+                          context.replaceRoute(const SignInRoute()),
+                      orElse: () {},
+                    );
+                  }, builder: (context, state) {
+                    return IconButton(
+                      icon: const Icon(Icons.logout, color: Colors.grey),
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext innerContext) => AlertDialog(
+                                  title: const Text('Sign Out?'),
+                                  content: const Text(
+                                      'Press OK to confirm sign out.'),
+                                  actions: <Widget>[
+                                    TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(innerContext),
+                                        child: const Text('Cancel')),
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(innerContext);
+                                          context
+                                              .read<AuthBloc>()
+                                              .add(const AuthEvent.signedOut());
+                                        },
+                                        child: const Text('OK'))
+                                  ],
+                                ));
+                      },
+                    );
+                  })
                 : Container(),
     title: Text(header,
         style: TextStyle(

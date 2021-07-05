@@ -13,7 +13,6 @@ import 'package:friendlinus/domain/data/profile/profile.dart';
 import 'package:friendlinus/domain/data/profile/value_objects.dart';
 import 'package:injectable/injectable.dart';
 import 'package:friendlinus/domain/core/constants.dart' as constants;
-import 'package:uuid/uuid.dart';
 
 part 'profile_form_event.dart';
 part 'profile_form_state.dart';
@@ -31,7 +30,7 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
   ) async* {
     yield* event.map(photoChanged: (e) async* {
       final failureOrString = await _profileRepository.uploadPhoto(e.photo);
-      String url = constants.randomPhotoUrl;
+      String url = state.photoUrl.getOrElse(() => constants.ERROR_DP);
       failureOrString.fold(
         (f) => print(f),
         (s) {
@@ -78,6 +77,8 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
         final uuid = await _profileRepository.getUserId();
 
         yield state.copyWith(
+          profile: state.profile.copyWith(
+              photoUrl: state.photoUrl.getOrElse(() => constants.ERROR_DP)),
           isSaving: true,
           saveFailureOrSuccessOption: none(),
         );

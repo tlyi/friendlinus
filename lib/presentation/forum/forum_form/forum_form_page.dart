@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:friendlinus/application/forum/forum_form/forum_form_bloc.dart';
 import 'package:friendlinus/injection.dart';
 import 'package:friendlinus/presentation/core/app_bar.dart';
+import 'package:friendlinus/presentation/core/dismiss_keyboard.dart';
 import 'package:friendlinus/presentation/forum/forum_form/widgets/forum_form.dart';
 
 class ForumFormPage extends StatelessWidget {
@@ -19,12 +20,13 @@ class ForumFormPage extends StatelessWidget {
           canClose: true,
           notifications: false,
         ),
-        body: Container(
+        body: DismissKeyboard(
+            child: Container(
           alignment: Alignment.topCenter,
           child: SingleChildScrollView(
             child: ForumForm(),
           ),
-        ),
+        )),
       ),
     );
   }

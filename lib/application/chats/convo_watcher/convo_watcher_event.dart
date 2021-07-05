@@ -4,6 +4,7 @@ part of 'convo_watcher_bloc.dart';
 class ConvoWatcherEvent with _$ConvoWatcherEvent {
   const factory ConvoWatcherEvent.retrieveConvoStarted(String convoId) =
       _RetrieveConvoStarted;
+  const factory ConvoWatcherEvent.retrieveConvoEnded() = _RetrieveConvoEnded;
   const factory ConvoWatcherEvent.convoReceived(
           Either<DataFailure, List<ChatMessage>> failureOrMessages) =
       _ConvoReceived;

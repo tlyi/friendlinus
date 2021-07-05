@@ -22,6 +22,8 @@ class ForumBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ownId = context.read<ForumActorBloc>().state.userId;
+
     return BlocBuilder<ForumPostWatcherBloc, ForumPostWatcherState>(
         builder: (context, state) {
       return state.map(
@@ -33,20 +35,61 @@ class ForumBody extends StatelessWidget {
         ),
         loadSuccess: (state) {
           ForumPost forum = state.forum;
-
+          Profile posterProfile = state.posterProfile;
           String header;
           if (forum.isAnon) {
             header = 'Posted by anonymous ${getTimeForum(forum.timestamp)}';
           } else {
             header =
-                'Posted by ${state.posterUsername} ${getTimeForum(forum.timestamp)}';
+                'Posted by ${posterProfile.username.getOrCrash()} ${getTimeForum(forum.timestamp)}';
           }
           return Scaffold(
-              appBar: appBar(
-                  context: context,
-                  header: header,
-                  canGoBack: true,
-                  fontSize: 16),
+              appBar: AppBar(
+                  centerTitle: true,
+                  backgroundColor: Colors.white,
+                  leading: IconButton(
+                    icon: const Icon(Icons.arrow_back, color: Colors.grey),
+                    onPressed: () {
+                      context.popRoute();
+                    },
+                  ),
+                  title: GestureDetector(
+                    onTap: () {
+                      if (!forum.isAnon) {
+                        ownId == forum.posterUserId
+                            ? context.pushRoute(ProfileRoute(canGoBack: true))
+                            : context.pushRoute(
+                                OtherProfileRoute(userProfile: posterProfile));
+                      }
+                    },
+                    child: Text(
+                      header,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 16.0,
+                      ),
+                    ),
+                  ),
+                  actions: [
+                    GestureDetector(
+                      onTap: () async {
+                        if (!forum.isAnon) {
+                          ownId == forum.posterUserId
+                              ? context.pushRoute(ProfileRoute(canGoBack: true))
+                              : context.pushRoute(OtherProfileRoute(
+                                  userProfile: posterProfile));
+                        }
+                      },
+                      child: CircleAvatar(
+                        backgroundImage: NetworkImage(
+                          posterProfile.photoUrl,
+                        ),
+                        backgroundColor: Colors.white,
+                        radius: 23.0,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                  ]),
               bottomNavigationBar: const NavigationBar(),
               body: SingleChildScrollView(
                 physics: const ScrollPhysics(),
@@ -54,9 +97,8 @@ class ForumBody extends StatelessWidget {
                   children: <Widget>[
                     _BuildPost(forum: forum),
                     Row(children: <Widget>[
-                      _BuildCommentButton(forumId: forum.forumId),
                       Expanded(
-                        child: _BuildDeleteButton(forum: forum),
+                        child: _BuildCommentButton(forumId: forum.forumId),
                       ),
                       _BuildSortCommentsOption(),
                     ]),
@@ -159,6 +201,7 @@ class _BuildPost extends StatelessWidget {
                   const SizedBox(height: 30),
                   if (forum.photoAdded) _BuildPhoto(photoUrl: forum.photoUrl),
                   if (forum.pollAdded) _BuildPoll(forumId: forum.forumId),
+                  _BuildDeleteButton(forum: forum),
                 ],
               ),
             ));
@@ -293,13 +336,13 @@ class _BuildDeleteButton extends StatelessWidget {
               const Text('Delete Forum', style: TextStyle(color: Colors.white)),
           onPressed: () => showDialog(
               context: context,
-              builder: (BuildContext context) => AlertDialog(
+              builder: (BuildContext innerContext) => AlertDialog(
                     title: const Text('Delete Forum?'),
                     content:
                         const Text('Press OK to delete the forum permanently.'),
                     actions: <Widget>[
                       TextButton(
-                          onPressed: () => Navigator.pop(context),
+                          onPressed: () => Navigator.pop(innerContext),
                           child: const Text('Cancel')),
                       TextButton(
                           onPressed: () {
@@ -307,7 +350,7 @@ class _BuildDeleteButton extends StatelessWidget {
                             //     .read<ForumFormBloc>()
                             //     .add(const ForumFormEvent.pollAdded());
 
-                            Navigator.pop(context);
+                            Navigator.pop(innerContext);
                           },
                           child: const Text('OK'))
                     ],
@@ -330,6 +373,7 @@ class _BuildSortCommentsOption extends StatelessWidget {
     return Row(
       children: <Widget>[
         const Text('Sort Comments by'),
+        const SizedBox(width: 8),
         DropdownButton<String>(
           value: selected,
           items: sortingOptions.map((String value) {
@@ -350,6 +394,7 @@ class _BuildComments extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ownId = context.read<ForumActorBloc>().state.userId;
     return BlocBuilder<CommentWatcherBloc, CommentWatcherState>(
       builder: (context, state) {
         return state.map(
@@ -389,11 +434,23 @@ class _BuildComments extends StatelessWidget {
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                CircleAvatar(
-                                  radius: 20,
-                                  backgroundImage:
-                                      NetworkImage(profile.photoUrl),
-                                ),
+                                GestureDetector(
+                                    onTap: () {
+                                      if (!comment.isAnon) {
+                                        ownId == comment.userId
+                                            ? context.pushRoute(
+                                                ProfileRoute(canGoBack: true))
+                                            : context.pushRoute(
+                                                OtherProfileRoute(
+                                                    userProfile: profile));
+                                      }
+                                    },
+                                    child: CircleAvatar(
+                                      radius: 20,
+                                      backgroundImage:
+                                          NetworkImage(profile.photoUrl),
+                                      backgroundColor: Colors.white,
+                                    )),
                                 const SizedBox(width: 10),
                                 Expanded(
                                   child: Column(
@@ -401,12 +458,26 @@ class _BuildComments extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       const SizedBox(height: 2),
-                                      Text(
-                                          comment.isAnon
-                                              ? 'Anonymous'
-                                              : '@${profile.username.getOrCrash()}',
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.w600)),
+                                      GestureDetector(
+                                          onTap: () {
+                                            if (!comment.isAnon) {
+                                              ownId == comment.userId
+                                                  ? context.pushRoute(
+                                                      ProfileRoute(
+                                                          canGoBack: true))
+                                                  : context.pushRoute(
+                                                      OtherProfileRoute(
+                                                          userProfile:
+                                                              profile));
+                                            }
+                                          },
+                                          child: Text(
+                                              comment.isAnon
+                                                  ? 'Anonymous'
+                                                  : '@${profile.username.getOrCrash()}',
+                                              style: const TextStyle(
+                                                  fontWeight:
+                                                      FontWeight.w600))),
                                       const SizedBox(height: 2),
                                       Text(getTime(comment.timestamp)),
                                     ],

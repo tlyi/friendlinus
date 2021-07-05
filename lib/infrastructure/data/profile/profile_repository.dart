@@ -297,6 +297,31 @@ class ProfileRepository implements IProfileRepository {
   }
 
   @override
+  Future<Either<DataFailure, List<Profile>>> retrieveFollowers(
+      String userId) async {
+    final following = <Profile>[];
+    final usersRef = await _firestore.usersRef();
+    try {
+      QuerySnapshot query =
+          await usersRef.where('following', arrayContains: userId).get();
+      {
+        if (query.docs.isNotEmpty) {
+          for (final doc in query.docs) {
+            following.add(ProfileDto.fromFirestore(doc).toDomain());
+          }
+        }
+        return right(following);
+      }
+    } on FirebaseException catch (e) {
+      if (e.message!.contains('PERMISSION_DENIED')) {
+        return left(const DataFailure.insufficientPermission());
+      } else {
+        return left(const DataFailure.unexpected());
+      }
+    }
+  }
+
+  @override
   Future<Either<DataFailure, List<ForumPost>>> retrieveMyForums(
       String userId) async {
     final forumPosts = <ForumPost>[];

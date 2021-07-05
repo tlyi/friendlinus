@@ -22,6 +22,10 @@ class _$ConvoWatcherEventTearOff {
     );
   }
 
+  _RetrieveConvoEnded retrieveConvoEnded() {
+    return const _RetrieveConvoEnded();
+  }
+
   _ConvoReceived convoReceived(
       Either<DataFailure, List<ChatMessage>> failureOrMessages) {
     return _ConvoReceived(
@@ -38,6 +42,7 @@ mixin _$ConvoWatcherEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String convoId) retrieveConvoStarted,
+    required TResult Function() retrieveConvoEnded,
     required TResult Function(
             Either<DataFailure, List<ChatMessage>> failureOrMessages)
         convoReceived,
@@ -46,6 +51,7 @@ mixin _$ConvoWatcherEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String convoId)? retrieveConvoStarted,
+    TResult Function()? retrieveConvoEnded,
     TResult Function(Either<DataFailure, List<ChatMessage>> failureOrMessages)?
         convoReceived,
     required TResult orElse(),
@@ -54,12 +60,14 @@ mixin _$ConvoWatcherEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_RetrieveConvoStarted value) retrieveConvoStarted,
+    required TResult Function(_RetrieveConvoEnded value) retrieveConvoEnded,
     required TResult Function(_ConvoReceived value) convoReceived,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_RetrieveConvoStarted value)? retrieveConvoStarted,
+    TResult Function(_RetrieveConvoEnded value)? retrieveConvoEnded,
     TResult Function(_ConvoReceived value)? convoReceived,
     required TResult orElse(),
   }) =>
@@ -150,6 +158,7 @@ class _$_RetrieveConvoStarted implements _RetrieveConvoStarted {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String convoId) retrieveConvoStarted,
+    required TResult Function() retrieveConvoEnded,
     required TResult Function(
             Either<DataFailure, List<ChatMessage>> failureOrMessages)
         convoReceived,
@@ -161,6 +170,7 @@ class _$_RetrieveConvoStarted implements _RetrieveConvoStarted {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String convoId)? retrieveConvoStarted,
+    TResult Function()? retrieveConvoEnded,
     TResult Function(Either<DataFailure, List<ChatMessage>> failureOrMessages)?
         convoReceived,
     required TResult orElse(),
@@ -175,6 +185,7 @@ class _$_RetrieveConvoStarted implements _RetrieveConvoStarted {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_RetrieveConvoStarted value) retrieveConvoStarted,
+    required TResult Function(_RetrieveConvoEnded value) retrieveConvoEnded,
     required TResult Function(_ConvoReceived value) convoReceived,
   }) {
     return retrieveConvoStarted(this);
@@ -184,6 +195,7 @@ class _$_RetrieveConvoStarted implements _RetrieveConvoStarted {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_RetrieveConvoStarted value)? retrieveConvoStarted,
+    TResult Function(_RetrieveConvoEnded value)? retrieveConvoEnded,
     TResult Function(_ConvoReceived value)? convoReceived,
     required TResult orElse(),
   }) {
@@ -201,6 +213,99 @@ abstract class _RetrieveConvoStarted implements ConvoWatcherEvent {
   @JsonKey(ignore: true)
   _$RetrieveConvoStartedCopyWith<_RetrieveConvoStarted> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$RetrieveConvoEndedCopyWith<$Res> {
+  factory _$RetrieveConvoEndedCopyWith(
+          _RetrieveConvoEnded value, $Res Function(_RetrieveConvoEnded) then) =
+      __$RetrieveConvoEndedCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$RetrieveConvoEndedCopyWithImpl<$Res>
+    extends _$ConvoWatcherEventCopyWithImpl<$Res>
+    implements _$RetrieveConvoEndedCopyWith<$Res> {
+  __$RetrieveConvoEndedCopyWithImpl(
+      _RetrieveConvoEnded _value, $Res Function(_RetrieveConvoEnded) _then)
+      : super(_value, (v) => _then(v as _RetrieveConvoEnded));
+
+  @override
+  _RetrieveConvoEnded get _value => super._value as _RetrieveConvoEnded;
+}
+
+/// @nodoc
+
+class _$_RetrieveConvoEnded implements _RetrieveConvoEnded {
+  const _$_RetrieveConvoEnded();
+
+  @override
+  String toString() {
+    return 'ConvoWatcherEvent.retrieveConvoEnded()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _RetrieveConvoEnded);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String convoId) retrieveConvoStarted,
+    required TResult Function() retrieveConvoEnded,
+    required TResult Function(
+            Either<DataFailure, List<ChatMessage>> failureOrMessages)
+        convoReceived,
+  }) {
+    return retrieveConvoEnded();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String convoId)? retrieveConvoStarted,
+    TResult Function()? retrieveConvoEnded,
+    TResult Function(Either<DataFailure, List<ChatMessage>> failureOrMessages)?
+        convoReceived,
+    required TResult orElse(),
+  }) {
+    if (retrieveConvoEnded != null) {
+      return retrieveConvoEnded();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_RetrieveConvoStarted value) retrieveConvoStarted,
+    required TResult Function(_RetrieveConvoEnded value) retrieveConvoEnded,
+    required TResult Function(_ConvoReceived value) convoReceived,
+  }) {
+    return retrieveConvoEnded(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_RetrieveConvoStarted value)? retrieveConvoStarted,
+    TResult Function(_RetrieveConvoEnded value)? retrieveConvoEnded,
+    TResult Function(_ConvoReceived value)? convoReceived,
+    required TResult orElse(),
+  }) {
+    if (retrieveConvoEnded != null) {
+      return retrieveConvoEnded(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _RetrieveConvoEnded implements ConvoWatcherEvent {
+  const factory _RetrieveConvoEnded() = _$_RetrieveConvoEnded;
 }
 
 /// @nodoc
@@ -271,6 +376,7 @@ class _$_ConvoReceived implements _ConvoReceived {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String convoId) retrieveConvoStarted,
+    required TResult Function() retrieveConvoEnded,
     required TResult Function(
             Either<DataFailure, List<ChatMessage>> failureOrMessages)
         convoReceived,
@@ -282,6 +388,7 @@ class _$_ConvoReceived implements _ConvoReceived {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String convoId)? retrieveConvoStarted,
+    TResult Function()? retrieveConvoEnded,
     TResult Function(Either<DataFailure, List<ChatMessage>> failureOrMessages)?
         convoReceived,
     required TResult orElse(),
@@ -296,6 +403,7 @@ class _$_ConvoReceived implements _ConvoReceived {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_RetrieveConvoStarted value) retrieveConvoStarted,
+    required TResult Function(_RetrieveConvoEnded value) retrieveConvoEnded,
     required TResult Function(_ConvoReceived value) convoReceived,
   }) {
     return convoReceived(this);
@@ -305,6 +413,7 @@ class _$_ConvoReceived implements _ConvoReceived {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_RetrieveConvoStarted value)? retrieveConvoStarted,
+    TResult Function(_RetrieveConvoEnded value)? retrieveConvoEnded,
     TResult Function(_ConvoReceived value)? convoReceived,
     required TResult orElse(),
   }) {

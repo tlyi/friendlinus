@@ -9,6 +9,7 @@ import 'package:friendlinus/domain/data/forum/i_forum_repository.dart';
 import 'package:friendlinus/domain/data/profile/i_profile_repository.dart';
 import 'package:friendlinus/domain/data/profile/profile.dart';
 import 'package:injectable/injectable.dart';
+import 'package:friendlinus/domain/core/constants.dart' as constants;
 
 part 'comment_watcher_event.dart';
 part 'comment_watcher_state.dart';
@@ -54,7 +55,7 @@ class CommentWatcherBloc
         final List<Profile> profileList = [];
         for (final comment in e.comments) {
           if (comment.isAnon) {
-            profileList.add(Profile.empty());
+            profileList.add(Profile.empty().copyWith(photoUrl: constants.LOGO));
           } else {
             final String userId = comment.userId;
             final Either<DataFailure, Profile> failureOrProfile =

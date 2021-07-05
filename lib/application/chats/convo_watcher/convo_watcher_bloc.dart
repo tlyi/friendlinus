@@ -35,6 +35,10 @@ class ConvoWatcherBloc extends Bloc<ConvoWatcherEvent, ConvoWatcherState> {
             (failureOrMessages) =>
                 add(ConvoWatcherEvent.convoReceived(failureOrMessages)));
       },
+      retrieveConvoEnded: (e) async* {
+        await _convoStreamSubscription?.cancel();
+        print('stop reading');
+      },
       convoReceived: (e) async* {
         yield e.failureOrMessages.fold(
             (failure) => ConvoWatcherState.loadMessagesFailure(failure),

@@ -75,8 +75,12 @@ class ConvoMessages extends StatelessWidget {
                                 Container(
                                   height: 200,
                                   width: 200,
-                                  child: Image.network(message.photoUrl,
-                                      fit: BoxFit.contain),
+                                  child: FadeInImage(
+                                    fit: BoxFit.contain,
+                                    image: NetworkImage(message.photoUrl),
+                                    placeholder: const AssetImage(
+                                        'images/loading_image.png'),
+                                  ),
                                 ),
                               Row(mainAxisSize: MainAxisSize.min, children: [
                                 Flexible(

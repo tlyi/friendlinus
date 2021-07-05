@@ -7,7 +7,9 @@ import 'package:friendlinus/domain/data/data_failure.dart';
 import 'package:friendlinus/domain/data/forum/forum_post/forum_post.dart';
 import 'package:friendlinus/domain/data/forum/i_forum_repository.dart';
 import 'package:friendlinus/domain/data/profile/i_profile_repository.dart';
+import 'package:friendlinus/domain/data/profile/profile.dart';
 import 'package:injectable/injectable.dart';
+import 'package:friendlinus/domain/core/constants.dart' as constants;
 
 part 'forum_post_watcher_event.dart';
 part 'forum_post_watcher_state.dart';
@@ -39,12 +41,18 @@ class ForumPostWatcherBloc
     }, forumPostReceived: (e) async* {
       e.failureOrForumPost.fold((f) async* {
         yield ForumPostWatcherState.loadFailure(f);
-      }, (forum) => add(ForumPostWatcherEvent.posterUsernameRetrieved(forum)));
-    }, posterUsernameRetrieved: (e) async* {
-      Either<DataFailure, String> posterUsernameOrFailure =
-          await _profileRepository.getUsername(e.forum.posterUserId);
-      String posterUsername = posterUsernameOrFailure.getOrElse(() => '');
-      yield ForumPostWatcherState.loadSuccess(e.forum, posterUsername);
+      }, (forum) => add(ForumPostWatcherEvent.posterProfileRetrieved(forum)));
+    }, posterProfileRetrieved: (e) async* {
+      if (e.forum.isAnon) {
+        yield ForumPostWatcherState.loadSuccess(
+            e.forum, Profile.empty().copyWith(photoUrl: constants.LOGO));
+      } else {
+        Either<DataFailure, Profile> posterProfileOrFailure =
+            await _profileRepository.searchProfileByUuid(e.forum.posterUserId);
+        Profile posterProfile = posterProfileOrFailure.getOrElse(
+            () => Profile.empty().copyWith(photoUrl: constants.ERROR_DP));
+        yield ForumPostWatcherState.loadSuccess(e.forum, posterProfile);
+      }
     });
   }
 
