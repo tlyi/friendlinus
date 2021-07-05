@@ -31,7 +31,7 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
   ) async* {
     yield* event.map(photoChanged: (e) async* {
       final failureOrString = await _profileRepository.uploadPhoto(e.photo);
-      String url = constants.DEFAULT_PHOTO_URL;
+      String url = constants.randomPhotoUrl;
       failureOrString.fold(
         (f) => print(f),
         (s) {

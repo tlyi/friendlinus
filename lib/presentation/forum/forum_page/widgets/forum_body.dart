@@ -48,14 +48,21 @@ class ForumBody extends StatelessWidget {
                   canGoBack: true,
                   fontSize: 16),
               bottomNavigationBar: const NavigationBar(),
-              body: Column(
-                children: <Widget>[
-                  _BuildPost(forum: forum),
-                  _BuildCommentButton(forumId: forum.forumId),
-                  Expanded(
-                      child: ClipRRect(
-                          child: _BuildComments(forumId: forum.forumId))),
-                ],
+              body: SingleChildScrollView(
+                physics: const ScrollPhysics(),
+                child: Column(
+                  children: <Widget>[
+                    _BuildPost(forum: forum),
+                    Row(children: <Widget>[
+                      _BuildCommentButton(forumId: forum.forumId),
+                      Expanded(
+                        child: _BuildDeleteButton(forum: forum),
+                      ),
+                      _BuildSortCommentsOption(),
+                    ]),
+                    _BuildComments(forumId: forum.forumId),
+                  ],
+                ),
               ));
         },
         loadFailure: (state) {
@@ -94,8 +101,23 @@ class _BuildPost extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Row(children: <Widget>[
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          const SizedBox(height: 15),
+                          Text(forum.title.getOrCrash(),
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 17)),
+                          const SizedBox(height: 15),
+                          Text(forum.body.getOrCrash(),
+                              style: const TextStyle(fontSize: 15)),
+                        ],
+                      ),
+                    ),
                     Column(
-                      //DO NOT ADJUST SPACING :')
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         Stack(
@@ -119,30 +141,20 @@ class _BuildPost extends StatelessWidget {
                                 size: 35,
                               ),
                             ),
-                            Positioned(
-                                left: 20,
-                                bottom: -1,
-                                child: Text(forum.likes.toString())),
+                            if (forum.likes < 10)
+                              Positioned(
+                                  left: 20,
+                                  bottom: -1,
+                                  child: Text(forum.likes.toString()))
+                            else
+                              Positioned(
+                                  left: 16,
+                                  bottom: -1,
+                                  child: Text(forum.likes.toString())),
                           ],
                         ),
                       ],
                     ),
-                    const SizedBox(width: 20),
-                    Expanded(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          const SizedBox(height: 15),
-                          Text(forum.title.getOrCrash(),
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 17)),
-                          const SizedBox(height: 15),
-                          Text(forum.body.getOrCrash(),
-                              style: const TextStyle(fontSize: 15)),
-                        ],
-                      ),
-                    )
                   ]),
                   const SizedBox(height: 30),
                   if (forum.photoAdded) _BuildPhoto(photoUrl: forum.photoUrl),
@@ -264,6 +276,74 @@ class _BuildCommentButton extends StatelessWidget {
   }
 }
 
+class _BuildDeleteButton extends StatelessWidget {
+  final ForumPost forum;
+  const _BuildDeleteButton({Key? key, required this.forum}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    if (context.read<ForumActorBloc>().state.userId == forum.posterUserId) {
+      return Container(
+        alignment: Alignment.centerLeft,
+        margin: const EdgeInsets.all(10.0),
+        child: ElevatedButton(
+          style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Colors.red[300])),
+          child:
+              const Text('Delete Forum', style: TextStyle(color: Colors.white)),
+          onPressed: () => showDialog(
+              context: context,
+              builder: (BuildContext context) => AlertDialog(
+                    title: const Text('Delete Forum?'),
+                    content:
+                        const Text('Press OK to delete the forum permanently.'),
+                    actions: <Widget>[
+                      TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: const Text('Cancel')),
+                      TextButton(
+                          onPressed: () {
+                            // context
+                            //     .read<ForumFormBloc>()
+                            //     .add(const ForumFormEvent.pollAdded());
+
+                            Navigator.pop(context);
+                          },
+                          child: const Text('OK'))
+                    ],
+                  )),
+        ),
+      );
+    } else {
+      return Container();
+    }
+  }
+}
+
+class _BuildSortCommentsOption extends StatelessWidget {
+  const _BuildSortCommentsOption({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    List<String> sortingOptions = ['Latest', 'Oldest', 'Most Liked'];
+    String selected = 'Latest'; //context.read<ForumPostWatcherBloc>...
+    return Row(
+      children: <Widget>[
+        const Text('Sort Comments by'),
+        DropdownButton<String>(
+          value: selected,
+          items: sortingOptions.map((String value) {
+            return DropdownMenuItem<String>(value: value, child: Text(value));
+          }).toList(),
+          onChanged: (String? newValue) {
+            //update state
+          },
+        ),
+      ],
+    );
+  }
+}
+
 class _BuildComments extends StatelessWidget {
   final String forumId;
   const _BuildComments({Key? key, required this.forumId}) : super(key: key);
@@ -281,12 +361,14 @@ class _BuildComments extends StatelessWidget {
                 ),
             loadSuccess: (state) {
               return ListView.builder(
-                  physics: const ScrollPhysics(),
+                  primary: false,
+                  physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: state.comments.length,
                   itemBuilder: (context, index) {
                     final Comment comment = state.comments[index];
                     final Profile profile = state.profileList[index];
+                    int commentLikes = 0;
                     return Padding(
                       padding: const EdgeInsets.only(
                           left: 8, right: 8, top: 10, bottom: 10),
@@ -313,18 +395,69 @@ class _BuildComments extends StatelessWidget {
                                       NetworkImage(profile.photoUrl),
                                 ),
                                 const SizedBox(width: 10),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const SizedBox(height: 2),
+                                      Text(
+                                          comment.isAnon
+                                              ? 'Anonymous'
+                                              : '@${profile.username.getOrCrash()}',
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.w600)),
+                                      const SizedBox(height: 2),
+                                      Text(getTime(comment.timestamp)),
+                                    ],
+                                  ),
+                                ),
                                 Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const SizedBox(height: 2),
-                                    Text(
-                                        comment.isAnon
-                                            ? 'Anonymous'
-                                            : '@${profile.username.getOrCrash()}',
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.w600)),
-                                    const SizedBox(height: 2),
-                                    Text(getTime(comment.timestamp)),
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Stack(
+                                      children: [
+                                        IconButton(
+                                          padding: const EdgeInsets.all(0),
+                                          onPressed: () {
+                                            commentLikes++;
+                                            /*if (comment.likedUserIds
+                                                .contains(userId)) {
+                                              context
+                                                  .read<ForumActorBloc>()
+                                                  .add(ForumActorEvent.unliked(
+                                                      forum.forumId));
+                                            } else {
+                                              context
+                                                  .read<ForumActorBloc>()
+                                                  .add(ForumActorEvent.liked(
+                                                      forum.forumId));
+                                            }*/
+                                          },
+                                          icon: Icon(
+                                            Icons.arrow_drop_up,
+                                            color: Colors.grey[800],
+                                            /*forum.likedUserIds
+                                                    .contains(userId)
+                                                ? Colors.grey[800]
+                                                : Colors.grey[400],*/
+                                            size: 35,
+                                          ),
+                                        ),
+                                        if (commentLikes < 10)
+                                          Positioned(
+                                              left: 20,
+                                              bottom: -1,
+                                              child:
+                                                  Text(commentLikes.toString()))
+                                        else
+                                          Positioned(
+                                              left: 16,
+                                              bottom: -1,
+                                              child: Text(
+                                                  commentLikes.toString())),
+                                      ],
+                                    ),
                                   ],
                                 ),
                               ],

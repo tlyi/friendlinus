@@ -22,7 +22,7 @@ abstract class Profile implements _$Profile {
   }) = _Profile;
 
   factory Profile.empty() => Profile(
-        photoUrl: constants.DEFAULT_PHOTO_URL,
+        photoUrl: constants.randomPhotoUrl,
         username: Username(''),
         course: Course(''),
         bio: Bio(''),

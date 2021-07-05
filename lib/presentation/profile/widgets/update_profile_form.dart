@@ -95,9 +95,7 @@ class _BuildProfilePicButton extends StatelessWidget {
       children: <Widget>[
         CircleAvatar(
           maxRadius: 60,
-          backgroundImage: prevPhotoUrl == ''
-              ? const NetworkImage(constants.DEFAULT_PHOTO_URL)
-              : NetworkImage(prevPhotoUrl),
+          backgroundImage: NetworkImage(prevPhotoUrl),
           backgroundColor: Colors.transparent,
         ),
         Positioned(

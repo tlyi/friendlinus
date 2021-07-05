@@ -37,10 +37,11 @@ const $Comment = _$CommentTearOff();
 
 /// @nodoc
 mixin _$Comment {
+//required String forumId,
   String get commentId => throw _privateConstructorUsedError;
   String get userId => throw _privateConstructorUsedError;
   CommentText get commentText => throw _privateConstructorUsedError;
-  bool get isAnon => throw _privateConstructorUsedError;
+  bool get isAnon => throw _privateConstructorUsedError; //required int likes,
   String get timestamp => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -166,7 +167,7 @@ class _$_Comment extends _Comment {
       required this.timestamp})
       : super._();
 
-  @override
+  @override //required String forumId,
   final String commentId;
   @override
   final String userId;
@@ -174,7 +175,7 @@ class _$_Comment extends _Comment {
   final CommentText commentText;
   @override
   final bool isAnon;
-  @override
+  @override //required int likes,
   final String timestamp;
 
   @override
@@ -225,7 +226,7 @@ abstract class _Comment extends Comment {
       required String timestamp}) = _$_Comment;
   const _Comment._() : super._();
 
-  @override
+  @override //required String forumId,
   String get commentId => throw _privateConstructorUsedError;
   @override
   String get userId => throw _privateConstructorUsedError;
@@ -233,7 +234,7 @@ abstract class _Comment extends Comment {
   CommentText get commentText => throw _privateConstructorUsedError;
   @override
   bool get isAnon => throw _privateConstructorUsedError;
-  @override
+  @override //required int likes,
   String get timestamp => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)

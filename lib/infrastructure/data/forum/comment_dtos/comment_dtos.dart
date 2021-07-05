@@ -11,29 +11,35 @@ abstract class CommentDto implements _$CommentDto {
   const CommentDto._();
 
   const factory CommentDto({
+    //required String forumId,
     required String commentId,
     required String userId,
     required String commentText,
     required bool isAnon,
+    //required int likes,
     required String timestamp,
   }) = _CommentDto;
 
   factory CommentDto.fromDomain(Comment comment) {
     return CommentDto(
+      //forumId: comment.forumId,
       commentId: comment.commentId,
       userId: comment.userId,
       commentText: comment.commentText.getOrCrash(),
       isAnon: comment.isAnon,
+      //likes: comment.likes,
       timestamp: DateTime.now().millisecondsSinceEpoch.toString(),
     );
   }
 
   Comment toDomain() {
     return Comment(
+      //forumId: forumId,
         commentId: commentId,
         userId: userId,
         commentText: CommentText(commentText),
         isAnon: isAnon,
+        //likes: likes,
         timestamp: timestamp);
   }
 
