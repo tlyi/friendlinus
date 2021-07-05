@@ -31,6 +31,7 @@ class ProfilePage extends StatelessWidget {
           context: context,
           header: 'Profile',
           canGoBack: canGoBack,
+          canSignOut: true,
         ),
         bottomNavigationBar: const NavigationBar(),
         body: SingleChildScrollView(child: OwnProfile()),

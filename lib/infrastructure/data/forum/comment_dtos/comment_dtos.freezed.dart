@@ -45,10 +45,11 @@ const $CommentDto = _$CommentDtoTearOff();
 
 /// @nodoc
 mixin _$CommentDto {
+//required String forumId,
   String get commentId => throw _privateConstructorUsedError;
   String get userId => throw _privateConstructorUsedError;
   String get commentText => throw _privateConstructorUsedError;
-  bool get isAnon => throw _privateConstructorUsedError;
+  bool get isAnon => throw _privateConstructorUsedError; //required int likes,
   String get timestamp => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -182,7 +183,7 @@ class _$_CommentDto extends _CommentDto {
   factory _$_CommentDto.fromJson(Map<String, dynamic> json) =>
       _$_$_CommentDtoFromJson(json);
 
-  @override
+  @override //required String forumId,
   final String commentId;
   @override
   final String userId;
@@ -190,7 +191,7 @@ class _$_CommentDto extends _CommentDto {
   final String commentText;
   @override
   final bool isAnon;
-  @override
+  @override //required int likes,
   final String timestamp;
 
   @override
@@ -249,7 +250,7 @@ abstract class _CommentDto extends CommentDto {
   factory _CommentDto.fromJson(Map<String, dynamic> json) =
       _$_CommentDto.fromJson;
 
-  @override
+  @override //required String forumId,
   String get commentId => throw _privateConstructorUsedError;
   @override
   String get userId => throw _privateConstructorUsedError;
@@ -257,7 +258,7 @@ abstract class _CommentDto extends CommentDto {
   String get commentText => throw _privateConstructorUsedError;
   @override
   bool get isAnon => throw _privateConstructorUsedError;
-  @override
+  @override //required int likes,
   String get timestamp => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)

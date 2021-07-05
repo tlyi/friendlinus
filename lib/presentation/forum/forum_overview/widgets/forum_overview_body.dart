@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -59,10 +61,16 @@ class ForumOverviewBody extends StatelessWidget {
                                     size: 35,
                                   ),
                                 ),
-                                Positioned(
-                                    left: 20,
-                                    bottom: -1,
-                                    child: Text(forum.likes.toString())),
+                                if (forum.likes < 10)
+                                  Positioned(
+                                      left: 20,
+                                      bottom: -1,
+                                      child: Text(forum.likes.toString()))
+                                else
+                                  Positioned(
+                                      left: 16,
+                                      bottom: -1,
+                                      child: Text(forum.likes.toString())),
                               ],
                             ),
                           ],
@@ -73,7 +81,26 @@ class ForumOverviewBody extends StatelessWidget {
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
-                        trailing: Text(getTime(forum.timestamp)),
+                        trailing: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: <Widget>[
+                            Text(getTime(forum.timestamp)),
+                            if (forum.pollAdded)
+                              Column(
+                                children: <Widget>[
+                                  const SizedBox(height: 10),
+                                  Transform.rotate(
+                                    angle: 90 * pi / 180,
+                                    child: const Icon(
+                                      Icons.poll_outlined,
+                                      color: Color(0xFF7BA5BB),
+                                      size: 20,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                          ],
+                        ),
                         isThreeLine: true,
 
                         onTap: () async {
