@@ -3,6 +3,7 @@ import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:friendlinus/application/profile/profile_form/profile_form_bloc.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
@@ -51,6 +52,8 @@ class RegisterProfileForm extends StatelessWidget {
                 _BuildBio(),
                 const SizedBox(height: 15),
                 _BuildModule(),
+                const SizedBox(height: 15),
+                _BuildTags(),
                 const SizedBox(height: 15),
                 _BuildSaveButton(),
               ]),
@@ -230,29 +233,52 @@ class _BuildBio extends StatelessWidget {
 class _BuildModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container();
-    // return BlocBuilder<ProfileFormBloc, ProfileFormState>(
-    //   builder: (context, state) {
-    //     return TextFormField(
-    //         decoration: InputDecoration(
-    //           border: OutlineInputBorder(
-    //             borderRadius: BorderRadius.circular(10.0),
-    //           ),
-    //           labelText: 'Module',
-    //         ),
-    //         autocorrect: false,
-    //         onChanged: (value) {
-    //           context
-    //               .read<ProfileFormBloc>()
-    //               .add(ProfileFormEvent.moduleChanged(value));
-    //         },
-    //         validator: (_) {},
-    //         inputFormatters: [
-    //           FilteringTextInputFormatter.deny(
-    //               RegExp(r"\s\b|\b\s")) //Prevents whitespace
-    //         ]);
-    //   },
-    // );
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Select modules of interest'),
+        TypeAheadField(
+          suggestionsCallback: (value) async {
+            context
+                .read<ProfileFormBloc>()
+                .add(ProfileFormEvent.searchedModule(value));
+
+            return context
+                .read<ProfileFormBloc>()
+                .state
+                .moduleSuggestions
+                .getOrElse(() => []);
+          },
+          itemBuilder: (context, suggestion) {
+            return ListTile(title: Text(suggestion.toString()));
+          },
+          onSuggestionSelected: (String value) {
+            if (context.read<ProfileFormBloc>().state.profile.modules.length >=
+                10) {
+              FlushbarHelper.createError(
+                      message: 'Maximum number of modules is 10')
+                  .show(context);
+            } else if (context
+                .read<ProfileFormBloc>()
+                .state
+                .profile
+                .modules
+                .contains(value)) {
+              print("module alr selected");
+              FlushbarHelper.createError(
+                      message: 'Module has already been selected')
+                  .show(context);
+            } else {
+              print("adding to list");
+              context
+                  .read<ProfileFormBloc>()
+                  .add(ProfileFormEvent.addedModule(value));
+            }
+          },
+        ),
+      ],
+    );
   }
 }
 
