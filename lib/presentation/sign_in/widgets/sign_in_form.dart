@@ -6,7 +6,7 @@ import 'package:friendlinus/application/auth/sign_in_form/sign_in_form_bloc.dart
 import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
-import 'package:friendlinus/presentation/sign_in/reset_password_page.dart';
+import 'package:friendlinus/domain/core/constants.dart' as constants;
 
 class SignInForm extends StatelessWidget {
   @override
@@ -81,7 +81,8 @@ class _BuildID extends StatelessWidget {
             validator: (_) =>
                 context.read<SignInFormBloc>().state.emailAddress.value.fold(
                       (f) => f.maybeMap(
-                        invalidEmail: (_) => 'Invalid NUSNET ID, please use format eXXXXXXX',
+                        invalidEmail: (_) =>
+                            'Invalid NUSNET ID, please use format eXXXXXXX',
                         orElse: () => null,
                       ),
                       (_) => null,
@@ -140,13 +141,13 @@ class _BuildLogInButton extends StatelessWidget {
           child: ElevatedButton(
               style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all(Color(0xFF7BA5BB))),
-              child: const Text("Sign In"),
+                      MaterialStateProperty.all(constants.THEME_BLUE)),
               onPressed: () {
                 context.read<SignInFormBloc>().add(
                       const SignInFormEvent.signInWithEmailAndPasswordPressed(),
                     );
-              }),
+              },
+              child: const Text("Sign In")),
         );
       },
     );
@@ -161,10 +162,11 @@ class _BuildForgotPassword extends StatelessWidget {
         return Container(
           margin: const EdgeInsets.only(top: 10.0),
           child: TextButton(
-              child: const Text('Forgot Password'),
               onPressed: () {
                 context.pushRoute(const ResetPasswordRoute());
-              }),
+              },
+              child: Text('Forgot Password',
+                  style: TextStyle(color: Colors.grey[700]))),
         );
       },
     );
@@ -177,10 +179,15 @@ class _BuildRegisterButton extends StatelessWidget {
     return BlocBuilder<SignInFormBloc, SignInFormState>(
       builder: (context, state) {
         return TextButton(
-            child: const Text('No account yet? Register Now'),
             onPressed: () {
               context.pushRoute(const RegisterRoute());
-            });
+            },
+            child: const Text('No account yet? Register Now!',
+                style: TextStyle(
+                  color: constants.THEME_BLUE,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15.5,
+                )));
       },
     );
   }

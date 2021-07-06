@@ -322,6 +322,7 @@ class _BuildTags extends StatelessWidget {
           child: Wrap(
               alignment: WrapAlignment.start,
               spacing: 6.0,
+              runSpacing: -5,
               children: List<Widget>.generate(
                   context.read<ProfileFormBloc>().state.profile.modules.length,
                   (int index) {

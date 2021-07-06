@@ -19,7 +19,7 @@ class SignInPage extends StatelessWidget {
               child: ConstrainedBox(
                 constraints: BoxConstraints(
                   maxHeight: MediaQuery.of(context).size.height -
-                      (MediaQuery.of(context).padding.top + kToolbarHeight),
+                      MediaQuery.of(context).padding.top,
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -30,7 +30,7 @@ class SignInPage extends StatelessWidget {
                       height: MediaQuery.of(context).size.width * 0.6,
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(30.0),
+                      padding: const EdgeInsets.only(left: 30, right: 30),
                       child: SignInForm(),
                     ),
                   ],

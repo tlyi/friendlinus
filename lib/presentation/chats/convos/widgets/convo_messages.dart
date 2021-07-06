@@ -63,51 +63,39 @@ class ConvoMessages extends StatelessWidget {
                         : BubbleNip.rightBottom,
                     showNip: index == 0 ||
                         state.messages[index - 1].senderId != message.senderId,
-                    child: Row(
+                    // child: Row(
+                    //   crossAxisAlignment: CrossAxisAlignment.start,
+                    //   mainAxisSize: MainAxisSize.min,
+                    //   children: [
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              if (message.photoUrl != '')
-                                Container(
-                                  height: 200,
-                                  width: 200,
-                                  child: FadeInImage(
-                                    fit: BoxFit.contain,
-                                    image: NetworkImage(message.photoUrl),
-                                    placeholder: const AssetImage(
-                                        'images/loading_image.png'),
-                                  ),
+                        if (message.photoUrl != '')
+                          Container(
+                            //height: 200,
+                            width: 200,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                FadeInImage(
+                                  fit: BoxFit.contain,
+                                  image: NetworkImage(message.photoUrl),
+                                  placeholder: const AssetImage(
+                                      'images/loading_image.png'),
                                 ),
-                              Row(mainAxisSize: MainAxisSize.min, children: [
-                                Flexible(
-                                  child: Text(
-                                    message.messageBody.getOrCrash(),
-                                    style: const TextStyle(fontSize: 15),
-                                  ),
+                                _MessageBody(
+                                  message: message,
+                                  isOtherSender: isOtherSender,
                                 ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 10, top: 10),
-                                  child: Text(
-                                    getTime(message.timeSent),
-                                    style: const TextStyle(fontSize: 10),
-                                  ),
-                                ),
-                                if (!isOtherSender)
-                                  Padding(
-                                    padding: EdgeInsets.only(left: 5, top: 10),
-                                    child: message.read
-                                        ? const Icon(MdiIcons.checkAll,
-                                            color: Colors.white, size: 15)
-                                        : const Icon(MdiIcons.check,
-                                            color: Colors.white, size: 15),
-                                  ),
-                              ]),
-                            ]),
+                              ],
+                            ),
+                          )
+                        else
+                          _MessageBody(
+                            message: message,
+                            isOtherSender: isOtherSender,
+                          )
                       ],
                     ),
                   ),
@@ -127,5 +115,61 @@ class ConvoMessages extends StatelessWidget {
         },
       );
     });
+  }
+}
+
+class _MessageBody extends StatelessWidget {
+  final ChatMessage message;
+  final bool isOtherSender;
+  const _MessageBody(
+      {Key? key, required this.message, required this.isOtherSender})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Flexible(
+              child: Text(
+                message.messageBody.getOrCrash(),
+                style: const TextStyle(fontSize: 15),
+              ),
+            ),
+          ],
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Flexible(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10, top: 10),
+                child: Text(
+                  getTime(message.timeSent),
+                  style: const TextStyle(fontSize: 10),
+                ),
+              ),
+            ),
+            if (!isOtherSender)
+              Flexible(
+                child: Padding(
+                  padding: EdgeInsets.only(left: 5, top: 10),
+                  child: message.read
+                      ? const Icon(MdiIcons.checkAll,
+                          color: Colors.white, size: 15)
+                      : const Icon(MdiIcons.check,
+                          color: Colors.white, size: 15),
+                ),
+              ),
+          ],
+        ),
+      ],
+    );
   }
 }

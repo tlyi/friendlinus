@@ -14,11 +14,12 @@ class RegisterProfilePage extends StatelessWidget {
       create: (context) => getIt<ProfileFormBloc>(),
       child: DismissKeyboard(
         child: Scaffold(
-          appBar: appBar(context: context, header: 'Profile Registration'),
+          appBar: appBar(
+              context: context,
+              header: 'Profile Registration',
+              notifications: false),
           body: SingleChildScrollView(
-            child: Container(
-              child: RegisterProfileForm(),
-            ),
+            child: RegisterProfileForm(),
           ),
         ),
       ),

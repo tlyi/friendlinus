@@ -258,18 +258,9 @@ class ModulesOfInterest extends StatelessWidget {
                   alignment: WrapAlignment.start,
                   spacing: 6.0,
                   runSpacing: -5,
-                  children: List<Widget>.generate(
-                      context
-                          .read<ProfileFormBloc>()
-                          .state
-                          .profile
-                          .modules
-                          .length, (int index) {
-                    final module = context
-                        .read<ProfileFormBloc>()
-                        .state
-                        .profile
-                        .modules[index];
+                  children: List<Widget>.generate(userProfile.modules.length,
+                      (int index) {
+                    final module = userProfile.modules[index];
                     return Chip(
                       key: Key(index.toString()),
                       label: Text(module),
@@ -344,9 +335,12 @@ class FollowersList extends StatelessWidget {
                                       final Profile profile = followers[index];
                                       return GestureDetector(
                                         onTap: () async {
-                                          await context.pushRoute(
-                                              OtherProfileRoute(
-                                                  userProfile: profile));
+                                          ownId == profile.uuid
+                                              ? await context.pushRoute(
+                                                  ProfileRoute(canGoBack: true))
+                                              : await context.pushRoute(
+                                                  OtherProfileRoute(
+                                                      userProfile: profile));
                                           isOwnProfile
                                               ? context
                                                   .read<ProfileActorBloc>()
@@ -424,7 +418,7 @@ class FollowingList extends StatelessWidget {
                         unexpected: (_) => 'Unexpected Error',
                         orElse: () => '')),
                   )
-                else if (following.isEmpty)
+                else if (!isOwnProfile && following.isEmpty)
                   const Padding(
                     padding: EdgeInsets.only(top: 10.0, bottom: 15.0),
                     child: Text('Not following anyone yet :('),
@@ -457,59 +451,68 @@ class FollowingList extends StatelessWidget {
                               ),
                             ),
                           ),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                child: ListView.builder(
-                                    shrinkWrap: true,
-                                    physics: const ScrollPhysics(),
-                                    padding: const EdgeInsets.only(top: 15.0),
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: following.length,
-                                    itemBuilder: (context, index) {
-                                      final Profile profile = following[index];
-                                      return GestureDetector(
-                                        onTap: () async {
-                                          ownId == profile.uuid
-                                              ? await context.pushRoute(
-                                                  ProfileRoute(canGoBack: true))
-                                              : await context.pushRoute(
-                                                  OtherProfileRoute(
-                                                      userProfile: profile));
-                                          isOwnProfile
-                                              ? context
-                                                  .read<ProfileActorBloc>()
-                                                  .add(const ProfileActorEvent
-                                                      .loadingOwnProfile())
-                                              : context
-                                                  .read<ProfileActorBloc>()
-                                                  .add(ProfileActorEvent
-                                                      .loadingOtherProfile(
-                                                          userProfile.uuid));
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 5.0, right: 5.0),
-                                          child: Column(children: [
-                                            ClipOval(
-                                              child: Image.network(
-                                                profile.photoUrl,
-                                                width: 60.0,
-                                                height: 60.0,
-                                                fit: BoxFit.cover,
+                        if (following.isEmpty)
+                          const Padding(
+                            padding: EdgeInsets.only(top: 35.0),
+                            child: Text('Not following anyone yet :('),
+                          )
+                        else
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: ListView.builder(
+                                      shrinkWrap: true,
+                                      physics: const ScrollPhysics(),
+                                      padding: const EdgeInsets.only(top: 15.0),
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: following.length,
+                                      itemBuilder: (context, index) {
+                                        final Profile profile =
+                                            following[index];
+                                        return GestureDetector(
+                                          onTap: () async {
+                                            ownId == profile.uuid
+                                                ? await context.pushRoute(
+                                                    ProfileRoute(
+                                                        canGoBack: true))
+                                                : await context.pushRoute(
+                                                    OtherProfileRoute(
+                                                        userProfile: profile));
+                                            isOwnProfile
+                                                ? context
+                                                    .read<ProfileActorBloc>()
+                                                    .add(const ProfileActorEvent
+                                                        .loadingOwnProfile())
+                                                : context
+                                                    .read<ProfileActorBloc>()
+                                                    .add(ProfileActorEvent
+                                                        .loadingOtherProfile(
+                                                            userProfile.uuid));
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 5.0, right: 5.0),
+                                            child: Column(children: [
+                                              ClipOval(
+                                                child: Image.network(
+                                                  profile.photoUrl,
+                                                  width: 60.0,
+                                                  height: 60.0,
+                                                  fit: BoxFit.cover,
+                                                ),
                                               ),
-                                            ),
-                                            Text(profile.username.getOrCrash()),
-                                          ]),
-                                        ),
-                                      );
-                                    }),
-                              ),
-                            ],
+                                              Text(profile.username
+                                                  .getOrCrash()),
+                                            ]),
+                                          ),
+                                        );
+                                      }),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
                       ],
                     ),
                   ),

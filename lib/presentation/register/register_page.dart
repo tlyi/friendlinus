@@ -10,28 +10,19 @@ class RegisterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => getIt<SignInFormBloc>(),
-      child: DismissKeyboard(
-        child: Scaffold(
-          appBar: appBar(
-            context: context,
-            header: 'Create an Account',
-            canGoBack: true,
-          ),
-          body: Container(
-            alignment: Alignment.center,
-            child: SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  maxHeight: MediaQuery.of(context).size.height -
-                      (MediaQuery.of(context).padding.top + kToolbarHeight),
-                ),
-                child: RegisterForm(),
-              ),
+        create: (context) => getIt<SignInFormBloc>(),
+        child: DismissKeyboard(
+          child: Scaffold(
+            appBar: appBar(
+              context: context,
+              header: 'Create an Account',
+              canGoBack: true,
+              notifications: false,
+            ),
+            body: SingleChildScrollView(
+              child: RegisterForm(),
             ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }

@@ -43,8 +43,9 @@ class RegisterProfileForm extends StatelessWidget {
             margin: const EdgeInsets.all(30.0),
             alignment: Alignment.center,
             child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-              _BuildProfilePicButton(),
               const SizedBox(height: 15),
+              _BuildProfilePicButton(),
+              const SizedBox(height: 35),
               _BuildUsername(),
               const SizedBox(height: 15),
               _BuildCourse(),
@@ -300,6 +301,7 @@ class _BuildTags extends StatelessWidget {
           child: Wrap(
               alignment: WrapAlignment.start,
               spacing: 6.0,
+              runSpacing: -5,
               children: List<Widget>.generate(
                   context.read<ProfileFormBloc>().state.profile.modules.length,
                   (int index) {
