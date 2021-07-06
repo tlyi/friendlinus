@@ -8,6 +8,7 @@ import 'package:friendlinus/application/forum/forum_watcher/forum_watcher_bloc.d
 import 'package:friendlinus/presentation/core/get_time.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
+import 'package:tap_debouncer/tap_debouncer.dart';
 
 class ForumOverviewBody extends StatelessWidget {
   @override
@@ -41,26 +42,34 @@ class ForumOverviewBody extends StatelessWidget {
                           children: <Widget>[
                             Stack(
                               children: [
-                                IconButton(
-                                  padding: const EdgeInsets.all(0),
-                                  onPressed: () {
-                                    if (forum.likedUserIds.contains(userId)) {
-                                      context.read<ForumActorBloc>().add(
-                                          ForumActorEvent.unliked(
-                                              forum.forumId));
-                                    } else {
-                                      context.read<ForumActorBloc>().add(
-                                          ForumActorEvent.liked(forum.forumId));
-                                    }
-                                  },
-                                  icon: Icon(
-                                    Icons.arrow_drop_up,
-                                    color: forum.likedUserIds.contains(userId)
-                                        ? Colors.grey[800]
-                                        : Colors.grey[400],
-                                    size: 35,
-                                  ),
-                                ),
+                                TapDebouncer(
+                                    cooldown: const Duration(milliseconds: 400),
+                                    onTap: () async {
+                                      if (forum.likedUserIds.contains(userId)) {
+                                        context.read<ForumActorBloc>().add(
+                                            ForumActorEvent.unliked(
+                                                forum.forumId));
+                                      } else {
+                                        context.read<ForumActorBloc>().add(
+                                            ForumActorEvent.liked(
+                                                forum.forumId));
+                                      }
+                                    },
+                                    builder: (BuildContext context,
+                                        TapDebouncerFunc? onTap) {
+                                      return IconButton(
+                                        padding: const EdgeInsets.all(0),
+                                        onPressed: onTap,
+                                        icon: Icon(
+                                          Icons.arrow_drop_up,
+                                          color: forum.likedUserIds
+                                                  .contains(userId)
+                                              ? Colors.grey[800]
+                                              : Colors.grey[400],
+                                          size: 35,
+                                        ),
+                                      );
+                                    }),
                                 if (forum.likes < 10)
                                   Positioned(
                                       left: 20,
@@ -107,9 +116,8 @@ class ForumOverviewBody extends StatelessWidget {
                           await context.pushRoute(ForumRoute(
                               forumId: forum.forumId,
                               pollAdded: forum.pollAdded));
-                          context
-                              .read<ForumWatcherBloc>()
-                              .add(ForumWatcherEvent.retrieveForumsStarted());
+                          context.read<ForumWatcherBloc>().add(
+                              const ForumWatcherEvent.retrieveForumsStarted());
                         },
                       ),
                     );

@@ -9,5 +9,12 @@ class ForumActorEvent with _$ForumActorEvent {
   const factory ForumActorEvent.commentChanged(String commentStr) =
       _CommentChanged;
   const factory ForumActorEvent.anonStateChanged() = _AnonStateChanged;
-  const factory ForumActorEvent.commentCreated(String forumId) = _CommentCreated;
+  const factory ForumActorEvent.commentCreated(String forumId) =
+      _CommentCreated;
+  const factory ForumActorEvent.commentLiked(String forumId, String commentId) =
+      _CommentLiked;
+  const factory ForumActorEvent.commentUnliked(
+      String forumId, String commentId) = _CommentUnliked;
+  const factory ForumActorEvent.forumDeleted(String forumId, bool hasPhoto) =
+      _ForumDeleted;
 }

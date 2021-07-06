@@ -416,10 +416,16 @@ class RecentPosts extends StatelessWidget {
                         ),
                         trailing: Text(getTime(forum.timestamp)),
                         isThreeLine: true,
-                        onTap: () {
-                          context.pushRoute(ForumRoute(
+                        onTap: () async {
+                          await context.pushRoute(ForumRoute(
                               forumId: forum.forumId,
                               pollAdded: forum.pollAdded));
+                          isOwnProfile
+                              ? context.read<ProfileActorBloc>().add(
+                                  const ProfileActorEvent.loadingOwnProfile())
+                              : context.read<ProfileActorBloc>().add(
+                                  ProfileActorEvent.loadingOtherProfile(
+                                      userProfile.uuid));
                         },
                       ),
                     );

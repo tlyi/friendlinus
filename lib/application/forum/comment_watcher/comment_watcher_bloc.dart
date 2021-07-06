@@ -36,7 +36,7 @@ class CommentWatcherBloc
         yield const CommentWatcherState.loadInProgress();
         await _commentStreamSubscription?.cancel();
         _commentStreamSubscription = _forumRepository
-            .retrieveComments(e.forumId)
+            .retrieveComments(e.sortedBy, e.forumId)
             .listen((failureOrComments) =>
                 add(CommentWatcherEvent.commentsReceived(failureOrComments)));
       },

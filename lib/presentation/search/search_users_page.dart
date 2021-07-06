@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:friendlinus/application/search/search_profile_bloc.dart';
 import 'package:friendlinus/injection.dart';
 import 'package:friendlinus/presentation/core/app_bar.dart';
+import 'package:friendlinus/presentation/core/dismiss_keyboard.dart';
 import 'package:friendlinus/presentation/core/nav_bar.dart';
 import 'package:friendlinus/presentation/search/widgets/search_bar.dart';
 
@@ -11,11 +12,13 @@ class SearchUsersPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => getIt<SearchProfileBloc>(),
-      child: Scaffold(
-        appBar:
-            appBar(context: context, header: 'Search Users', canGoBack: true),
-        bottomNavigationBar: const NavigationBar(),
-        body: SearchBar(),
+      child: DismissKeyboard(
+        child: Scaffold(
+          appBar:
+              appBar(context: context, header: 'Search Users', canGoBack: true),
+          bottomNavigationBar: const NavigationBar(),
+          body: SearchBar(),
+        ),
       ),
     );
   }

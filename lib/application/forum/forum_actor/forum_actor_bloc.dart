@@ -30,10 +30,10 @@ class ForumActorBloc extends Bloc<ForumActorEvent, ForumActorState> {
         );
       },
       liked: (e) async* {
-        await _forumRepository.like(e.forumId, state.userId);
+        await _forumRepository.likeForum(e.forumId, state.userId);
       },
       unliked: (e) async* {
-        await _forumRepository.unlike(e.forumId, state.userId);
+        await _forumRepository.unlikeForum(e.forumId, state.userId);
       },
       voted: (e) async* {
         await _forumRepository.vote(e.forumId, e.index, state.userId);
@@ -58,15 +58,28 @@ class ForumActorBloc extends Bloc<ForumActorEvent, ForumActorState> {
           yield state.copyWith(
               isLoading: true,
               createFailureOrSuccessOption: none(),
-              comment: state.comment.copyWith(userId: state.userId));
+              comment: state.comment
+                  .copyWith(forumId: e.forumId, userId: state.userId));
           failureOrSuccess = await _forumRepository.createComment(
-              state.comment.copyWith(userId: state.userId), e.forumId);
+              state.comment.copyWith(userId: state.userId, forumId: e.forumId),
+              e.forumId);
         }
 
         yield state.copyWith(
             isLoading: false,
             showErrorMessages: true,
             createFailureOrSuccessOption: optionOf(failureOrSuccess));
+      },
+      commentLiked: (e) async* {
+        await _forumRepository.likeComment(
+            e.forumId, e.commentId, state.userId);
+      },
+      commentUnliked: (e) async* {
+        await _forumRepository.unlikeComment(
+            e.forumId, e.commentId, state.userId);
+      },
+      forumDeleted: (e) async* {
+        await _forumRepository.deleteForum(e.forumId, e.hasPhoto);
       },
     );
   }

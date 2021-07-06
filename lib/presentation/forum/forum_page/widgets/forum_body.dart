@@ -16,6 +16,7 @@ import 'package:friendlinus/presentation/core/nav_bar.dart';
 import 'package:polls/polls.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:tap_debouncer/tap_debouncer.dart';
 
 class ForumBody extends StatelessWidget {
   const ForumBody({Key? key}) : super(key: key);
@@ -100,7 +101,7 @@ class ForumBody extends StatelessWidget {
                       Expanded(
                         child: _BuildCommentButton(forumId: forum.forumId),
                       ),
-                      _BuildSortCommentsOption(),
+                      _BuildSortCommentsOption(forumId: forum.forumId),
                     ]),
                     _BuildComments(forumId: forum.forumId),
                   ],
@@ -164,25 +165,31 @@ class _BuildPost extends StatelessWidget {
                       children: <Widget>[
                         Stack(
                           children: [
-                            IconButton(
-                              padding: const EdgeInsets.all(0),
-                              onPressed: () {
-                                if (forum.likedUserIds.contains(userId)) {
-                                  context.read<ForumActorBloc>().add(
-                                      ForumActorEvent.unliked(forum.forumId));
-                                } else {
-                                  context.read<ForumActorBloc>().add(
-                                      ForumActorEvent.liked(forum.forumId));
-                                }
-                              },
-                              icon: Icon(
-                                Icons.arrow_drop_up,
-                                color: forum.likedUserIds.contains(userId)
-                                    ? Colors.grey[800]
-                                    : Colors.grey[400],
-                                size: 35,
-                              ),
-                            ),
+                            TapDebouncer(
+                                cooldown: const Duration(milliseconds: 800),
+                                onTap: () async {
+                                  if (forum.likedUserIds.contains(userId)) {
+                                    context.read<ForumActorBloc>().add(
+                                        ForumActorEvent.unliked(forum.forumId));
+                                  } else {
+                                    context.read<ForumActorBloc>().add(
+                                        ForumActorEvent.liked(forum.forumId));
+                                  }
+                                },
+                                builder: (BuildContext context,
+                                    TapDebouncerFunc? onTap) {
+                                  return IconButton(
+                                    padding: const EdgeInsets.all(0),
+                                    onPressed: onTap,
+                                    icon: Icon(
+                                      Icons.arrow_drop_up,
+                                      color: forum.likedUserIds.contains(userId)
+                                          ? Colors.grey[800]
+                                          : Colors.grey[400],
+                                      size: 35,
+                                    ),
+                                  );
+                                }),
                             if (forum.likes < 10)
                               Positioned(
                                   left: 20,
@@ -312,8 +319,8 @@ class _BuildCommentButton extends StatelessWidget {
         style: ButtonStyle(
             backgroundColor:
                 MaterialStateProperty.all(const Color(0xFF7BA5BB))),
-        child: const Text('Add Comment'),
         onPressed: () => context.pushRoute(CommentRoute(forumId: forumId)),
+        child: const Text('Add Comment'),
       ),
     );
   }
@@ -332,8 +339,6 @@ class _BuildDeleteButton extends StatelessWidget {
         child: ElevatedButton(
           style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(Colors.red[300])),
-          child:
-              const Text('Delete Forum', style: TextStyle(color: Colors.white)),
           onPressed: () => showDialog(
               context: context,
               builder: (BuildContext innerContext) => AlertDialog(
@@ -346,15 +351,17 @@ class _BuildDeleteButton extends StatelessWidget {
                           child: const Text('Cancel')),
                       TextButton(
                           onPressed: () {
-                            // context
-                            //     .read<ForumFormBloc>()
-                            //     .add(const ForumFormEvent.pollAdded());
-
+                            context.read<ForumActorBloc>().add(
+                                ForumActorEvent.forumDeleted(
+                                    forum.forumId, forum.photoAdded));
                             Navigator.pop(innerContext);
+                            context.popRoute();
                           },
                           child: const Text('OK'))
                     ],
                   )),
+          child:
+              const Text('Delete Forum', style: TextStyle(color: Colors.white)),
         ),
       );
     } else {
@@ -363,13 +370,21 @@ class _BuildDeleteButton extends StatelessWidget {
   }
 }
 
-class _BuildSortCommentsOption extends StatelessWidget {
-  const _BuildSortCommentsOption({Key? key}) : super(key: key);
+class _BuildSortCommentsOption extends StatefulWidget {
+  final String forumId;
+  const _BuildSortCommentsOption({Key? key, required this.forumId})
+      : super(key: key);
 
   @override
+  __BuildSortCommentsOptionState createState() =>
+      __BuildSortCommentsOptionState();
+}
+
+class __BuildSortCommentsOptionState extends State<_BuildSortCommentsOption> {
+  String selected = 'Recent';
+  @override
   Widget build(BuildContext context) {
-    List<String> sortingOptions = ['Latest', 'Oldest', 'Most Liked'];
-    String selected = 'Latest'; //context.read<ForumPostWatcherBloc>...
+    List<String> sortingOptions = ['Recent', 'Oldest', 'Most Liked'];
     return Row(
       children: <Widget>[
         const Text('Sort Comments by'),
@@ -380,7 +395,12 @@ class _BuildSortCommentsOption extends StatelessWidget {
             return DropdownMenuItem<String>(value: value, child: Text(value));
           }).toList(),
           onChanged: (String? newValue) {
-            //update state
+            setState(() {
+              selected = newValue!;
+            });
+            context.read<CommentWatcherBloc>().add(
+                CommentWatcherEvent.retrieveCommentsStarted(
+                    widget.forumId, newValue!));
           },
         ),
       ],
@@ -413,7 +433,6 @@ class _BuildComments extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final Comment comment = state.comments[index];
                     final Profile profile = state.profileList[index];
-                    int commentLikes = 0;
                     return Padding(
                       padding: const EdgeInsets.only(
                           left: 8, right: 8, top: 10, bottom: 10),
@@ -488,45 +507,55 @@ class _BuildComments extends StatelessWidget {
                                   children: <Widget>[
                                     Stack(
                                       children: [
-                                        IconButton(
-                                          padding: const EdgeInsets.all(0),
-                                          onPressed: () {
-                                            commentLikes++;
-                                            /*if (comment.likedUserIds
-                                                .contains(userId)) {
-                                              context
-                                                  .read<ForumActorBloc>()
-                                                  .add(ForumActorEvent.unliked(
-                                                      forum.forumId));
-                                            } else {
-                                              context
-                                                  .read<ForumActorBloc>()
-                                                  .add(ForumActorEvent.liked(
-                                                      forum.forumId));
-                                            }*/
-                                          },
-                                          icon: Icon(
-                                            Icons.arrow_drop_up,
-                                            color: Colors.grey[800],
-                                            /*forum.likedUserIds
-                                                    .contains(userId)
-                                                ? Colors.grey[800]
-                                                : Colors.grey[400],*/
-                                            size: 35,
-                                          ),
-                                        ),
-                                        if (commentLikes < 10)
+                                        TapDebouncer(
+                                            cooldown: const Duration(
+                                                milliseconds: 800),
+                                            onTap: () async {
+                                              if (comment.likedUserIds
+                                                  .contains(ownId)) {
+                                                context
+                                                    .read<ForumActorBloc>()
+                                                    .add(ForumActorEvent
+                                                        .commentUnliked(
+                                                            comment.forumId,
+                                                            comment.commentId));
+                                              } else {
+                                                context
+                                                    .read<ForumActorBloc>()
+                                                    .add(ForumActorEvent
+                                                        .commentLiked(
+                                                            comment.forumId,
+                                                            comment.commentId));
+                                              }
+                                            },
+                                            builder: (BuildContext context,
+                                                TapDebouncerFunc? onTap) {
+                                              return IconButton(
+                                                padding:
+                                                    const EdgeInsets.all(0),
+                                                onPressed: onTap,
+                                                icon: Icon(
+                                                  Icons.arrow_drop_up,
+                                                  color: comment.likedUserIds
+                                                          .contains(ownId)
+                                                      ? Colors.grey[800]
+                                                      : Colors.grey[400],
+                                                  size: 35,
+                                                ),
+                                              );
+                                            }),
+                                        if (comment.likes < 10)
                                           Positioned(
                                               left: 20,
                                               bottom: -1,
-                                              child:
-                                                  Text(commentLikes.toString()))
+                                              child: Text(
+                                                  comment.likes.toString()))
                                         else
                                           Positioned(
                                               left: 16,
                                               bottom: -1,
                                               child: Text(
-                                                  commentLikes.toString())),
+                                                  comment.likes.toString())),
                                       ],
                                     ),
                                   ],
@@ -544,26 +573,6 @@ class _BuildComments extends StatelessWidget {
                         ),
                       ),
                     );
-
-                    /* Card(
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(
-                              side: const BorderSide(color: Color(0xFF7BA5BB)),
-                              borderRadius: BorderRadius.circular(15.0),
-                            ),
-                            child: ListTile(
-                              leading: CircleAvatar(
-                                radius: 20,
-                                backgroundImage: NetworkImage(profile.photoUrl),
-                              ),
-                              title: Text(comment.commentText.getOrCrash()),
-                              subtitle: Text(comment.isAnon
-                                  ? 'Anonymous'
-                                  : '@${profile.username.getOrCrash()}'),
-                              trailing: Text(getTime(comment.timestamp)),
-                              isThreeLine: true,
-                            ),
-                          ), */
                   });
             },
             loadFailure: (state) {

@@ -17,16 +17,22 @@ class _$CommentTearOff {
   const _$CommentTearOff();
 
   _Comment call(
-      {required String commentId,
+      {required String forumId,
+      required String commentId,
       required String userId,
       required CommentText commentText,
       required bool isAnon,
+      required int likes,
+      required List<String> likedUserIds,
       required String timestamp}) {
     return _Comment(
+      forumId: forumId,
       commentId: commentId,
       userId: userId,
       commentText: commentText,
       isAnon: isAnon,
+      likes: likes,
+      likedUserIds: likedUserIds,
       timestamp: timestamp,
     );
   }
@@ -37,11 +43,13 @@ const $Comment = _$CommentTearOff();
 
 /// @nodoc
 mixin _$Comment {
-//required String forumId,
+  String get forumId => throw _privateConstructorUsedError;
   String get commentId => throw _privateConstructorUsedError;
   String get userId => throw _privateConstructorUsedError;
   CommentText get commentText => throw _privateConstructorUsedError;
-  bool get isAnon => throw _privateConstructorUsedError; //required int likes,
+  bool get isAnon => throw _privateConstructorUsedError;
+  int get likes => throw _privateConstructorUsedError;
+  List<String> get likedUserIds => throw _privateConstructorUsedError;
   String get timestamp => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -53,10 +61,13 @@ abstract class $CommentCopyWith<$Res> {
   factory $CommentCopyWith(Comment value, $Res Function(Comment) then) =
       _$CommentCopyWithImpl<$Res>;
   $Res call(
-      {String commentId,
+      {String forumId,
+      String commentId,
       String userId,
       CommentText commentText,
       bool isAnon,
+      int likes,
+      List<String> likedUserIds,
       String timestamp});
 }
 
@@ -70,13 +81,20 @@ class _$CommentCopyWithImpl<$Res> implements $CommentCopyWith<$Res> {
 
   @override
   $Res call({
+    Object? forumId = freezed,
     Object? commentId = freezed,
     Object? userId = freezed,
     Object? commentText = freezed,
     Object? isAnon = freezed,
+    Object? likes = freezed,
+    Object? likedUserIds = freezed,
     Object? timestamp = freezed,
   }) {
     return _then(_value.copyWith(
+      forumId: forumId == freezed
+          ? _value.forumId
+          : forumId // ignore: cast_nullable_to_non_nullable
+              as String,
       commentId: commentId == freezed
           ? _value.commentId
           : commentId // ignore: cast_nullable_to_non_nullable
@@ -93,6 +111,14 @@ class _$CommentCopyWithImpl<$Res> implements $CommentCopyWith<$Res> {
           ? _value.isAnon
           : isAnon // ignore: cast_nullable_to_non_nullable
               as bool,
+      likes: likes == freezed
+          ? _value.likes
+          : likes // ignore: cast_nullable_to_non_nullable
+              as int,
+      likedUserIds: likedUserIds == freezed
+          ? _value.likedUserIds
+          : likedUserIds // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       timestamp: timestamp == freezed
           ? _value.timestamp
           : timestamp // ignore: cast_nullable_to_non_nullable
@@ -107,10 +133,13 @@ abstract class _$CommentCopyWith<$Res> implements $CommentCopyWith<$Res> {
       __$CommentCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String commentId,
+      {String forumId,
+      String commentId,
       String userId,
       CommentText commentText,
       bool isAnon,
+      int likes,
+      List<String> likedUserIds,
       String timestamp});
 }
 
@@ -125,13 +154,20 @@ class __$CommentCopyWithImpl<$Res> extends _$CommentCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? forumId = freezed,
     Object? commentId = freezed,
     Object? userId = freezed,
     Object? commentText = freezed,
     Object? isAnon = freezed,
+    Object? likes = freezed,
+    Object? likedUserIds = freezed,
     Object? timestamp = freezed,
   }) {
     return _then(_Comment(
+      forumId: forumId == freezed
+          ? _value.forumId
+          : forumId // ignore: cast_nullable_to_non_nullable
+              as String,
       commentId: commentId == freezed
           ? _value.commentId
           : commentId // ignore: cast_nullable_to_non_nullable
@@ -148,6 +184,14 @@ class __$CommentCopyWithImpl<$Res> extends _$CommentCopyWithImpl<$Res>
           ? _value.isAnon
           : isAnon // ignore: cast_nullable_to_non_nullable
               as bool,
+      likes: likes == freezed
+          ? _value.likes
+          : likes // ignore: cast_nullable_to_non_nullable
+              as int,
+      likedUserIds: likedUserIds == freezed
+          ? _value.likedUserIds
+          : likedUserIds // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       timestamp: timestamp == freezed
           ? _value.timestamp
           : timestamp // ignore: cast_nullable_to_non_nullable
@@ -160,14 +204,19 @@ class __$CommentCopyWithImpl<$Res> extends _$CommentCopyWithImpl<$Res>
 
 class _$_Comment extends _Comment {
   const _$_Comment(
-      {required this.commentId,
+      {required this.forumId,
+      required this.commentId,
       required this.userId,
       required this.commentText,
       required this.isAnon,
+      required this.likes,
+      required this.likedUserIds,
       required this.timestamp})
       : super._();
 
-  @override //required String forumId,
+  @override
+  final String forumId;
+  @override
   final String commentId;
   @override
   final String userId;
@@ -175,18 +224,25 @@ class _$_Comment extends _Comment {
   final CommentText commentText;
   @override
   final bool isAnon;
-  @override //required int likes,
+  @override
+  final int likes;
+  @override
+  final List<String> likedUserIds;
+  @override
   final String timestamp;
 
   @override
   String toString() {
-    return 'Comment(commentId: $commentId, userId: $userId, commentText: $commentText, isAnon: $isAnon, timestamp: $timestamp)';
+    return 'Comment(forumId: $forumId, commentId: $commentId, userId: $userId, commentText: $commentText, isAnon: $isAnon, likes: $likes, likedUserIds: $likedUserIds, timestamp: $timestamp)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _Comment &&
+            (identical(other.forumId, forumId) ||
+                const DeepCollectionEquality()
+                    .equals(other.forumId, forumId)) &&
             (identical(other.commentId, commentId) ||
                 const DeepCollectionEquality()
                     .equals(other.commentId, commentId)) &&
@@ -197,6 +253,11 @@ class _$_Comment extends _Comment {
                     .equals(other.commentText, commentText)) &&
             (identical(other.isAnon, isAnon) ||
                 const DeepCollectionEquality().equals(other.isAnon, isAnon)) &&
+            (identical(other.likes, likes) ||
+                const DeepCollectionEquality().equals(other.likes, likes)) &&
+            (identical(other.likedUserIds, likedUserIds) ||
+                const DeepCollectionEquality()
+                    .equals(other.likedUserIds, likedUserIds)) &&
             (identical(other.timestamp, timestamp) ||
                 const DeepCollectionEquality()
                     .equals(other.timestamp, timestamp)));
@@ -205,10 +266,13 @@ class _$_Comment extends _Comment {
   @override
   int get hashCode =>
       runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(forumId) ^
       const DeepCollectionEquality().hash(commentId) ^
       const DeepCollectionEquality().hash(userId) ^
       const DeepCollectionEquality().hash(commentText) ^
       const DeepCollectionEquality().hash(isAnon) ^
+      const DeepCollectionEquality().hash(likes) ^
+      const DeepCollectionEquality().hash(likedUserIds) ^
       const DeepCollectionEquality().hash(timestamp);
 
   @JsonKey(ignore: true)
@@ -219,14 +283,19 @@ class _$_Comment extends _Comment {
 
 abstract class _Comment extends Comment {
   const factory _Comment(
-      {required String commentId,
+      {required String forumId,
+      required String commentId,
       required String userId,
       required CommentText commentText,
       required bool isAnon,
+      required int likes,
+      required List<String> likedUserIds,
       required String timestamp}) = _$_Comment;
   const _Comment._() : super._();
 
-  @override //required String forumId,
+  @override
+  String get forumId => throw _privateConstructorUsedError;
+  @override
   String get commentId => throw _privateConstructorUsedError;
   @override
   String get userId => throw _privateConstructorUsedError;
@@ -234,7 +303,11 @@ abstract class _Comment extends Comment {
   CommentText get commentText => throw _privateConstructorUsedError;
   @override
   bool get isAnon => throw _privateConstructorUsedError;
-  @override //required int likes,
+  @override
+  int get likes => throw _privateConstructorUsedError;
+  @override
+  List<String> get likedUserIds => throw _privateConstructorUsedError;
+  @override
   String get timestamp => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)

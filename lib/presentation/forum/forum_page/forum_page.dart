@@ -24,7 +24,8 @@ class ForumPage extends StatelessWidget {
               getIt<ForumActorBloc>()..add(const ForumActorEvent.started())),
       BlocProvider(
           create: (context) => getIt<CommentWatcherBloc>()
-            ..add(CommentWatcherEvent.retrieveCommentsStarted(forumId))),
+            ..add(CommentWatcherEvent.retrieveCommentsStarted(
+                forumId, 'Recent'))),
       if (pollAdded)
         BlocProvider(
             create: (context) => getIt<PollWatcherBloc>()

@@ -149,11 +149,11 @@ class ForumPostRepository implements IForumRepository {
   }
 
   @override
-  Future<Either<DataFailure, Unit>> like(String forumId, String userId) async {
+  Future<Either<DataFailure, Unit>> likeForum(
+      String forumId, String userId) async {
     try {
       await _firestore.runTransaction((transaction) async {
-        final forumsRef = await _firestore.forumsRef();
-        final forumDoc = forumsRef.doc(forumId);
+        final forumDoc = await _firestore.forumDocument(forumId);
         transaction.update(forumDoc, {
           'likedUserIds': FieldValue.arrayUnion([userId]),
           'likes': FieldValue.increment(1),
@@ -170,12 +170,11 @@ class ForumPostRepository implements IForumRepository {
   }
 
   @override
-  Future<Either<DataFailure, Unit>> unlike(
+  Future<Either<DataFailure, Unit>> unlikeForum(
       String forumId, String userId) async {
     try {
       await _firestore.runTransaction((transaction) async {
-        final forumsRef = await _firestore.forumsRef();
-        final forumDoc = forumsRef.doc(forumId);
+        final forumDoc = await _firestore.forumDocument(forumId);
         transaction.update(forumDoc, {
           'likedUserIds': FieldValue.arrayRemove([userId]),
           'likes': FieldValue.increment(-1),
@@ -238,10 +237,13 @@ class ForumPostRepository implements IForumRepository {
 
   @override
   Stream<Either<DataFailure, List<Comment>>> retrieveComments(
-      String forumId) async* {
+      String sortedBy, String forumId) async* {
+    String orderBy = sortedBy == 'Most Liked' ? 'likes' : 'timestamp';
+    bool descending = sortedBy == 'Oldest' ? false : true;
+    print('orderedBy: $orderBy');
     final commentsRef = await _firestore.commentsForumRef(forumId);
     yield* commentsRef
-        .orderBy('timestamp', descending: true)
+        .orderBy(orderBy, descending: descending)
         .snapshots()
         .map(
           (snapshot) => right<DataFailure, List<Comment>>(
@@ -258,5 +260,95 @@ class ForumPostRepository implements IForumRepository {
         return left(const DataFailure.unexpected());
       }
     });
+  }
+
+  @override
+  Future<Either<DataFailure, Unit>> likeComment(
+      String forumId, String commentId, String userId) async {
+    try {
+      await _firestore.runTransaction((transaction) async {
+        final commentsRef = await _firestore.commentsForumRef(forumId);
+        final commentDoc = commentsRef.doc(commentId);
+        transaction.update(commentDoc, {
+          'likedUserIds': FieldValue.arrayUnion([userId]),
+          'likes': FieldValue.increment(1),
+        });
+      });
+      return right(unit);
+    } on FirebaseException catch (e) {
+      if (e.message!.contains('PERMISSION_DENIED')) {
+        return left(const DataFailure.insufficientPermission());
+      } else {
+        return left(const DataFailure.unexpected());
+      }
+    }
+  }
+
+  @override
+  Future<Either<DataFailure, Unit>> unlikeComment(
+      String forumId, String commentId, String userId) async {
+    try {
+      await _firestore.runTransaction((transaction) async {
+        final commentsRef = await _firestore.commentsForumRef(forumId);
+        final commentDoc = commentsRef.doc(commentId);
+        transaction.update(commentDoc, {
+          'likedUserIds': FieldValue.arrayRemove([userId]),
+          'likes': FieldValue.increment(-1),
+        });
+      });
+      return right(unit);
+    } on FirebaseException catch (e) {
+      if (e.message!.contains('PERMISSION_DENIED')) {
+        return left(const DataFailure.insufficientPermission());
+      } else {
+        return left(const DataFailure.unexpected());
+      }
+    }
+  }
+
+  @override
+  Future<Either<DataFailure, Unit>> deleteForum(
+      String forumId, bool hasPhoto) async {
+    try {
+      final forumDoc = await _firestore.forumDocument(forumId);
+      await forumDoc.delete();
+
+      //Recursively deletes each comment doc because of Firestore limitations
+      final commentsRef = await _firestore.commentsForumRef(forumId);
+      await commentsRef.get().then((snapshot) {
+        for (DocumentSnapshot doc in snapshot.docs) {
+          doc.reference.delete();
+        }
+      });
+
+      //Deletes comments/forumId doc
+      final commentDoc = await _firestore.commentsDoc(forumId);
+      await commentDoc.delete();
+
+      //Deletes Poll if poll exists
+      final pollDoc = await _firestore.pollDocument(forumId);
+      await pollDoc.get().then((doc) {
+        if (doc.exists) {
+          pollDoc.delete();
+        }
+      });
+
+      //Not sure how to check if photo exists??? But a bit sad if gotta retrieve the whole forum to check bool
+      //Delete photo if exists
+      if (hasPhoto) {
+        _firebaseStorage
+            .ref()
+            .child('forumPictures/$forumId/$forumId')
+            .delete()
+            .onError((error, stackTrace) => null);
+      }
+      return right(unit);
+    } on FirebaseException catch (e) {
+      if (e.message!.contains('PERMISSION_DENIED')) {
+        return left(const DataFailure.insufficientPermission());
+      } else {
+        return left(const DataFailure.unexpected());
+      }
+    }
   }
 }

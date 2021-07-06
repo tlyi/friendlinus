@@ -16,9 +16,11 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$CommentWatcherEventTearOff {
   const _$CommentWatcherEventTearOff();
 
-  _RetrieveCommentsStarted retrieveCommentsStarted(String forumId) {
+  _RetrieveCommentsStarted retrieveCommentsStarted(
+      String forumId, String sortedBy) {
     return _RetrieveCommentsStarted(
       forumId,
+      sortedBy,
     );
   }
 
@@ -43,7 +45,8 @@ const $CommentWatcherEvent = _$CommentWatcherEventTearOff();
 mixin _$CommentWatcherEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String forumId) retrieveCommentsStarted,
+    required TResult Function(String forumId, String sortedBy)
+        retrieveCommentsStarted,
     required TResult Function(
             Either<DataFailure, List<Comment>> failureOrComments)
         commentsReceived,
@@ -52,7 +55,7 @@ mixin _$CommentWatcherEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String forumId)? retrieveCommentsStarted,
+    TResult Function(String forumId, String sortedBy)? retrieveCommentsStarted,
     TResult Function(Either<DataFailure, List<Comment>> failureOrComments)?
         commentsReceived,
     TResult Function(List<Comment> comments)? retrieveProfilesStarted,
@@ -100,7 +103,7 @@ abstract class _$RetrieveCommentsStartedCopyWith<$Res> {
   factory _$RetrieveCommentsStartedCopyWith(_RetrieveCommentsStarted value,
           $Res Function(_RetrieveCommentsStarted) then) =
       __$RetrieveCommentsStartedCopyWithImpl<$Res>;
-  $Res call({String forumId});
+  $Res call({String forumId, String sortedBy});
 }
 
 /// @nodoc
@@ -118,11 +121,16 @@ class __$RetrieveCommentsStartedCopyWithImpl<$Res>
   @override
   $Res call({
     Object? forumId = freezed,
+    Object? sortedBy = freezed,
   }) {
     return _then(_RetrieveCommentsStarted(
       forumId == freezed
           ? _value.forumId
           : forumId // ignore: cast_nullable_to_non_nullable
+              as String,
+      sortedBy == freezed
+          ? _value.sortedBy
+          : sortedBy // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -131,14 +139,16 @@ class __$RetrieveCommentsStartedCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_RetrieveCommentsStarted implements _RetrieveCommentsStarted {
-  const _$_RetrieveCommentsStarted(this.forumId);
+  const _$_RetrieveCommentsStarted(this.forumId, this.sortedBy);
 
   @override
   final String forumId;
+  @override
+  final String sortedBy;
 
   @override
   String toString() {
-    return 'CommentWatcherEvent.retrieveCommentsStarted(forumId: $forumId)';
+    return 'CommentWatcherEvent.retrieveCommentsStarted(forumId: $forumId, sortedBy: $sortedBy)';
   }
 
   @override
@@ -146,12 +156,18 @@ class _$_RetrieveCommentsStarted implements _RetrieveCommentsStarted {
     return identical(this, other) ||
         (other is _RetrieveCommentsStarted &&
             (identical(other.forumId, forumId) ||
-                const DeepCollectionEquality().equals(other.forumId, forumId)));
+                const DeepCollectionEquality()
+                    .equals(other.forumId, forumId)) &&
+            (identical(other.sortedBy, sortedBy) ||
+                const DeepCollectionEquality()
+                    .equals(other.sortedBy, sortedBy)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(forumId);
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(forumId) ^
+      const DeepCollectionEquality().hash(sortedBy);
 
   @JsonKey(ignore: true)
   @override
@@ -162,26 +178,27 @@ class _$_RetrieveCommentsStarted implements _RetrieveCommentsStarted {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String forumId) retrieveCommentsStarted,
+    required TResult Function(String forumId, String sortedBy)
+        retrieveCommentsStarted,
     required TResult Function(
             Either<DataFailure, List<Comment>> failureOrComments)
         commentsReceived,
     required TResult Function(List<Comment> comments) retrieveProfilesStarted,
   }) {
-    return retrieveCommentsStarted(forumId);
+    return retrieveCommentsStarted(forumId, sortedBy);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String forumId)? retrieveCommentsStarted,
+    TResult Function(String forumId, String sortedBy)? retrieveCommentsStarted,
     TResult Function(Either<DataFailure, List<Comment>> failureOrComments)?
         commentsReceived,
     TResult Function(List<Comment> comments)? retrieveProfilesStarted,
     required TResult orElse(),
   }) {
     if (retrieveCommentsStarted != null) {
-      return retrieveCommentsStarted(forumId);
+      return retrieveCommentsStarted(forumId, sortedBy);
     }
     return orElse();
   }
@@ -214,10 +231,11 @@ class _$_RetrieveCommentsStarted implements _RetrieveCommentsStarted {
 }
 
 abstract class _RetrieveCommentsStarted implements CommentWatcherEvent {
-  const factory _RetrieveCommentsStarted(String forumId) =
+  const factory _RetrieveCommentsStarted(String forumId, String sortedBy) =
       _$_RetrieveCommentsStarted;
 
   String get forumId => throw _privateConstructorUsedError;
+  String get sortedBy => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$RetrieveCommentsStartedCopyWith<_RetrieveCommentsStarted> get copyWith =>
       throw _privateConstructorUsedError;
@@ -290,7 +308,8 @@ class _$_CommentsReceived implements _CommentsReceived {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String forumId) retrieveCommentsStarted,
+    required TResult Function(String forumId, String sortedBy)
+        retrieveCommentsStarted,
     required TResult Function(
             Either<DataFailure, List<Comment>> failureOrComments)
         commentsReceived,
@@ -302,7 +321,7 @@ class _$_CommentsReceived implements _CommentsReceived {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String forumId)? retrieveCommentsStarted,
+    TResult Function(String forumId, String sortedBy)? retrieveCommentsStarted,
     TResult Function(Either<DataFailure, List<Comment>> failureOrComments)?
         commentsReceived,
     TResult Function(List<Comment> comments)? retrieveProfilesStarted,
@@ -421,7 +440,8 @@ class _$_RetrieveProfilesStarted implements _RetrieveProfilesStarted {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String forumId) retrieveCommentsStarted,
+    required TResult Function(String forumId, String sortedBy)
+        retrieveCommentsStarted,
     required TResult Function(
             Either<DataFailure, List<Comment>> failureOrComments)
         commentsReceived,
@@ -433,7 +453,7 @@ class _$_RetrieveProfilesStarted implements _RetrieveProfilesStarted {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String forumId)? retrieveCommentsStarted,
+    TResult Function(String forumId, String sortedBy)? retrieveCommentsStarted,
     TResult Function(Either<DataFailure, List<Comment>> failureOrComments)?
         commentsReceived,
     TResult Function(List<Comment> comments)? retrieveProfilesStarted,
