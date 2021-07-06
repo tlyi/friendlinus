@@ -72,4 +72,16 @@ extension FirestoreX on FirebaseFirestore {
   Future<CollectionReference> modulesRef() async {
     return FirebaseFirestore.instance.collection('modules');
   }
+
+  //Notifications
+  Future<CollectionReference> notificationsRef() async {
+    return FirebaseFirestore.instance.collection('notifications');
+  }
+
+  Future<CollectionReference> notificationsUserRef(String userId) async {
+    return FirebaseFirestore.instance
+        .collection('notifications')
+        .doc(userId)
+        .collection('notifications');
+  }
 }

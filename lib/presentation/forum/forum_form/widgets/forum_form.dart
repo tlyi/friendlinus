@@ -47,9 +47,9 @@ class ForumForm extends StatelessWidget {
               children: <Widget>[
                 const _BuildTitle(),
                 const SizedBox(height: 15),
-                const _BuildTag(),
-                const SizedBox(height: 15),
                 const _BuildBody(),
+                const SizedBox(height: 15),
+                const _BuildTag(),
                 const SizedBox(height: 15),
                 if (photoAdded) const _BuildImage(),
                 if (pollAdded) _BuildPoll(),
@@ -112,20 +112,55 @@ class _BuildTag extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TypeAheadField(suggestionsCallback: (value) async {
-      context.read<ForumFormBloc>().add(ForumFormEvent.searchedModule(value));
+    return BlocBuilder<ForumFormBloc, ForumFormState>(
+      builder: (context, state) {
+        if (context.read<ForumFormBloc>().state.forumPost.tag == '') {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Tag your post:'),
+              TypeAheadField(suggestionsCallback: (value) async {
+                context
+                    .read<ForumFormBloc>()
+                    .add(ForumFormEvent.searchedModule(value));
 
-      return context
-          .read<ForumFormBloc>()
-          .state
-          .moduleSuggestions
-          .getOrElse(() => []);
-    }, itemBuilder: (context, suggestion) {
-      return ListTile(title: Text(suggestion.toString()));
-    }, onSuggestionSelected: (String value) {
-      print("adding tag");
-      context.read<ForumFormBloc>().add(ForumFormEvent.tagChanged(value));
-    });
+                return context
+                    .read<ForumFormBloc>()
+                    .state
+                    .moduleSuggestions
+                    .getOrElse(() => []);
+              }, itemBuilder: (context, suggestion) {
+                return ListTile(title: Text(suggestion.toString()));
+              }, onSuggestionSelected: (String value) {
+                print("adding tag");
+                context
+                    .read<ForumFormBloc>()
+                    .add(ForumFormEvent.tagChanged(value));
+              })
+            ],
+          );
+        } else {
+          return Align(
+            alignment: Alignment.centerLeft,
+            child: Chip(
+                label: Text(context.read<ForumFormBloc>().state.forumPost.tag),
+                labelPadding: EdgeInsets.only(left: 4, right: 0),
+                deleteIcon: Icon(
+                  Icons.close_rounded,
+                  color: Colors.grey[700],
+                  size: 18,
+                ),
+                deleteIconColor: Colors.transparent,
+                onDeleted: () {
+                  print("removing");
+                  context
+                      .read<ForumFormBloc>()
+                      .add(const ForumFormEvent.tagChanged(''));
+                }),
+          );
+        }
+      },
+    );
   }
 }
 

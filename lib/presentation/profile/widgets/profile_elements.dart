@@ -573,6 +573,12 @@ class RecentPosts extends StatelessWidget {
                           borderRadius: BorderRadius.circular(15.0),
                         ),
                         child: ListTile(
+                          title: Text(forum.title.getOrCrash()),
+                          subtitle: Text(
+                            forum.body.getOrCrash(),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                           trailing: Text(getTime(forum.timestamp)),
                           isThreeLine: true,
                           onTap: () async {

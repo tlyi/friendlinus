@@ -7,9 +7,11 @@ import 'package:friendlinus/domain/core/value_objects.dart';
 import 'package:friendlinus/domain/data/data_failure.dart';
 import 'package:dartz/dartz.dart';
 import 'package:friendlinus/domain/data/forum/forum_post/forum_post.dart';
+import 'package:friendlinus/domain/data/notifications/notification.dart';
 import 'package:friendlinus/domain/data/profile/i_profile_repository.dart';
 import 'package:friendlinus/domain/data/profile/profile.dart';
 import 'package:friendlinus/infrastructure/data/forum/forum_post_dtos/forum_post_dtos.dart';
+import 'package:friendlinus/infrastructure/data/notifications/notification_dtos.dart';
 import 'package:friendlinus/infrastructure/data/profile/profile_dtos.dart';
 import 'package:friendlinus/injection.dart';
 import 'package:injectable/injectable.dart';
@@ -234,7 +236,15 @@ class ProfileRepository implements IProfileRepository {
       final ownId = await getUserId();
       final ownDoc = await _firestore.userDocument();
       final otherUserDoc = await _firestore.userDocumentById(userToFollowId);
+      final notifRef = await _firestore.notificationsUserRef(userToFollowId);
+      final notifDoc = notifRef.doc();
+      final notif = Notification.empty().copyWith(
+        senderId: ownId,
+        notificationType: 'newFollower',
+      );
+      final notifDto = NotificationDto.fromDomain(notif).toJson();
       WriteBatch batch = _firestore.batch();
+      batch.set(notifDoc, notifDto);
       batch.update(ownDoc, {
         'following': FieldValue.arrayUnion([userToFollowId])
       });

@@ -48,6 +48,7 @@ class ConvoMessages extends StatelessWidget {
                     .add(const ConvoActorEvent.lastMessageRead());
               }
               return Container(
+                width: MediaQuery.of(context).size.width,
                 padding: const EdgeInsets.only(
                     left: 14, right: 14, top: 5, bottom: 5),
                 child: Align(
@@ -63,20 +64,11 @@ class ConvoMessages extends StatelessWidget {
                         : BubbleNip.rightBottom,
                     showNip: index == 0 ||
                         state.messages[index - 1].senderId != message.senderId,
-                    // child: Row(
-                    //   crossAxisAlignment: CrossAxisAlignment.start,
-                    //   mainAxisSize: MainAxisSize.min,
-                    //   children: [
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        if (message.photoUrl != '')
-                          Container(
-                            //height: 200,
+                    child: message.photoUrl != ''
+                        ? Container(
                             width: 200,
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 FadeInImage(
                                   fit: BoxFit.contain,
@@ -87,17 +79,14 @@ class ConvoMessages extends StatelessWidget {
                                 _MessageBody(
                                   message: message,
                                   isOtherSender: isOtherSender,
-                                ),
+                                )
                               ],
                             ),
                           )
-                        else
-                          _MessageBody(
+                        : _MessageBody(
                             message: message,
                             isOtherSender: isOtherSender,
-                          )
-                      ],
-                    ),
+                          ),
                   ),
                 ),
               );
@@ -129,47 +118,80 @@ class _MessageBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      // crossAxisAlignment: CrossAxisAlignment.end,
+      // //     isOtherSender ? CrossAxisAlignment.start : CrossAxisAlignment.end,
       mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
             Flexible(
-              child: Text(
-                message.messageBody.getOrCrash(),
-                style: const TextStyle(fontSize: 15),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    message.messageBody.getOrCrash(),
+                    style: const TextStyle(fontSize: 15),
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Text(
+                          getTime(message.timeSent),
+                          style: const TextStyle(fontSize: 10),
+                        ),
+                      ),
+                      if (!isOtherSender)
+                        Padding(
+                          padding: EdgeInsets.only(left: 5),
+                          child: message.read
+                              ? const Icon(MdiIcons.checkAll,
+                                  color: Colors.white, size: 15)
+                              : const Icon(MdiIcons.check,
+                                  color: Colors.white, size: 15),
+                        ),
+                    ],
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Flexible(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 10, top: 10),
-                child: Text(
-                  getTime(message.timeSent),
-                  style: const TextStyle(fontSize: 10),
-                ),
-              ),
-            ),
-            if (!isOtherSender)
-              Flexible(
-                child: Padding(
-                  padding: EdgeInsets.only(left: 5, top: 10),
-                  child: message.read
-                      ? const Icon(MdiIcons.checkAll,
-                          color: Colors.white, size: 15)
-                      : const Icon(MdiIcons.check,
-                          color: Colors.white, size: 15),
-                ),
-              ),
           ],
         ),
       ],
     );
   }
 }
+
+
+/*
+Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              verticalDirection: VerticalDirection.down,
+              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Text(
+                    getTime(message.timeSent),
+                    style: const TextStyle(fontSize: 10),
+                  ),
+                ),
+                if (!isOtherSender)
+                  Padding(
+                    padding: EdgeInsets.only(left: 5),
+                    child: message.read
+                        ? const Icon(MdiIcons.checkAll,
+                            color: Colors.white, size: 15)
+                        : const Icon(MdiIcons.check,
+                            color: Colors.white, size: 15),
+                  ),
+              ],
+            ),
+
+            */
