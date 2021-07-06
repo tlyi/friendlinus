@@ -67,7 +67,7 @@ class UpdateProfileForm extends StatelessWidget {
                   const SizedBox(height: 15),
                   _BuildBio(userProfile: userProfile),
                   const SizedBox(height: 15),
-                  Expanded(child: _BuildModule(userProfile: userProfile)),
+                  _BuildModule(userProfile: userProfile),
                   const SizedBox(height: 15),
                   _BuildTags(userProfile: userProfile),
                   _BuildSaveButton(),
@@ -260,6 +260,7 @@ class _BuildModule extends StatelessWidget {
       children: [
         Text('Select modules of interest'),
         TypeAheadField(
+          direction: AxisDirection.up,
           suggestionsCallback: (value) async {
             context
                 .read<ProfileFormBloc>()
@@ -316,50 +317,44 @@ class _BuildTags extends StatelessWidget {
         print("is empt");
         return Container();
       } else if (context.read<ProfileFormBloc>().state.refreshTags) {
-        if (context.read<ProfileFormBloc>().state.refreshTags) {
-          return Container(
-            alignment: Alignment.topLeft,
-            child: Tags(
-              alignment: WrapAlignment.start,
-              itemCount:
-                  context.read<ProfileFormBloc>().state.profile.modules.length,
-              itemBuilder: (index) {
-                final module = context
-                    .read<ProfileFormBloc>()
-                    .state
-                    .profile
-                    .modules[index];
-                return ItemTags(
-                  key: Key(index.toString()),
-                  index: index,
-                  title: module,
-                  activeColor: Colors.grey.shade500,
-                  pressEnabled: false,
-                  highlightColor: Colors.transparent,
-                  splashColor: Colors.transparent,
-                  elevation: 0.0,
-                  borderRadius: BorderRadius.all(Radius.circular(7.0)),
-//                textColor: ,
-                  textColor: Colors.white,
-                  textActiveColor: Colors.white,
-                  removeButton: ItemTagsRemoveButton(
-                      color: Colors.black,
-                      backgroundColor: Colors.transparent,
-                      size: 14,
-                      onRemoved: () {
-                        print("removing");
-                        context
-                            .read<ProfileFormBloc>()
-                            .add(ProfileFormEvent.removedModule(index));
+        return Container(
+          alignment: Alignment.topLeft,
+          child: Tags(
+            alignment: WrapAlignment.start,
+            itemCount:
+                context.read<ProfileFormBloc>().state.profile.modules.length,
+            itemBuilder: (index) {
+              final module =
+                  context.read<ProfileFormBloc>().state.profile.modules[index];
+              return ItemTags(
+                key: Key(index.toString()),
+                index: index,
+                title: module,
+                activeColor: Colors.grey.shade500,
+                pressEnabled: false,
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
+                elevation: 0.0,
+                borderRadius: BorderRadius.all(Radius.circular(7.0)),
+                textColor: Colors.white,
+                textActiveColor: Colors.white,
+                removeButton: ItemTagsRemoveButton(
+                    color: Colors.black,
+                    backgroundColor: Colors.transparent,
+                    size: 14,
+                    onRemoved: () {
+                      print("removing");
+                      context
+                          .read<ProfileFormBloc>()
+                          .add(ProfileFormEvent.removedModule(index));
 
-                        return true;
-                      }),
-                  textOverflow: TextOverflow.ellipsis,
-                );
-              },
-            ),
-          );
-        }
+                      return true;
+                    }),
+                textOverflow: TextOverflow.ellipsis,
+              );
+            },
+          ),
+        );
       }
       return Container();
     });

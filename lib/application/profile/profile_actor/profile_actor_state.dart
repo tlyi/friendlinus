@@ -8,6 +8,7 @@ class ProfileActorState with _$ProfileActorState {
     required bool isLoading,
     required bool isFollowing,
     required Either<DataFailure, List<Profile>> failureOrFollowing,
+    required Either<DataFailure, List<Profile>> failureOrFollowers,
     required Either<DataFailure, List<ForumPost>> failureOrForumsPosted,
   }) = _ProfileActorState;
 
@@ -17,6 +18,7 @@ class ProfileActorState with _$ProfileActorState {
         isLoading: true,
         isFollowing: false,
         failureOrFollowing: right([]),
+        failureOrFollowers: right([]),
         failureOrForumsPosted: right([]),
       );
 }

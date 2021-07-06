@@ -510,6 +510,7 @@ class _$ProfileActorStateTearOff {
       required bool isLoading,
       required bool isFollowing,
       required Either<DataFailure, List<Profile>> failureOrFollowing,
+      required Either<DataFailure, List<Profile>> failureOrFollowers,
       required Either<DataFailure, List<ForumPost>> failureOrForumsPosted}) {
     return _ProfileActorState(
       ownId: ownId,
@@ -517,6 +518,7 @@ class _$ProfileActorStateTearOff {
       isLoading: isLoading,
       isFollowing: isFollowing,
       failureOrFollowing: failureOrFollowing,
+      failureOrFollowers: failureOrFollowers,
       failureOrForumsPosted: failureOrForumsPosted,
     );
   }
@@ -532,6 +534,8 @@ mixin _$ProfileActorState {
   bool get isLoading => throw _privateConstructorUsedError;
   bool get isFollowing => throw _privateConstructorUsedError;
   Either<DataFailure, List<Profile>> get failureOrFollowing =>
+      throw _privateConstructorUsedError;
+  Either<DataFailure, List<Profile>> get failureOrFollowers =>
       throw _privateConstructorUsedError;
   Either<DataFailure, List<ForumPost>> get failureOrForumsPosted =>
       throw _privateConstructorUsedError;
@@ -552,6 +556,7 @@ abstract class $ProfileActorStateCopyWith<$Res> {
       bool isLoading,
       bool isFollowing,
       Either<DataFailure, List<Profile>> failureOrFollowing,
+      Either<DataFailure, List<Profile>> failureOrFollowers,
       Either<DataFailure, List<ForumPost>> failureOrForumsPosted});
 }
 
@@ -571,6 +576,7 @@ class _$ProfileActorStateCopyWithImpl<$Res>
     Object? isLoading = freezed,
     Object? isFollowing = freezed,
     Object? failureOrFollowing = freezed,
+    Object? failureOrFollowers = freezed,
     Object? failureOrForumsPosted = freezed,
   }) {
     return _then(_value.copyWith(
@@ -594,6 +600,10 @@ class _$ProfileActorStateCopyWithImpl<$Res>
           ? _value.failureOrFollowing
           : failureOrFollowing // ignore: cast_nullable_to_non_nullable
               as Either<DataFailure, List<Profile>>,
+      failureOrFollowers: failureOrFollowers == freezed
+          ? _value.failureOrFollowers
+          : failureOrFollowers // ignore: cast_nullable_to_non_nullable
+              as Either<DataFailure, List<Profile>>,
       failureOrForumsPosted: failureOrForumsPosted == freezed
           ? _value.failureOrForumsPosted
           : failureOrForumsPosted // ignore: cast_nullable_to_non_nullable
@@ -615,6 +625,7 @@ abstract class _$ProfileActorStateCopyWith<$Res>
       bool isLoading,
       bool isFollowing,
       Either<DataFailure, List<Profile>> failureOrFollowing,
+      Either<DataFailure, List<Profile>> failureOrFollowers,
       Either<DataFailure, List<ForumPost>> failureOrForumsPosted});
 }
 
@@ -636,6 +647,7 @@ class __$ProfileActorStateCopyWithImpl<$Res>
     Object? isLoading = freezed,
     Object? isFollowing = freezed,
     Object? failureOrFollowing = freezed,
+    Object? failureOrFollowers = freezed,
     Object? failureOrForumsPosted = freezed,
   }) {
     return _then(_ProfileActorState(
@@ -659,6 +671,10 @@ class __$ProfileActorStateCopyWithImpl<$Res>
           ? _value.failureOrFollowing
           : failureOrFollowing // ignore: cast_nullable_to_non_nullable
               as Either<DataFailure, List<Profile>>,
+      failureOrFollowers: failureOrFollowers == freezed
+          ? _value.failureOrFollowers
+          : failureOrFollowers // ignore: cast_nullable_to_non_nullable
+              as Either<DataFailure, List<Profile>>,
       failureOrForumsPosted: failureOrForumsPosted == freezed
           ? _value.failureOrForumsPosted
           : failureOrForumsPosted // ignore: cast_nullable_to_non_nullable
@@ -676,6 +692,7 @@ class _$_ProfileActorState implements _ProfileActorState {
       required this.isLoading,
       required this.isFollowing,
       required this.failureOrFollowing,
+      required this.failureOrFollowers,
       required this.failureOrForumsPosted});
 
   @override
@@ -689,11 +706,13 @@ class _$_ProfileActorState implements _ProfileActorState {
   @override
   final Either<DataFailure, List<Profile>> failureOrFollowing;
   @override
+  final Either<DataFailure, List<Profile>> failureOrFollowers;
+  @override
   final Either<DataFailure, List<ForumPost>> failureOrForumsPosted;
 
   @override
   String toString() {
-    return 'ProfileActorState(ownId: $ownId, userId: $userId, isLoading: $isLoading, isFollowing: $isFollowing, failureOrFollowing: $failureOrFollowing, failureOrForumsPosted: $failureOrForumsPosted)';
+    return 'ProfileActorState(ownId: $ownId, userId: $userId, isLoading: $isLoading, isFollowing: $isFollowing, failureOrFollowing: $failureOrFollowing, failureOrFollowers: $failureOrFollowers, failureOrForumsPosted: $failureOrForumsPosted)';
   }
 
   @override
@@ -713,6 +732,9 @@ class _$_ProfileActorState implements _ProfileActorState {
             (identical(other.failureOrFollowing, failureOrFollowing) ||
                 const DeepCollectionEquality()
                     .equals(other.failureOrFollowing, failureOrFollowing)) &&
+            (identical(other.failureOrFollowers, failureOrFollowers) ||
+                const DeepCollectionEquality()
+                    .equals(other.failureOrFollowers, failureOrFollowers)) &&
             (identical(other.failureOrForumsPosted, failureOrForumsPosted) ||
                 const DeepCollectionEquality().equals(
                     other.failureOrForumsPosted, failureOrForumsPosted)));
@@ -726,6 +748,7 @@ class _$_ProfileActorState implements _ProfileActorState {
       const DeepCollectionEquality().hash(isLoading) ^
       const DeepCollectionEquality().hash(isFollowing) ^
       const DeepCollectionEquality().hash(failureOrFollowing) ^
+      const DeepCollectionEquality().hash(failureOrFollowers) ^
       const DeepCollectionEquality().hash(failureOrForumsPosted);
 
   @JsonKey(ignore: true)
@@ -741,6 +764,7 @@ abstract class _ProfileActorState implements ProfileActorState {
       required bool isLoading,
       required bool isFollowing,
       required Either<DataFailure, List<Profile>> failureOrFollowing,
+      required Either<DataFailure, List<Profile>> failureOrFollowers,
       required Either<DataFailure, List<ForumPost>>
           failureOrForumsPosted}) = _$_ProfileActorState;
 
@@ -754,6 +778,9 @@ abstract class _ProfileActorState implements ProfileActorState {
   bool get isFollowing => throw _privateConstructorUsedError;
   @override
   Either<DataFailure, List<Profile>> get failureOrFollowing =>
+      throw _privateConstructorUsedError;
+  @override
+  Either<DataFailure, List<Profile>> get failureOrFollowers =>
       throw _privateConstructorUsedError;
   @override
   Either<DataFailure, List<ForumPost>> get failureOrForumsPosted =>
