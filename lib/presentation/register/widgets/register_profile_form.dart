@@ -233,52 +233,7 @@ class _BuildBio extends StatelessWidget {
 class _BuildModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('Select modules of interest'),
-        TypeAheadField(
-          suggestionsCallback: (value) async {
-            context
-                .read<ProfileFormBloc>()
-                .add(ProfileFormEvent.searchedModule(value));
-
-            return context
-                .read<ProfileFormBloc>()
-                .state
-                .moduleSuggestions
-                .getOrElse(() => []);
-          },
-          itemBuilder: (context, suggestion) {
-            return ListTile(title: Text(suggestion.toString()));
-          },
-          onSuggestionSelected: (String value) {
-            if (context.read<ProfileFormBloc>().state.profile.modules.length >=
-                10) {
-              FlushbarHelper.createError(
-                      message: 'Maximum number of modules is 10')
-                  .show(context);
-            } else if (context
-                .read<ProfileFormBloc>()
-                .state
-                .profile
-                .modules
-                .contains(value)) {
-              print("module alr selected");
-              FlushbarHelper.createError(
-                      message: 'Module has already been selected')
-                  .show(context);
-            } else {
-              print("adding to list");
-              context
-                  .read<ProfileFormBloc>()
-                  .add(ProfileFormEvent.addedModule(value));
-            }
-          },
-        ),
-      ],
-    );
+    return Container();
   }
 }
 
