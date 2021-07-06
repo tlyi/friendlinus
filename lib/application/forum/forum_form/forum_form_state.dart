@@ -11,6 +11,7 @@ class ForumFormState with _$ForumFormState {
     required Option<Either<DataFailure, Unit>> createFailureOrSuccessOption,
     required bool isLoading,
     required bool showErrorMessages,
+    required Either<DataFailure, List<String>> moduleSuggestions,
   }) = _ForumFormState;
 
   factory ForumFormState.initial() => ForumFormState(
@@ -22,5 +23,6 @@ class ForumFormState with _$ForumFormState {
         createPollFailureOrSuccessOption: none(),
         isLoading: false,
         showErrorMessages: false,
+        moduleSuggestions: right([]),
       );
 }

@@ -252,32 +252,29 @@ class ModulesOfInterest extends StatelessWidget {
                 padding: EdgeInsets.only(top: 10.0, bottom: 15.0),
                 child: Text('No modules indicated yet :('))
           else
-            Flexible(
-              child: Container(
-                padding: EdgeInsets.only(top: 15, bottom: 20),
-                alignment: Alignment.topLeft,
-                child: Tags(
+            Align(
+              alignment: Alignment.topLeft,
+              child: Wrap(
                   alignment: WrapAlignment.start,
-                  itemCount: userProfile.modules.length,
-                  itemBuilder: (index) {
-                    final module = userProfile.modules[index];
-                    return ItemTags(
+                  spacing: 6.0,
+                  runSpacing: -5,
+                  children: List<Widget>.generate(
+                      context
+                          .read<ProfileFormBloc>()
+                          .state
+                          .profile
+                          .modules
+                          .length, (int index) {
+                    final module = context
+                        .read<ProfileFormBloc>()
+                        .state
+                        .profile
+                        .modules[index];
+                    return Chip(
                       key: Key(index.toString()),
-                      index: index,
-                      title: module,
-                      activeColor: Colors.grey.shade500,
-                      pressEnabled: false, //TODO: Press to go into module forum
-                      highlightColor: Colors.transparent,
-                      splashColor: Colors.transparent,
-                      elevation: 0.0,
-                      borderRadius: BorderRadius.all(Radius.circular(7.0)),
-                      textColor: Colors.white,
-                      textActiveColor: Colors.white,
-                      textOverflow: TextOverflow.ellipsis,
+                      label: Text(module),
                     );
-                  },
-                ),
-              ),
+                  })),
             )
         ],
       ),
@@ -540,59 +537,58 @@ class RecentPosts extends StatelessWidget {
           (list) => forums = list,
         );
     return Align(
-      alignment: Alignment.topLeft,
-      child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            const Text('Recent Posts',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-            if (failure != null)
-              Padding(
-                padding: const EdgeInsets.only(top: 10.0, bottom: 15.0),
-                child: Text(failure!.maybeMap(
-                    unexpected: (_) => 'Unexpected Error',
-                    orElse: () => 'Error')),
-              )
-            else if (forums.isEmpty)
-              const Padding(
-                padding: EdgeInsets.only(top: 10.0, bottom: 15.0),
-                child: Text('No forums posted yet :('),
-              )
-            else
-              ListView.builder(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: forums.length,
-                  itemBuilder: (context, index) {
-                    final forum = forums[index];
+        alignment: Alignment.topLeft,
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
+            Widget>[
+          const Text('Recent Posts',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+          if (failure != null)
+            Padding(
+              padding: const EdgeInsets.only(top: 10.0, bottom: 15.0),
+              child: Text(failure!.maybeMap(
+                  unexpected: (_) => 'Unexpected Error',
+                  orElse: () => 'Error')),
+            )
+          else if (forums.isEmpty)
+            const Padding(
+              padding: EdgeInsets.only(top: 10.0, bottom: 15.0),
+              child: Text('No forums posted yet :('),
+            )
+          else
+            ListView.builder(
+                physics: const AlwaysScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: forums.length,
+                itemBuilder: (context, index) {
+                  final forum = forums[index];
 
-                    if (isOwnProfile || (!isOwnProfile && !forum.isAnon)) {
-                      return Card(
+                  if (isOwnProfile || (!isOwnProfile && !forum.isAnon)) {
+                    return Card(
                         shape: RoundedRectangleBorder(
                           side: const BorderSide(
                               color: Color(0xFF7BA5BB), width: 2.0),
                           borderRadius: BorderRadius.circular(15.0),
                         ),
-                        trailing: Text(getTime(forum.timestamp)),
-                        isThreeLine: true,
-                        onTap: () async {
-                          await context.pushRoute(ForumRoute(
-                              forumId: forum.forumId,
-                              pollAdded: forum.pollAdded));
-                          isOwnProfile
-                              ? context.read<ProfileActorBloc>().add(
-                                  const ProfileActorEvent.loadingOwnProfile())
-                              : context.read<ProfileActorBloc>().add(
-                                  ProfileActorEvent.loadingOtherProfile(
-                                      userProfile.uuid));
-                        },
-                      ),
-                    );
+                        child: ListTile(
+                          trailing: Text(getTime(forum.timestamp)),
+                          isThreeLine: true,
+                          onTap: () async {
+                            await context.pushRoute(ForumRoute(
+                                forumId: forum.forumId,
+                                pollAdded: forum.pollAdded));
+                            isOwnProfile
+                                ? context.read<ProfileActorBloc>().add(
+                                    const ProfileActorEvent.loadingOwnProfile())
+                                : context.read<ProfileActorBloc>().add(
+                                    ProfileActorEvent.loadingOtherProfile(
+                                        userProfile.uuid));
+                          },
+                        ));
                   } else {
                     return Container();
                   }
                 })
-        ]);
+        ]));
   }
 }
 

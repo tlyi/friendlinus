@@ -5,6 +5,7 @@ import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:friendlinus/application/forum/forum_form/forum_form_bloc.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
@@ -111,30 +112,20 @@ class _BuildTag extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-        decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          labelText: 'Tag this post',
-        ),
-        autocorrect: false,
-        onChanged: (value) {
-          context.read<ForumFormBloc>().add(ForumFormEvent.tagChanged(value));
-        },
-        autovalidateMode: AutovalidateMode.onUserInteraction,
-        validator: (_) {
-          return context.read<ForumFormBloc>().state.forumPost.tag.value.fold(
-              (f) => f.maybeMap(
-                  exceedingLength: (_) =>
-                      'Title too long, maximum of 6 characters only',
-                  orElse: () => null),
-              (_) => null);
-        },
-        inputFormatters: [
-          FilteringTextInputFormatter.deny(
-              RegExp(r"\s\b|\b\s")) //Prevents whitespace
-        ]);
+    return TypeAheadField(suggestionsCallback: (value) async {
+      context.read<ForumFormBloc>().add(ForumFormEvent.searchedModule(value));
+
+      return context
+          .read<ForumFormBloc>()
+          .state
+          .moduleSuggestions
+          .getOrElse(() => []);
+    }, itemBuilder: (context, suggestion) {
+      return ListTile(title: Text(suggestion.toString()));
+    }, onSuggestionSelected: (String value) {
+      print("adding tag");
+      context.read<ForumFormBloc>().add(ForumFormEvent.tagChanged(value));
+    });
   }
 }
 

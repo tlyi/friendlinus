@@ -22,6 +22,12 @@ class _$ForumFormEventTearOff {
     );
   }
 
+  _SearchedModule searchedModule(String searchStr) {
+    return _SearchedModule(
+      searchStr,
+    );
+  }
+
   _TagChanged tagChanged(String tagStr) {
     return _TagChanged(
       tagStr,
@@ -92,6 +98,7 @@ mixin _$ForumFormEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String titleStr) titleChanged,
+    required TResult Function(String searchStr) searchedModule,
     required TResult Function(String tagStr) tagChanged,
     required TResult Function(String bodyStr) bodyChanged,
     required TResult Function() anonStateChanged,
@@ -109,6 +116,7 @@ mixin _$ForumFormEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String titleStr)? titleChanged,
+    TResult Function(String searchStr)? searchedModule,
     TResult Function(String tagStr)? tagChanged,
     TResult Function(String bodyStr)? bodyChanged,
     TResult Function()? anonStateChanged,
@@ -127,6 +135,7 @@ mixin _$ForumFormEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_TitleChanged value) titleChanged,
+    required TResult Function(_SearchedModule value) searchedModule,
     required TResult Function(_TagChanged value) tagChanged,
     required TResult Function(_BodyChanged value) bodyChanged,
     required TResult Function(_AnonStateChanged value) anonStateChanged,
@@ -145,6 +154,7 @@ mixin _$ForumFormEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_TitleChanged value)? titleChanged,
+    TResult Function(_SearchedModule value)? searchedModule,
     TResult Function(_TagChanged value)? tagChanged,
     TResult Function(_BodyChanged value)? bodyChanged,
     TResult Function(_AnonStateChanged value)? anonStateChanged,
@@ -254,6 +264,7 @@ class _$_TitleChanged with DiagnosticableTreeMixin implements _TitleChanged {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String titleStr) titleChanged,
+    required TResult Function(String searchStr) searchedModule,
     required TResult Function(String tagStr) tagChanged,
     required TResult Function(String bodyStr) bodyChanged,
     required TResult Function() anonStateChanged,
@@ -274,6 +285,7 @@ class _$_TitleChanged with DiagnosticableTreeMixin implements _TitleChanged {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String titleStr)? titleChanged,
+    TResult Function(String searchStr)? searchedModule,
     TResult Function(String tagStr)? tagChanged,
     TResult Function(String bodyStr)? bodyChanged,
     TResult Function()? anonStateChanged,
@@ -298,6 +310,7 @@ class _$_TitleChanged with DiagnosticableTreeMixin implements _TitleChanged {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_TitleChanged value) titleChanged,
+    required TResult Function(_SearchedModule value) searchedModule,
     required TResult Function(_TagChanged value) tagChanged,
     required TResult Function(_BodyChanged value) bodyChanged,
     required TResult Function(_AnonStateChanged value) anonStateChanged,
@@ -319,6 +332,7 @@ class _$_TitleChanged with DiagnosticableTreeMixin implements _TitleChanged {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_TitleChanged value)? titleChanged,
+    TResult Function(_SearchedModule value)? searchedModule,
     TResult Function(_TagChanged value)? tagChanged,
     TResult Function(_BodyChanged value)? bodyChanged,
     TResult Function(_AnonStateChanged value)? anonStateChanged,
@@ -346,6 +360,182 @@ abstract class _TitleChanged implements ForumFormEvent {
   String get titleStr => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$TitleChangedCopyWith<_TitleChanged> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$SearchedModuleCopyWith<$Res> {
+  factory _$SearchedModuleCopyWith(
+          _SearchedModule value, $Res Function(_SearchedModule) then) =
+      __$SearchedModuleCopyWithImpl<$Res>;
+  $Res call({String searchStr});
+}
+
+/// @nodoc
+class __$SearchedModuleCopyWithImpl<$Res>
+    extends _$ForumFormEventCopyWithImpl<$Res>
+    implements _$SearchedModuleCopyWith<$Res> {
+  __$SearchedModuleCopyWithImpl(
+      _SearchedModule _value, $Res Function(_SearchedModule) _then)
+      : super(_value, (v) => _then(v as _SearchedModule));
+
+  @override
+  _SearchedModule get _value => super._value as _SearchedModule;
+
+  @override
+  $Res call({
+    Object? searchStr = freezed,
+  }) {
+    return _then(_SearchedModule(
+      searchStr == freezed
+          ? _value.searchStr
+          : searchStr // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_SearchedModule
+    with DiagnosticableTreeMixin
+    implements _SearchedModule {
+  const _$_SearchedModule(this.searchStr);
+
+  @override
+  final String searchStr;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ForumFormEvent.searchedModule(searchStr: $searchStr)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ForumFormEvent.searchedModule'))
+      ..add(DiagnosticsProperty('searchStr', searchStr));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _SearchedModule &&
+            (identical(other.searchStr, searchStr) ||
+                const DeepCollectionEquality()
+                    .equals(other.searchStr, searchStr)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(searchStr);
+
+  @JsonKey(ignore: true)
+  @override
+  _$SearchedModuleCopyWith<_SearchedModule> get copyWith =>
+      __$SearchedModuleCopyWithImpl<_SearchedModule>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String titleStr) titleChanged,
+    required TResult Function(String searchStr) searchedModule,
+    required TResult Function(String tagStr) tagChanged,
+    required TResult Function(String bodyStr) bodyChanged,
+    required TResult Function() anonStateChanged,
+    required TResult Function(File photo) photoChanged,
+    required TResult Function() photoAdded,
+    required TResult Function() pollAdded,
+    required TResult Function(int numOptions) pollNumOptionsChanged,
+    required TResult Function(String pollTitleStr) pollTitleChanged,
+    required TResult Function(int index, String optionStr) pollOptionChanged,
+    required TResult Function() photoRemoved,
+    required TResult Function() pollRemoved,
+    required TResult Function() createdPost,
+  }) {
+    return searchedModule(searchStr);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String titleStr)? titleChanged,
+    TResult Function(String searchStr)? searchedModule,
+    TResult Function(String tagStr)? tagChanged,
+    TResult Function(String bodyStr)? bodyChanged,
+    TResult Function()? anonStateChanged,
+    TResult Function(File photo)? photoChanged,
+    TResult Function()? photoAdded,
+    TResult Function()? pollAdded,
+    TResult Function(int numOptions)? pollNumOptionsChanged,
+    TResult Function(String pollTitleStr)? pollTitleChanged,
+    TResult Function(int index, String optionStr)? pollOptionChanged,
+    TResult Function()? photoRemoved,
+    TResult Function()? pollRemoved,
+    TResult Function()? createdPost,
+    required TResult orElse(),
+  }) {
+    if (searchedModule != null) {
+      return searchedModule(searchStr);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_TitleChanged value) titleChanged,
+    required TResult Function(_SearchedModule value) searchedModule,
+    required TResult Function(_TagChanged value) tagChanged,
+    required TResult Function(_BodyChanged value) bodyChanged,
+    required TResult Function(_AnonStateChanged value) anonStateChanged,
+    required TResult Function(_PhotoChanged value) photoChanged,
+    required TResult Function(_PhotoAdded value) photoAdded,
+    required TResult Function(_PollAdded value) pollAdded,
+    required TResult Function(_PollNumOptionsChanged value)
+        pollNumOptionsChanged,
+    required TResult Function(_PollTitleChanged value) pollTitleChanged,
+    required TResult Function(_PollOptionChanged value) pollOptionChanged,
+    required TResult Function(_PhotoRemoved value) photoRemoved,
+    required TResult Function(_PollRemoved value) pollRemoved,
+    required TResult Function(_CreatedPost value) createdPost,
+  }) {
+    return searchedModule(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_TitleChanged value)? titleChanged,
+    TResult Function(_SearchedModule value)? searchedModule,
+    TResult Function(_TagChanged value)? tagChanged,
+    TResult Function(_BodyChanged value)? bodyChanged,
+    TResult Function(_AnonStateChanged value)? anonStateChanged,
+    TResult Function(_PhotoChanged value)? photoChanged,
+    TResult Function(_PhotoAdded value)? photoAdded,
+    TResult Function(_PollAdded value)? pollAdded,
+    TResult Function(_PollNumOptionsChanged value)? pollNumOptionsChanged,
+    TResult Function(_PollTitleChanged value)? pollTitleChanged,
+    TResult Function(_PollOptionChanged value)? pollOptionChanged,
+    TResult Function(_PhotoRemoved value)? photoRemoved,
+    TResult Function(_PollRemoved value)? pollRemoved,
+    TResult Function(_CreatedPost value)? createdPost,
+    required TResult orElse(),
+  }) {
+    if (searchedModule != null) {
+      return searchedModule(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _SearchedModule implements ForumFormEvent {
+  const factory _SearchedModule(String searchStr) = _$_SearchedModule;
+
+  String get searchStr => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$SearchedModuleCopyWith<_SearchedModule> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -422,6 +612,7 @@ class _$_TagChanged with DiagnosticableTreeMixin implements _TagChanged {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String titleStr) titleChanged,
+    required TResult Function(String searchStr) searchedModule,
     required TResult Function(String tagStr) tagChanged,
     required TResult Function(String bodyStr) bodyChanged,
     required TResult Function() anonStateChanged,
@@ -442,6 +633,7 @@ class _$_TagChanged with DiagnosticableTreeMixin implements _TagChanged {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String titleStr)? titleChanged,
+    TResult Function(String searchStr)? searchedModule,
     TResult Function(String tagStr)? tagChanged,
     TResult Function(String bodyStr)? bodyChanged,
     TResult Function()? anonStateChanged,
@@ -466,6 +658,7 @@ class _$_TagChanged with DiagnosticableTreeMixin implements _TagChanged {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_TitleChanged value) titleChanged,
+    required TResult Function(_SearchedModule value) searchedModule,
     required TResult Function(_TagChanged value) tagChanged,
     required TResult Function(_BodyChanged value) bodyChanged,
     required TResult Function(_AnonStateChanged value) anonStateChanged,
@@ -487,6 +680,7 @@ class _$_TagChanged with DiagnosticableTreeMixin implements _TagChanged {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_TitleChanged value)? titleChanged,
+    TResult Function(_SearchedModule value)? searchedModule,
     TResult Function(_TagChanged value)? tagChanged,
     TResult Function(_BodyChanged value)? bodyChanged,
     TResult Function(_AnonStateChanged value)? anonStateChanged,
@@ -591,6 +785,7 @@ class _$_BodyChanged with DiagnosticableTreeMixin implements _BodyChanged {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String titleStr) titleChanged,
+    required TResult Function(String searchStr) searchedModule,
     required TResult Function(String tagStr) tagChanged,
     required TResult Function(String bodyStr) bodyChanged,
     required TResult Function() anonStateChanged,
@@ -611,6 +806,7 @@ class _$_BodyChanged with DiagnosticableTreeMixin implements _BodyChanged {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String titleStr)? titleChanged,
+    TResult Function(String searchStr)? searchedModule,
     TResult Function(String tagStr)? tagChanged,
     TResult Function(String bodyStr)? bodyChanged,
     TResult Function()? anonStateChanged,
@@ -635,6 +831,7 @@ class _$_BodyChanged with DiagnosticableTreeMixin implements _BodyChanged {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_TitleChanged value) titleChanged,
+    required TResult Function(_SearchedModule value) searchedModule,
     required TResult Function(_TagChanged value) tagChanged,
     required TResult Function(_BodyChanged value) bodyChanged,
     required TResult Function(_AnonStateChanged value) anonStateChanged,
@@ -656,6 +853,7 @@ class _$_BodyChanged with DiagnosticableTreeMixin implements _BodyChanged {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_TitleChanged value)? titleChanged,
+    TResult Function(_SearchedModule value)? searchedModule,
     TResult Function(_TagChanged value)? tagChanged,
     TResult Function(_BodyChanged value)? bodyChanged,
     TResult Function(_AnonStateChanged value)? anonStateChanged,
@@ -736,6 +934,7 @@ class _$_AnonStateChanged
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String titleStr) titleChanged,
+    required TResult Function(String searchStr) searchedModule,
     required TResult Function(String tagStr) tagChanged,
     required TResult Function(String bodyStr) bodyChanged,
     required TResult Function() anonStateChanged,
@@ -756,6 +955,7 @@ class _$_AnonStateChanged
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String titleStr)? titleChanged,
+    TResult Function(String searchStr)? searchedModule,
     TResult Function(String tagStr)? tagChanged,
     TResult Function(String bodyStr)? bodyChanged,
     TResult Function()? anonStateChanged,
@@ -780,6 +980,7 @@ class _$_AnonStateChanged
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_TitleChanged value) titleChanged,
+    required TResult Function(_SearchedModule value) searchedModule,
     required TResult Function(_TagChanged value) tagChanged,
     required TResult Function(_BodyChanged value) bodyChanged,
     required TResult Function(_AnonStateChanged value) anonStateChanged,
@@ -801,6 +1002,7 @@ class _$_AnonStateChanged
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_TitleChanged value)? titleChanged,
+    TResult Function(_SearchedModule value)? searchedModule,
     TResult Function(_TagChanged value)? tagChanged,
     TResult Function(_BodyChanged value)? bodyChanged,
     TResult Function(_AnonStateChanged value)? anonStateChanged,
@@ -900,6 +1102,7 @@ class _$_PhotoChanged with DiagnosticableTreeMixin implements _PhotoChanged {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String titleStr) titleChanged,
+    required TResult Function(String searchStr) searchedModule,
     required TResult Function(String tagStr) tagChanged,
     required TResult Function(String bodyStr) bodyChanged,
     required TResult Function() anonStateChanged,
@@ -920,6 +1123,7 @@ class _$_PhotoChanged with DiagnosticableTreeMixin implements _PhotoChanged {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String titleStr)? titleChanged,
+    TResult Function(String searchStr)? searchedModule,
     TResult Function(String tagStr)? tagChanged,
     TResult Function(String bodyStr)? bodyChanged,
     TResult Function()? anonStateChanged,
@@ -944,6 +1148,7 @@ class _$_PhotoChanged with DiagnosticableTreeMixin implements _PhotoChanged {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_TitleChanged value) titleChanged,
+    required TResult Function(_SearchedModule value) searchedModule,
     required TResult Function(_TagChanged value) tagChanged,
     required TResult Function(_BodyChanged value) bodyChanged,
     required TResult Function(_AnonStateChanged value) anonStateChanged,
@@ -965,6 +1170,7 @@ class _$_PhotoChanged with DiagnosticableTreeMixin implements _PhotoChanged {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_TitleChanged value)? titleChanged,
+    TResult Function(_SearchedModule value)? searchedModule,
     TResult Function(_TagChanged value)? tagChanged,
     TResult Function(_BodyChanged value)? bodyChanged,
     TResult Function(_AnonStateChanged value)? anonStateChanged,
@@ -1041,6 +1247,7 @@ class _$_PhotoAdded with DiagnosticableTreeMixin implements _PhotoAdded {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String titleStr) titleChanged,
+    required TResult Function(String searchStr) searchedModule,
     required TResult Function(String tagStr) tagChanged,
     required TResult Function(String bodyStr) bodyChanged,
     required TResult Function() anonStateChanged,
@@ -1061,6 +1268,7 @@ class _$_PhotoAdded with DiagnosticableTreeMixin implements _PhotoAdded {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String titleStr)? titleChanged,
+    TResult Function(String searchStr)? searchedModule,
     TResult Function(String tagStr)? tagChanged,
     TResult Function(String bodyStr)? bodyChanged,
     TResult Function()? anonStateChanged,
@@ -1085,6 +1293,7 @@ class _$_PhotoAdded with DiagnosticableTreeMixin implements _PhotoAdded {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_TitleChanged value) titleChanged,
+    required TResult Function(_SearchedModule value) searchedModule,
     required TResult Function(_TagChanged value) tagChanged,
     required TResult Function(_BodyChanged value) bodyChanged,
     required TResult Function(_AnonStateChanged value) anonStateChanged,
@@ -1106,6 +1315,7 @@ class _$_PhotoAdded with DiagnosticableTreeMixin implements _PhotoAdded {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_TitleChanged value)? titleChanged,
+    TResult Function(_SearchedModule value)? searchedModule,
     TResult Function(_TagChanged value)? tagChanged,
     TResult Function(_BodyChanged value)? bodyChanged,
     TResult Function(_AnonStateChanged value)? anonStateChanged,
@@ -1176,6 +1386,7 @@ class _$_PollAdded with DiagnosticableTreeMixin implements _PollAdded {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String titleStr) titleChanged,
+    required TResult Function(String searchStr) searchedModule,
     required TResult Function(String tagStr) tagChanged,
     required TResult Function(String bodyStr) bodyChanged,
     required TResult Function() anonStateChanged,
@@ -1196,6 +1407,7 @@ class _$_PollAdded with DiagnosticableTreeMixin implements _PollAdded {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String titleStr)? titleChanged,
+    TResult Function(String searchStr)? searchedModule,
     TResult Function(String tagStr)? tagChanged,
     TResult Function(String bodyStr)? bodyChanged,
     TResult Function()? anonStateChanged,
@@ -1220,6 +1432,7 @@ class _$_PollAdded with DiagnosticableTreeMixin implements _PollAdded {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_TitleChanged value) titleChanged,
+    required TResult Function(_SearchedModule value) searchedModule,
     required TResult Function(_TagChanged value) tagChanged,
     required TResult Function(_BodyChanged value) bodyChanged,
     required TResult Function(_AnonStateChanged value) anonStateChanged,
@@ -1241,6 +1454,7 @@ class _$_PollAdded with DiagnosticableTreeMixin implements _PollAdded {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_TitleChanged value)? titleChanged,
+    TResult Function(_SearchedModule value)? searchedModule,
     TResult Function(_TagChanged value)? tagChanged,
     TResult Function(_BodyChanged value)? bodyChanged,
     TResult Function(_AnonStateChanged value)? anonStateChanged,
@@ -1344,6 +1558,7 @@ class _$_PollNumOptionsChanged
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String titleStr) titleChanged,
+    required TResult Function(String searchStr) searchedModule,
     required TResult Function(String tagStr) tagChanged,
     required TResult Function(String bodyStr) bodyChanged,
     required TResult Function() anonStateChanged,
@@ -1364,6 +1579,7 @@ class _$_PollNumOptionsChanged
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String titleStr)? titleChanged,
+    TResult Function(String searchStr)? searchedModule,
     TResult Function(String tagStr)? tagChanged,
     TResult Function(String bodyStr)? bodyChanged,
     TResult Function()? anonStateChanged,
@@ -1388,6 +1604,7 @@ class _$_PollNumOptionsChanged
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_TitleChanged value) titleChanged,
+    required TResult Function(_SearchedModule value) searchedModule,
     required TResult Function(_TagChanged value) tagChanged,
     required TResult Function(_BodyChanged value) bodyChanged,
     required TResult Function(_AnonStateChanged value) anonStateChanged,
@@ -1409,6 +1626,7 @@ class _$_PollNumOptionsChanged
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_TitleChanged value)? titleChanged,
+    TResult Function(_SearchedModule value)? searchedModule,
     TResult Function(_TagChanged value)? tagChanged,
     TResult Function(_BodyChanged value)? bodyChanged,
     TResult Function(_AnonStateChanged value)? anonStateChanged,
@@ -1517,6 +1735,7 @@ class _$_PollTitleChanged
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String titleStr) titleChanged,
+    required TResult Function(String searchStr) searchedModule,
     required TResult Function(String tagStr) tagChanged,
     required TResult Function(String bodyStr) bodyChanged,
     required TResult Function() anonStateChanged,
@@ -1537,6 +1756,7 @@ class _$_PollTitleChanged
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String titleStr)? titleChanged,
+    TResult Function(String searchStr)? searchedModule,
     TResult Function(String tagStr)? tagChanged,
     TResult Function(String bodyStr)? bodyChanged,
     TResult Function()? anonStateChanged,
@@ -1561,6 +1781,7 @@ class _$_PollTitleChanged
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_TitleChanged value) titleChanged,
+    required TResult Function(_SearchedModule value) searchedModule,
     required TResult Function(_TagChanged value) tagChanged,
     required TResult Function(_BodyChanged value) bodyChanged,
     required TResult Function(_AnonStateChanged value) anonStateChanged,
@@ -1582,6 +1803,7 @@ class _$_PollTitleChanged
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_TitleChanged value)? titleChanged,
+    TResult Function(_SearchedModule value)? searchedModule,
     TResult Function(_TagChanged value)? tagChanged,
     TResult Function(_BodyChanged value)? bodyChanged,
     TResult Function(_AnonStateChanged value)? anonStateChanged,
@@ -1701,6 +1923,7 @@ class _$_PollOptionChanged
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String titleStr) titleChanged,
+    required TResult Function(String searchStr) searchedModule,
     required TResult Function(String tagStr) tagChanged,
     required TResult Function(String bodyStr) bodyChanged,
     required TResult Function() anonStateChanged,
@@ -1721,6 +1944,7 @@ class _$_PollOptionChanged
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String titleStr)? titleChanged,
+    TResult Function(String searchStr)? searchedModule,
     TResult Function(String tagStr)? tagChanged,
     TResult Function(String bodyStr)? bodyChanged,
     TResult Function()? anonStateChanged,
@@ -1745,6 +1969,7 @@ class _$_PollOptionChanged
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_TitleChanged value) titleChanged,
+    required TResult Function(_SearchedModule value) searchedModule,
     required TResult Function(_TagChanged value) tagChanged,
     required TResult Function(_BodyChanged value) bodyChanged,
     required TResult Function(_AnonStateChanged value) anonStateChanged,
@@ -1766,6 +1991,7 @@ class _$_PollOptionChanged
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_TitleChanged value)? titleChanged,
+    TResult Function(_SearchedModule value)? searchedModule,
     TResult Function(_TagChanged value)? tagChanged,
     TResult Function(_BodyChanged value)? bodyChanged,
     TResult Function(_AnonStateChanged value)? anonStateChanged,
@@ -1845,6 +2071,7 @@ class _$_PhotoRemoved with DiagnosticableTreeMixin implements _PhotoRemoved {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String titleStr) titleChanged,
+    required TResult Function(String searchStr) searchedModule,
     required TResult Function(String tagStr) tagChanged,
     required TResult Function(String bodyStr) bodyChanged,
     required TResult Function() anonStateChanged,
@@ -1865,6 +2092,7 @@ class _$_PhotoRemoved with DiagnosticableTreeMixin implements _PhotoRemoved {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String titleStr)? titleChanged,
+    TResult Function(String searchStr)? searchedModule,
     TResult Function(String tagStr)? tagChanged,
     TResult Function(String bodyStr)? bodyChanged,
     TResult Function()? anonStateChanged,
@@ -1889,6 +2117,7 @@ class _$_PhotoRemoved with DiagnosticableTreeMixin implements _PhotoRemoved {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_TitleChanged value) titleChanged,
+    required TResult Function(_SearchedModule value) searchedModule,
     required TResult Function(_TagChanged value) tagChanged,
     required TResult Function(_BodyChanged value) bodyChanged,
     required TResult Function(_AnonStateChanged value) anonStateChanged,
@@ -1910,6 +2139,7 @@ class _$_PhotoRemoved with DiagnosticableTreeMixin implements _PhotoRemoved {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_TitleChanged value)? titleChanged,
+    TResult Function(_SearchedModule value)? searchedModule,
     TResult Function(_TagChanged value)? tagChanged,
     TResult Function(_BodyChanged value)? bodyChanged,
     TResult Function(_AnonStateChanged value)? anonStateChanged,
@@ -1982,6 +2212,7 @@ class _$_PollRemoved with DiagnosticableTreeMixin implements _PollRemoved {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String titleStr) titleChanged,
+    required TResult Function(String searchStr) searchedModule,
     required TResult Function(String tagStr) tagChanged,
     required TResult Function(String bodyStr) bodyChanged,
     required TResult Function() anonStateChanged,
@@ -2002,6 +2233,7 @@ class _$_PollRemoved with DiagnosticableTreeMixin implements _PollRemoved {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String titleStr)? titleChanged,
+    TResult Function(String searchStr)? searchedModule,
     TResult Function(String tagStr)? tagChanged,
     TResult Function(String bodyStr)? bodyChanged,
     TResult Function()? anonStateChanged,
@@ -2026,6 +2258,7 @@ class _$_PollRemoved with DiagnosticableTreeMixin implements _PollRemoved {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_TitleChanged value) titleChanged,
+    required TResult Function(_SearchedModule value) searchedModule,
     required TResult Function(_TagChanged value) tagChanged,
     required TResult Function(_BodyChanged value) bodyChanged,
     required TResult Function(_AnonStateChanged value) anonStateChanged,
@@ -2047,6 +2280,7 @@ class _$_PollRemoved with DiagnosticableTreeMixin implements _PollRemoved {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_TitleChanged value)? titleChanged,
+    TResult Function(_SearchedModule value)? searchedModule,
     TResult Function(_TagChanged value)? tagChanged,
     TResult Function(_BodyChanged value)? bodyChanged,
     TResult Function(_AnonStateChanged value)? anonStateChanged,
@@ -2119,6 +2353,7 @@ class _$_CreatedPost with DiagnosticableTreeMixin implements _CreatedPost {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String titleStr) titleChanged,
+    required TResult Function(String searchStr) searchedModule,
     required TResult Function(String tagStr) tagChanged,
     required TResult Function(String bodyStr) bodyChanged,
     required TResult Function() anonStateChanged,
@@ -2139,6 +2374,7 @@ class _$_CreatedPost with DiagnosticableTreeMixin implements _CreatedPost {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String titleStr)? titleChanged,
+    TResult Function(String searchStr)? searchedModule,
     TResult Function(String tagStr)? tagChanged,
     TResult Function(String bodyStr)? bodyChanged,
     TResult Function()? anonStateChanged,
@@ -2163,6 +2399,7 @@ class _$_CreatedPost with DiagnosticableTreeMixin implements _CreatedPost {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_TitleChanged value) titleChanged,
+    required TResult Function(_SearchedModule value) searchedModule,
     required TResult Function(_TagChanged value) tagChanged,
     required TResult Function(_BodyChanged value) bodyChanged,
     required TResult Function(_AnonStateChanged value) anonStateChanged,
@@ -2184,6 +2421,7 @@ class _$_CreatedPost with DiagnosticableTreeMixin implements _CreatedPost {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_TitleChanged value)? titleChanged,
+    TResult Function(_SearchedModule value)? searchedModule,
     TResult Function(_TagChanged value)? tagChanged,
     TResult Function(_BodyChanged value)? bodyChanged,
     TResult Function(_AnonStateChanged value)? anonStateChanged,
@@ -2222,7 +2460,8 @@ class _$ForumFormStateTearOff {
           createPollFailureOrSuccessOption,
       required Option<Either<DataFailure, Unit>> createFailureOrSuccessOption,
       required bool isLoading,
-      required bool showErrorMessages}) {
+      required bool showErrorMessages,
+      required Either<DataFailure, List<String>> moduleSuggestions}) {
     return _ForumFormState(
       forumPost: forumPost,
       photoUrl: photoUrl,
@@ -2232,6 +2471,7 @@ class _$ForumFormStateTearOff {
       createFailureOrSuccessOption: createFailureOrSuccessOption,
       isLoading: isLoading,
       showErrorMessages: showErrorMessages,
+      moduleSuggestions: moduleSuggestions,
     );
   }
 }
@@ -2252,6 +2492,8 @@ mixin _$ForumFormState {
       throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   bool get showErrorMessages => throw _privateConstructorUsedError;
+  Either<DataFailure, List<String>> get moduleSuggestions =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ForumFormStateCopyWith<ForumFormState> get copyWith =>
@@ -2271,7 +2513,8 @@ abstract class $ForumFormStateCopyWith<$Res> {
       Option<Either<DataFailure, Unit>> createPollFailureOrSuccessOption,
       Option<Either<DataFailure, Unit>> createFailureOrSuccessOption,
       bool isLoading,
-      bool showErrorMessages});
+      bool showErrorMessages,
+      Either<DataFailure, List<String>> moduleSuggestions});
 
   $ForumPostCopyWith<$Res> get forumPost;
   $PollCopyWith<$Res> get poll;
@@ -2296,6 +2539,7 @@ class _$ForumFormStateCopyWithImpl<$Res>
     Object? createFailureOrSuccessOption = freezed,
     Object? isLoading = freezed,
     Object? showErrorMessages = freezed,
+    Object? moduleSuggestions = freezed,
   }) {
     return _then(_value.copyWith(
       forumPost: forumPost == freezed
@@ -2331,6 +2575,10 @@ class _$ForumFormStateCopyWithImpl<$Res>
           ? _value.showErrorMessages
           : showErrorMessages // ignore: cast_nullable_to_non_nullable
               as bool,
+      moduleSuggestions: moduleSuggestions == freezed
+          ? _value.moduleSuggestions
+          : moduleSuggestions // ignore: cast_nullable_to_non_nullable
+              as Either<DataFailure, List<String>>,
     ));
   }
 
@@ -2364,7 +2612,8 @@ abstract class _$ForumFormStateCopyWith<$Res>
       Option<Either<DataFailure, Unit>> createPollFailureOrSuccessOption,
       Option<Either<DataFailure, Unit>> createFailureOrSuccessOption,
       bool isLoading,
-      bool showErrorMessages});
+      bool showErrorMessages,
+      Either<DataFailure, List<String>> moduleSuggestions});
 
   @override
   $ForumPostCopyWith<$Res> get forumPost;
@@ -2393,6 +2642,7 @@ class __$ForumFormStateCopyWithImpl<$Res>
     Object? createFailureOrSuccessOption = freezed,
     Object? isLoading = freezed,
     Object? showErrorMessages = freezed,
+    Object? moduleSuggestions = freezed,
   }) {
     return _then(_ForumFormState(
       forumPost: forumPost == freezed
@@ -2428,6 +2678,10 @@ class __$ForumFormStateCopyWithImpl<$Res>
           ? _value.showErrorMessages
           : showErrorMessages // ignore: cast_nullable_to_non_nullable
               as bool,
+      moduleSuggestions: moduleSuggestions == freezed
+          ? _value.moduleSuggestions
+          : moduleSuggestions // ignore: cast_nullable_to_non_nullable
+              as Either<DataFailure, List<String>>,
     ));
   }
 }
@@ -2445,7 +2699,8 @@ class _$_ForumFormState
       required this.createPollFailureOrSuccessOption,
       required this.createFailureOrSuccessOption,
       required this.isLoading,
-      required this.showErrorMessages});
+      required this.showErrorMessages,
+      required this.moduleSuggestions});
 
   @override
   final ForumPost forumPost;
@@ -2463,10 +2718,12 @@ class _$_ForumFormState
   final bool isLoading;
   @override
   final bool showErrorMessages;
+  @override
+  final Either<DataFailure, List<String>> moduleSuggestions;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ForumFormState(forumPost: $forumPost, photoUrl: $photoUrl, photoFile: $photoFile, poll: $poll, createPollFailureOrSuccessOption: $createPollFailureOrSuccessOption, createFailureOrSuccessOption: $createFailureOrSuccessOption, isLoading: $isLoading, showErrorMessages: $showErrorMessages)';
+    return 'ForumFormState(forumPost: $forumPost, photoUrl: $photoUrl, photoFile: $photoFile, poll: $poll, createPollFailureOrSuccessOption: $createPollFailureOrSuccessOption, createFailureOrSuccessOption: $createFailureOrSuccessOption, isLoading: $isLoading, showErrorMessages: $showErrorMessages, moduleSuggestions: $moduleSuggestions)';
   }
 
   @override
@@ -2483,7 +2740,8 @@ class _$_ForumFormState
       ..add(DiagnosticsProperty(
           'createFailureOrSuccessOption', createFailureOrSuccessOption))
       ..add(DiagnosticsProperty('isLoading', isLoading))
-      ..add(DiagnosticsProperty('showErrorMessages', showErrorMessages));
+      ..add(DiagnosticsProperty('showErrorMessages', showErrorMessages))
+      ..add(DiagnosticsProperty('moduleSuggestions', moduleSuggestions));
   }
 
   @override
@@ -2516,7 +2774,10 @@ class _$_ForumFormState
                     .equals(other.isLoading, isLoading)) &&
             (identical(other.showErrorMessages, showErrorMessages) ||
                 const DeepCollectionEquality()
-                    .equals(other.showErrorMessages, showErrorMessages)));
+                    .equals(other.showErrorMessages, showErrorMessages)) &&
+            (identical(other.moduleSuggestions, moduleSuggestions) ||
+                const DeepCollectionEquality()
+                    .equals(other.moduleSuggestions, moduleSuggestions)));
   }
 
   @override
@@ -2529,7 +2790,8 @@ class _$_ForumFormState
       const DeepCollectionEquality().hash(createPollFailureOrSuccessOption) ^
       const DeepCollectionEquality().hash(createFailureOrSuccessOption) ^
       const DeepCollectionEquality().hash(isLoading) ^
-      const DeepCollectionEquality().hash(showErrorMessages);
+      const DeepCollectionEquality().hash(showErrorMessages) ^
+      const DeepCollectionEquality().hash(moduleSuggestions);
 
   @JsonKey(ignore: true)
   @override
@@ -2547,7 +2809,9 @@ abstract class _ForumFormState implements ForumFormState {
           createPollFailureOrSuccessOption,
       required Option<Either<DataFailure, Unit>> createFailureOrSuccessOption,
       required bool isLoading,
-      required bool showErrorMessages}) = _$_ForumFormState;
+      required bool showErrorMessages,
+      required Either<DataFailure, List<String>>
+          moduleSuggestions}) = _$_ForumFormState;
 
   @override
   ForumPost get forumPost => throw _privateConstructorUsedError;
@@ -2568,6 +2832,9 @@ abstract class _ForumFormState implements ForumFormState {
   bool get isLoading => throw _privateConstructorUsedError;
   @override
   bool get showErrorMessages => throw _privateConstructorUsedError;
+  @override
+  Either<DataFailure, List<String>> get moduleSuggestions =>
+      throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$ForumFormStateCopyWith<_ForumFormState> get copyWith =>

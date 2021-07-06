@@ -317,43 +317,36 @@ class _BuildTags extends StatelessWidget {
         print("is empt");
         return Container();
       } else if (context.read<ProfileFormBloc>().state.refreshTags) {
-        return Container(
+        return Align(
           alignment: Alignment.topLeft,
-          child: Tags(
-            alignment: WrapAlignment.start,
-            itemCount:
-                context.read<ProfileFormBloc>().state.profile.modules.length,
-            itemBuilder: (index) {
-              final module =
-                  context.read<ProfileFormBloc>().state.profile.modules[index];
-              return ItemTags(
-                key: Key(index.toString()),
-                index: index,
-                title: module,
-                activeColor: Colors.grey.shade500,
-                pressEnabled: false,
-                highlightColor: Colors.transparent,
-                splashColor: Colors.transparent,
-                elevation: 0.0,
-                borderRadius: BorderRadius.all(Radius.circular(7.0)),
-                textColor: Colors.white,
-                textActiveColor: Colors.white,
-                removeButton: ItemTagsRemoveButton(
-                    color: Colors.black,
-                    backgroundColor: Colors.transparent,
-                    size: 14,
-                    onRemoved: () {
+          child: Wrap(
+              alignment: WrapAlignment.start,
+              spacing: 6.0,
+              children: List<Widget>.generate(
+                  context.read<ProfileFormBloc>().state.profile.modules.length,
+                  (int index) {
+                final module = context
+                    .read<ProfileFormBloc>()
+                    .state
+                    .profile
+                    .modules[index];
+                return Chip(
+                    key: Key(index.toString()),
+                    label: Text(module),
+                    labelPadding: EdgeInsets.only(left: 4, right: 0),
+                    deleteIcon: Icon(
+                      Icons.close_rounded,
+                      color: Colors.grey[700],
+                      size: 18,
+                    ),
+                    deleteIconColor: Colors.transparent,
+                    onDeleted: () {
                       print("removing");
                       context
                           .read<ProfileFormBloc>()
                           .add(ProfileFormEvent.removedModule(index));
-
-                      return true;
-                    }),
-                textOverflow: TextOverflow.ellipsis,
-              );
-            },
-          ),
+                    });
+              })),
         );
       }
       return Container();

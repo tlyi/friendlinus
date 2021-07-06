@@ -42,20 +42,18 @@ class RegisterForm extends StatelessWidget {
         autovalidateMode: state.showErrorMessages
             ? AutovalidateMode.always
             : AutovalidateMode.disabled,
-        child: Scaffold(
-          body: Container(
-            margin: const EdgeInsets.all(30.0),
-            alignment: Alignment.center,
-            child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-              _BuildVerifyMessage(),
-              _BuildIDField(),
-              const SizedBox(height: 15),
-              _BuildPasswordField(),
-              const SizedBox(height: 15),
-              _BuildReEnterPasswordField(),
-              _BuildRegisterButton()
-            ]),
-          ),
+        child: Container(
+          margin: const EdgeInsets.all(30.0),
+          alignment: Alignment.center,
+          child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+            _BuildVerifyMessage(),
+            _BuildIDField(),
+            const SizedBox(height: 15),
+            _BuildPasswordField(),
+            const SizedBox(height: 15),
+            _BuildReEnterPasswordField(),
+            _BuildRegisterButton()
+          ]),
         ),
       );
     });
@@ -71,9 +69,9 @@ class _BuildVerifyMessage extends StatelessWidget {
         children: <Widget>[
           const Padding(
             padding: EdgeInsets.all(15.0),
-            child: const Text(
+            child: Text(
               "Sign up now with your NUSNET ID!",
-              style: const TextStyle(
+              style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
               ),

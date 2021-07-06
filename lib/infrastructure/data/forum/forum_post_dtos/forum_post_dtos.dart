@@ -23,14 +23,13 @@ abstract class ForumPostDto implements _$ForumPostDto {
     required bool photoAdded,
     required bool pollAdded,
     required String timestamp,
-
   }) = _ForumPostDto;
 
   factory ForumPostDto.fromDomain(ForumPost forumPost) {
     return ForumPostDto(
       forumId: forumPost.forumId,
       title: forumPost.title.getOrCrash(),
-      tag: forumPost.tag.getOrCrash(),
+      tag: forumPost.tag,
       body: forumPost.body.getOrCrash(),
       likes: forumPost.likes,
       likedUserIds: forumPost.likedUserIds,
@@ -47,7 +46,7 @@ abstract class ForumPostDto implements _$ForumPostDto {
     return ForumPost(
       forumId: forumId,
       title: Title(title),
-      tag: Tag(tag),
+      tag: tag,
       body: Body(body),
       likes: likes,
       likedUserIds: likedUserIds,

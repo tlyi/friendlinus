@@ -8,11 +8,11 @@ import 'package:friendlinus/presentation/register/widgets/verify_email.dart';
 class VerifyEmailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return DismissKeyboard(
-      child: Scaffold(
-        body: BlocProvider(
-          create: (context) => getIt<SignInFormBloc>(),
-          child: VerifyEmail(),
+    return BlocProvider(
+      create: (context) => getIt<SignInFormBloc>(),
+      child: DismissKeyboard(
+        child: Scaffold(
+          body: VerifyEmail(),
         ),
       ),
     );

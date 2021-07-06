@@ -17,19 +17,6 @@ class Title extends ValueObject<String> {
   const Title._(this.value);
 }
 
-class Tag extends ValueObject<String> {
-  @override
-  final Either<ValueFailure<String>, String> value;
-
-  static const maxLength = 6;
-
-  factory Tag(String input) {
-    return Tag._(validateMaxStringLength(input, maxLength));
-  }
-
-  const Tag._(this.value);
-}
-
 class Body extends ValueObject<String> {
   @override
   final Either<ValueFailure<String>, String> value;

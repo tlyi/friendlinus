@@ -10,21 +10,14 @@ import 'package:friendlinus/presentation/register/widgets/register_profile_form.
 class RegisterProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return DismissKeyboard(
-      child: Scaffold(
-        appBar: appBar(context: context, header: 'Profile Registration'),
-        body: Container(
-          alignment: Alignment.center,
-          child: SingleChildScrollView(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                maxHeight: MediaQuery.of(context).size.height -
-                    (MediaQuery.of(context).padding.top + kToolbarHeight),
-              ),
-              child: BlocProvider(
-                create: (context) => getIt<ProfileFormBloc>(),
-                child: RegisterProfileForm(),
-              ),
+    return BlocProvider(
+      create: (context) => getIt<ProfileFormBloc>(),
+      child: DismissKeyboard(
+        child: Scaffold(
+          appBar: appBar(context: context, header: 'Profile Registration'),
+          body: SingleChildScrollView(
+            child: Container(
+              child: RegisterProfileForm(),
             ),
           ),
         ),

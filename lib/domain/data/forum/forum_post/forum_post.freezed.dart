@@ -19,7 +19,7 @@ class _$ForumPostTearOff {
   _ForumPost call(
       {required String forumId,
       required Title title,
-      required Tag tag,
+      required String tag,
       required Body body,
       required int likes,
       required List<String> likedUserIds,
@@ -53,7 +53,7 @@ const $ForumPost = _$ForumPostTearOff();
 mixin _$ForumPost {
   String get forumId => throw _privateConstructorUsedError;
   Title get title => throw _privateConstructorUsedError;
-  Tag get tag => throw _privateConstructorUsedError;
+  String get tag => throw _privateConstructorUsedError;
   Body get body => throw _privateConstructorUsedError;
   int get likes => throw _privateConstructorUsedError;
   List<String> get likedUserIds => throw _privateConstructorUsedError;
@@ -76,7 +76,7 @@ abstract class $ForumPostCopyWith<$Res> {
   $Res call(
       {String forumId,
       Title title,
-      Tag tag,
+      String tag,
       Body body,
       int likes,
       List<String> likedUserIds,
@@ -123,7 +123,7 @@ class _$ForumPostCopyWithImpl<$Res> implements $ForumPostCopyWith<$Res> {
       tag: tag == freezed
           ? _value.tag
           : tag // ignore: cast_nullable_to_non_nullable
-              as Tag,
+              as String,
       body: body == freezed
           ? _value.body
           : body // ignore: cast_nullable_to_non_nullable
@@ -173,7 +173,7 @@ abstract class _$ForumPostCopyWith<$Res> implements $ForumPostCopyWith<$Res> {
   $Res call(
       {String forumId,
       Title title,
-      Tag tag,
+      String tag,
       Body body,
       int likes,
       List<String> likedUserIds,
@@ -221,7 +221,7 @@ class __$ForumPostCopyWithImpl<$Res> extends _$ForumPostCopyWithImpl<$Res>
       tag: tag == freezed
           ? _value.tag
           : tag // ignore: cast_nullable_to_non_nullable
-              as Tag,
+              as String,
       body: body == freezed
           ? _value.body
           : body // ignore: cast_nullable_to_non_nullable
@@ -285,7 +285,7 @@ class _$_ForumPost extends _ForumPost {
   @override
   final Title title;
   @override
-  final Tag tag;
+  final String tag;
   @override
   final Body body;
   @override
@@ -373,7 +373,7 @@ abstract class _ForumPost extends ForumPost {
   const factory _ForumPost(
       {required String forumId,
       required Title title,
-      required Tag tag,
+      required String tag,
       required Body body,
       required int likes,
       required List<String> likedUserIds,
@@ -390,7 +390,7 @@ abstract class _ForumPost extends ForumPost {
   @override
   Title get title => throw _privateConstructorUsedError;
   @override
-  Tag get tag => throw _privateConstructorUsedError;
+  String get tag => throw _privateConstructorUsedError;
   @override
   Body get body => throw _privateConstructorUsedError;
   @override

@@ -333,7 +333,6 @@ class ForumPostRepository implements IForumRepository {
         }
       });
 
-      //Not sure how to check if photo exists??? But a bit sad if gotta retrieve the whole forum to check bool
       //Delete photo if exists
       if (hasPhoto) {
         _firebaseStorage
@@ -349,6 +348,34 @@ class ForumPostRepository implements IForumRepository {
       } else {
         return left(const DataFailure.unexpected());
       }
+    }
+  }
+
+  @override
+  Future<Either<DataFailure, List<String>>> searchModulesByModuleCode(
+      String moduleCode) async {
+    print("Searching for ${moduleCode.toUpperCase()}");
+    final List<String> searchResults = [];
+    final modRef = await _firestore.modulesRef();
+    try {
+      QuerySnapshot query = await modRef
+          .where('moduleCode', isGreaterThanOrEqualTo: moduleCode.toUpperCase())
+          .limit(15)
+          .get();
+      {
+        if (query.docs.isNotEmpty) {
+          for (final doc in query.docs) {
+            if (doc.id.contains(moduleCode.toUpperCase())) {
+              searchResults.add(doc.id);
+            }
+          }
+        }
+
+        return right(searchResults);
+      }
+    } on FirebaseException catch (e) {
+      print(e);
+      return left(const DataFailure.unexpected());
     }
   }
 }

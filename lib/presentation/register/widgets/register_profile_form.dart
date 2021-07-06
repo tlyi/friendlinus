@@ -3,6 +3,7 @@ import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_tags/flutter_tags.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:friendlinus/application/profile/profile_form/profile_form_bloc.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
@@ -38,26 +39,24 @@ class RegisterProfileForm extends StatelessWidget {
           autovalidateMode: state.showErrorMessages
               ? AutovalidateMode.always
               : AutovalidateMode.disabled,
-          child: Scaffold(
-            body: Container(
-              margin: const EdgeInsets.all(30.0),
-              alignment: Alignment.center,
-              child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                _BuildProfilePicButton(),
-                const SizedBox(height: 15),
-                _BuildUsername(),
-                const SizedBox(height: 15),
-                _BuildCourse(),
-                const SizedBox(height: 15),
-                _BuildBio(),
-                const SizedBox(height: 15),
-                _BuildModule(),
-                const SizedBox(height: 15),
-                _BuildTags(),
-                const SizedBox(height: 15),
-                _BuildSaveButton(),
-              ]),
-            ),
+          child: Container(
+            margin: const EdgeInsets.all(30.0),
+            alignment: Alignment.center,
+            child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+              _BuildProfilePicButton(),
+              const SizedBox(height: 15),
+              _BuildUsername(),
+              const SizedBox(height: 15),
+              _BuildCourse(),
+              const SizedBox(height: 15),
+              _BuildBio(),
+              const SizedBox(height: 15),
+              _BuildModule(),
+              const SizedBox(height: 15),
+              _BuildTags(),
+              const SizedBox(height: 15),
+              _BuildSaveButton(),
+            ]),
           ),
         );
       },
@@ -231,9 +230,105 @@ class _BuildBio extends StatelessWidget {
 }
 
 class _BuildModule extends StatelessWidget {
+  const _BuildModule({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Select modules of interest'),
+        TypeAheadField(
+          direction: AxisDirection.up,
+          suggestionsCallback: (value) async {
+            context
+                .read<ProfileFormBloc>()
+                .add(ProfileFormEvent.searchedModule(value));
+
+            return context
+                .read<ProfileFormBloc>()
+                .state
+                .moduleSuggestions
+                .getOrElse(() => []);
+          },
+          itemBuilder: (context, suggestion) {
+            return ListTile(title: Text(suggestion.toString()));
+          },
+          onSuggestionSelected: (String value) {
+            if (context.read<ProfileFormBloc>().state.profile.modules.length >=
+                10) {
+              FlushbarHelper.createError(
+                      message: 'Maximum number of modules is 10')
+                  .show(context);
+            } else if (context
+                .read<ProfileFormBloc>()
+                .state
+                .profile
+                .modules
+                .contains(value)) {
+              print("module alr selected");
+              FlushbarHelper.createError(
+                      message: 'Module has already been selected')
+                  .show(context);
+            } else {
+              print("adding to list");
+              context
+                  .read<ProfileFormBloc>()
+                  .add(ProfileFormEvent.addedModule(value));
+            }
+          },
+        ),
+      ],
+    );
+  }
+}
+
+class _BuildTags extends StatelessWidget {
+  const _BuildTags({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ProfileFormBloc, ProfileFormState>(
+        builder: (context, state) {
+      if (context.read<ProfileFormBloc>().state.profile.modules.isEmpty) {
+        print("is empt");
+        return Container();
+      } else if (context.read<ProfileFormBloc>().state.refreshTags) {
+        return Align(
+          alignment: Alignment.topLeft,
+          child: Wrap(
+              alignment: WrapAlignment.start,
+              spacing: 6.0,
+              children: List<Widget>.generate(
+                  context.read<ProfileFormBloc>().state.profile.modules.length,
+                  (int index) {
+                final module = context
+                    .read<ProfileFormBloc>()
+                    .state
+                    .profile
+                    .modules[index];
+                return Chip(
+                    key: Key(index.toString()),
+                    label: Text(module),
+                    labelPadding: EdgeInsets.only(left: 4, right: 0),
+                    deleteIcon: Icon(
+                      Icons.close_rounded,
+                      color: Colors.grey[700],
+                      size: 18,
+                    ),
+                    deleteIconColor: Colors.transparent,
+                    onDeleted: () {
+                      print("removing");
+                      context
+                          .read<ProfileFormBloc>()
+                          .add(ProfileFormEvent.removedModule(index));
+                    });
+              })),
+        );
+      }
+      return Container();
+    });
   }
 }
 

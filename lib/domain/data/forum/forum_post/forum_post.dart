@@ -13,7 +13,7 @@ abstract class ForumPost implements _$ForumPost {
   const factory ForumPost({
     required String forumId,
     required Title title,
-    required Tag tag,
+    required String tag,
     required Body body,
     required int likes,
     required List<String> likedUserIds,
@@ -21,14 +21,14 @@ abstract class ForumPost implements _$ForumPost {
     required bool isAnon,
     required String photoUrl,
     required bool photoAdded,
-    required bool pollAdded, 
+    required bool pollAdded,
     required String timestamp,
   }) = _ForumPost;
 
   factory ForumPost.empty() => ForumPost(
         forumId: UniqueId('').getOrCrash(),
         title: Title(''),
-        tag: Tag(''),
+        tag: '',
         body: Body(''),
         likes: 0,
         likedUserIds: [],

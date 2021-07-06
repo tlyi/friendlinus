@@ -27,22 +27,20 @@ class VerifyEmail extends StatelessWidget {
           //  context.read<AuthBloc>().add(const AuthEvent.signedOut());
           return true;
         },
-        child: Scaffold(
-          body: Container(
-            margin: const EdgeInsets.all(30.0),
-            alignment: Alignment.center,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                const Icon(Icons.email_rounded),
-                const SizedBox(height: 15),
-                const Text(
-                  "An email has been sent. Please click on the link in the email to verify your account!",
-                  textAlign: TextAlign.center,
-                ),
-                _BuildResendEmailButton(),
-              ],
-            ),
+        child: Container(
+          margin: const EdgeInsets.all(30.0),
+          alignment: Alignment.center,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              const Icon(Icons.email_rounded),
+              const SizedBox(height: 15),
+              const Text(
+                "An email has been sent. Please click on the link in the email to verify your account!",
+                textAlign: TextAlign.center,
+              ),
+              _BuildResendEmailButton(),
+            ],
           ),
         ),
       );

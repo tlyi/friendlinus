@@ -83,8 +83,10 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
           saveFailureOrSuccessOption: none(),
         );
 
-        failureOrSuccess =
-            await _profileRepository.create(state.profile.copyWith(uuid: uuid));
+        failureOrSuccess = await _profileRepository.create(state.profile
+            .copyWith(
+                uuid: uuid,
+                photoUrl: state.photoUrl.getOrElse(() => constants.ERROR_DP)));
       }
 
       yield state.copyWith(
@@ -115,7 +117,7 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
       List<String> moduleList = state.profile.modules;
 
       moduleList.add(e.moduleStr);
-
+      print(moduleList);
       yield state.copyWith(
         profile: state.profile.copyWith(modules: moduleList),
         refreshTags: true,

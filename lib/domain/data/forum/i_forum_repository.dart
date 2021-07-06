@@ -27,4 +27,7 @@ abstract class IForumRepository {
   Future<Either<DataFailure, Unit>> unlikeComment(
       String forumId, String commentId, String userId);
   Future<Either<DataFailure, Unit>> deleteForum(String forumId, bool hasPhoto);
+
+  Future<Either<DataFailure, List<String>>> searchModulesByModuleCode(
+      String moduleCode);
 }

@@ -40,10 +40,18 @@ class ForumFormBloc extends Bloc<ForumFormEvent, ForumFormState> {
           title: Title(e.titleStr),
         ));
       },
+      searchedModule: (e) async* {
+        final moduleSuggestions =
+            await _profileRepository.searchModulesByModuleCode(e.searchStr);
+
+        yield state.copyWith(
+          moduleSuggestions: moduleSuggestions,
+        );
+      },
       tagChanged: (e) async* {
         yield state.copyWith(
             forumPost: state.forumPost.copyWith(
-          tag: Tag(e.tagStr),
+          tag: e.tagStr,
         ));
       },
       bodyChanged: (e) async* {
@@ -130,17 +138,22 @@ class ForumFormBloc extends Bloc<ForumFormEvent, ForumFormState> {
         Either<DataFailure, Unit>? pollFailureOrSuccess;
 
         bool isTitleValid = state.forumPost.title.isValid();
-        bool isTagValid = state.forumPost.tag.isValid();
         bool isBodyValid = state.forumPost.body.isValid();
-        bool isForumPostValid = isTitleValid && isTagValid && isBodyValid;
+        bool isForumPostValid = isTitleValid && isBodyValid;
 
         if (isForumPostValid) {
           String userId = await _forumRepository.getOwnId();
+          if (state.forumPost.tag == '') {
+            yield state.copyWith(
+                forumPost: state.forumPost.copyWith(tag: 'General'));
+          }
           yield state.copyWith(
               isLoading: true,
               createFailureOrSuccessOption: none(),
               createPollFailureOrSuccessOption: none(),
-              forumPost: state.forumPost.copyWith(posterUserId: userId),
+              forumPost: state.forumPost.copyWith(
+                posterUserId: userId,
+              ),
               poll: state.poll.copyWith(creatorUuid: userId));
 
           _profileRepository.addForum(state.forumPost.forumId);
