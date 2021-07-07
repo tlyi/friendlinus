@@ -6,6 +6,8 @@
 
 import 'package:auto_route/auto_route.dart' as _i1;
 import 'package:flutter/material.dart' as _i2;
+import 'package:friendlinus/domain/data/forum/forum_post/forum_post.dart'
+    as _i22;
 import 'package:friendlinus/domain/data/profile/profile.dart' as _i21;
 import 'package:friendlinus/presentation/chats/chat_list/chat_list_page.dart'
     as _i16;
@@ -143,7 +145,7 @@ class AppRouter extends _i1.RootStackRouter {
         routeData: routeData,
         builder: (data) {
           final args = data.argsAs<CommentRouteArgs>();
-          return _i20.CommentPage(key: args.key, forumId: args.forumId);
+          return _i20.CommentPage(key: args.key, forum: args.forum);
         })
   };
 
@@ -340,18 +342,18 @@ class ConvoSplashRouteArgs {
 }
 
 class CommentRoute extends _i1.PageRouteInfo<CommentRouteArgs> {
-  CommentRoute({_i2.Key? key, required String forumId})
+  CommentRoute({_i2.Key? key, required _i22.ForumPost forum})
       : super(name,
             path: '/comment-page',
-            args: CommentRouteArgs(key: key, forumId: forumId));
+            args: CommentRouteArgs(key: key, forum: forum));
 
   static const String name = 'CommentRoute';
 }
 
 class CommentRouteArgs {
-  const CommentRouteArgs({this.key, required this.forumId});
+  const CommentRouteArgs({this.key, required this.forum});
 
   final _i2.Key? key;
 
-  final String forumId;
+  final _i22.ForumPost forum;
 }

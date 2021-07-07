@@ -47,12 +47,12 @@ class ForumOverviewBody extends StatelessWidget {
                                     onTap: () async {
                                       if (forum.likedUserIds.contains(userId)) {
                                         context.read<ForumActorBloc>().add(
-                                            ForumActorEvent.unliked(
+                                            ForumActorEvent.forumUnliked(
                                                 forum.forumId));
                                       } else {
                                         context.read<ForumActorBloc>().add(
-                                            ForumActorEvent.liked(
-                                                forum.forumId));
+                                            ForumActorEvent.forumLiked(
+                                                forum));
                                       }
                                     },
                                     builder: (BuildContext context,

@@ -8,9 +8,11 @@ import 'package:friendlinus/domain/data/forum/forum_post/forum_post.dart';
 import 'package:friendlinus/domain/data/data_failure.dart';
 import 'package:friendlinus/domain/data/forum/i_forum_repository.dart';
 import 'package:friendlinus/domain/data/forum/poll/poll.dart';
+import 'package:friendlinus/domain/data/notifications/notification.dart';
 import 'package:friendlinus/infrastructure/data/forum/comment_dtos/comment_dtos.dart';
 import 'package:friendlinus/infrastructure/data/forum/forum_post_dtos/forum_post_dtos.dart';
 import 'package:friendlinus/infrastructure/data/forum/poll_dtos/poll_dtos.dart';
+import 'package:friendlinus/infrastructure/data/notifications/notification_dtos.dart';
 import 'package:injectable/injectable.dart';
 import 'package:friendlinus/infrastructure/core/firestore_helpers.dart';
 
@@ -150,10 +152,23 @@ class ForumPostRepository implements IForumRepository {
 
   @override
   Future<Either<DataFailure, Unit>> likeForum(
-      String forumId, String userId) async {
+      ForumPost forum, String userId) async {
     try {
       await _firestore.runTransaction((transaction) async {
-        final forumDoc = await _firestore.forumDocument(forumId);
+        final forumDoc = await _firestore.forumDocument(forum.forumId);
+        if (forum.posterUserId != userId) {
+          final notifRef =
+              await _firestore.notificationsUserRef(forum.posterUserId);
+          final notifDoc = notifRef.doc();
+          final notif = Notification.empty().copyWith(
+            senderId: userId,
+            notificationType: 'forumLike',
+            postId: forum.forumId,
+            title: forum.title.getOrCrash(),
+          );
+          final notifDto = NotificationDto.fromDomain(notif).toJson();
+          transaction.set(notifDoc, notifDto);
+        }
         transaction.update(forumDoc, {
           'likedUserIds': FieldValue.arrayUnion([userId]),
           'likes': FieldValue.increment(1),
@@ -218,12 +233,26 @@ class ForumPostRepository implements IForumRepository {
 
   @override
   Future<Either<DataFailure, Unit>> createComment(
-      Comment comment, String forumId) async {
+      Comment comment, ForumPost forum) async {
     try {
-      final commentRef = await _firestore.commentsForumRef(forumId);
+      final commentRef = await _firestore.commentsForumRef(forum.forumId);
       final commentDto = CommentDto.fromDomain(comment);
 
       await commentRef.doc(comment.commentId).set(commentDto.toJson());
+
+      if (comment.userId != forum.posterUserId) {
+        final notifRef =
+            await _firestore.notificationsUserRef(forum.posterUserId);
+        final notifDoc = notifRef.doc();
+        final notif = Notification.empty().copyWith(
+            senderId: comment.userId,
+            notificationType: 'newComment',
+            postId: forum.forumId,
+            title: forum.title.getOrCrash(),
+            details: comment.commentText.getOrCrash());
+        final notifDto = NotificationDto.fromDomain(notif).toJson();
+        notifDoc.set(notifDto);
+      }
 
       return right(unit);
     } on FirebaseException catch (e) {
@@ -264,16 +293,30 @@ class ForumPostRepository implements IForumRepository {
 
   @override
   Future<Either<DataFailure, Unit>> likeComment(
-      String forumId, String commentId, String userId) async {
+      ForumPost forum, Comment comment, String userId) async {
     try {
       await _firestore.runTransaction((transaction) async {
-        final commentsRef = await _firestore.commentsForumRef(forumId);
-        final commentDoc = commentsRef.doc(commentId);
+        final commentsRef = await _firestore.commentsForumRef(forum.forumId);
+        final commentDoc = commentsRef.doc(comment.commentId);
+        if (comment.userId != userId) {
+          final notifRef =
+              await _firestore.notificationsUserRef(comment.userId);
+          final notifDoc = notifRef.doc();
+          final notif = Notification.empty().copyWith(
+            senderId: userId,
+            notificationType: 'commentLike',
+            postId: comment.commentId,
+            title: forum.title.getOrCrash(),
+          );
+          final notifDto = NotificationDto.fromDomain(notif).toJson();
+          transaction.set(notifDoc, notifDto);
+        }
         transaction.update(commentDoc, {
           'likedUserIds': FieldValue.arrayUnion([userId]),
           'likes': FieldValue.increment(1),
         });
       });
+      
       return right(unit);
     } on FirebaseException catch (e) {
       if (e.message!.contains('PERMISSION_DENIED')) {

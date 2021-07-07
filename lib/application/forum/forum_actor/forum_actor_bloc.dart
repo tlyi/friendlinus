@@ -5,6 +5,7 @@ import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:friendlinus/domain/data/data_failure.dart';
 import 'package:friendlinus/domain/data/forum/comment/comment.dart';
+import 'package:friendlinus/domain/data/forum/forum_post/forum_post.dart';
 import 'package:friendlinus/domain/data/forum/i_forum_repository.dart';
 import 'package:friendlinus/domain/data/forum/value_objects.dart';
 import 'package:injectable/injectable.dart';
@@ -29,10 +30,10 @@ class ForumActorBloc extends Bloc<ForumActorEvent, ForumActorState> {
           userId: userId,
         );
       },
-      liked: (e) async* {
-        await _forumRepository.likeForum(e.forumId, state.userId);
+      forumLiked: (e) async* {
+        await _forumRepository.likeForum(e.forum, state.userId);
       },
-      unliked: (e) async* {
+      forumUnliked: (e) async* {
         await _forumRepository.unlikeForum(e.forumId, state.userId);
       },
       voted: (e) async* {
@@ -59,10 +60,10 @@ class ForumActorBloc extends Bloc<ForumActorEvent, ForumActorState> {
               isLoading: true,
               createFailureOrSuccessOption: none(),
               comment: state.comment
-                  .copyWith(forumId: e.forumId, userId: state.userId));
+                  .copyWith(forumId: e.forum.forumId, userId: state.userId));
           failureOrSuccess = await _forumRepository.createComment(
-              state.comment.copyWith(userId: state.userId, forumId: e.forumId),
-              e.forumId);
+              state.comment.copyWith(userId: state.userId, forumId: e.forum.forumId),
+              e.forum);
         }
 
         yield state.copyWith(
@@ -72,7 +73,7 @@ class ForumActorBloc extends Bloc<ForumActorEvent, ForumActorState> {
       },
       commentLiked: (e) async* {
         await _forumRepository.likeComment(
-            e.forumId, e.commentId, state.userId);
+            e.forum, e.comment, state.userId);
       },
       commentUnliked: (e) async* {
         await _forumRepository.unlikeComment(

@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:friendlinus/application/forum/forum_actor/forum_actor_bloc.dart';
+import 'package:friendlinus/domain/data/forum/forum_post/forum_post.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 
 class CommentForm extends StatelessWidget {
-  final String forumId;
-  const CommentForm({Key? key, required this.forumId}) : super(key: key);
+  final ForumPost forum;
+  const CommentForm({Key? key, required this.forum}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +44,7 @@ class CommentForm extends StatelessWidget {
                     ],
                   ),
                   _BuildPostCommentButton(
-                    forumId: forumId,
+                    forum: forum,
                   ),
                 ],
               ),
@@ -100,8 +101,8 @@ class _BuildAnonymousSwitch extends StatelessWidget {
 }
 
 class _BuildPostCommentButton extends StatelessWidget {
-  final String forumId;
-  const _BuildPostCommentButton({Key? key, required this.forumId})
+  final ForumPost forum;
+  const _BuildPostCommentButton({Key? key, required this.forum})
       : super(key: key);
 
   @override
@@ -116,7 +117,7 @@ class _BuildPostCommentButton extends StatelessWidget {
         child: const Text('Post Comment'),
         onPressed: () => context
             .read<ForumActorBloc>()
-            .add(ForumActorEvent.commentCreated(forumId)),
+            .add(ForumActorEvent.commentCreated(forum)),
       ),
     );
   }

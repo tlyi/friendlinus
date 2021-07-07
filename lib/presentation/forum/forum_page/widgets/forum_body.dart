@@ -99,11 +99,11 @@ class ForumBody extends StatelessWidget {
                     _BuildPost(forum: forum),
                     Row(children: <Widget>[
                       Expanded(
-                        child: _BuildCommentButton(forumId: forum.forumId),
+                        child: _BuildCommentButton(forum: forum),
                       ),
                       _BuildSortCommentsOption(forumId: forum.forumId),
                     ]),
-                    _BuildComments(forumId: forum.forumId),
+                    _BuildComments(forum: forum),
                   ],
                 ),
               ));
@@ -170,10 +170,10 @@ class _BuildPost extends StatelessWidget {
                                 onTap: () async {
                                   if (forum.likedUserIds.contains(userId)) {
                                     context.read<ForumActorBloc>().add(
-                                        ForumActorEvent.unliked(forum.forumId));
+                                        ForumActorEvent.forumUnliked(forum.forumId));
                                   } else {
                                     context.read<ForumActorBloc>().add(
-                                        ForumActorEvent.liked(forum.forumId));
+                                        ForumActorEvent.forumLiked(forum));
                                   }
                                 },
                                 builder: (BuildContext context,
@@ -306,8 +306,8 @@ class _BuildPoll extends StatelessWidget {
 }
 
 class _BuildCommentButton extends StatelessWidget {
-  final String forumId;
-  const _BuildCommentButton({Key? key, required this.forumId})
+final ForumPost forum;
+  const _BuildCommentButton({Key? key, required this.forum})
       : super(key: key);
 
   @override
@@ -319,7 +319,7 @@ class _BuildCommentButton extends StatelessWidget {
         style: ButtonStyle(
             backgroundColor:
                 MaterialStateProperty.all(const Color(0xFF7BA5BB))),
-        onPressed: () => context.pushRoute(CommentRoute(forumId: forumId)),
+        onPressed: () => context.pushRoute(CommentRoute(forum: forum)),
         child: const Text('Add Comment'),
       ),
     );
@@ -409,8 +409,8 @@ class __BuildSortCommentsOptionState extends State<_BuildSortCommentsOption> {
 }
 
 class _BuildComments extends StatelessWidget {
-  final String forumId;
-  const _BuildComments({Key? key, required this.forumId}) : super(key: key);
+  final ForumPost forum;
+  const _BuildComments({Key? key, required this.forum}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -524,8 +524,8 @@ class _BuildComments extends StatelessWidget {
                                                     .read<ForumActorBloc>()
                                                     .add(ForumActorEvent
                                                         .commentLiked(
-                                                            comment.forumId,
-                                                            comment.commentId));
+                                                            forum,
+                                                            comment));
                                               }
                                             },
                                             builder: (BuildContext context,

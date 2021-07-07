@@ -17,7 +17,7 @@ abstract class Notification implements _$Notification {
       required String details //contains comment for preview
       }) = _Notification;
 
-  factory Notification.empty() => Notification(
+  factory Notification.empty() => const Notification(
       senderId: '',
       isRead: false,
       notificationType: '',

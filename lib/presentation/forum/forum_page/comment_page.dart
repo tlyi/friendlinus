@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:friendlinus/application/forum/forum_actor/forum_actor_bloc.dart';
+import 'package:friendlinus/domain/data/forum/forum_post/forum_post.dart';
 import 'package:friendlinus/injection.dart';
 import 'package:friendlinus/presentation/core/app_bar.dart';
 import 'package:friendlinus/presentation/core/dismiss_keyboard.dart';
@@ -8,8 +9,8 @@ import 'package:friendlinus/presentation/core/nav_bar.dart';
 import 'package:friendlinus/presentation/forum/forum_page/widgets/comment_form.dart';
 
 class CommentPage extends StatelessWidget {
-  final String forumId;
-  const CommentPage({Key? key, required this.forumId}) : super(key: key);
+  final ForumPost forum;
+  const CommentPage({Key? key, required this.forum}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,7 @@ class CommentPage extends StatelessWidget {
                     maxHeight: MediaQuery.of(context).size.height -
                         (MediaQuery.of(context).padding.top + kToolbarHeight),
                   ),
-                  child: CommentForm(forumId: forumId),
+                  child: CommentForm(forum: forum),
                 )))),
       ),
     );
