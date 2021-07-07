@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:friendlinus/application/notifications/notification_watcher/notification_watcher_bloc.dart';
+import 'package:friendlinus/injection.dart';
 import 'package:friendlinus/presentation/core/app_bar.dart';
 import 'package:friendlinus/presentation/core/nav_bar.dart';
 import 'package:friendlinus/presentation/notifications/widgets/notifications.dart';
 
 class NotificationPage extends StatelessWidget {
-  const NotificationPage({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar:
-            appBar(context: context, header: 'Notifications', canClose: true),
-        bottomNavigationBar: NavigationBar(),
-        body: Notifications());
+    return BlocProvider(
+        create: (context) => getIt<NotificationWatcherBloc>()
+          ..add(NotificationWatcherEvent.retrieveNotificationsStarted()),
+        child: Scaffold(
+            appBar: appBar(
+                context: context,
+                header: 'Notifications',
+                canClose: true,
+                notifications: false),
+            bottomNavigationBar: NavigationBar(),
+            body: Notifications()));
   }
 }

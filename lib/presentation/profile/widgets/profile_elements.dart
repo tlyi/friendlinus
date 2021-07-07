@@ -561,6 +561,7 @@ class RecentPosts extends StatelessWidget {
             ListView.builder(
                 physics: const AlwaysScrollableScrollPhysics(),
                 shrinkWrap: true,
+                padding: EdgeInsets.only(top: 15.0),
                 itemCount: forums.length,
                 itemBuilder: (context, index) {
                   final forum = forums[index];

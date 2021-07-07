@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+String anonUserId = 'hf9ATYu6F5MEFZIQa5OK';
+
 ///generates random number from 0 to 3 inclusive
 int generateRandomNumber() {
   final randomNo = Random().nextInt(5);

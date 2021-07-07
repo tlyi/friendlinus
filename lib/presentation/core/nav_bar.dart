@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:friendlinus/application/notifications/chat_counter_watcher/chat_counter_watcher_bloc.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
 
 /// Add the line 'bottomNavigationBar: const NavigationBar(),' within a Scaffold Block
@@ -28,17 +30,62 @@ class NavigationBar extends StatelessWidget {
               context.replaceRoute(const HomeRoute());
             },
           ),
-          IconButton(
-            icon: const Icon(
-              Icons.forum,
-              size: 35,
+          Stack(children: [
+            IconButton(
+              icon: const Icon(
+                Icons.forum,
+                size: 35,
+              ),
+              tooltip: 'Chats',
+              onPressed: () {
+                context.replaceRoute(const ChatListRoute());
+                print('Nav to chats');
+              },
             ),
-            tooltip: 'Chats',
-            onPressed: () {
-              context.replaceRoute(const ChatListRoute());
-              print('Nav to chats');
-            },
-          ),
+            Positioned(
+              right: 0,
+              child:
+                  BlocBuilder<ChatCounterWatcherBloc, ChatCounterWatcherState>(
+                builder: (context, state) {
+                  if (state is LoadSuccess) {
+                    if (state.unreadChatCounter == 0) {
+                      return Container();
+                    } else {
+                      return ClipOval(
+                        child: Container(
+                            alignment: Alignment.center,
+                            width: 20,
+                            height: 20,
+                            color: const Color(0xFFE44444),
+                            child: Text(
+                                state.unreadChatCounter >= 100
+                                    ? '+'
+                                    : state.unreadChatCounter.toString(),
+                                style: const TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w400))),
+                      );
+                    }
+                  } else {
+                    return ClipOval(
+                      child: Container(
+                        alignment: Alignment.center,
+                        width: 20,
+                        height: 20,
+                        color: const Color(0xFFE44444),
+                        child: const Padding(
+                          padding: EdgeInsets.all(5.0),
+                          child: CircularProgressIndicator(
+                              color: Colors.white, strokeWidth: 1),
+                        ),
+                      ),
+                    );
+                  }
+                },
+              ),
+            ),
+          ]),
           IconButton(
             icon: const Icon(
               Icons.near_me,

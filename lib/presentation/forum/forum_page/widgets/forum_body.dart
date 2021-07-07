@@ -170,10 +170,12 @@ class _BuildPost extends StatelessWidget {
                                 onTap: () async {
                                   if (forum.likedUserIds.contains(userId)) {
                                     context.read<ForumActorBloc>().add(
-                                        ForumActorEvent.forumUnliked(forum.forumId));
+                                        ForumActorEvent.forumUnliked(
+                                            forum.forumId));
                                   } else {
-                                    context.read<ForumActorBloc>().add(
-                                        ForumActorEvent.forumLiked(forum));
+                                    context
+                                        .read<ForumActorBloc>()
+                                        .add(ForumActorEvent.forumLiked(forum));
                                   }
                                 },
                                 builder: (BuildContext context,
@@ -306,9 +308,8 @@ class _BuildPoll extends StatelessWidget {
 }
 
 class _BuildCommentButton extends StatelessWidget {
-final ForumPost forum;
-  const _BuildCommentButton({Key? key, required this.forum})
-      : super(key: key);
+  final ForumPost forum;
+  const _BuildCommentButton({Key? key, required this.forum}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -336,6 +337,8 @@ class _BuildDeleteButton extends StatelessWidget {
       return Container(
         alignment: Alignment.centerLeft,
         margin: const EdgeInsets.all(10.0),
+
+        ///child: IconButton(icon: Icon(Icons.delete), ),
         child: ElevatedButton(
           style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(Colors.red[300])),
@@ -363,6 +366,7 @@ class _BuildDeleteButton extends StatelessWidget {
           child:
               const Text('Delete Forum', style: TextStyle(color: Colors.white)),
         ),
+        //Change to icon button Icons.delete
       );
     } else {
       return Container();
@@ -524,8 +528,7 @@ class _BuildComments extends StatelessWidget {
                                                     .read<ForumActorBloc>()
                                                     .add(ForumActorEvent
                                                         .commentLiked(
-                                                            forum,
-                                                            comment));
+                                                            forum, comment));
                                               }
                                             },
                                             builder: (BuildContext context,

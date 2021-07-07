@@ -16,29 +16,32 @@ abstract class NotificationDto implements _$NotificationDto {
       required String timestamp,
       required String postId,
       required String title,
-      required String details}) = _NotificationDto;
+      required String details,
+      required bool pollAdded}) = _NotificationDto;
 
   factory NotificationDto.fromDomain(Notification notification) {
     return NotificationDto(
-      senderId: notification.senderId,
-      isRead: notification.isRead,
-      notificationType: notification.notificationType,
-      timestamp: DateTime.now().millisecondsSinceEpoch.toString(),
-      postId: notification.postId,
-      title: notification.title,
-      details: notification.details,
-    );
+        senderId: notification.senderId,
+        isRead: notification.isRead,
+        notificationType: notification.notificationType,
+        timestamp: DateTime.now().millisecondsSinceEpoch.toString(),
+        postId: notification.postId,
+        title: notification.title,
+        details: notification.details,
+        pollAdded: notification.pollAdded);
   }
 
   Notification toDomain() {
     return Notification(
-        senderId: senderId,
-        isRead: isRead,
-        notificationType: notificationType,
-        timestamp: timestamp,
-        postId: postId,
-        title: title,
-        details: details);
+      senderId: senderId,
+      isRead: isRead,
+      notificationType: notificationType,
+      timestamp: timestamp,
+      postId: postId,
+      title: title,
+      details: details,
+      pollAdded: pollAdded,
+    );
   }
 
   factory NotificationDto.fromJson(Map<String, dynamic> json) =>

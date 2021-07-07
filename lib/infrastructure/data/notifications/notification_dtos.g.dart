@@ -15,6 +15,7 @@ _$_NotificationDto _$_$_NotificationDtoFromJson(Map<String, dynamic> json) {
     postId: json['postId'] as String,
     title: json['title'] as String,
     details: json['details'] as String,
+    pollAdded: json['pollAdded'] as bool,
   );
 }
 
@@ -27,4 +28,5 @@ Map<String, dynamic> _$_$_NotificationDtoToJson(_$_NotificationDto instance) =>
       'postId': instance.postId,
       'title': instance.title,
       'details': instance.details,
+      'pollAdded': instance.pollAdded,
     };

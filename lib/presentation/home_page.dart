@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:friendlinus/application/auth/auth_bloc.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:friendlinus/domain/mods/i_mod_repository.dart';
 import 'package:friendlinus/presentation/core/app_bar.dart';
 import 'package:friendlinus/presentation/core/nav_bar.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
@@ -12,6 +9,7 @@ import 'package:intl/intl.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    String userId;
     return Scaffold(
       appBar: appBar(context: context, header: 'Welcome'),
       body: Container(
@@ -41,10 +39,9 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  SizedBox(height: 50),
+                  const SizedBox(height: 50),
                   Image(
                     image: const AssetImage('images/logo.png'),
                     height: MediaQuery.of(context).size.height * 0.3,
@@ -70,10 +67,10 @@ class _BuildSearchUsersButton extends StatelessWidget {
       child: ElevatedButton(
         style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(constants.THEME_BLUE)),
-        child: const Text("Search Users"),
         onPressed: () {
           context.pushRoute(const SearchUsersRoute());
         },
+        child: const Text("Search Users"),
       ),
     );
   }

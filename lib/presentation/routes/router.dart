@@ -8,6 +8,7 @@ import 'package:friendlinus/presentation/forum/forum_overview/forum_overview_pag
 import 'package:friendlinus/presentation/forum/forum_page/comment_page.dart';
 import 'package:friendlinus/presentation/forum/forum_page/forum_page.dart';
 import 'package:friendlinus/presentation/home_page.dart';
+import 'package:friendlinus/presentation/notifications/notification_page.dart';
 import 'package:friendlinus/presentation/profile/other_profile_page.dart';
 import 'package:friendlinus/presentation/profile/profile_page.dart';
 import 'package:friendlinus/presentation/profile/update_profile_page.dart';
@@ -24,7 +25,7 @@ import 'package:friendlinus/presentation/splash/splash_page.dart';
   routes: <AutoRoute>[
     AutoRoute(page: SplashPage, initial: true),
     AutoRoute(page: SignInPage),
-    AutoRoute(page: HomePage, initial: false),
+    AutoRoute(page: HomePage),
     AutoRoute(page: RegisterPage),
     AutoRoute(page: VerifyEmailPage),
     AutoRoute(page: RegisterProfilePage),
@@ -40,6 +41,7 @@ import 'package:friendlinus/presentation/splash/splash_page.dart';
     AutoRoute(page: ForumPage),
     AutoRoute(page: ConvoSplashPage),
     AutoRoute(page: CommentPage),
+    AutoRoute(page: NotificationPage),
   ],
 )
 class $AppRouter {}

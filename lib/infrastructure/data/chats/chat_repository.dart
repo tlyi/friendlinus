@@ -79,9 +79,7 @@ class ChatRepository implements IChatRepository {
   @override
   Stream<Either<DataFailure, List<Chat>>> retrieveUserChats(
       String userId) async* {
-    await deleteEmptyChats();
     final chatsRef = await _firestore.chatsRef();
-
     yield* chatsRef
         .where('userIds', arrayContains: userId)
         .orderBy('timestamp', descending: true)
@@ -105,6 +103,7 @@ class ChatRepository implements IChatRepository {
 
   @override
   Future<Either<DataFailure, Unit>> deleteEmptyChats() async {
+    //not used for now
     try {
       final chatsRef = await _firestore.chatsRef();
       QuerySnapshot emptyChats =
@@ -278,6 +277,9 @@ class ChatRepository implements IChatRepository {
     });
   }
 }
+
+
+
 
 /*   try {
       final chatsRef = await _firestore.chatsRef();

@@ -23,7 +23,8 @@ class _$NotificationTearOff {
       required String timestamp,
       required String postId,
       required String title,
-      required String details}) {
+      required String details,
+      required bool pollAdded}) {
     return _Notification(
       senderId: senderId,
       isRead: isRead,
@@ -32,6 +33,7 @@ class _$NotificationTearOff {
       postId: postId,
       title: title,
       details: details,
+      pollAdded: pollAdded,
     );
   }
 }
@@ -46,9 +48,11 @@ mixin _$Notification {
   String get notificationType =>
       throw _privateConstructorUsedError; //newFollower, forumLike, commentLike, newComment
   String get timestamp => throw _privateConstructorUsedError;
-  String get postId => throw _privateConstructorUsedError;
+  String get postId => throw _privateConstructorUsedError; //forumId only
   String get title => throw _privateConstructorUsedError;
-  String get details => throw _privateConstructorUsedError;
+  String get details =>
+      throw _privateConstructorUsedError; //contains comment for preview
+  bool get pollAdded => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $NotificationCopyWith<Notification> get copyWith =>
@@ -67,7 +71,8 @@ abstract class $NotificationCopyWith<$Res> {
       String timestamp,
       String postId,
       String title,
-      String details});
+      String details,
+      bool pollAdded});
 }
 
 /// @nodoc
@@ -87,6 +92,7 @@ class _$NotificationCopyWithImpl<$Res> implements $NotificationCopyWith<$Res> {
     Object? postId = freezed,
     Object? title = freezed,
     Object? details = freezed,
+    Object? pollAdded = freezed,
   }) {
     return _then(_value.copyWith(
       senderId: senderId == freezed
@@ -117,6 +123,10 @@ class _$NotificationCopyWithImpl<$Res> implements $NotificationCopyWith<$Res> {
           ? _value.details
           : details // ignore: cast_nullable_to_non_nullable
               as String,
+      pollAdded: pollAdded == freezed
+          ? _value.pollAdded
+          : pollAdded // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -135,7 +145,8 @@ abstract class _$NotificationCopyWith<$Res>
       String timestamp,
       String postId,
       String title,
-      String details});
+      String details,
+      bool pollAdded});
 }
 
 /// @nodoc
@@ -157,6 +168,7 @@ class __$NotificationCopyWithImpl<$Res> extends _$NotificationCopyWithImpl<$Res>
     Object? postId = freezed,
     Object? title = freezed,
     Object? details = freezed,
+    Object? pollAdded = freezed,
   }) {
     return _then(_Notification(
       senderId: senderId == freezed
@@ -187,6 +199,10 @@ class __$NotificationCopyWithImpl<$Res> extends _$NotificationCopyWithImpl<$Res>
           ? _value.details
           : details // ignore: cast_nullable_to_non_nullable
               as String,
+      pollAdded: pollAdded == freezed
+          ? _value.pollAdded
+          : pollAdded // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -201,7 +217,8 @@ class _$_Notification extends _Notification {
       required this.timestamp,
       required this.postId,
       required this.title,
-      required this.details})
+      required this.details,
+      required this.pollAdded})
       : super._();
 
   @override
@@ -214,14 +231,16 @@ class _$_Notification extends _Notification {
   final String timestamp;
   @override
   final String postId;
-  @override
+  @override //forumId only
   final String title;
   @override
   final String details;
+  @override //contains comment for preview
+  final bool pollAdded;
 
   @override
   String toString() {
-    return 'Notification(senderId: $senderId, isRead: $isRead, notificationType: $notificationType, timestamp: $timestamp, postId: $postId, title: $title, details: $details)';
+    return 'Notification(senderId: $senderId, isRead: $isRead, notificationType: $notificationType, timestamp: $timestamp, postId: $postId, title: $title, details: $details, pollAdded: $pollAdded)';
   }
 
   @override
@@ -244,7 +263,11 @@ class _$_Notification extends _Notification {
             (identical(other.title, title) ||
                 const DeepCollectionEquality().equals(other.title, title)) &&
             (identical(other.details, details) ||
-                const DeepCollectionEquality().equals(other.details, details)));
+                const DeepCollectionEquality()
+                    .equals(other.details, details)) &&
+            (identical(other.pollAdded, pollAdded) ||
+                const DeepCollectionEquality()
+                    .equals(other.pollAdded, pollAdded)));
   }
 
   @override
@@ -256,7 +279,8 @@ class _$_Notification extends _Notification {
       const DeepCollectionEquality().hash(timestamp) ^
       const DeepCollectionEquality().hash(postId) ^
       const DeepCollectionEquality().hash(title) ^
-      const DeepCollectionEquality().hash(details);
+      const DeepCollectionEquality().hash(details) ^
+      const DeepCollectionEquality().hash(pollAdded);
 
   @JsonKey(ignore: true)
   @override
@@ -272,7 +296,8 @@ abstract class _Notification extends Notification {
       required String timestamp,
       required String postId,
       required String title,
-      required String details}) = _$_Notification;
+      required String details,
+      required bool pollAdded}) = _$_Notification;
   const _Notification._() : super._();
 
   @override
@@ -285,10 +310,12 @@ abstract class _Notification extends Notification {
   String get timestamp => throw _privateConstructorUsedError;
   @override
   String get postId => throw _privateConstructorUsedError;
-  @override
+  @override //forumId only
   String get title => throw _privateConstructorUsedError;
   @override
   String get details => throw _privateConstructorUsedError;
+  @override //contains comment for preview
+  bool get pollAdded => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$NotificationCopyWith<_Notification> get copyWith =>

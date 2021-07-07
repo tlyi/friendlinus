@@ -4,6 +4,8 @@ part of 'notification_watcher_bloc.dart';
 class NotificationWatcherEvent with _$NotificationWatcherEvent {
   const factory NotificationWatcherEvent.retrieveNotificationsStarted() =
       _RetrieveNotificationsStarted;
+  const factory NotificationWatcherEvent.retrieveProfilesStarted(
+      List<Notification> notifs) = _RetrieveProfilesStarted;
   const factory NotificationWatcherEvent.notificationsReceived(
           Either<DataFailure, List<Notification>> failureOrNotifications) =
       _NotificationsReceived;

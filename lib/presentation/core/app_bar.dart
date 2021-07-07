@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:friendlinus/application/auth/auth_bloc.dart';
+import 'package:friendlinus/application/notifications/notif_counter_watcher/notif_counter_watcher_bloc.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
 
 /// Scaffold -> appBar:
@@ -73,14 +74,59 @@ AppBar appBar({
         )),
     backgroundColor: Colors.white,
     centerTitle: true,
-    actions: notifications
-        ? [
-            IconButton(
-              icon: const Icon(Icons.notifications_none, color: Colors.grey),
-              onPressed: () => print('notifs button clicked'),
-              padding: const EdgeInsets.only(right: 20),
-            ),
-          ]
-        : [],
+    actions: [
+      if (notifications)
+        Stack(children: [
+          IconButton(
+            icon: const Icon(Icons.notifications_none, color: Colors.grey),
+            onPressed: () {
+              print('opening notifs');
+              context.pushRoute(NotificationRoute());
+            },
+            padding: const EdgeInsets.only(right: 20),
+          ),
+          BlocBuilder<NotifCounterWatcherBloc, NotifCounterWatcherState>(
+            builder: (context, state) {
+              return Positioned(
+                right: 10,
+                child: (state is LoadSuccess)
+                    ? state.unread == 0
+                        ? Container()
+                        : ClipOval(
+                            child: Container(
+                                alignment: Alignment.center,
+                                width: 20,
+                                height: 20,
+                                color: const Color(0xFFE44444),
+                                child: Text(
+                                    state.unread > 100
+                                        ? '+'
+                                        : state.unread.toString(),
+                                    style: const TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w300))))
+                    : ClipOval(
+                        child: Container(
+                          alignment: Alignment.center,
+                          width: 20,
+                          height: 20,
+                          color: const Color(0xFFE44444),
+                          child: const Padding(
+                            padding: EdgeInsets.all(5.0),
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                              strokeWidth: 1,
+                            ),
+                          ),
+                        ),
+                      ),
+              );
+            },
+          ),
+        ])
+      else
+        Container(),
+    ],
   );
 }

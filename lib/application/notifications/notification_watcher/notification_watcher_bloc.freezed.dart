@@ -20,6 +20,12 @@ class _$NotificationWatcherEventTearOff {
     return const _RetrieveNotificationsStarted();
   }
 
+  _RetrieveProfilesStarted retrieveProfilesStarted(List<Notification> notifs) {
+    return _RetrieveProfilesStarted(
+      notifs,
+    );
+  }
+
   _NotificationsReceived notificationsReceived(
       Either<DataFailure, List<Notification>> failureOrNotifications) {
     return _NotificationsReceived(
@@ -36,6 +42,8 @@ mixin _$NotificationWatcherEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() retrieveNotificationsStarted,
+    required TResult Function(List<Notification> notifs)
+        retrieveProfilesStarted,
     required TResult Function(
             Either<DataFailure, List<Notification>> failureOrNotifications)
         notificationsReceived,
@@ -44,6 +52,7 @@ mixin _$NotificationWatcherEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? retrieveNotificationsStarted,
+    TResult Function(List<Notification> notifs)? retrieveProfilesStarted,
     TResult Function(
             Either<DataFailure, List<Notification>> failureOrNotifications)?
         notificationsReceived,
@@ -54,6 +63,8 @@ mixin _$NotificationWatcherEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(_RetrieveNotificationsStarted value)
         retrieveNotificationsStarted,
+    required TResult Function(_RetrieveProfilesStarted value)
+        retrieveProfilesStarted,
     required TResult Function(_NotificationsReceived value)
         notificationsReceived,
   }) =>
@@ -62,6 +73,7 @@ mixin _$NotificationWatcherEvent {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_RetrieveNotificationsStarted value)?
         retrieveNotificationsStarted,
+    TResult Function(_RetrieveProfilesStarted value)? retrieveProfilesStarted,
     TResult Function(_NotificationsReceived value)? notificationsReceived,
     required TResult orElse(),
   }) =>
@@ -129,6 +141,8 @@ class _$_RetrieveNotificationsStarted implements _RetrieveNotificationsStarted {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() retrieveNotificationsStarted,
+    required TResult Function(List<Notification> notifs)
+        retrieveProfilesStarted,
     required TResult Function(
             Either<DataFailure, List<Notification>> failureOrNotifications)
         notificationsReceived,
@@ -140,6 +154,7 @@ class _$_RetrieveNotificationsStarted implements _RetrieveNotificationsStarted {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? retrieveNotificationsStarted,
+    TResult Function(List<Notification> notifs)? retrieveProfilesStarted,
     TResult Function(
             Either<DataFailure, List<Notification>> failureOrNotifications)?
         notificationsReceived,
@@ -156,6 +171,8 @@ class _$_RetrieveNotificationsStarted implements _RetrieveNotificationsStarted {
   TResult map<TResult extends Object?>({
     required TResult Function(_RetrieveNotificationsStarted value)
         retrieveNotificationsStarted,
+    required TResult Function(_RetrieveProfilesStarted value)
+        retrieveProfilesStarted,
     required TResult Function(_NotificationsReceived value)
         notificationsReceived,
   }) {
@@ -167,6 +184,7 @@ class _$_RetrieveNotificationsStarted implements _RetrieveNotificationsStarted {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_RetrieveNotificationsStarted value)?
         retrieveNotificationsStarted,
+    TResult Function(_RetrieveProfilesStarted value)? retrieveProfilesStarted,
     TResult Function(_NotificationsReceived value)? notificationsReceived,
     required TResult orElse(),
   }) {
@@ -181,6 +199,138 @@ abstract class _RetrieveNotificationsStarted
     implements NotificationWatcherEvent {
   const factory _RetrieveNotificationsStarted() =
       _$_RetrieveNotificationsStarted;
+}
+
+/// @nodoc
+abstract class _$RetrieveProfilesStartedCopyWith<$Res> {
+  factory _$RetrieveProfilesStartedCopyWith(_RetrieveProfilesStarted value,
+          $Res Function(_RetrieveProfilesStarted) then) =
+      __$RetrieveProfilesStartedCopyWithImpl<$Res>;
+  $Res call({List<Notification> notifs});
+}
+
+/// @nodoc
+class __$RetrieveProfilesStartedCopyWithImpl<$Res>
+    extends _$NotificationWatcherEventCopyWithImpl<$Res>
+    implements _$RetrieveProfilesStartedCopyWith<$Res> {
+  __$RetrieveProfilesStartedCopyWithImpl(_RetrieveProfilesStarted _value,
+      $Res Function(_RetrieveProfilesStarted) _then)
+      : super(_value, (v) => _then(v as _RetrieveProfilesStarted));
+
+  @override
+  _RetrieveProfilesStarted get _value =>
+      super._value as _RetrieveProfilesStarted;
+
+  @override
+  $Res call({
+    Object? notifs = freezed,
+  }) {
+    return _then(_RetrieveProfilesStarted(
+      notifs == freezed
+          ? _value.notifs
+          : notifs // ignore: cast_nullable_to_non_nullable
+              as List<Notification>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_RetrieveProfilesStarted implements _RetrieveProfilesStarted {
+  const _$_RetrieveProfilesStarted(this.notifs);
+
+  @override
+  final List<Notification> notifs;
+
+  @override
+  String toString() {
+    return 'NotificationWatcherEvent.retrieveProfilesStarted(notifs: $notifs)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _RetrieveProfilesStarted &&
+            (identical(other.notifs, notifs) ||
+                const DeepCollectionEquality().equals(other.notifs, notifs)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(notifs);
+
+  @JsonKey(ignore: true)
+  @override
+  _$RetrieveProfilesStartedCopyWith<_RetrieveProfilesStarted> get copyWith =>
+      __$RetrieveProfilesStartedCopyWithImpl<_RetrieveProfilesStarted>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() retrieveNotificationsStarted,
+    required TResult Function(List<Notification> notifs)
+        retrieveProfilesStarted,
+    required TResult Function(
+            Either<DataFailure, List<Notification>> failureOrNotifications)
+        notificationsReceived,
+  }) {
+    return retrieveProfilesStarted(notifs);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? retrieveNotificationsStarted,
+    TResult Function(List<Notification> notifs)? retrieveProfilesStarted,
+    TResult Function(
+            Either<DataFailure, List<Notification>> failureOrNotifications)?
+        notificationsReceived,
+    required TResult orElse(),
+  }) {
+    if (retrieveProfilesStarted != null) {
+      return retrieveProfilesStarted(notifs);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_RetrieveNotificationsStarted value)
+        retrieveNotificationsStarted,
+    required TResult Function(_RetrieveProfilesStarted value)
+        retrieveProfilesStarted,
+    required TResult Function(_NotificationsReceived value)
+        notificationsReceived,
+  }) {
+    return retrieveProfilesStarted(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_RetrieveNotificationsStarted value)?
+        retrieveNotificationsStarted,
+    TResult Function(_RetrieveProfilesStarted value)? retrieveProfilesStarted,
+    TResult Function(_NotificationsReceived value)? notificationsReceived,
+    required TResult orElse(),
+  }) {
+    if (retrieveProfilesStarted != null) {
+      return retrieveProfilesStarted(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _RetrieveProfilesStarted implements NotificationWatcherEvent {
+  const factory _RetrieveProfilesStarted(List<Notification> notifs) =
+      _$_RetrieveProfilesStarted;
+
+  List<Notification> get notifs => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$RetrieveProfilesStartedCopyWith<_RetrieveProfilesStarted> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -252,6 +402,8 @@ class _$_NotificationsReceived implements _NotificationsReceived {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() retrieveNotificationsStarted,
+    required TResult Function(List<Notification> notifs)
+        retrieveProfilesStarted,
     required TResult Function(
             Either<DataFailure, List<Notification>> failureOrNotifications)
         notificationsReceived,
@@ -263,6 +415,7 @@ class _$_NotificationsReceived implements _NotificationsReceived {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? retrieveNotificationsStarted,
+    TResult Function(List<Notification> notifs)? retrieveProfilesStarted,
     TResult Function(
             Either<DataFailure, List<Notification>> failureOrNotifications)?
         notificationsReceived,
@@ -279,6 +432,8 @@ class _$_NotificationsReceived implements _NotificationsReceived {
   TResult map<TResult extends Object?>({
     required TResult Function(_RetrieveNotificationsStarted value)
         retrieveNotificationsStarted,
+    required TResult Function(_RetrieveProfilesStarted value)
+        retrieveProfilesStarted,
     required TResult Function(_NotificationsReceived value)
         notificationsReceived,
   }) {
@@ -290,6 +445,7 @@ class _$_NotificationsReceived implements _NotificationsReceived {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_RetrieveNotificationsStarted value)?
         retrieveNotificationsStarted,
+    TResult Function(_RetrieveProfilesStarted value)? retrieveProfilesStarted,
     TResult Function(_NotificationsReceived value)? notificationsReceived,
     required TResult orElse(),
   }) {
@@ -320,18 +476,20 @@ class _$NotificationWatcherStateTearOff {
     return const _Initial();
   }
 
-  _LoadInProgress loadInProgress() {
-    return const _LoadInProgress();
+  LoadInProgress loadInProgress() {
+    return const LoadInProgress();
   }
 
-  _LoadSuccess loadSuccess(List<Notification> notifications) {
-    return _LoadSuccess(
+  LoadSuccess loadSuccess(
+      List<Notification> notifications, List<Profile> profiles) {
+    return LoadSuccess(
       notifications,
+      profiles,
     );
   }
 
-  _LoadFailure loadFailure(DataFailure dataFailure) {
-    return _LoadFailure(
+  LoadFailure loadFailure(DataFailure dataFailure) {
+    return LoadFailure(
       dataFailure,
     );
   }
@@ -346,7 +504,9 @@ mixin _$NotificationWatcherState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<Notification> notifications) loadSuccess,
+    required TResult Function(
+            List<Notification> notifications, List<Profile> profiles)
+        loadSuccess,
     required TResult Function(DataFailure dataFailure) loadFailure,
   }) =>
       throw _privateConstructorUsedError;
@@ -354,7 +514,8 @@ mixin _$NotificationWatcherState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<Notification> notifications)? loadSuccess,
+    TResult Function(List<Notification> notifications, List<Profile> profiles)?
+        loadSuccess,
     TResult Function(DataFailure dataFailure)? loadFailure,
     required TResult orElse(),
   }) =>
@@ -362,17 +523,17 @@ mixin _$NotificationWatcherState {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
-    required TResult Function(_LoadInProgress value) loadInProgress,
-    required TResult Function(_LoadSuccess value) loadSuccess,
-    required TResult Function(_LoadFailure value) loadFailure,
+    required TResult Function(LoadInProgress value) loadInProgress,
+    required TResult Function(LoadSuccess value) loadSuccess,
+    required TResult Function(LoadFailure value) loadFailure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
-    TResult Function(_LoadInProgress value)? loadInProgress,
-    TResult Function(_LoadSuccess value)? loadSuccess,
-    TResult Function(_LoadFailure value)? loadFailure,
+    TResult Function(LoadInProgress value)? loadInProgress,
+    TResult Function(LoadSuccess value)? loadSuccess,
+    TResult Function(LoadFailure value)? loadFailure,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -435,7 +596,9 @@ class _$_Initial implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<Notification> notifications) loadSuccess,
+    required TResult Function(
+            List<Notification> notifications, List<Profile> profiles)
+        loadSuccess,
     required TResult Function(DataFailure dataFailure) loadFailure,
   }) {
     return initial();
@@ -446,7 +609,8 @@ class _$_Initial implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<Notification> notifications)? loadSuccess,
+    TResult Function(List<Notification> notifications, List<Profile> profiles)?
+        loadSuccess,
     TResult Function(DataFailure dataFailure)? loadFailure,
     required TResult orElse(),
   }) {
@@ -460,9 +624,9 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
-    required TResult Function(_LoadInProgress value) loadInProgress,
-    required TResult Function(_LoadSuccess value) loadSuccess,
-    required TResult Function(_LoadFailure value) loadFailure,
+    required TResult Function(LoadInProgress value) loadInProgress,
+    required TResult Function(LoadSuccess value) loadSuccess,
+    required TResult Function(LoadFailure value) loadFailure,
   }) {
     return initial(this);
   }
@@ -471,9 +635,9 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
-    TResult Function(_LoadInProgress value)? loadInProgress,
-    TResult Function(_LoadSuccess value)? loadSuccess,
-    TResult Function(_LoadFailure value)? loadFailure,
+    TResult Function(LoadInProgress value)? loadInProgress,
+    TResult Function(LoadSuccess value)? loadSuccess,
+    TResult Function(LoadFailure value)? loadFailure,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -488,28 +652,28 @@ abstract class _Initial implements NotificationWatcherState {
 }
 
 /// @nodoc
-abstract class _$LoadInProgressCopyWith<$Res> {
-  factory _$LoadInProgressCopyWith(
-          _LoadInProgress value, $Res Function(_LoadInProgress) then) =
-      __$LoadInProgressCopyWithImpl<$Res>;
+abstract class $LoadInProgressCopyWith<$Res> {
+  factory $LoadInProgressCopyWith(
+          LoadInProgress value, $Res Function(LoadInProgress) then) =
+      _$LoadInProgressCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$LoadInProgressCopyWithImpl<$Res>
+class _$LoadInProgressCopyWithImpl<$Res>
     extends _$NotificationWatcherStateCopyWithImpl<$Res>
-    implements _$LoadInProgressCopyWith<$Res> {
-  __$LoadInProgressCopyWithImpl(
-      _LoadInProgress _value, $Res Function(_LoadInProgress) _then)
-      : super(_value, (v) => _then(v as _LoadInProgress));
+    implements $LoadInProgressCopyWith<$Res> {
+  _$LoadInProgressCopyWithImpl(
+      LoadInProgress _value, $Res Function(LoadInProgress) _then)
+      : super(_value, (v) => _then(v as LoadInProgress));
 
   @override
-  _LoadInProgress get _value => super._value as _LoadInProgress;
+  LoadInProgress get _value => super._value as LoadInProgress;
 }
 
 /// @nodoc
 
-class _$_LoadInProgress implements _LoadInProgress {
-  const _$_LoadInProgress();
+class _$LoadInProgress implements LoadInProgress {
+  const _$LoadInProgress();
 
   @override
   String toString() {
@@ -518,7 +682,7 @@ class _$_LoadInProgress implements _LoadInProgress {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _LoadInProgress);
+    return identical(this, other) || (other is LoadInProgress);
   }
 
   @override
@@ -529,7 +693,9 @@ class _$_LoadInProgress implements _LoadInProgress {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<Notification> notifications) loadSuccess,
+    required TResult Function(
+            List<Notification> notifications, List<Profile> profiles)
+        loadSuccess,
     required TResult Function(DataFailure dataFailure) loadFailure,
   }) {
     return loadInProgress();
@@ -540,7 +706,8 @@ class _$_LoadInProgress implements _LoadInProgress {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<Notification> notifications)? loadSuccess,
+    TResult Function(List<Notification> notifications, List<Profile> profiles)?
+        loadSuccess,
     TResult Function(DataFailure dataFailure)? loadFailure,
     required TResult orElse(),
   }) {
@@ -554,9 +721,9 @@ class _$_LoadInProgress implements _LoadInProgress {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
-    required TResult Function(_LoadInProgress value) loadInProgress,
-    required TResult Function(_LoadSuccess value) loadSuccess,
-    required TResult Function(_LoadFailure value) loadFailure,
+    required TResult Function(LoadInProgress value) loadInProgress,
+    required TResult Function(LoadSuccess value) loadSuccess,
+    required TResult Function(LoadFailure value) loadFailure,
   }) {
     return loadInProgress(this);
   }
@@ -565,9 +732,9 @@ class _$_LoadInProgress implements _LoadInProgress {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
-    TResult Function(_LoadInProgress value)? loadInProgress,
-    TResult Function(_LoadSuccess value)? loadSuccess,
-    TResult Function(_LoadFailure value)? loadFailure,
+    TResult Function(LoadInProgress value)? loadInProgress,
+    TResult Function(LoadSuccess value)? loadSuccess,
+    TResult Function(LoadFailure value)? loadFailure,
     required TResult orElse(),
   }) {
     if (loadInProgress != null) {
@@ -577,82 +744,96 @@ class _$_LoadInProgress implements _LoadInProgress {
   }
 }
 
-abstract class _LoadInProgress implements NotificationWatcherState {
-  const factory _LoadInProgress() = _$_LoadInProgress;
+abstract class LoadInProgress implements NotificationWatcherState {
+  const factory LoadInProgress() = _$LoadInProgress;
 }
 
 /// @nodoc
-abstract class _$LoadSuccessCopyWith<$Res> {
-  factory _$LoadSuccessCopyWith(
-          _LoadSuccess value, $Res Function(_LoadSuccess) then) =
-      __$LoadSuccessCopyWithImpl<$Res>;
-  $Res call({List<Notification> notifications});
+abstract class $LoadSuccessCopyWith<$Res> {
+  factory $LoadSuccessCopyWith(
+          LoadSuccess value, $Res Function(LoadSuccess) then) =
+      _$LoadSuccessCopyWithImpl<$Res>;
+  $Res call({List<Notification> notifications, List<Profile> profiles});
 }
 
 /// @nodoc
-class __$LoadSuccessCopyWithImpl<$Res>
+class _$LoadSuccessCopyWithImpl<$Res>
     extends _$NotificationWatcherStateCopyWithImpl<$Res>
-    implements _$LoadSuccessCopyWith<$Res> {
-  __$LoadSuccessCopyWithImpl(
-      _LoadSuccess _value, $Res Function(_LoadSuccess) _then)
-      : super(_value, (v) => _then(v as _LoadSuccess));
+    implements $LoadSuccessCopyWith<$Res> {
+  _$LoadSuccessCopyWithImpl(
+      LoadSuccess _value, $Res Function(LoadSuccess) _then)
+      : super(_value, (v) => _then(v as LoadSuccess));
 
   @override
-  _LoadSuccess get _value => super._value as _LoadSuccess;
+  LoadSuccess get _value => super._value as LoadSuccess;
 
   @override
   $Res call({
     Object? notifications = freezed,
+    Object? profiles = freezed,
   }) {
-    return _then(_LoadSuccess(
+    return _then(LoadSuccess(
       notifications == freezed
           ? _value.notifications
           : notifications // ignore: cast_nullable_to_non_nullable
               as List<Notification>,
+      profiles == freezed
+          ? _value.profiles
+          : profiles // ignore: cast_nullable_to_non_nullable
+              as List<Profile>,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_LoadSuccess implements _LoadSuccess {
-  const _$_LoadSuccess(this.notifications);
+class _$LoadSuccess implements LoadSuccess {
+  const _$LoadSuccess(this.notifications, this.profiles);
 
   @override
   final List<Notification> notifications;
+  @override
+  final List<Profile> profiles;
 
   @override
   String toString() {
-    return 'NotificationWatcherState.loadSuccess(notifications: $notifications)';
+    return 'NotificationWatcherState.loadSuccess(notifications: $notifications, profiles: $profiles)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _LoadSuccess &&
+        (other is LoadSuccess &&
             (identical(other.notifications, notifications) ||
                 const DeepCollectionEquality()
-                    .equals(other.notifications, notifications)));
+                    .equals(other.notifications, notifications)) &&
+            (identical(other.profiles, profiles) ||
+                const DeepCollectionEquality()
+                    .equals(other.profiles, profiles)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(notifications);
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(notifications) ^
+      const DeepCollectionEquality().hash(profiles);
 
   @JsonKey(ignore: true)
   @override
-  _$LoadSuccessCopyWith<_LoadSuccess> get copyWith =>
-      __$LoadSuccessCopyWithImpl<_LoadSuccess>(this, _$identity);
+  $LoadSuccessCopyWith<LoadSuccess> get copyWith =>
+      _$LoadSuccessCopyWithImpl<LoadSuccess>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<Notification> notifications) loadSuccess,
+    required TResult Function(
+            List<Notification> notifications, List<Profile> profiles)
+        loadSuccess,
     required TResult Function(DataFailure dataFailure) loadFailure,
   }) {
-    return loadSuccess(notifications);
+    return loadSuccess(notifications, profiles);
   }
 
   @override
@@ -660,12 +841,13 @@ class _$_LoadSuccess implements _LoadSuccess {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<Notification> notifications)? loadSuccess,
+    TResult Function(List<Notification> notifications, List<Profile> profiles)?
+        loadSuccess,
     TResult Function(DataFailure dataFailure)? loadFailure,
     required TResult orElse(),
   }) {
     if (loadSuccess != null) {
-      return loadSuccess(notifications);
+      return loadSuccess(notifications, profiles);
     }
     return orElse();
   }
@@ -674,9 +856,9 @@ class _$_LoadSuccess implements _LoadSuccess {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
-    required TResult Function(_LoadInProgress value) loadInProgress,
-    required TResult Function(_LoadSuccess value) loadSuccess,
-    required TResult Function(_LoadFailure value) loadFailure,
+    required TResult Function(LoadInProgress value) loadInProgress,
+    required TResult Function(LoadSuccess value) loadSuccess,
+    required TResult Function(LoadFailure value) loadFailure,
   }) {
     return loadSuccess(this);
   }
@@ -685,9 +867,9 @@ class _$_LoadSuccess implements _LoadSuccess {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
-    TResult Function(_LoadInProgress value)? loadInProgress,
-    TResult Function(_LoadSuccess value)? loadSuccess,
-    TResult Function(_LoadFailure value)? loadFailure,
+    TResult Function(LoadInProgress value)? loadInProgress,
+    TResult Function(LoadSuccess value)? loadSuccess,
+    TResult Function(LoadFailure value)? loadFailure,
     required TResult orElse(),
   }) {
     if (loadSuccess != null) {
@@ -697,41 +879,43 @@ class _$_LoadSuccess implements _LoadSuccess {
   }
 }
 
-abstract class _LoadSuccess implements NotificationWatcherState {
-  const factory _LoadSuccess(List<Notification> notifications) = _$_LoadSuccess;
+abstract class LoadSuccess implements NotificationWatcherState {
+  const factory LoadSuccess(
+      List<Notification> notifications, List<Profile> profiles) = _$LoadSuccess;
 
   List<Notification> get notifications => throw _privateConstructorUsedError;
+  List<Profile> get profiles => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  _$LoadSuccessCopyWith<_LoadSuccess> get copyWith =>
+  $LoadSuccessCopyWith<LoadSuccess> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$LoadFailureCopyWith<$Res> {
-  factory _$LoadFailureCopyWith(
-          _LoadFailure value, $Res Function(_LoadFailure) then) =
-      __$LoadFailureCopyWithImpl<$Res>;
+abstract class $LoadFailureCopyWith<$Res> {
+  factory $LoadFailureCopyWith(
+          LoadFailure value, $Res Function(LoadFailure) then) =
+      _$LoadFailureCopyWithImpl<$Res>;
   $Res call({DataFailure dataFailure});
 
   $DataFailureCopyWith<$Res> get dataFailure;
 }
 
 /// @nodoc
-class __$LoadFailureCopyWithImpl<$Res>
+class _$LoadFailureCopyWithImpl<$Res>
     extends _$NotificationWatcherStateCopyWithImpl<$Res>
-    implements _$LoadFailureCopyWith<$Res> {
-  __$LoadFailureCopyWithImpl(
-      _LoadFailure _value, $Res Function(_LoadFailure) _then)
-      : super(_value, (v) => _then(v as _LoadFailure));
+    implements $LoadFailureCopyWith<$Res> {
+  _$LoadFailureCopyWithImpl(
+      LoadFailure _value, $Res Function(LoadFailure) _then)
+      : super(_value, (v) => _then(v as LoadFailure));
 
   @override
-  _LoadFailure get _value => super._value as _LoadFailure;
+  LoadFailure get _value => super._value as LoadFailure;
 
   @override
   $Res call({
     Object? dataFailure = freezed,
   }) {
-    return _then(_LoadFailure(
+    return _then(LoadFailure(
       dataFailure == freezed
           ? _value.dataFailure
           : dataFailure // ignore: cast_nullable_to_non_nullable
@@ -749,8 +933,8 @@ class __$LoadFailureCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_LoadFailure implements _LoadFailure {
-  const _$_LoadFailure(this.dataFailure);
+class _$LoadFailure implements LoadFailure {
+  const _$LoadFailure(this.dataFailure);
 
   @override
   final DataFailure dataFailure;
@@ -763,7 +947,7 @@ class _$_LoadFailure implements _LoadFailure {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _LoadFailure &&
+        (other is LoadFailure &&
             (identical(other.dataFailure, dataFailure) ||
                 const DeepCollectionEquality()
                     .equals(other.dataFailure, dataFailure)));
@@ -775,15 +959,17 @@ class _$_LoadFailure implements _LoadFailure {
 
   @JsonKey(ignore: true)
   @override
-  _$LoadFailureCopyWith<_LoadFailure> get copyWith =>
-      __$LoadFailureCopyWithImpl<_LoadFailure>(this, _$identity);
+  $LoadFailureCopyWith<LoadFailure> get copyWith =>
+      _$LoadFailureCopyWithImpl<LoadFailure>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<Notification> notifications) loadSuccess,
+    required TResult Function(
+            List<Notification> notifications, List<Profile> profiles)
+        loadSuccess,
     required TResult Function(DataFailure dataFailure) loadFailure,
   }) {
     return loadFailure(dataFailure);
@@ -794,7 +980,8 @@ class _$_LoadFailure implements _LoadFailure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<Notification> notifications)? loadSuccess,
+    TResult Function(List<Notification> notifications, List<Profile> profiles)?
+        loadSuccess,
     TResult Function(DataFailure dataFailure)? loadFailure,
     required TResult orElse(),
   }) {
@@ -808,9 +995,9 @@ class _$_LoadFailure implements _LoadFailure {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
-    required TResult Function(_LoadInProgress value) loadInProgress,
-    required TResult Function(_LoadSuccess value) loadSuccess,
-    required TResult Function(_LoadFailure value) loadFailure,
+    required TResult Function(LoadInProgress value) loadInProgress,
+    required TResult Function(LoadSuccess value) loadSuccess,
+    required TResult Function(LoadFailure value) loadFailure,
   }) {
     return loadFailure(this);
   }
@@ -819,9 +1006,9 @@ class _$_LoadFailure implements _LoadFailure {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
-    TResult Function(_LoadInProgress value)? loadInProgress,
-    TResult Function(_LoadSuccess value)? loadSuccess,
-    TResult Function(_LoadFailure value)? loadFailure,
+    TResult Function(LoadInProgress value)? loadInProgress,
+    TResult Function(LoadSuccess value)? loadSuccess,
+    TResult Function(LoadFailure value)? loadFailure,
     required TResult orElse(),
   }) {
     if (loadFailure != null) {
@@ -831,11 +1018,11 @@ class _$_LoadFailure implements _LoadFailure {
   }
 }
 
-abstract class _LoadFailure implements NotificationWatcherState {
-  const factory _LoadFailure(DataFailure dataFailure) = _$_LoadFailure;
+abstract class LoadFailure implements NotificationWatcherState {
+  const factory LoadFailure(DataFailure dataFailure) = _$LoadFailure;
 
   DataFailure get dataFailure => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  _$LoadFailureCopyWith<_LoadFailure> get copyWith =>
+  $LoadFailureCopyWith<LoadFailure> get copyWith =>
       throw _privateConstructorUsedError;
 }

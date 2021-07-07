@@ -775,8 +775,10 @@ class _$AuthStateTearOff {
     return const Unregistered();
   }
 
-  Registered registered() {
-    return const Registered();
+  Registered registered(String userId) {
+    return Registered(
+      userId,
+    );
   }
 }
 
@@ -794,7 +796,7 @@ mixin _$AuthState {
     required TResult Function() verifying,
     required TResult Function() verified,
     required TResult Function() unregistered,
-    required TResult Function() registered,
+    required TResult Function(String userId) registered,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -806,7 +808,7 @@ mixin _$AuthState {
     TResult Function()? verifying,
     TResult Function()? verified,
     TResult Function()? unregistered,
-    TResult Function()? registered,
+    TResult Function(String userId)? registered,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -896,7 +898,7 @@ class _$Initial implements Initial {
     required TResult Function() verifying,
     required TResult Function() verified,
     required TResult Function() unregistered,
-    required TResult Function() registered,
+    required TResult Function(String userId) registered,
   }) {
     return initial();
   }
@@ -911,7 +913,7 @@ class _$Initial implements Initial {
     TResult Function()? verifying,
     TResult Function()? verified,
     TResult Function()? unregistered,
-    TResult Function()? registered,
+    TResult Function(String userId)? registered,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -1005,7 +1007,7 @@ class _$Authenticated implements Authenticated {
     required TResult Function() verifying,
     required TResult Function() verified,
     required TResult Function() unregistered,
-    required TResult Function() registered,
+    required TResult Function(String userId) registered,
   }) {
     return authenticated();
   }
@@ -1020,7 +1022,7 @@ class _$Authenticated implements Authenticated {
     TResult Function()? verifying,
     TResult Function()? verified,
     TResult Function()? unregistered,
-    TResult Function()? registered,
+    TResult Function(String userId)? registered,
     required TResult orElse(),
   }) {
     if (authenticated != null) {
@@ -1114,7 +1116,7 @@ class _$Unauthenticated implements Unauthenticated {
     required TResult Function() verifying,
     required TResult Function() verified,
     required TResult Function() unregistered,
-    required TResult Function() registered,
+    required TResult Function(String userId) registered,
   }) {
     return unauthenticated();
   }
@@ -1129,7 +1131,7 @@ class _$Unauthenticated implements Unauthenticated {
     TResult Function()? verifying,
     TResult Function()? verified,
     TResult Function()? unregistered,
-    TResult Function()? registered,
+    TResult Function(String userId)? registered,
     required TResult orElse(),
   }) {
     if (unauthenticated != null) {
@@ -1222,7 +1224,7 @@ class _$Unverified implements Unverified {
     required TResult Function() verifying,
     required TResult Function() verified,
     required TResult Function() unregistered,
-    required TResult Function() registered,
+    required TResult Function(String userId) registered,
   }) {
     return unverified();
   }
@@ -1237,7 +1239,7 @@ class _$Unverified implements Unverified {
     TResult Function()? verifying,
     TResult Function()? verified,
     TResult Function()? unregistered,
-    TResult Function()? registered,
+    TResult Function(String userId)? registered,
     required TResult orElse(),
   }) {
     if (unverified != null) {
@@ -1329,7 +1331,7 @@ class _$Verifying implements Verifying {
     required TResult Function() verifying,
     required TResult Function() verified,
     required TResult Function() unregistered,
-    required TResult Function() registered,
+    required TResult Function(String userId) registered,
   }) {
     return verifying();
   }
@@ -1344,7 +1346,7 @@ class _$Verifying implements Verifying {
     TResult Function()? verifying,
     TResult Function()? verified,
     TResult Function()? unregistered,
-    TResult Function()? registered,
+    TResult Function(String userId)? registered,
     required TResult orElse(),
   }) {
     if (verifying != null) {
@@ -1436,7 +1438,7 @@ class _$Verified implements Verified {
     required TResult Function() verifying,
     required TResult Function() verified,
     required TResult Function() unregistered,
-    required TResult Function() registered,
+    required TResult Function(String userId) registered,
   }) {
     return verified();
   }
@@ -1451,7 +1453,7 @@ class _$Verified implements Verified {
     TResult Function()? verifying,
     TResult Function()? verified,
     TResult Function()? unregistered,
-    TResult Function()? registered,
+    TResult Function(String userId)? registered,
     required TResult orElse(),
   }) {
     if (verified != null) {
@@ -1545,7 +1547,7 @@ class _$Unregistered implements Unregistered {
     required TResult Function() verifying,
     required TResult Function() verified,
     required TResult Function() unregistered,
-    required TResult Function() registered,
+    required TResult Function(String userId) registered,
   }) {
     return unregistered();
   }
@@ -1560,7 +1562,7 @@ class _$Unregistered implements Unregistered {
     TResult Function()? verifying,
     TResult Function()? verified,
     TResult Function()? unregistered,
-    TResult Function()? registered,
+    TResult Function(String userId)? registered,
     required TResult orElse(),
   }) {
     if (unregistered != null) {
@@ -1613,6 +1615,7 @@ abstract class $RegisteredCopyWith<$Res> {
   factory $RegisteredCopyWith(
           Registered value, $Res Function(Registered) then) =
       _$RegisteredCopyWithImpl<$Res>;
+  $Res call({String userId});
 }
 
 /// @nodoc
@@ -1623,25 +1626,49 @@ class _$RegisteredCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
 
   @override
   Registered get _value => super._value as Registered;
+
+  @override
+  $Res call({
+    Object? userId = freezed,
+  }) {
+    return _then(Registered(
+      userId == freezed
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$Registered implements Registered {
-  const _$Registered();
+  const _$Registered(this.userId);
+
+  @override
+  final String userId;
 
   @override
   String toString() {
-    return 'AuthState.registered()';
+    return 'AuthState.registered(userId: $userId)';
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is Registered);
+    return identical(this, other) ||
+        (other is Registered &&
+            (identical(other.userId, userId) ||
+                const DeepCollectionEquality().equals(other.userId, userId)));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(userId);
+
+  @JsonKey(ignore: true)
+  @override
+  $RegisteredCopyWith<Registered> get copyWith =>
+      _$RegisteredCopyWithImpl<Registered>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1653,9 +1680,9 @@ class _$Registered implements Registered {
     required TResult Function() verifying,
     required TResult Function() verified,
     required TResult Function() unregistered,
-    required TResult Function() registered,
+    required TResult Function(String userId) registered,
   }) {
-    return registered();
+    return registered(userId);
   }
 
   @override
@@ -1668,11 +1695,11 @@ class _$Registered implements Registered {
     TResult Function()? verifying,
     TResult Function()? verified,
     TResult Function()? unregistered,
-    TResult Function()? registered,
+    TResult Function(String userId)? registered,
     required TResult orElse(),
   }) {
     if (registered != null) {
-      return registered();
+      return registered(userId);
     }
     return orElse();
   }
@@ -1713,5 +1740,10 @@ class _$Registered implements Registered {
 }
 
 abstract class Registered implements AuthState {
-  const factory Registered() = _$Registered;
+  const factory Registered(String userId) = _$Registered;
+
+  String get userId => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $RegisteredCopyWith<Registered> get copyWith =>
+      throw _privateConstructorUsedError;
 }

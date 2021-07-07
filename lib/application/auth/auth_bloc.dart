@@ -59,7 +59,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             await _profileRepository.verifyUserRegistered();
         final bool userRegistered = verifyUserRegistered.getOrElse(() => false);
         if (userRegistered) {
-          yield const AuthState.registered();
+          final userId = await _profileRepository.getUserId();
+          yield AuthState.registered(userId);
         } else {
           yield const AuthState.unregistered();
         }

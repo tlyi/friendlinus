@@ -14,7 +14,7 @@ abstract class IChatRepository {
   Future<Either<DataFailure, Chat>> createChat(
       Chat chat, String userIdsCombined, String otherId);
 
-  Future<Either<DataFailure, Unit>> deleteEmptyChats(); 
+  Future<Either<DataFailure, Unit>> deleteEmptyChats();
 
   Stream<Either<DataFailure, List<Chat>>> retrieveUserChats(String userId);
 
@@ -36,7 +36,7 @@ abstract class IChatRepository {
       {required String convoId, required String messageId});
 
   Future<Either<DataFailure, Unit>> updateLastMessageRead(
-      {required String convoId}); //to be implemented
+      {required String convoId});
 
   Future<Either<DataFailure, Unit>> deleteMessage(
       ChatMessage chatMessage); //to be implemented

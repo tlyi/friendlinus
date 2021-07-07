@@ -15,6 +15,7 @@ import 'package:friendlinus/infrastructure/data/forum/poll_dtos/poll_dtos.dart';
 import 'package:friendlinus/infrastructure/data/notifications/notification_dtos.dart';
 import 'package:injectable/injectable.dart';
 import 'package:friendlinus/infrastructure/core/firestore_helpers.dart';
+import 'package:friendlinus/domain/core/constants.dart' as constants;
 
 @LazySingleton(as: IForumRepository)
 class ForumPostRepository implements IForumRepository {
@@ -161,11 +162,11 @@ class ForumPostRepository implements IForumRepository {
               await _firestore.notificationsUserRef(forum.posterUserId);
           final notifDoc = notifRef.doc();
           final notif = Notification.empty().copyWith(
-            senderId: userId,
-            notificationType: 'forumLike',
-            postId: forum.forumId,
-            title: forum.title.getOrCrash(),
-          );
+              senderId: userId,
+              notificationType: 'forumLike',
+              postId: forum.forumId,
+              title: forum.title.getOrCrash(),
+              pollAdded: forum.pollAdded);
           final notifDto = NotificationDto.fromDomain(notif).toJson();
           transaction.set(notifDoc, notifDto);
         }
@@ -245,11 +246,12 @@ class ForumPostRepository implements IForumRepository {
             await _firestore.notificationsUserRef(forum.posterUserId);
         final notifDoc = notifRef.doc();
         final notif = Notification.empty().copyWith(
-            senderId: comment.userId,
+            senderId: comment.isAnon ? constants.anonUserId : comment.userId,
             notificationType: 'newComment',
             postId: forum.forumId,
             title: forum.title.getOrCrash(),
-            details: comment.commentText.getOrCrash());
+            details: comment.commentText.getOrCrash(),
+            pollAdded: forum.pollAdded);
         final notifDto = NotificationDto.fromDomain(notif).toJson();
         notifDoc.set(notifDto);
       }
@@ -303,11 +305,12 @@ class ForumPostRepository implements IForumRepository {
               await _firestore.notificationsUserRef(comment.userId);
           final notifDoc = notifRef.doc();
           final notif = Notification.empty().copyWith(
-            senderId: userId,
-            notificationType: 'commentLike',
-            postId: comment.commentId,
-            title: forum.title.getOrCrash(),
-          );
+              senderId: userId,
+              notificationType: 'commentLike',
+              postId: forum.forumId,
+              title: forum.title.getOrCrash(),
+              details: comment.commentText.getOrCrash(),
+              pollAdded: forum.pollAdded);
           final notifDto = NotificationDto.fromDomain(notif).toJson();
           transaction.set(notifDoc, notifDto);
         }
@@ -316,7 +319,7 @@ class ForumPostRepository implements IForumRepository {
           'likes': FieldValue.increment(1),
         });
       });
-      
+
       return right(unit);
     } on FirebaseException catch (e) {
       if (e.message!.contains('PERMISSION_DENIED')) {

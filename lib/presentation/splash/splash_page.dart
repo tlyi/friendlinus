@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:friendlinus/application/auth/auth_bloc.dart';
+import 'package:friendlinus/application/notifications/chat_counter_watcher/chat_counter_watcher_bloc.dart';
+import 'package:friendlinus/application/notifications/notif_counter_watcher/notif_counter_watcher_bloc.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 
@@ -29,7 +31,7 @@ class SplashPage extends StatelessWidget {
           verified: (_) {
             print(
                 'SPLASH: user is logged in and verified. Checking if registered');
-                context
+            context
                 .read<AuthBloc>()
                 .add(const AuthEvent.registeredCheckRequested());
           },
@@ -37,7 +39,14 @@ class SplashPage extends StatelessWidget {
             print('SPLASH: user has not registered profile.');
             context.replaceRoute(const RegisterProfileRoute());
           },
-          registered: (_) {
+          registered: (state) {
+            context.read<NotifCounterWatcherBloc>().add(
+                NotifCounterWatcherEvent.retrieveUnreadNotifsStarted(
+                    userId: state.userId));
+            context.read<ChatCounterWatcherBloc>().add(
+                ChatCounterWatcherEvent.retrieveUnreadChatsStarted(
+                    userId: state.userId));
+            ;
             print('SPLASH: user is registered. Gg home page.');
             context.replaceRoute(const HomeRoute());
           });

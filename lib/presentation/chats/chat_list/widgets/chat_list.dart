@@ -31,40 +31,44 @@ class ChatList extends StatelessWidget {
               itemBuilder: (context, index) {
                 final chat = state.chats[index];
                 final profile = state.profiles[index];
-                return Card(
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      radius: 20,
-                      backgroundImage: NetworkImage(profile.photoUrl),
-                    ),
-                    title: Text(profile.username.getOrCrash()),
-                    subtitle: Text(
-                      chat.lastMessage,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    trailing: Row(mainAxisSize: MainAxisSize.min, children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 5),
-                        child: chat.lastSenderId == profile.uuid
-                            ? chat.lastMessageRead
-                                ? Container()
-                                : const Icon(MdiIcons.checkboxBlankCircle,
-                                    size: 15, color: constants.THEME_BLUE)
-                            : chat.lastMessageRead
-                                ? const Icon(MdiIcons.checkAll,
-                                    size: 17, color: constants.THEME_BLUE)
-                                : const Icon(MdiIcons.check, size: 17),
+                if (chat.lastMessage == '') {
+                  return Container();
+                } else {
+                  return Card(
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        radius: 20,
+                        backgroundImage: NetworkImage(profile.photoUrl),
                       ),
-                      Text(getTime(chat.timestamp))
-                    ]),
-                    onTap: () {
-                      context.pushRoute(ConvoRoute(
-                          convoId: chat.userIdsCombined,
-                          senderProfile: profile));
-                    },
-                  ),
-                );
+                      title: Text(profile.username.getOrCrash()),
+                      subtitle: Text(
+                        chat.lastMessage,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      trailing: Row(mainAxisSize: MainAxisSize.min, children: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 5),
+                          child: chat.lastSenderId == profile.uuid
+                              ? chat.lastMessageRead
+                                  ? Container()
+                                  : const Icon(MdiIcons.checkboxBlankCircle,
+                                      size: 15, color: constants.THEME_BLUE)
+                              : chat.lastMessageRead
+                                  ? const Icon(MdiIcons.checkAll,
+                                      size: 17, color: constants.THEME_BLUE)
+                                  : const Icon(MdiIcons.check, size: 17),
+                        ),
+                        Text(getTime(chat.timestamp))
+                      ]),
+                      onTap: () {
+                        context.pushRoute(ConvoRoute(
+                            convoId: chat.userIdsCombined,
+                            senderProfile: profile));
+                      },
+                    ),
+                  );
+                }
               },
             );
           },

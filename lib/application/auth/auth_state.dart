@@ -9,6 +9,7 @@ class AuthState with _$AuthState {
   const factory AuthState.unverified() = Unverified;
   const factory AuthState.verifying() = Verifying;
   const factory AuthState.verified() = Verified;
-  const factory AuthState.unregistered() = Unregistered; //User is verified but has not registered profile
-  const factory AuthState.registered() = Registered;
+  const factory AuthState.unregistered() =
+      Unregistered; //User is verified but has not registered profile
+  const factory AuthState.registered(String userId) = Registered;
 }
