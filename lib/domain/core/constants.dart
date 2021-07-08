@@ -28,3 +28,5 @@ const String LOGO =
     'https://firebasestorage.googleapis.com/v0/b/friendlinus.appspot.com/o/profilePictures%2Fdefault%2Flogo.png?alt=media&token=6513b2d4-2988-407c-9a89-0370798b806a';
 
 const Color THEME_BLUE = Color(0xFF7BA5BB);
+
+const Color THEME_NOTIF_BG = Color(0xFFE44444);

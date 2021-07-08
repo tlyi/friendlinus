@@ -10,6 +10,7 @@ import 'package:friendlinus/application/forum/forum_form/forum_form_bloc.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:friendlinus/domain/core/constants.dart' as constants;
 
 class ForumForm extends StatelessWidget {
   @override
@@ -326,8 +327,7 @@ class _BuildSaveButton extends StatelessWidget {
       margin: const EdgeInsets.only(top: 20.0),
       child: ElevatedButton(
           style: ButtonStyle(
-              backgroundColor:
-                  MaterialStateProperty.all(const Color(0xFF7BA5BB))),
+              backgroundColor: MaterialStateProperty.all(constants.THEME_BLUE)),
           onPressed: () {
             if (context.read<ForumFormBloc>().state.forumPost.photoAdded) {
               context

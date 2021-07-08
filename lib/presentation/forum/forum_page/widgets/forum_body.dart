@@ -423,10 +423,8 @@ class _BuildComments extends StatelessWidget {
       builder: (context, state) {
         return state.map(
             initial: (_) => Container(),
-            loadInProgress: (_) => const Scaffold(
-                  body: Center(
-                    child: CircularProgressIndicator(),
-                  ),
+            loadInProgress: (_) => const Center(
+                  child: CircularProgressIndicator(),
                 ),
             loadSuccess: (state) {
               return ListView.builder(

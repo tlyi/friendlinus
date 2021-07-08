@@ -8,6 +8,7 @@ import 'package:friendlinus/presentation/core/nav_bar.dart';
 import 'package:friendlinus/presentation/forum/forum_overview/widgets/forum_overview_body.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:friendlinus/domain/core/constants.dart' as constants;
 
 class ForumOverviewPage extends StatelessWidget {
   const ForumOverviewPage({Key? key}) : super(key: key);
@@ -32,7 +33,7 @@ class ForumOverviewPage extends StatelessWidget {
           onPressed: () {
             context.pushRoute(const ForumFormRoute());
           },
-          backgroundColor: const Color(0xFF7BA5BB),
+          backgroundColor: constants.THEME_BLUE,
           child: const Icon(Icons.create),
         ),
         body: ClipRRect(

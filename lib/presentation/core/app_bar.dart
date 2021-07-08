@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:friendlinus/application/auth/auth_bloc.dart';
 import 'package:friendlinus/application/notifications/notif_counter_watcher/notif_counter_watcher_bloc.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
+import 'package:friendlinus/domain/core/constants.dart' as constants;
 
 /// Scaffold -> appBar:
 
@@ -97,7 +98,7 @@ AppBar appBar({
                                 alignment: Alignment.center,
                                 width: 20,
                                 height: 20,
-                                color: const Color(0xFFE44444),
+                                color: constants.THEME_NOTIF_BG,
                                 child: Text(
                                     state.unread > 100
                                         ? '+'
@@ -111,7 +112,7 @@ AppBar appBar({
                           alignment: Alignment.center,
                           width: 20,
                           height: 20,
-                          color: const Color(0xFFE44444),
+                          color: constants.THEME_NOTIF_BG,
                           child: const Padding(
                             padding: EdgeInsets.all(5.0),
                             child: CircularProgressIndicator(

@@ -7,6 +7,7 @@ import 'package:friendlinus/application/chats/convo_actor/convo_actor_bloc.dart'
 import 'package:friendlinus/domain/data/profile/profile.dart';
 import 'package:friendlinus/presentation/chats/convos/widgets/convo_messages.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class ConvoActions extends StatefulWidget {
   final String convoId;
@@ -45,12 +46,12 @@ class _ConvoActionsState extends State<ConvoActions> {
                   height: 35,
                   width: 35,
                   decoration: BoxDecoration(
-                    color: Colors.lightBlue,
+                    color: Colors.blueGrey,
                     borderRadius: BorderRadius.circular(30),
                   ),
                   child: IconButton(
                     icon: const Icon(
-                      Icons.image_outlined,
+                      MdiIcons.imagePlus,
                       color: Colors.white,
                       size: 20,
                     ),

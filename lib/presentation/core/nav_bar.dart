@@ -3,6 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:friendlinus/application/notifications/chat_counter_watcher/chat_counter_watcher_bloc.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
+import 'package:friendlinus/domain/core/constants.dart' as constants;
 
 /// Add the line 'bottomNavigationBar: const NavigationBar(),' within a Scaffold Block
 class NavigationBar extends StatelessWidget {
@@ -56,7 +57,7 @@ class NavigationBar extends StatelessWidget {
                             alignment: Alignment.center,
                             width: 20,
                             height: 20,
-                            color: const Color(0xFFE44444),
+                            color: constants.THEME_NOTIF_BG,
                             child: Text(
                                 state.unreadChatCounter >= 100
                                     ? '+'
@@ -73,7 +74,7 @@ class NavigationBar extends StatelessWidget {
                         alignment: Alignment.center,
                         width: 20,
                         height: 20,
-                        color: const Color(0xFFE44444),
+                        color: constants.THEME_NOTIF_BG,
                         child: const Padding(
                           padding: EdgeInsets.all(5.0),
                           child: CircularProgressIndicator(

@@ -41,5 +41,10 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key> NSPhotoLibraryUsageDescription</key>
+	<string>The app needs permission to browse and select images from your photo gallery to be used for profile, chats and forums.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>The app needs permission to take images to be used for profile, chats and forums.</string>
+
 </dict>
 </plist>

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:friendlinus/application/chats/convo_watcher/convo_watcher_bloc.dart';
 import 'package:friendlinus/application/chats/convo_actor/convo_actor_bloc.dart';
+import 'package:friendlinus/application/notifications/chat_counter_watcher/chat_counter_watcher_bloc.dart';
 import 'package:friendlinus/domain/data/profile/profile.dart';
 import 'package:friendlinus/injection.dart';
 import 'package:friendlinus/presentation/chats/convos/widgets/convo_actions.dart';
@@ -9,6 +10,7 @@ import 'package:friendlinus/presentation/chats/convos/widgets/convo_messages.dar
 import 'package:friendlinus/presentation/core/app_bar.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:friendlinus/domain/core/constants.dart' as constants;
 
 class ConvoPage extends StatelessWidget {
   final String convoId;
@@ -36,12 +38,57 @@ class ConvoPage extends StatelessWidget {
             appBar: AppBar(
                 centerTitle: true,
                 backgroundColor: Colors.white,
-                leading: IconButton(
-                  icon: const Icon(Icons.arrow_back, color: Colors.grey),
-                  onPressed: () {
-                    context.popRoute();
-                  },
-                ),
+                leading: Stack(children: [
+                  IconButton(
+                    icon: const Icon(Icons.arrow_back, color: Colors.grey),
+                    onPressed: () {
+                      context.popRoute();
+                    },
+                  ),
+                  Positioned(
+                    right: 0,
+                    child: BlocBuilder<ChatCounterWatcherBloc,
+                        ChatCounterWatcherState>(
+                      builder: (context, state) {
+                        if (state is LoadSuccess) {
+                          if (state.unreadChatCounter == 0) {
+                            return Container();
+                          } else {
+                            return ClipOval(
+                              child: Container(
+                                  alignment: Alignment.center,
+                                  width: 20,
+                                  height: 20,
+                                  color: constants.THEME_NOTIF_BG,
+                                  child: Text(
+                                      state.unreadChatCounter >= 100
+                                          ? '+'
+                                          : state.unreadChatCounter.toString(),
+                                      style: const TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w400))),
+                            );
+                          }
+                        } else {
+                          return ClipOval(
+                            child: Container(
+                              alignment: Alignment.center,
+                              width: 20,
+                              height: 20,
+                              color: constants.THEME_NOTIF_BG,
+                              child: const Padding(
+                                padding: EdgeInsets.all(5.0),
+                                child: CircularProgressIndicator(
+                                    color: Colors.white, strokeWidth: 1),
+                              ),
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                ]),
                 title: GestureDetector(
                   onTap: () async {
                     context

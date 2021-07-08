@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +18,7 @@ import 'package:friendlinus/presentation/core/get_time.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:friendlinus/domain/core/constants.dart' as constants;
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class ProfileElements extends StatelessWidget {
   final Profile userProfile;
@@ -580,7 +583,29 @@ class RecentPosts extends StatelessWidget {
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),
-                          trailing: Text(getTime(forum.timestamp)),
+                          trailing: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(getTime(forum.timestamp)),
+                              SizedBox(height: 5),
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  if (forum.pollAdded)
+                                    Transform.rotate(
+                                      angle: 90 * pi / 180,
+                                      child: const Icon(
+                                        Icons.poll_outlined,
+                                        color: constants.THEME_BLUE,
+                                        size: 20,
+                                      ),
+                                    ),
+                                  if (forum.isAnon)
+                                    const Icon(MdiIcons.incognito, size: 20),
+                                ],
+                              ),
+                            ],
+                          ),
                           isThreeLine: true,
                           onTap: () async {
                             await context.pushRoute(ForumRoute(

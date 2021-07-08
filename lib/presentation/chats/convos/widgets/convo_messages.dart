@@ -48,7 +48,6 @@ class ConvoMessages extends StatelessWidget {
                     .add(const ConvoActorEvent.lastMessageRead());
               }
               return Container(
-                width: MediaQuery.of(context).size.width,
                 padding: const EdgeInsets.only(
                     left: 14, right: 14, top: 5, bottom: 5),
                 child: Align(
@@ -68,7 +67,7 @@ class ConvoMessages extends StatelessWidget {
                         ? Container(
                             width: 200,
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 FadeInImage(
                                   fit: BoxFit.contain,
@@ -76,10 +75,11 @@ class ConvoMessages extends StatelessWidget {
                                   placeholder: const AssetImage(
                                       'images/loading_image.png'),
                                 ),
-                                _MessageBody(
-                                  message: message,
-                                  isOtherSender: isOtherSender,
-                                )
+                                if (message.messageBody.getOrCrash() != '')
+                                  const SizedBox(height: 5),
+                                _CaptionBody(
+                                    message: message,
+                                    isOtherSender: isOtherSender),
                               ],
                             ),
                           )
@@ -116,82 +116,75 @@ class _MessageBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      // crossAxisAlignment: CrossAxisAlignment.end,
-      // //     isOtherSender ? CrossAxisAlignment.start : CrossAxisAlignment.end,
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.end,
+    return Wrap(
+      alignment: WrapAlignment.end,
+      runSpacing: -15,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Flexible(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    message.messageBody.getOrCrash(),
-                    style: const TextStyle(fontSize: 15),
-                  ),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Text(
-                          getTime(message.timeSent),
-                          style: const TextStyle(fontSize: 10),
-                        ),
-                      ),
-                      if (!isOtherSender)
-                        Padding(
-                          padding: EdgeInsets.only(left: 5),
-                          child: message.read
-                              ? const Icon(MdiIcons.checkAll,
-                                  color: Colors.white, size: 15)
-                              : const Icon(MdiIcons.check,
-                                  color: Colors.white, size: 15),
-                        ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ],
+        Text(
+          message.messageBody.getOrCrash(),
+          style: const TextStyle(fontSize: 15),
         ),
+        Row(mainAxisSize: MainAxisSize.min, children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 10, top: 10),
+            child: Text(
+              getTime(message.timeSent),
+              style: const TextStyle(fontSize: 10),
+            ),
+          ),
+          if (!isOtherSender)
+            Padding(
+              padding: const EdgeInsets.only(left: 5, top: 10),
+              child: message.read
+                  ? const Icon(MdiIcons.checkAll, color: Colors.white, size: 15)
+                  : const Icon(MdiIcons.check, color: Colors.white, size: 15),
+            ),
+        ]),
       ],
     );
   }
 }
 
+class _CaptionBody extends StatelessWidget {
+  final ChatMessage message;
+  final bool isOtherSender;
+  const _CaptionBody(
+      {Key? key, required this.message, required this.isOtherSender})
+      : super(key: key);
 
-/*
-Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              verticalDirection: VerticalDirection.down,
-              mainAxisAlignment: MainAxisAlignment.end,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Text(
-                    getTime(message.timeSent),
-                    style: const TextStyle(fontSize: 10),
-                  ),
-                ),
-                if (!isOtherSender)
-                  Padding(
-                    padding: EdgeInsets.only(left: 5),
-                    child: message.read
-                        ? const Icon(MdiIcons.checkAll,
-                            color: Colors.white, size: 15)
-                        : const Icon(MdiIcons.check,
-                            color: Colors.white, size: 15),
-                  ),
-              ],
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      alignment: WrapAlignment.end,
+      runSpacing: -15,
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: Text(
+                message.messageBody.getOrCrash(),
+                style: const TextStyle(fontSize: 15),
+              ),
             ),
-
-            */
+          ],
+        ),
+        Row(mainAxisSize: MainAxisSize.min, children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 10, top: 10),
+            child: Text(
+              getTime(message.timeSent),
+              style: const TextStyle(fontSize: 10),
+            ),
+          ),
+          if (!isOtherSender)
+            Padding(
+              padding: const EdgeInsets.only(left: 5, top: 10),
+              child: message.read
+                  ? const Icon(MdiIcons.checkAll, color: Colors.white, size: 15)
+                  : const Icon(MdiIcons.check, color: Colors.white, size: 15),
+            ),
+        ]),
+      ],
+    );
+  }
+}

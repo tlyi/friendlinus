@@ -9,6 +9,7 @@ import 'package:friendlinus/presentation/core/get_time.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:tap_debouncer/tap_debouncer.dart';
+import 'package:friendlinus/domain/core/constants.dart' as constants;
 
 class ForumOverviewBody extends StatelessWidget {
   @override
@@ -31,7 +32,7 @@ class ForumOverviewBody extends StatelessWidget {
                     return Card(
                       shape: RoundedRectangleBorder(
                         side: const BorderSide(
-                            color: Color(0xFF7BA5BB), width: 2.0),
+                            color: constants.THEME_BLUE, width: 2.0),
                         borderRadius: BorderRadius.circular(15.0),
                       ),
                       child: ListTile(
@@ -51,8 +52,7 @@ class ForumOverviewBody extends StatelessWidget {
                                                 forum.forumId));
                                       } else {
                                         context.read<ForumActorBloc>().add(
-                                            ForumActorEvent.forumLiked(
-                                                forum));
+                                            ForumActorEvent.forumLiked(forum));
                                       }
                                     },
                                     builder: (BuildContext context,
@@ -102,7 +102,7 @@ class ForumOverviewBody extends StatelessWidget {
                                     angle: 90 * pi / 180,
                                     child: const Icon(
                                       Icons.poll_outlined,
-                                      color: Color(0xFF7BA5BB),
+                                      color: constants.THEME_BLUE,
                                       size: 20,
                                     ),
                                   ),
