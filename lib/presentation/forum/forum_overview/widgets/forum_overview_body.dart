@@ -51,8 +51,7 @@ class ForumOverviewBody extends StatelessWidget {
                                                 forum.forumId));
                                       } else {
                                         context.read<ForumActorBloc>().add(
-                                            ForumActorEvent.forumLiked(
-                                                forum));
+                                            ForumActorEvent.forumLiked(forum));
                                       }
                                     },
                                     builder: (BuildContext context,
@@ -85,11 +84,24 @@ class ForumOverviewBody extends StatelessWidget {
                           ],
                         ),
                         title: Text(forum.title.getOrCrash()),
-                        subtitle: Text(
-                          forum.body.getOrCrash(),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                        subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              if (forum.body.getOrCrash() != '')
+                                Text(
+                                  forum.body.getOrCrash(),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              Chip(
+                                label: Text(
+                                  forum.tag,
+                                  style: TextStyle(fontSize: 10),
+                                ),
+                                labelPadding: EdgeInsets.only(
+                                    top: 0, bottom: 0, left: 4, right: 4),
+                              )
+                            ]),
                         trailing: Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: <Widget>[

@@ -11,6 +11,8 @@ class NavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: const BoxDecoration(
+          border: Border(top: BorderSide(color: Colors.black54, width: 0.4))),
       height: 70,
       padding: const EdgeInsets.only(
         top: 10,

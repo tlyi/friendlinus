@@ -29,10 +29,8 @@ class ForumBody extends StatelessWidget {
         builder: (context, state) {
       return state.map(
         initial: (_) => Container(),
-        loadInProgress: (_) => const Scaffold(
-          body: Center(
-            child: CircularProgressIndicator(),
-          ),
+        loadInProgress: (_) => const Center(
+          child: CircularProgressIndicator(),
         ),
         loadSuccess: (state) {
           ForumPost forum = state.forum;
@@ -207,10 +205,16 @@ class _BuildPost extends StatelessWidget {
                       ],
                     ),
                   ]),
-                  const SizedBox(height: 30),
+                  if (forum.photoAdded || forum.pollAdded)
+                    const SizedBox(height: 30),
                   if (forum.photoAdded) _BuildPhoto(photoUrl: forum.photoUrl),
                   if (forum.pollAdded) _BuildPoll(forumId: forum.forumId),
-                  _BuildDeleteButton(forum: forum),
+                  Row(
+                    children: [
+                      _BuildTag(forumTag: forum.tag),
+                      _BuildDeleteButton(forum: forum),
+                    ],
+                  ),
                 ],
               ),
             ));
@@ -314,7 +318,7 @@ class _BuildCommentButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      alignment: Alignment.centerLeft,
+      alignment: Alignment.topLeft,
       margin: const EdgeInsets.all(10.0),
       child: ElevatedButton(
         style: ButtonStyle(
@@ -322,6 +326,21 @@ class _BuildCommentButton extends StatelessWidget {
                 MaterialStateProperty.all(const Color(0xFF7BA5BB))),
         onPressed: () => context.pushRoute(CommentRoute(forum: forum)),
         child: const Text('Add Comment'),
+      ),
+    );
+  }
+}
+
+class _BuildTag extends StatelessWidget {
+  final String forumTag;
+  const _BuildTag({Key? key, required this.forumTag}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Container(
+        alignment: Alignment.topLeft,
+        child: Chip(label: Text(forumTag)),
       ),
     );
   }
@@ -335,38 +354,32 @@ class _BuildDeleteButton extends StatelessWidget {
   Widget build(BuildContext context) {
     if (context.read<ForumActorBloc>().state.userId == forum.posterUserId) {
       return Container(
-        alignment: Alignment.centerLeft,
-        margin: const EdgeInsets.all(10.0),
-
-        ///child: IconButton(icon: Icon(Icons.delete), ),
-        child: ElevatedButton(
-          style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Colors.red[300])),
-          onPressed: () => showDialog(
-              context: context,
-              builder: (BuildContext innerContext) => AlertDialog(
-                    title: const Text('Delete Forum?'),
-                    content:
-                        const Text('Press OK to delete the forum permanently.'),
-                    actions: <Widget>[
-                      TextButton(
-                          onPressed: () => Navigator.pop(innerContext),
-                          child: const Text('Cancel')),
-                      TextButton(
-                          onPressed: () {
-                            context.read<ForumActorBloc>().add(
-                                ForumActorEvent.forumDeleted(
-                                    forum.forumId, forum.photoAdded));
-                            Navigator.pop(innerContext);
-                            context.popRoute();
-                          },
-                          child: const Text('OK'))
-                    ],
-                  )),
-          child:
-              const Text('Delete Forum', style: TextStyle(color: Colors.white)),
-        ),
-        //Change to icon button Icons.delete
+        alignment: Alignment.topRight,
+        child: IconButton(
+            color: Colors.red[300],
+            onPressed: () => showDialog(
+                context: context,
+                builder: (BuildContext innerContext) => AlertDialog(
+                      title: const Text('Delete Forum?'),
+                      content: const Text(
+                          'Press OK to delete the forum permanently.'),
+                      actions: <Widget>[
+                        TextButton(
+                            onPressed: () => Navigator.pop(innerContext),
+                            child: const Text('Cancel')),
+                        TextButton(
+                            onPressed: () {
+                              context.read<ForumActorBloc>().add(
+                                  ForumActorEvent.forumDeleted(
+                                      forum.forumId, forum.photoAdded));
+                              Navigator.pop(innerContext);
+                              context.popRoute();
+                            },
+                            child: const Text('OK'))
+                      ],
+                    )),
+            icon: const Icon(Icons.delete),
+            tooltip: 'Delete Forum'),
       );
     } else {
       return Container();
