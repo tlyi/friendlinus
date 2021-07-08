@@ -66,7 +66,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         }
       },
       nusModsUpdateRequested: (e) async* {
-        _modRepository.uploadMods();
+        _modRepository.addLastPosted();
       },
     );
   }
