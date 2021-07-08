@@ -10,11 +10,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class ConvoActions extends StatefulWidget {
-  final String convoId;
-  final Profile senderProfile;
-  const ConvoActions(
-      {Key? key, required this.convoId, required this.senderProfile})
-      : super(key: key);
+  final Profile otherProfile;
+  const ConvoActions({Key? key, required this.otherProfile}) : super(key: key);
 
   @override
   _ConvoActionsState createState() => _ConvoActionsState();
@@ -57,16 +54,59 @@ class _ConvoActionsState extends State<ConvoActions> {
                     ),
                     onPressed: () async {
                       final picker = ImagePicker();
+                      PickedFile? pickedFile;
+                      await showDialog(
+                          context: context,
+                          builder: (BuildContext innerContext) {
+                            return AlertDialog(
+                              content: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Align(
+                                    alignment: Alignment.topRight,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.pop(innerContext);
+                                      },
+                                      child: const Icon(
+                                        Icons.close,
+                                        color: Colors.grey,
+                                        size: 30,
+                                      ),
+                                    ),
+                                  ),
+                                  TextButton(
+                                    onPressed: () async {
+                                      pickedFile = await picker.getImage(
+                                        source: ImageSource.gallery,
+                                        imageQuality: 70,
+                                      );
+                                      Navigator.pop(innerContext);
+                                    },
+                                    child: Text('from gallery'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () async {
+                                      pickedFile = await picker.getImage(
+                                        source: ImageSource.camera,
+                                        imageQuality: 70,
+                                      );
+                                      Navigator.pop(innerContext);
+                                    },
+                                    child: Text('from camera'),
+                                  ),
+                                ],
+                              ),
+                            );
+                          });
+
                       File? pickedImage;
-                      final pickedFile = await picker.getImage(
-                        source: ImageSource.gallery,
-                        imageQuality: 70,
-                      );
+
                       if (pickedFile == null) {
                         FlushbarHelper.createError(message: 'No image picked')
                             .show(context);
                       } else {
-                        pickedImage = File(pickedFile.path);
+                        pickedImage = File(pickedFile!.path);
                         showDialog(
                             context: context,
                             builder: (BuildContext innerContext) {

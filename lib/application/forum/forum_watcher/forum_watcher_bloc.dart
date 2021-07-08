@@ -6,6 +6,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:friendlinus/domain/data/data_failure.dart';
 import 'package:friendlinus/domain/data/forum/forum_post/forum_post.dart';
 import 'package:friendlinus/domain/data/forum/i_forum_repository.dart';
+import 'package:friendlinus/domain/mods/mod.dart';
 import 'package:injectable/injectable.dart';
 
 part 'forum_watcher_event.dart';
@@ -28,7 +29,9 @@ class ForumWatcherBloc extends Bloc<ForumWatcherEvent, ForumWatcherState> {
     yield* event.map(
       retrieveForumsStarted: (e) async* {
         yield const ForumWatcherState.loadInProgress();
+
         await _forumStreamSubscription?.cancel();
+
         _forumStreamSubscription = _forumRepository.retrieveForums().listen(
             (failureOrForums) =>
                 add(ForumWatcherEvent.forumsReceived(failureOrForums)));

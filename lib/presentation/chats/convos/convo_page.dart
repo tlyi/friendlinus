@@ -13,11 +13,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:friendlinus/domain/core/constants.dart' as constants;
 
 class ConvoPage extends StatelessWidget {
-  final String convoId;
-  final Profile senderProfile;
-  const ConvoPage(
-      {Key? key, required this.convoId, required this.senderProfile})
-      : super(key: key);
+  final Profile otherProfile;
+  const ConvoPage({Key? key, required this.otherProfile}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,11 +22,11 @@ class ConvoPage extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => getIt<ConvoWatcherBloc>()
-            ..add(ConvoWatcherEvent.retrieveConvoStarted(convoId)),
+            ..add(ConvoWatcherEvent.retrieveConvoStarted(otherProfile.uuid)),
         ),
         BlocProvider(
           create: (context) => getIt<ConvoActorBloc>()
-            ..add(ConvoActorEvent.convoOpened(convoId)),
+            ..add(ConvoActorEvent.convoOpened(otherProfile.uuid)),
         ),
       ],
       child: BlocBuilder<ConvoWatcherBloc, ConvoWatcherState>(
@@ -95,13 +92,13 @@ class ConvoPage extends StatelessWidget {
                         .read<ConvoWatcherBloc>()
                         .add(const ConvoWatcherEvent.retrieveConvoEnded());
                     await context.pushRoute(
-                        OtherProfileRoute(userProfile: senderProfile));
-                    context
-                        .read<ConvoWatcherBloc>()
-                        .add(ConvoWatcherEvent.retrieveConvoStarted(convoId));
+                        OtherProfileRoute(userProfile: otherProfile));
+                    context.read<ConvoWatcherBloc>().add(
+                        ConvoWatcherEvent.retrieveConvoStarted(
+                            otherProfile.uuid));
                   },
                   child: Text(
-                    senderProfile.username.getOrCrash(),
+                    otherProfile.username.getOrCrash(),
                     style: const TextStyle(
                       color: Colors.black,
                       fontSize: 20.0,
@@ -115,14 +112,14 @@ class ConvoPage extends StatelessWidget {
                           .read<ConvoWatcherBloc>()
                           .add(const ConvoWatcherEvent.retrieveConvoEnded());
                       await context.pushRoute(
-                          OtherProfileRoute(userProfile: senderProfile));
-                      context
-                          .read<ConvoWatcherBloc>()
-                          .add(ConvoWatcherEvent.retrieveConvoStarted(convoId));
+                          OtherProfileRoute(userProfile: otherProfile));
+                      context.read<ConvoWatcherBloc>().add(
+                          ConvoWatcherEvent.retrieveConvoStarted(
+                              otherProfile.uuid));
                     },
                     child: CircleAvatar(
                       backgroundImage: NetworkImage(
-                        senderProfile.photoUrl,
+                        otherProfile.photoUrl,
                       ),
                       backgroundColor: Colors.white,
                       radius: 23.0,
@@ -134,12 +131,11 @@ class ConvoPage extends StatelessWidget {
               Expanded(
                 child: ClipRRect(
                   child: ConvoMessages(
-                    convoId: convoId,
-                    senderProfile: senderProfile,
+                    otherProfile: otherProfile,
                   ),
                 ),
               ),
-              ConvoActions(convoId: convoId, senderProfile: senderProfile),
+              ConvoActions(otherProfile: otherProfile),
             ]),
           );
         },

@@ -16,10 +16,14 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$ModTearOff {
   const _$ModTearOff();
 
-  _Mod call({required String moduleCode, required String moduleTitle}) {
+  _Mod call(
+      {required String moduleCode,
+      required String moduleTitle,
+      required String lastPosted}) {
     return _Mod(
       moduleCode: moduleCode,
       moduleTitle: moduleTitle,
+      lastPosted: lastPosted,
     );
   }
 }
@@ -31,6 +35,7 @@ const $Mod = _$ModTearOff();
 mixin _$Mod {
   String get moduleCode => throw _privateConstructorUsedError;
   String get moduleTitle => throw _privateConstructorUsedError;
+  String get lastPosted => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ModCopyWith<Mod> get copyWith => throw _privateConstructorUsedError;
@@ -40,7 +45,7 @@ mixin _$Mod {
 abstract class $ModCopyWith<$Res> {
   factory $ModCopyWith(Mod value, $Res Function(Mod) then) =
       _$ModCopyWithImpl<$Res>;
-  $Res call({String moduleCode, String moduleTitle});
+  $Res call({String moduleCode, String moduleTitle, String lastPosted});
 }
 
 /// @nodoc
@@ -55,6 +60,7 @@ class _$ModCopyWithImpl<$Res> implements $ModCopyWith<$Res> {
   $Res call({
     Object? moduleCode = freezed,
     Object? moduleTitle = freezed,
+    Object? lastPosted = freezed,
   }) {
     return _then(_value.copyWith(
       moduleCode: moduleCode == freezed
@@ -65,6 +71,10 @@ class _$ModCopyWithImpl<$Res> implements $ModCopyWith<$Res> {
           ? _value.moduleTitle
           : moduleTitle // ignore: cast_nullable_to_non_nullable
               as String,
+      lastPosted: lastPosted == freezed
+          ? _value.lastPosted
+          : lastPosted // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -74,7 +84,7 @@ abstract class _$ModCopyWith<$Res> implements $ModCopyWith<$Res> {
   factory _$ModCopyWith(_Mod value, $Res Function(_Mod) then) =
       __$ModCopyWithImpl<$Res>;
   @override
-  $Res call({String moduleCode, String moduleTitle});
+  $Res call({String moduleCode, String moduleTitle, String lastPosted});
 }
 
 /// @nodoc
@@ -90,6 +100,7 @@ class __$ModCopyWithImpl<$Res> extends _$ModCopyWithImpl<$Res>
   $Res call({
     Object? moduleCode = freezed,
     Object? moduleTitle = freezed,
+    Object? lastPosted = freezed,
   }) {
     return _then(_Mod(
       moduleCode: moduleCode == freezed
@@ -100,6 +111,10 @@ class __$ModCopyWithImpl<$Res> extends _$ModCopyWithImpl<$Res>
           ? _value.moduleTitle
           : moduleTitle // ignore: cast_nullable_to_non_nullable
               as String,
+      lastPosted: lastPosted == freezed
+          ? _value.lastPosted
+          : lastPosted // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -107,17 +122,22 @@ class __$ModCopyWithImpl<$Res> extends _$ModCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Mod extends _Mod {
-  const _$_Mod({required this.moduleCode, required this.moduleTitle})
+  const _$_Mod(
+      {required this.moduleCode,
+      required this.moduleTitle,
+      required this.lastPosted})
       : super._();
 
   @override
   final String moduleCode;
   @override
   final String moduleTitle;
+  @override
+  final String lastPosted;
 
   @override
   String toString() {
-    return 'Mod(moduleCode: $moduleCode, moduleTitle: $moduleTitle)';
+    return 'Mod(moduleCode: $moduleCode, moduleTitle: $moduleTitle, lastPosted: $lastPosted)';
   }
 
   @override
@@ -129,14 +149,18 @@ class _$_Mod extends _Mod {
                     .equals(other.moduleCode, moduleCode)) &&
             (identical(other.moduleTitle, moduleTitle) ||
                 const DeepCollectionEquality()
-                    .equals(other.moduleTitle, moduleTitle)));
+                    .equals(other.moduleTitle, moduleTitle)) &&
+            (identical(other.lastPosted, lastPosted) ||
+                const DeepCollectionEquality()
+                    .equals(other.lastPosted, lastPosted)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(moduleCode) ^
-      const DeepCollectionEquality().hash(moduleTitle);
+      const DeepCollectionEquality().hash(moduleTitle) ^
+      const DeepCollectionEquality().hash(lastPosted);
 
   @JsonKey(ignore: true)
   @override
@@ -146,13 +170,17 @@ class _$_Mod extends _Mod {
 
 abstract class _Mod extends Mod {
   const factory _Mod(
-      {required String moduleCode, required String moduleTitle}) = _$_Mod;
+      {required String moduleCode,
+      required String moduleTitle,
+      required String lastPosted}) = _$_Mod;
   const _Mod._() : super._();
 
   @override
   String get moduleCode => throw _privateConstructorUsedError;
   @override
   String get moduleTitle => throw _privateConstructorUsedError;
+  @override
+  String get lastPosted => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$ModCopyWith<_Mod> get copyWith => throw _privateConstructorUsedError;

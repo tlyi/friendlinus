@@ -138,23 +138,27 @@ class ChatRepository implements IChatRepository {
 
   @override
   Future<Either<DataFailure, Unit>> createMessage(
-      {required String convoId,
+      {required String receiverId,
+      required String convoId,
       required String messageId,
       required ChatMessage chatMessage}) async {
     try {
-      final convoMessagesRef = await _firestore.convoMessagesRef(convoId);
       final chatMessageDto = ChatMessageDto.fromDomain(chatMessage);
+      final convoMessagesRef = await _firestore.convoMessagesRef(convoId);
+
       await convoMessagesRef.doc(messageId).set(chatMessageDto.toJson());
       await _firestore.runTransaction((transaction) async {
         final chatDoc = await _firestore.chatDocumentById(convoId);
-        transaction.update(
+        transaction.set(
           chatDoc,
           {
             'lastMessage': chatMessageDto.photoUrl == ''
                 ? chatMessageDto.messageBody
-                : 'Photo',
+                : '(Photo) ${chatMessageDto.messageBody}',
             'lastSenderId': chatMessageDto.senderId,
             'lastMessageRead': false,
+            'userIdsCombined': convoId,
+            'userIds': [chatMessageDto.senderId, receiverId],
             'timestamp': chatMessageDto.timeSent,
           },
         );

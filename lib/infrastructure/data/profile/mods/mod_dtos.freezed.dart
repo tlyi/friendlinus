@@ -23,11 +23,13 @@ class _$ModDtoTearOff {
   _ModDto call(
       {required String moduleCode,
       required String title,
-      required List<int> semesters}) {
+      required List<int> semesters,
+      required String lastPosted}) {
     return _ModDto(
       moduleCode: moduleCode,
       title: title,
       semesters: semesters,
+      lastPosted: lastPosted,
     );
   }
 
@@ -44,6 +46,7 @@ mixin _$ModDto {
   String get moduleCode => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   List<int> get semesters => throw _privateConstructorUsedError;
+  String get lastPosted => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -54,7 +57,11 @@ mixin _$ModDto {
 abstract class $ModDtoCopyWith<$Res> {
   factory $ModDtoCopyWith(ModDto value, $Res Function(ModDto) then) =
       _$ModDtoCopyWithImpl<$Res>;
-  $Res call({String moduleCode, String title, List<int> semesters});
+  $Res call(
+      {String moduleCode,
+      String title,
+      List<int> semesters,
+      String lastPosted});
 }
 
 /// @nodoc
@@ -70,6 +77,7 @@ class _$ModDtoCopyWithImpl<$Res> implements $ModDtoCopyWith<$Res> {
     Object? moduleCode = freezed,
     Object? title = freezed,
     Object? semesters = freezed,
+    Object? lastPosted = freezed,
   }) {
     return _then(_value.copyWith(
       moduleCode: moduleCode == freezed
@@ -84,6 +92,10 @@ class _$ModDtoCopyWithImpl<$Res> implements $ModDtoCopyWith<$Res> {
           ? _value.semesters
           : semesters // ignore: cast_nullable_to_non_nullable
               as List<int>,
+      lastPosted: lastPosted == freezed
+          ? _value.lastPosted
+          : lastPosted // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -93,7 +105,11 @@ abstract class _$ModDtoCopyWith<$Res> implements $ModDtoCopyWith<$Res> {
   factory _$ModDtoCopyWith(_ModDto value, $Res Function(_ModDto) then) =
       __$ModDtoCopyWithImpl<$Res>;
   @override
-  $Res call({String moduleCode, String title, List<int> semesters});
+  $Res call(
+      {String moduleCode,
+      String title,
+      List<int> semesters,
+      String lastPosted});
 }
 
 /// @nodoc
@@ -110,6 +126,7 @@ class __$ModDtoCopyWithImpl<$Res> extends _$ModDtoCopyWithImpl<$Res>
     Object? moduleCode = freezed,
     Object? title = freezed,
     Object? semesters = freezed,
+    Object? lastPosted = freezed,
   }) {
     return _then(_ModDto(
       moduleCode: moduleCode == freezed
@@ -124,6 +141,10 @@ class __$ModDtoCopyWithImpl<$Res> extends _$ModDtoCopyWithImpl<$Res>
           ? _value.semesters
           : semesters // ignore: cast_nullable_to_non_nullable
               as List<int>,
+      lastPosted: lastPosted == freezed
+          ? _value.lastPosted
+          : lastPosted // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -132,7 +153,10 @@ class __$ModDtoCopyWithImpl<$Res> extends _$ModDtoCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_ModDto extends _ModDto {
   const _$_ModDto(
-      {required this.moduleCode, required this.title, required this.semesters})
+      {required this.moduleCode,
+      required this.title,
+      required this.semesters,
+      required this.lastPosted})
       : super._();
 
   factory _$_ModDto.fromJson(Map<String, dynamic> json) =>
@@ -144,10 +168,12 @@ class _$_ModDto extends _ModDto {
   final String title;
   @override
   final List<int> semesters;
+  @override
+  final String lastPosted;
 
   @override
   String toString() {
-    return 'ModDto(moduleCode: $moduleCode, title: $title, semesters: $semesters)';
+    return 'ModDto(moduleCode: $moduleCode, title: $title, semesters: $semesters, lastPosted: $lastPosted)';
   }
 
   @override
@@ -161,7 +187,10 @@ class _$_ModDto extends _ModDto {
                 const DeepCollectionEquality().equals(other.title, title)) &&
             (identical(other.semesters, semesters) ||
                 const DeepCollectionEquality()
-                    .equals(other.semesters, semesters)));
+                    .equals(other.semesters, semesters)) &&
+            (identical(other.lastPosted, lastPosted) ||
+                const DeepCollectionEquality()
+                    .equals(other.lastPosted, lastPosted)));
   }
 
   @override
@@ -169,7 +198,8 @@ class _$_ModDto extends _ModDto {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(moduleCode) ^
       const DeepCollectionEquality().hash(title) ^
-      const DeepCollectionEquality().hash(semesters);
+      const DeepCollectionEquality().hash(semesters) ^
+      const DeepCollectionEquality().hash(lastPosted);
 
   @JsonKey(ignore: true)
   @override
@@ -186,7 +216,8 @@ abstract class _ModDto extends ModDto {
   const factory _ModDto(
       {required String moduleCode,
       required String title,
-      required List<int> semesters}) = _$_ModDto;
+      required List<int> semesters,
+      required String lastPosted}) = _$_ModDto;
   const _ModDto._() : super._();
 
   factory _ModDto.fromJson(Map<String, dynamic> json) = _$_ModDto.fromJson;
@@ -197,6 +228,8 @@ abstract class _ModDto extends ModDto {
   String get title => throw _privateConstructorUsedError;
   @override
   List<int> get semesters => throw _privateConstructorUsedError;
+  @override
+  String get lastPosted => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$ModDtoCopyWith<_ModDto> get copyWith => throw _privateConstructorUsedError;

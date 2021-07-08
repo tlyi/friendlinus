@@ -16,9 +16,9 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$ConvoWatcherEventTearOff {
   const _$ConvoWatcherEventTearOff();
 
-  _RetrieveConvoStarted retrieveConvoStarted(String convoId) {
+  _RetrieveConvoStarted retrieveConvoStarted(String otherId) {
     return _RetrieveConvoStarted(
-      convoId,
+      otherId,
     );
   }
 
@@ -41,7 +41,7 @@ const $ConvoWatcherEvent = _$ConvoWatcherEventTearOff();
 mixin _$ConvoWatcherEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String convoId) retrieveConvoStarted,
+    required TResult Function(String otherId) retrieveConvoStarted,
     required TResult Function() retrieveConvoEnded,
     required TResult Function(
             Either<DataFailure, List<ChatMessage>> failureOrMessages)
@@ -50,7 +50,7 @@ mixin _$ConvoWatcherEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String convoId)? retrieveConvoStarted,
+    TResult Function(String otherId)? retrieveConvoStarted,
     TResult Function()? retrieveConvoEnded,
     TResult Function(Either<DataFailure, List<ChatMessage>> failureOrMessages)?
         convoReceived,
@@ -96,7 +96,7 @@ abstract class _$RetrieveConvoStartedCopyWith<$Res> {
   factory _$RetrieveConvoStartedCopyWith(_RetrieveConvoStarted value,
           $Res Function(_RetrieveConvoStarted) then) =
       __$RetrieveConvoStartedCopyWithImpl<$Res>;
-  $Res call({String convoId});
+  $Res call({String otherId});
 }
 
 /// @nodoc
@@ -112,12 +112,12 @@ class __$RetrieveConvoStartedCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? convoId = freezed,
+    Object? otherId = freezed,
   }) {
     return _then(_RetrieveConvoStarted(
-      convoId == freezed
-          ? _value.convoId
-          : convoId // ignore: cast_nullable_to_non_nullable
+      otherId == freezed
+          ? _value.otherId
+          : otherId // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -126,27 +126,27 @@ class __$RetrieveConvoStartedCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_RetrieveConvoStarted implements _RetrieveConvoStarted {
-  const _$_RetrieveConvoStarted(this.convoId);
+  const _$_RetrieveConvoStarted(this.otherId);
 
   @override
-  final String convoId;
+  final String otherId;
 
   @override
   String toString() {
-    return 'ConvoWatcherEvent.retrieveConvoStarted(convoId: $convoId)';
+    return 'ConvoWatcherEvent.retrieveConvoStarted(otherId: $otherId)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _RetrieveConvoStarted &&
-            (identical(other.convoId, convoId) ||
-                const DeepCollectionEquality().equals(other.convoId, convoId)));
+            (identical(other.otherId, otherId) ||
+                const DeepCollectionEquality().equals(other.otherId, otherId)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(convoId);
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(otherId);
 
   @JsonKey(ignore: true)
   @override
@@ -157,26 +157,26 @@ class _$_RetrieveConvoStarted implements _RetrieveConvoStarted {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String convoId) retrieveConvoStarted,
+    required TResult Function(String otherId) retrieveConvoStarted,
     required TResult Function() retrieveConvoEnded,
     required TResult Function(
             Either<DataFailure, List<ChatMessage>> failureOrMessages)
         convoReceived,
   }) {
-    return retrieveConvoStarted(convoId);
+    return retrieveConvoStarted(otherId);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String convoId)? retrieveConvoStarted,
+    TResult Function(String otherId)? retrieveConvoStarted,
     TResult Function()? retrieveConvoEnded,
     TResult Function(Either<DataFailure, List<ChatMessage>> failureOrMessages)?
         convoReceived,
     required TResult orElse(),
   }) {
     if (retrieveConvoStarted != null) {
-      return retrieveConvoStarted(convoId);
+      return retrieveConvoStarted(otherId);
     }
     return orElse();
   }
@@ -207,9 +207,9 @@ class _$_RetrieveConvoStarted implements _RetrieveConvoStarted {
 }
 
 abstract class _RetrieveConvoStarted implements ConvoWatcherEvent {
-  const factory _RetrieveConvoStarted(String convoId) = _$_RetrieveConvoStarted;
+  const factory _RetrieveConvoStarted(String otherId) = _$_RetrieveConvoStarted;
 
-  String get convoId => throw _privateConstructorUsedError;
+  String get otherId => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$RetrieveConvoStartedCopyWith<_RetrieveConvoStarted> get copyWith =>
       throw _privateConstructorUsedError;
@@ -255,7 +255,7 @@ class _$_RetrieveConvoEnded implements _RetrieveConvoEnded {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String convoId) retrieveConvoStarted,
+    required TResult Function(String otherId) retrieveConvoStarted,
     required TResult Function() retrieveConvoEnded,
     required TResult Function(
             Either<DataFailure, List<ChatMessage>> failureOrMessages)
@@ -267,7 +267,7 @@ class _$_RetrieveConvoEnded implements _RetrieveConvoEnded {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String convoId)? retrieveConvoStarted,
+    TResult Function(String otherId)? retrieveConvoStarted,
     TResult Function()? retrieveConvoEnded,
     TResult Function(Either<DataFailure, List<ChatMessage>> failureOrMessages)?
         convoReceived,
@@ -375,7 +375,7 @@ class _$_ConvoReceived implements _ConvoReceived {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String convoId) retrieveConvoStarted,
+    required TResult Function(String otherId) retrieveConvoStarted,
     required TResult Function() retrieveConvoEnded,
     required TResult Function(
             Either<DataFailure, List<ChatMessage>> failureOrMessages)
@@ -387,7 +387,7 @@ class _$_ConvoReceived implements _ConvoReceived {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String convoId)? retrieveConvoStarted,
+    TResult Function(String otherId)? retrieveConvoStarted,
     TResult Function()? retrieveConvoEnded,
     TResult Function(Either<DataFailure, List<ChatMessage>> failureOrMessages)?
         convoReceived,

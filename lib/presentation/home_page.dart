@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:friendlinus/application/forum/module_watcher/module_watcher_bloc.dart';
 import 'package:friendlinus/presentation/core/app_bar.dart';
 import 'package:friendlinus/presentation/core/nav_bar.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
@@ -46,7 +48,6 @@ class HomePage extends StatelessWidget {
                     image: const AssetImage('images/logo.png'),
                     height: MediaQuery.of(context).size.height * 0.3,
                   ),
-                  _BuildSearchUsersButton(),
                 ],
               ),
             ],
@@ -54,24 +55,6 @@ class HomePage extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: const NavigationBar(),
-    );
-  }
-}
-
-class _BuildSearchUsersButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: 20.0),
-      width: MediaQuery.of(context).size.width * 0.62,
-      child: ElevatedButton(
-        style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(constants.THEME_BLUE)),
-        onPressed: () {
-          context.pushRoute(const SearchUsersRoute());
-        },
-        child: const Text("Search Users"),
-      ),
     );
   }
 }

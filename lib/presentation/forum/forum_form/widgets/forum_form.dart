@@ -376,7 +376,7 @@ class _BuildAddImageButton extends StatelessWidget {
           height: 40,
           decoration: const BoxDecoration(
             shape: BoxShape.circle,
-            color: Color(0xFF7BA5BB),
+            color: constants.THEME_BLUE,
           ),
           child: IconButton(
             icon: const Icon(

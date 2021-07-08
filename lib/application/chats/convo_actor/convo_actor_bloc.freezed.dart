@@ -16,9 +16,9 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$ConvoActorEventTearOff {
   const _$ConvoActorEventTearOff();
 
-  _ConvoOpened convoOpened(String convoId) {
+  _ConvoOpened convoOpened(String otherId) {
     return _ConvoOpened(
-      convoId,
+      otherId,
     );
   }
 
@@ -56,7 +56,7 @@ const $ConvoActorEvent = _$ConvoActorEventTearOff();
 mixin _$ConvoActorEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String convoId) convoOpened,
+    required TResult Function(String otherId) convoOpened,
     required TResult Function(String message) messageChanged,
     required TResult Function(File photo) photoSent,
     required TResult Function() messageSent,
@@ -66,7 +66,7 @@ mixin _$ConvoActorEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String convoId)? convoOpened,
+    TResult Function(String otherId)? convoOpened,
     TResult Function(String message)? messageChanged,
     TResult Function(File photo)? photoSent,
     TResult Function()? messageSent,
@@ -120,7 +120,7 @@ abstract class _$ConvoOpenedCopyWith<$Res> {
   factory _$ConvoOpenedCopyWith(
           _ConvoOpened value, $Res Function(_ConvoOpened) then) =
       __$ConvoOpenedCopyWithImpl<$Res>;
-  $Res call({String convoId});
+  $Res call({String otherId});
 }
 
 /// @nodoc
@@ -136,12 +136,12 @@ class __$ConvoOpenedCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? convoId = freezed,
+    Object? otherId = freezed,
   }) {
     return _then(_ConvoOpened(
-      convoId == freezed
-          ? _value.convoId
-          : convoId // ignore: cast_nullable_to_non_nullable
+      otherId == freezed
+          ? _value.otherId
+          : otherId // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -150,27 +150,27 @@ class __$ConvoOpenedCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_ConvoOpened implements _ConvoOpened {
-  const _$_ConvoOpened(this.convoId);
+  const _$_ConvoOpened(this.otherId);
 
   @override
-  final String convoId;
+  final String otherId;
 
   @override
   String toString() {
-    return 'ConvoActorEvent.convoOpened(convoId: $convoId)';
+    return 'ConvoActorEvent.convoOpened(otherId: $otherId)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _ConvoOpened &&
-            (identical(other.convoId, convoId) ||
-                const DeepCollectionEquality().equals(other.convoId, convoId)));
+            (identical(other.otherId, otherId) ||
+                const DeepCollectionEquality().equals(other.otherId, otherId)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(convoId);
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(otherId);
 
   @JsonKey(ignore: true)
   @override
@@ -180,20 +180,20 @@ class _$_ConvoOpened implements _ConvoOpened {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String convoId) convoOpened,
+    required TResult Function(String otherId) convoOpened,
     required TResult Function(String message) messageChanged,
     required TResult Function(File photo) photoSent,
     required TResult Function() messageSent,
     required TResult Function(String messageId) messageRead,
     required TResult Function() lastMessageRead,
   }) {
-    return convoOpened(convoId);
+    return convoOpened(otherId);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String convoId)? convoOpened,
+    TResult Function(String otherId)? convoOpened,
     TResult Function(String message)? messageChanged,
     TResult Function(File photo)? photoSent,
     TResult Function()? messageSent,
@@ -202,7 +202,7 @@ class _$_ConvoOpened implements _ConvoOpened {
     required TResult orElse(),
   }) {
     if (convoOpened != null) {
-      return convoOpened(convoId);
+      return convoOpened(otherId);
     }
     return orElse();
   }
@@ -239,9 +239,9 @@ class _$_ConvoOpened implements _ConvoOpened {
 }
 
 abstract class _ConvoOpened implements ConvoActorEvent {
-  const factory _ConvoOpened(String convoId) = _$_ConvoOpened;
+  const factory _ConvoOpened(String otherId) = _$_ConvoOpened;
 
-  String get convoId => throw _privateConstructorUsedError;
+  String get otherId => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$ConvoOpenedCopyWith<_ConvoOpened> get copyWith =>
       throw _privateConstructorUsedError;
@@ -312,7 +312,7 @@ class _$_MessageChanged implements _MessageChanged {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String convoId) convoOpened,
+    required TResult Function(String otherId) convoOpened,
     required TResult Function(String message) messageChanged,
     required TResult Function(File photo) photoSent,
     required TResult Function() messageSent,
@@ -325,7 +325,7 @@ class _$_MessageChanged implements _MessageChanged {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String convoId)? convoOpened,
+    TResult Function(String otherId)? convoOpened,
     TResult Function(String message)? messageChanged,
     TResult Function(File photo)? photoSent,
     TResult Function()? messageSent,
@@ -444,7 +444,7 @@ class _$_PhotoChanged implements _PhotoChanged {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String convoId) convoOpened,
+    required TResult Function(String otherId) convoOpened,
     required TResult Function(String message) messageChanged,
     required TResult Function(File photo) photoSent,
     required TResult Function() messageSent,
@@ -457,7 +457,7 @@ class _$_PhotoChanged implements _PhotoChanged {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String convoId)? convoOpened,
+    TResult Function(String otherId)? convoOpened,
     TResult Function(String message)? messageChanged,
     TResult Function(File photo)? photoSent,
     TResult Function()? messageSent,
@@ -551,7 +551,7 @@ class _$_MessageSent implements _MessageSent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String convoId) convoOpened,
+    required TResult Function(String otherId) convoOpened,
     required TResult Function(String message) messageChanged,
     required TResult Function(File photo) photoSent,
     required TResult Function() messageSent,
@@ -564,7 +564,7 @@ class _$_MessageSent implements _MessageSent {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String convoId)? convoOpened,
+    TResult Function(String otherId)? convoOpened,
     TResult Function(String message)? messageChanged,
     TResult Function(File photo)? photoSent,
     TResult Function()? messageSent,
@@ -679,7 +679,7 @@ class _$_MessageRead implements _MessageRead {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String convoId) convoOpened,
+    required TResult Function(String otherId) convoOpened,
     required TResult Function(String message) messageChanged,
     required TResult Function(File photo) photoSent,
     required TResult Function() messageSent,
@@ -692,7 +692,7 @@ class _$_MessageRead implements _MessageRead {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String convoId)? convoOpened,
+    TResult Function(String otherId)? convoOpened,
     TResult Function(String message)? messageChanged,
     TResult Function(File photo)? photoSent,
     TResult Function()? messageSent,
@@ -786,7 +786,7 @@ class _$_LastMessageRead implements _LastMessageRead {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String convoId) convoOpened,
+    required TResult Function(String otherId) convoOpened,
     required TResult Function(String message) messageChanged,
     required TResult Function(File photo) photoSent,
     required TResult Function() messageSent,
@@ -799,7 +799,7 @@ class _$_LastMessageRead implements _LastMessageRead {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String convoId)? convoOpened,
+    TResult Function(String otherId)? convoOpened,
     TResult Function(String message)? messageChanged,
     TResult Function(File photo)? photoSent,
     TResult Function()? messageSent,
@@ -857,6 +857,7 @@ class _$ConvoActorStateTearOff {
       required ChatMessage chatMessage,
       required Option<Either<DataFailure, Unit>> sentFailureOrSuccessOption,
       required String ownId,
+      required String otherId,
       required String convoId,
       required String messageId}) {
     return _ConvoActorState(
@@ -864,6 +865,7 @@ class _$ConvoActorStateTearOff {
       chatMessage: chatMessage,
       sentFailureOrSuccessOption: sentFailureOrSuccessOption,
       ownId: ownId,
+      otherId: otherId,
       convoId: convoId,
       messageId: messageId,
     );
@@ -881,6 +883,7 @@ mixin _$ConvoActorState {
   Option<Either<DataFailure, Unit>> get sentFailureOrSuccessOption =>
       throw _privateConstructorUsedError;
   String get ownId => throw _privateConstructorUsedError;
+  String get otherId => throw _privateConstructorUsedError;
   String get convoId => throw _privateConstructorUsedError;
   String get messageId => throw _privateConstructorUsedError;
 
@@ -899,6 +902,7 @@ abstract class $ConvoActorStateCopyWith<$Res> {
       ChatMessage chatMessage,
       Option<Either<DataFailure, Unit>> sentFailureOrSuccessOption,
       String ownId,
+      String otherId,
       String convoId,
       String messageId});
 
@@ -920,6 +924,7 @@ class _$ConvoActorStateCopyWithImpl<$Res>
     Object? chatMessage = freezed,
     Object? sentFailureOrSuccessOption = freezed,
     Object? ownId = freezed,
+    Object? otherId = freezed,
     Object? convoId = freezed,
     Object? messageId = freezed,
   }) {
@@ -939,6 +944,10 @@ class _$ConvoActorStateCopyWithImpl<$Res>
       ownId: ownId == freezed
           ? _value.ownId
           : ownId // ignore: cast_nullable_to_non_nullable
+              as String,
+      otherId: otherId == freezed
+          ? _value.otherId
+          : otherId // ignore: cast_nullable_to_non_nullable
               as String,
       convoId: convoId == freezed
           ? _value.convoId
@@ -971,6 +980,7 @@ abstract class _$ConvoActorStateCopyWith<$Res>
       ChatMessage chatMessage,
       Option<Either<DataFailure, Unit>> sentFailureOrSuccessOption,
       String ownId,
+      String otherId,
       String convoId,
       String messageId});
 
@@ -995,6 +1005,7 @@ class __$ConvoActorStateCopyWithImpl<$Res>
     Object? chatMessage = freezed,
     Object? sentFailureOrSuccessOption = freezed,
     Object? ownId = freezed,
+    Object? otherId = freezed,
     Object? convoId = freezed,
     Object? messageId = freezed,
   }) {
@@ -1014,6 +1025,10 @@ class __$ConvoActorStateCopyWithImpl<$Res>
       ownId: ownId == freezed
           ? _value.ownId
           : ownId // ignore: cast_nullable_to_non_nullable
+              as String,
+      otherId: otherId == freezed
+          ? _value.otherId
+          : otherId // ignore: cast_nullable_to_non_nullable
               as String,
       convoId: convoId == freezed
           ? _value.convoId
@@ -1035,6 +1050,7 @@ class _$_ConvoActorState implements _ConvoActorState {
       required this.chatMessage,
       required this.sentFailureOrSuccessOption,
       required this.ownId,
+      required this.otherId,
       required this.convoId,
       required this.messageId});
 
@@ -1047,13 +1063,15 @@ class _$_ConvoActorState implements _ConvoActorState {
   @override
   final String ownId;
   @override
+  final String otherId;
+  @override
   final String convoId;
   @override
   final String messageId;
 
   @override
   String toString() {
-    return 'ConvoActorState(photoUrl: $photoUrl, chatMessage: $chatMessage, sentFailureOrSuccessOption: $sentFailureOrSuccessOption, ownId: $ownId, convoId: $convoId, messageId: $messageId)';
+    return 'ConvoActorState(photoUrl: $photoUrl, chatMessage: $chatMessage, sentFailureOrSuccessOption: $sentFailureOrSuccessOption, ownId: $ownId, otherId: $otherId, convoId: $convoId, messageId: $messageId)';
   }
 
   @override
@@ -1073,6 +1091,9 @@ class _$_ConvoActorState implements _ConvoActorState {
                     sentFailureOrSuccessOption)) &&
             (identical(other.ownId, ownId) ||
                 const DeepCollectionEquality().equals(other.ownId, ownId)) &&
+            (identical(other.otherId, otherId) ||
+                const DeepCollectionEquality()
+                    .equals(other.otherId, otherId)) &&
             (identical(other.convoId, convoId) ||
                 const DeepCollectionEquality()
                     .equals(other.convoId, convoId)) &&
@@ -1088,6 +1109,7 @@ class _$_ConvoActorState implements _ConvoActorState {
       const DeepCollectionEquality().hash(chatMessage) ^
       const DeepCollectionEquality().hash(sentFailureOrSuccessOption) ^
       const DeepCollectionEquality().hash(ownId) ^
+      const DeepCollectionEquality().hash(otherId) ^
       const DeepCollectionEquality().hash(convoId) ^
       const DeepCollectionEquality().hash(messageId);
 
@@ -1103,6 +1125,7 @@ abstract class _ConvoActorState implements ConvoActorState {
       required ChatMessage chatMessage,
       required Option<Either<DataFailure, Unit>> sentFailureOrSuccessOption,
       required String ownId,
+      required String otherId,
       required String convoId,
       required String messageId}) = _$_ConvoActorState;
 
@@ -1116,6 +1139,8 @@ abstract class _ConvoActorState implements ConvoActorState {
       throw _privateConstructorUsedError;
   @override
   String get ownId => throw _privateConstructorUsedError;
+  @override
+  String get otherId => throw _privateConstructorUsedError;
   @override
   String get convoId => throw _privateConstructorUsedError;
   @override

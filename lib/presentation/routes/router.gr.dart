@@ -124,10 +124,7 @@ class AppRouter extends _i1.RootStackRouter {
         routeData: routeData,
         builder: (data) {
           final args = data.argsAs<ConvoRouteArgs>();
-          return _i17.ConvoPage(
-              key: args.key,
-              convoId: args.convoId,
-              senderProfile: args.senderProfile);
+          return _i17.ConvoPage(key: args.key, otherProfile: args.otherProfile);
         }),
     ForumRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
         routeData: routeData,
@@ -141,7 +138,7 @@ class AppRouter extends _i1.RootStackRouter {
         builder: (data) {
           final args = data.argsAs<ConvoSplashRouteArgs>();
           return _i19.ConvoSplashPage(
-              key: args.key, senderProfile: args.senderProfile);
+              key: args.key, otherProfile: args.otherProfile);
         }),
     CommentRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
         routeData: routeData,
@@ -288,27 +285,20 @@ class ChatListRoute extends _i1.PageRouteInfo {
 }
 
 class ConvoRoute extends _i1.PageRouteInfo<ConvoRouteArgs> {
-  ConvoRoute(
-      {_i2.Key? key,
-      required String convoId,
-      required _i22.Profile senderProfile})
+  ConvoRoute({_i2.Key? key, required _i22.Profile otherProfile})
       : super(name,
             path: '/convo-page',
-            args: ConvoRouteArgs(
-                key: key, convoId: convoId, senderProfile: senderProfile));
+            args: ConvoRouteArgs(key: key, otherProfile: otherProfile));
 
   static const String name = 'ConvoRoute';
 }
 
 class ConvoRouteArgs {
-  const ConvoRouteArgs(
-      {this.key, required this.convoId, required this.senderProfile});
+  const ConvoRouteArgs({this.key, required this.otherProfile});
 
   final _i2.Key? key;
 
-  final String convoId;
-
-  final _i22.Profile senderProfile;
+  final _i22.Profile otherProfile;
 }
 
 class ForumRoute extends _i1.PageRouteInfo<ForumRouteArgs> {
@@ -333,20 +323,20 @@ class ForumRouteArgs {
 }
 
 class ConvoSplashRoute extends _i1.PageRouteInfo<ConvoSplashRouteArgs> {
-  ConvoSplashRoute({_i2.Key? key, required _i22.Profile senderProfile})
+  ConvoSplashRoute({_i2.Key? key, required _i22.Profile otherProfile})
       : super(name,
             path: '/convo-splash-page',
-            args: ConvoSplashRouteArgs(key: key, senderProfile: senderProfile));
+            args: ConvoSplashRouteArgs(key: key, otherProfile: otherProfile));
 
   static const String name = 'ConvoSplashRoute';
 }
 
 class ConvoSplashRouteArgs {
-  const ConvoSplashRouteArgs({this.key, required this.senderProfile});
+  const ConvoSplashRouteArgs({this.key, required this.otherProfile});
 
   final _i2.Key? key;
 
-  final _i22.Profile senderProfile;
+  final _i22.Profile otherProfile;
 }
 
 class CommentRoute extends _i1.PageRouteInfo<CommentRouteArgs> {

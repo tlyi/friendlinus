@@ -26,9 +26,14 @@ class ConvoActorBloc extends Bloc<ConvoActorEvent, ConvoActorState> {
   ) async* {
     yield* event.map(convoOpened: (e) async* {
       final ownId = await _chatRepository.getOwnId();
+      final convoId = ownId.compareTo(e.otherId) > 0
+          ? '${ownId}_${e.otherId}'
+          : '${e.otherId}_$ownId';
+
       yield state.copyWith(
         ownId: ownId,
-        convoId: e.convoId,
+        otherId: e.otherId,
+        convoId: convoId,
         chatMessage: state.chatMessage.copyWith(senderId: ownId),
       );
     }, messageChanged: (e) async* {
@@ -50,16 +55,24 @@ class ConvoActorBloc extends Bloc<ConvoActorEvent, ConvoActorState> {
           chatMessage: state.chatMessage.copyWith(photoUrl: url));
       add(const ConvoActorEvent.messageSent());
     }, messageSent: (e) async* {
-      Either<DataFailure, Unit> failureOrSuccess;
-      failureOrSuccess = await _chatRepository.createMessage(
-          convoId: state.convoId,
-          messageId: state.messageId,
-          chatMessage: state.chatMessage.copyWith(messageId: state.messageId));
-      yield state.copyWith(
-          chatMessage: state.chatMessage
-              .copyWith(messageBody: MessageBody(''), photoUrl: ''),
-          sentFailureOrSuccessOption: optionOf(failureOrSuccess),
-          messageId: UniqueId('').getOrCrash());
+      if (state.chatMessage.photoUrl != '' ||
+          state.chatMessage.messageBody.getOrCrash() != '') {
+        Either<DataFailure, Unit> failureOrSuccess;
+        failureOrSuccess = await _chatRepository.createMessage(
+            receiverId: state.otherId,
+            convoId: state.convoId,
+            messageId: state.messageId,
+            chatMessage:
+                state.chatMessage.copyWith(messageId: state.messageId));
+
+        yield state.copyWith(
+            chatMessage: state.chatMessage
+                .copyWith(messageBody: MessageBody(''), photoUrl: ''),
+            sentFailureOrSuccessOption: optionOf(failureOrSuccess),
+            messageId: UniqueId('').getOrCrash());
+      } else {
+        print('empty bro');
+      }
     }, messageRead: (e) async* {
       await _chatRepository.updateMessageRead(
           convoId: state.convoId, messageId: e.messageId);

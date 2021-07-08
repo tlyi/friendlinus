@@ -9,10 +9,13 @@ import 'package:friendlinus/domain/data/data_failure.dart';
 import 'package:friendlinus/domain/data/forum/i_forum_repository.dart';
 import 'package:friendlinus/domain/data/forum/poll/poll.dart';
 import 'package:friendlinus/domain/data/notifications/notification.dart';
+import 'package:friendlinus/domain/mods/mod.dart';
 import 'package:friendlinus/infrastructure/data/forum/comment_dtos/comment_dtos.dart';
 import 'package:friendlinus/infrastructure/data/forum/forum_post_dtos/forum_post_dtos.dart';
 import 'package:friendlinus/infrastructure/data/forum/poll_dtos/poll_dtos.dart';
 import 'package:friendlinus/infrastructure/data/notifications/notification_dtos.dart';
+import 'package:friendlinus/infrastructure/data/profile/mods/mod_dtos.dart';
+import 'package:friendlinus/infrastructure/data/profile/profile_dtos.dart';
 import 'package:injectable/injectable.dart';
 import 'package:friendlinus/infrastructure/core/firestore_helpers.dart';
 import 'package:friendlinus/domain/core/constants.dart' as constants;
@@ -35,11 +38,25 @@ class ForumPostRepository implements IForumRepository {
       ForumPost forumPost, String forumId) async {
     try {
       final forumsRef = await _firestore.forumsRef();
-      final forumPostDto = ForumPostDto.fromDomain((forumPost.tag == '')
-          ? forumPost.copyWith(tag: 'General')
-          : forumPost);
+      final tag = forumPost.tag == '' ? 'General' : forumPost.tag;
+      final forumPostDto =
+          ForumPostDto.fromDomain(forumPost.copyWith(tag: tag));
 
       await forumsRef.doc(forumId).set(forumPostDto.toJson());
+
+      final modulesRef = await _firestore.modulesRef();
+      await _firestore.runTransaction((transaction) async {
+        final tagDoc = modulesRef.doc(forumPost.tag);
+        transaction.update(tagDoc,
+            {'lastPosted': DateTime.now().millisecondsSinceEpoch.toString()});
+
+        if (forumPost.isAnon) {
+          final anonDoc = modulesRef.doc('Anonymous');
+          transaction.update(anonDoc,
+              {'lastPosted': DateTime.now().millisecondsSinceEpoch.toString()});
+        }
+      });
+
       return right(unit);
     } on FirebaseException catch (e) {
       if (e.message!.contains('PERMISSION_DENIED')) {
@@ -425,5 +442,122 @@ class ForumPostRepository implements IForumRepository {
       print(e);
       return left(const DataFailure.unexpected());
     }
+  }
+
+  @override
+  Stream<Either<DataFailure, List<Mod>>> retrieveModules() async* {
+    final userDoc = await _firestore.userDocument();
+    final modulesRef = await _firestore.modulesRef();
+    List<String> modulesFollowed = [];
+    await userDoc.get().then((DocumentSnapshot doc) {
+      modulesFollowed = ProfileDto.fromFirestore(doc).toDomain().modules;
+    });
+
+    yield* modulesRef
+        .where('moduleCode', whereIn: modulesFollowed)
+        .where('moduleCode', isEqualTo: 'Anonymous')
+        .where('moduleCode', isEqualTo: 'General')
+        .snapshots()
+        .map(
+      (snapshot) {
+        return right<DataFailure, List<Mod>>(snapshot.docs.map((doc) {
+          print("mod");
+          return ModDto.fromFirestore(doc).toDomain();
+        }).toList());
+      },
+    ).handleError((e) {
+      if (e is FirebaseException && e.message!.contains('PERMISSION_DENIED')) {
+        return left(const DataFailure.insufficientPermission());
+      } else {
+        print('help');
+        print(e);
+        return left(const DataFailure.unexpected());
+      }
+    });
+  }
+
+  @override
+  Stream<Either<DataFailure, List<ForumPost>>> retrieveModuleForums(
+      String moduleCode) async* {
+    final forumRef = await _firestore.forumsRef();
+    yield* forumRef
+        .where('tag', isEqualTo: moduleCode)
+        .orderBy('timestamp', descending: true)
+        .snapshots()
+        .map(
+          (snapshot) => right<DataFailure, List<ForumPost>>(
+            snapshot.docs
+                .map((doc) => ForumPostDto.fromFirestore(doc).toDomain())
+                .toList(),
+          ),
+        )
+        .handleError((e) {
+      if (e is FirebaseException && e.message!.contains('PERMISSION_DENIED')) {
+        return left(const DataFailure.insufficientPermission());
+      } else {
+        print(e);
+        return left(const DataFailure.unexpected());
+      }
+    });
+  }
+
+  @override
+  Stream<Either<DataFailure, List<ForumPost>>> retrieveHomeForums() async* {
+    final userDoc = await _firestore.userDocument();
+    final forumRef = await _firestore.forumsRef();
+    List<String> modulesFollowed = [];
+    await userDoc.get().then((DocumentSnapshot doc) {
+      modulesFollowed = ProfileDto.fromFirestore(doc).toDomain().modules;
+    });
+    yield* forumRef
+        .where('tag', whereIn: modulesFollowed)
+        .orderBy('timestamp', descending: true)
+        .snapshots()
+        .map(
+          (snapshot) => right<DataFailure, List<ForumPost>>(
+            snapshot.docs
+                .map((doc) => ForumPostDto.fromFirestore(doc).toDomain())
+                .toList(),
+          ),
+        )
+        .handleError((e) {
+      if (e is FirebaseException && e.message!.contains('PERMISSION_DENIED')) {
+        return left(const DataFailure.insufficientPermission());
+      } else {
+        print(e);
+        return left(const DataFailure.unexpected());
+      }
+    });
+  }
+
+  //Possibly split following list into "chunks of 10", retrieve separate s
+  @override
+  Stream<Either<DataFailure, List<ForumPost>>>
+      retrieveFollowingForums() async* {
+    final userDoc = await _firestore.userDocument();
+    final forumRef = await _firestore.forumsRef();
+    List<String> usersFollowing = [];
+    // await userDoc.get().then((DocumentSnapshot doc) {
+    //   usersFollowing = ProfileDto.fromFirestore(doc).toDomain().following;
+    // });
+    yield* forumRef
+        .where('tag', whereIn: usersFollowing)
+        .orderBy('timestamp', descending: true)
+        .snapshots()
+        .map(
+          (snapshot) => right<DataFailure, List<ForumPost>>(
+            snapshot.docs
+                .map((doc) => ForumPostDto.fromFirestore(doc).toDomain())
+                .toList(),
+          ),
+        )
+        .handleError((e) {
+      if (e is FirebaseException && e.message!.contains('PERMISSION_DENIED')) {
+        return left(const DataFailure.insufficientPermission());
+      } else {
+        print(e);
+        return left(const DataFailure.unexpected());
+      }
+    });
   }
 }

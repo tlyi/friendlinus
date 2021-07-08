@@ -7,6 +7,7 @@ class ConvoActorState with _$ConvoActorState {
     required ChatMessage chatMessage,
     required Option<Either<DataFailure, Unit>> sentFailureOrSuccessOption,
     required String ownId,
+    required String otherId,
     required String convoId,
     required String messageId,
   }) = _ConvoActorState;
@@ -16,6 +17,7 @@ class ConvoActorState with _$ConvoActorState {
       chatMessage: ChatMessage.empty(),
       sentFailureOrSuccessOption: none(),
       ownId: '',
+      otherId: '',
       convoId: '',
       messageId: UniqueId('').getOrCrash());
 }

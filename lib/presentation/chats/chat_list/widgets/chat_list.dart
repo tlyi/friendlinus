@@ -26,14 +26,17 @@ class ChatList extends StatelessWidget {
                 child: CircularProgressIndicator(),
               ),
           loadSuccess: (state) {
-            return ListView.builder(
-              itemCount: state.chats.length,
-              itemBuilder: (context, index) {
-                final chat = state.chats[index];
-                final profile = state.profiles[index];
-                if (chat.lastMessage == '') {
-                  return Container();
-                } else {
+            if (state.chats.isEmpty) {
+              return const Center(
+                child: Text('No chats yet'),
+              );
+            } else {
+              return ListView.builder(
+                itemCount: state.chats.length,
+                itemBuilder: (context, index) {
+                  final chat = state.chats[index];
+                  final profile = state.profiles[index];
+
                   return Card(
                     child: ListTile(
                       leading: CircleAvatar(
@@ -62,15 +65,13 @@ class ChatList extends StatelessWidget {
                         Text(getTime(chat.timestamp))
                       ]),
                       onTap: () {
-                        context.pushRoute(ConvoRoute(
-                            convoId: chat.userIdsCombined,
-                            senderProfile: profile));
+                        context.pushRoute(ConvoRoute(otherProfile: profile));
                       },
                     ),
                   );
-                }
-              },
-            );
+                },
+              );
+            }
           },
           loadFailure: (state) {
             FlushbarHelper.createError(

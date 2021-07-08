@@ -12,11 +12,8 @@ import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class ConvoMessages extends StatelessWidget {
-  final String convoId;
-  final Profile senderProfile;
-  const ConvoMessages(
-      {Key? key, required this.convoId, required this.senderProfile})
-      : super(key: key);
+  final Profile otherProfile;
+  const ConvoMessages({Key? key, required this.otherProfile}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,70 +25,76 @@ class ConvoMessages extends StatelessWidget {
           child: CircularProgressIndicator(),
         ),
         loadMessagesSuccess: (state) {
-          return ListView.builder(
-            reverse: true,
-            shrinkWrap: true,
-            physics: const ScrollPhysics(),
-            padding: const EdgeInsets.only(top: 10, bottom: 10),
-            itemCount: state.messages.length,
-            itemBuilder: (context, index) {
-              final message = state.messages[index];
-              final isOtherSender = message.senderId == senderProfile.uuid;
-              if (isOtherSender) {
-                context
-                    .read<ConvoActorBloc>()
-                    .add(ConvoActorEvent.messageRead(message.messageId));
-              }
-              if (index == 0 && isOtherSender) {
-                context
-                    .read<ConvoActorBloc>()
-                    .add(const ConvoActorEvent.lastMessageRead());
-              }
-              return Container(
-                padding: const EdgeInsets.only(
-                    left: 14, right: 14, top: 5, bottom: 5),
-                child: Align(
-                  alignment:
-                      isOtherSender ? Alignment.topLeft : Alignment.topRight,
-                  child: Bubble(
-                    radius: const Radius.circular(10),
-                    color:
-                        isOtherSender ? Colors.grey[400] : constants.THEME_BLUE,
-                    padding: const BubbleEdges.all(8),
-                    nip: isOtherSender
-                        ? BubbleNip.leftBottom
-                        : BubbleNip.rightBottom,
-                    showNip: index == 0 ||
-                        state.messages[index - 1].senderId != message.senderId,
-                    child: message.photoUrl != ''
-                        ? Container(
-                            width: 200,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                FadeInImage(
-                                  fit: BoxFit.contain,
-                                  image: NetworkImage(message.photoUrl),
-                                  placeholder: const AssetImage(
-                                      'images/loading_image.png'),
-                                ),
-                                if (message.messageBody.getOrCrash() != '')
-                                  const SizedBox(height: 5),
-                                _CaptionBody(
-                                    message: message,
-                                    isOtherSender: isOtherSender),
-                              ],
+          if (state.messages.isEmpty) {
+            return const Center(child: Text('No messages yet'));
+          } else {
+            return ListView.builder(
+              reverse: true,
+              shrinkWrap: true,
+              physics: const ScrollPhysics(),
+              padding: const EdgeInsets.only(top: 10, bottom: 10),
+              itemCount: state.messages.length,
+              itemBuilder: (context, index) {
+                final message = state.messages[index];
+                final isOtherSender = message.senderId == otherProfile.uuid;
+                if (isOtherSender) {
+                  context
+                      .read<ConvoActorBloc>()
+                      .add(ConvoActorEvent.messageRead(message.messageId));
+                }
+                if (index == 0 && isOtherSender) {
+                  context
+                      .read<ConvoActorBloc>()
+                      .add(const ConvoActorEvent.lastMessageRead());
+                }
+                return Container(
+                  padding: const EdgeInsets.only(
+                      left: 14, right: 14, top: 5, bottom: 5),
+                  child: Align(
+                    alignment:
+                        isOtherSender ? Alignment.topLeft : Alignment.topRight,
+                    child: Bubble(
+                      radius: const Radius.circular(10),
+                      color: isOtherSender
+                          ? Colors.grey[400]
+                          : constants.THEME_BLUE,
+                      padding: const BubbleEdges.all(8),
+                      nip: isOtherSender
+                          ? BubbleNip.leftBottom
+                          : BubbleNip.rightBottom,
+                      showNip: index == 0 ||
+                          state.messages[index - 1].senderId !=
+                              message.senderId,
+                      child: message.photoUrl != ''
+                          ? Container(
+                              width: 200,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  FadeInImage(
+                                    fit: BoxFit.contain,
+                                    image: NetworkImage(message.photoUrl),
+                                    placeholder: const AssetImage(
+                                        'images/loading_image.png'),
+                                  ),
+                                  if (message.messageBody.getOrCrash() != '')
+                                    const SizedBox(height: 5),
+                                  _CaptionBody(
+                                      message: message,
+                                      isOtherSender: isOtherSender),
+                                ],
+                              ),
+                            )
+                          : _MessageBody(
+                              message: message,
+                              isOtherSender: isOtherSender,
                             ),
-                          )
-                        : _MessageBody(
-                            message: message,
-                            isOtherSender: isOtherSender,
-                          ),
+                    ),
                   ),
-                ),
-              );
-            },
-          );
+                );
+              },
+            );
+          }
         },
         loadMessagesFailure: (state) {
           FlushbarHelper.createError(

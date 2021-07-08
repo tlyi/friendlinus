@@ -25,7 +25,8 @@ abstract class IChatRepository {
   Stream<Either<DataFailure, List<ChatMessage>>> getConvo(String convoId);
 
   Future<Either<DataFailure, Unit>> createMessage(
-      {required String convoId,
+      {required String receiverId,
+      required String convoId,
       required String messageId,
       required ChatMessage chatMessage});
 

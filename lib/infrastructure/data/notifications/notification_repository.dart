@@ -29,8 +29,8 @@ class NotificationRepository implements INotificationRepository {
     final chatsRef = await _firestore.chatsRef();
     yield* chatsRef
         .where('userIds', arrayContains: userId)
+        .where('lastSenderId', isNotEqualTo: userId)
         .where('lastMessageRead', isEqualTo: false)
-        .where('lastMessage', isNotEqualTo: '')
         .snapshots()
         .map((docSnapshot) => right<DataFailure, int>(docSnapshot.docs.length))
         .handleError((e) {

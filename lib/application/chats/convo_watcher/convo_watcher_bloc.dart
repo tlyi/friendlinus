@@ -30,8 +30,14 @@ class ConvoWatcherBloc extends Bloc<ConvoWatcherEvent, ConvoWatcherState> {
     yield* event.map(
       retrieveConvoStarted: (e) async* {
         yield const ConvoWatcherState.loadMessagesInProgress();
+        final ownId = await _chatRepository.getOwnId();
+
+        final convoId = ownId.compareTo(e.otherId) > 0
+            ? '${ownId}_${e.otherId}'
+            : '${e.otherId}_$ownId';
+
         await _convoStreamSubscription?.cancel();
-        _convoStreamSubscription = _chatRepository.getConvo(e.convoId).listen(
+        _convoStreamSubscription = _chatRepository.getConvo(convoId).listen(
             (failureOrMessages) =>
                 add(ConvoWatcherEvent.convoReceived(failureOrMessages)));
       },

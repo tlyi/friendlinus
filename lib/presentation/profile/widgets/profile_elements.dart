@@ -93,7 +93,6 @@ class ProfileHeader extends StatelessWidget {
                   UpdateProfileButton(userProfile: userProfile)
                 else
                   Row(
-                    //mainAxisSize: MainAxisSize.min,
                     children: [
                       MessageProfileButton(userProfile: userProfile),
                       const Padding(padding: EdgeInsets.only(left: 5)),
@@ -179,7 +178,7 @@ class MessageProfileButton extends StatelessWidget {
         ),
       ),
       onPressed: () {
-        context.pushRoute(ConvoSplashRoute(senderProfile: userProfile));
+        context.pushRoute(ConvoRoute(otherProfile: userProfile));
       },
       child:
           const Icon(Icons.chat_rounded, color: constants.THEME_BLUE, size: 20),

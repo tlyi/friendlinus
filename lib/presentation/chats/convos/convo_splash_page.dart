@@ -10,15 +10,15 @@ import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 
 class ConvoSplashPage extends StatelessWidget {
-  final Profile senderProfile;
-  const ConvoSplashPage({Key? key, required this.senderProfile})
+  final Profile otherProfile;
+  const ConvoSplashPage({Key? key, required this.otherProfile})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          getIt<ChatBloc>()..add(ChatEvent.chatStarted(senderProfile.uuid)),
+          getIt<ChatBloc>()..add(ChatEvent.chatStarted(otherProfile.uuid)),
       child: BlocBuilder<ChatBloc, ChatState>(builder: (context, state) {
         return state.map(
             initial: (_) => Container(),
@@ -29,8 +29,7 @@ class ConvoSplashPage extends StatelessWidget {
                 ),
             loadSuccess: (state) {
               return ConvoPage(
-                convoId: state.chat.userIdsCombined,
-                senderProfile: senderProfile,
+                otherProfile: otherProfile,
               );
             },
             loadFailure: (state) {

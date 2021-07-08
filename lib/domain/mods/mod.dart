@@ -9,17 +9,12 @@ abstract class Mod implements _$Mod {
   const factory Mod({
     required String moduleCode,
     required String moduleTitle,
+    required String lastPosted,
   }) = _Mod;
 
   factory Mod.empty() => const Mod(
         moduleCode: '',
         moduleTitle: '',
+        lastPosted: '',
       );
-
-  factory Mod.fromJson2(Map<String, dynamic> json) {
-    return Mod(
-      moduleCode: json['moduleCode'] as String,
-      moduleTitle: json['title'] as String,
-    );
-  }
 }

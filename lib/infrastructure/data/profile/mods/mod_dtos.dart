@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:friendlinus/domain/mods/mod.dart';
 import 'package:http/http.dart';
@@ -15,25 +16,27 @@ abstract class ModDto implements _$ModDto {
     required String moduleCode,
     required String title,
     required List<int> semesters,
+    required String lastPosted,
   }) = _ModDto;
 
   factory ModDto.fromDomain(Mod mod) {
     return ModDto(
-      moduleCode: mod.moduleCode,
-      title: mod.moduleTitle,
-      semesters: [],
-    );
+        moduleCode: mod.moduleCode,
+        title: mod.moduleTitle,
+        semesters: [],
+        lastPosted: mod.lastPosted);
   }
+
   Mod toDomain() {
     return Mod(
-      moduleCode: moduleCode,
-      moduleTitle: title,
-    );
+        moduleCode: moduleCode,
+        moduleTitle: title,
+        lastPosted: lastPosted == '0' ? 'No posts yet' : lastPosted);
   }
 
   factory ModDto.fromJson(Map<String, dynamic> json) => _$ModDtoFromJson(json);
 
-  factory ModDto.fromAPI(Response response) {
-    return ModDto.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
+  factory ModDto.fromFirestore(DocumentSnapshot doc) {
+    return ModDto.fromJson(doc.data()! as Map<String, dynamic>);
   }
 }
