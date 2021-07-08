@@ -35,7 +35,9 @@ class ForumPostRepository implements IForumRepository {
       ForumPost forumPost, String forumId) async {
     try {
       final forumsRef = await _firestore.forumsRef();
-      final forumPostDto = ForumPostDto.fromDomain(forumPost);
+      final forumPostDto = ForumPostDto.fromDomain((forumPost.tag == '')
+          ? forumPost.copyWith(tag: 'General')
+          : forumPost);
 
       await forumsRef.doc(forumId).set(forumPostDto.toJson());
       return right(unit);

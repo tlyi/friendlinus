@@ -185,7 +185,7 @@ class _BuildBody extends StatelessWidget {
         context.read<ForumFormBloc>().add(ForumFormEvent.bodyChanged(value));
       },
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      validator: (_) {
+      validator: (value) {
         return context.read<ForumFormBloc>().state.forumPost.body.value.fold(
             (f) => f.maybeMap(
                 exceedingLength: (_) =>
