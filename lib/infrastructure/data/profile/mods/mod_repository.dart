@@ -74,15 +74,6 @@ class ModRepository implements IModRepository {
       moduleRef.get().then((snapshot) => snapshot.docs.forEach((element) {
             element.reference.update({'lastPosted': '0'});
           }));
-      Either<DataFailure, List<Mod>> failureorModList = await getMods();
-
-      List<Mod> modList = failureorModList.getOrElse(() => []);
-
-      for (var mod in modList) {
-        final moduleDto = ModDto.fromDomain(mod);
-        await moduleRef.doc(mod.moduleCode).set(moduleDto.toJson());
-      }
-
       return right(unit);
     } on FirebaseException catch (e) {
       if (e.message!.contains('PERMISSION_DENIED')) {
