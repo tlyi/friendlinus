@@ -5,4 +5,5 @@ import 'package:friendlinus/domain/mods/mod.dart';
 abstract class IModRepository {
   Future<Either<DataFailure, List<Mod>>> getMods();
   Future<Either<DataFailure, Unit>> uploadMods();
+  Future<Either<DataFailure, Unit>> addLastPosted();
 }

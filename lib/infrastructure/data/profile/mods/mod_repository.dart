@@ -66,4 +66,21 @@ class ModRepository implements IModRepository {
       }
     }
   }
+
+  @override
+  Future<Either<DataFailure, Unit>> addLastPosted() async {
+    try {
+      final moduleRef = await _firestore.modulesRef();
+      moduleRef.get().then((snapshot) => snapshot.docs.forEach((element) {
+            element.reference.update({'lastPosted': '0'});
+          }));
+      return right(unit);
+    } on FirebaseException catch (e) {
+      if (e.message!.contains('PERMISSION_DENIED')) {
+        return left(const DataFailure.insufficientPermission());
+      } else {
+        return left(const DataFailure.unexpected());
+      }
+    }
+  }
 }
