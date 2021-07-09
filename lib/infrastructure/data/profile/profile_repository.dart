@@ -385,4 +385,36 @@ class ProfileRepository implements IProfileRepository {
       return left(const DataFailure.unexpected());
     }
   }
+
+  @override
+  Future<Either<DataFailure, Unit>> followModule(String moduleCode) async {
+    try {
+      final userDoc = await _firestore.userDocument();
+      WriteBatch batch = _firestore.batch();
+      batch.update(userDoc, {
+        'modules': FieldValue.arrayUnion([moduleCode])
+      });
+      await batch.commit();
+      return right(unit);
+    } on FirebaseException catch (e) {
+      print(e);
+      return left(const DataFailure.unexpected());
+    }
+  }
+
+  @override
+  Future<Either<DataFailure, Unit>> unfollowModule(String moduleCode) async {
+    try {
+      final userDoc = await _firestore.userDocument();
+      WriteBatch batch = _firestore.batch();
+      batch.update(userDoc, {
+        'modules': FieldValue.arrayRemove([moduleCode])
+      });
+      await batch.commit();
+      return right(unit);
+    } on FirebaseException catch (e) {
+      print(e);
+      return left(const DataFailure.unexpected());
+    }
+  }
 }

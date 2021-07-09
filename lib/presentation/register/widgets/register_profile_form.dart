@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tags/flutter_tags.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:friendlinus/application/profile/profile_form/profile_form_bloc.dart';
+import 'package:friendlinus/presentation/core/image_picker.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:image_picker/image_picker.dart';
@@ -88,12 +89,8 @@ class _BuildProfilePicButton extends StatelessWidget {
                 shape: const CircleBorder(),
               ),
               onPressed: () async {
-                final picker = ImagePicker();
+                final PickedFile? pickedFile = await imagePicker(context);
                 File? pickedImage;
-                final pickedFile = await picker.getImage(
-                  source: ImageSource.gallery,
-                  imageQuality: 70,
-                );
                 if (pickedFile == null) {
                   FlushbarHelper.createError(message: 'No image picked')
                       .show(context);
@@ -258,9 +255,9 @@ class _BuildModule extends StatelessWidget {
           },
           onSuggestionSelected: (String value) {
             if (context.read<ProfileFormBloc>().state.profile.modules.length >=
-                10) {
+                8) {
               FlushbarHelper.createError(
-                      message: 'Maximum number of modules is 10')
+                      message: 'Maximum number of modules is 8')
                   .show(context);
             } else if (context
                 .read<ProfileFormBloc>()

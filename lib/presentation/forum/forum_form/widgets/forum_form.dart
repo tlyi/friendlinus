@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:friendlinus/application/forum/forum_form/forum_form_bloc.dart';
+import 'package:friendlinus/presentation/core/image_picker.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:image_picker/image_picker.dart';
@@ -386,20 +387,18 @@ class _BuildAddImageButton extends StatelessWidget {
             tooltip: 'Add Image',
             onPressed: () async {
               void pickPhoto() async {
-                final picker = ImagePicker();
+               
+                final PickedFile? pickedFile = await imagePicker(context);
                 File? pickedImage;
-                final pickedFile = await picker.getImage(
-                  source: ImageSource.gallery,
-                  imageQuality: 70,
-                );
                 if (pickedFile == null) {
                   FlushbarHelper.createError(message: 'No image picked')
                       .show(context);
                 } else {
                   pickedImage = File(pickedFile.path);
-                  context.read<ForumFormBloc>().add(ForumFormEvent.photoChanged(
-                        pickedImage,
-                      ));
+
+                  context
+                      .read<ForumFormBloc>()
+                      .add(ForumFormEvent.photoChanged(pickedImage));
                 }
               }
 

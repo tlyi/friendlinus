@@ -18,6 +18,9 @@ abstract class Profile implements _$Profile {
     required List<String> modules,
     required String uuid,
     required List<String> forumsPosted,
+    required List<String> following,
+    required List<String> followedBy,
+ 
   }) = _Profile;
 
   factory Profile.empty() => Profile(
@@ -28,5 +31,8 @@ abstract class Profile implements _$Profile {
         modules: [],
         uuid: '',
         forumsPosted: [],
+        following: [],
+        followedBy: [],
+
       );
 }

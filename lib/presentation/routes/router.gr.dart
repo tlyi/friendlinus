@@ -7,8 +7,8 @@
 import 'package:auto_route/auto_route.dart' as _i1;
 import 'package:flutter/material.dart' as _i2;
 import 'package:friendlinus/domain/data/forum/forum_post/forum_post.dart'
-    as _i23;
-import 'package:friendlinus/domain/data/profile/profile.dart' as _i22;
+    as _i25;
+import 'package:friendlinus/domain/data/profile/profile.dart' as _i24;
 import 'package:friendlinus/presentation/chats/chat_list/chat_list_page.dart'
     as _i16;
 import 'package:friendlinus/presentation/chats/convos/convo_page.dart' as _i17;
@@ -22,6 +22,10 @@ import 'package:friendlinus/presentation/forum/forum_page/comment_page.dart'
     as _i20;
 import 'package:friendlinus/presentation/forum/forum_page/forum_page.dart'
     as _i18;
+import 'package:friendlinus/presentation/forum/forum_tab/forum_tab_page.dart'
+    as _i23;
+import 'package:friendlinus/presentation/forum/forum_tab/module_forum_page.dart'
+    as _i22;
 import 'package:friendlinus/presentation/home_page.dart' as _i5;
 import 'package:friendlinus/presentation/notifications/notification_page.dart'
     as _i21;
@@ -90,8 +94,9 @@ class AppRouter extends _i1.RootStackRouter {
         }),
     SearchUsersRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
         routeData: routeData,
-        builder: (_) {
-          return _i11.SearchUsersPage();
+        builder: (data) {
+          final args = data.argsAs<SearchUsersRouteArgs>();
+          return _i11.SearchUsersPage(key: args.key, ownId: args.ownId);
         }),
     UpdateProfileRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
         routeData: routeData,
@@ -150,6 +155,18 @@ class AppRouter extends _i1.RootStackRouter {
         routeData: routeData,
         builder: (_) {
           return _i21.NotificationPage();
+        }),
+    ModuleForumRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
+        routeData: routeData,
+        builder: (data) {
+          final args = data.argsAs<ModuleForumRouteArgs>();
+          return _i22.ModuleForumPage(
+              key: args.key, moduleCode: args.moduleCode);
+        }),
+    ForumTabRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
+        routeData: routeData,
+        builder: (_) {
+          return const _i23.ForumTabPage();
         })
   };
 
@@ -174,7 +191,9 @@ class AppRouter extends _i1.RootStackRouter {
         _i1.RouteConfig(ForumRoute.name, path: '/forum-page'),
         _i1.RouteConfig(ConvoSplashRoute.name, path: '/convo-splash-page'),
         _i1.RouteConfig(CommentRoute.name, path: '/comment-page'),
-        _i1.RouteConfig(NotificationRoute.name, path: '/notification-page')
+        _i1.RouteConfig(NotificationRoute.name, path: '/notification-page'),
+        _i1.RouteConfig(ModuleForumRoute.name, path: '/module-forum-page'),
+        _i1.RouteConfig(ForumTabRoute.name, path: '/forum-tab-page')
       ];
 }
 
@@ -237,10 +256,21 @@ class ProfileRouteArgs {
   final bool canGoBack;
 }
 
-class SearchUsersRoute extends _i1.PageRouteInfo {
-  const SearchUsersRoute() : super(name, path: '/search-users-page');
+class SearchUsersRoute extends _i1.PageRouteInfo<SearchUsersRouteArgs> {
+  SearchUsersRoute({_i2.Key? key, required String ownId})
+      : super(name,
+            path: '/search-users-page',
+            args: SearchUsersRouteArgs(key: key, ownId: ownId));
 
   static const String name = 'SearchUsersRoute';
+}
+
+class SearchUsersRouteArgs {
+  const SearchUsersRouteArgs({this.key, required this.ownId});
+
+  final _i2.Key? key;
+
+  final String ownId;
 }
 
 class UpdateProfileRoute extends _i1.PageRouteInfo {
@@ -250,7 +280,7 @@ class UpdateProfileRoute extends _i1.PageRouteInfo {
 }
 
 class OtherProfileRoute extends _i1.PageRouteInfo<OtherProfileRouteArgs> {
-  OtherProfileRoute({_i2.Key? key, required _i22.Profile userProfile})
+  OtherProfileRoute({_i2.Key? key, required _i24.Profile userProfile})
       : super(name,
             path: '/other-profile-page',
             args: OtherProfileRouteArgs(key: key, userProfile: userProfile));
@@ -263,7 +293,7 @@ class OtherProfileRouteArgs {
 
   final _i2.Key? key;
 
-  final _i22.Profile userProfile;
+  final _i24.Profile userProfile;
 }
 
 class ForumOverviewRoute extends _i1.PageRouteInfo {
@@ -285,7 +315,7 @@ class ChatListRoute extends _i1.PageRouteInfo {
 }
 
 class ConvoRoute extends _i1.PageRouteInfo<ConvoRouteArgs> {
-  ConvoRoute({_i2.Key? key, required _i22.Profile otherProfile})
+  ConvoRoute({_i2.Key? key, required _i24.Profile otherProfile})
       : super(name,
             path: '/convo-page',
             args: ConvoRouteArgs(key: key, otherProfile: otherProfile));
@@ -298,7 +328,7 @@ class ConvoRouteArgs {
 
   final _i2.Key? key;
 
-  final _i22.Profile otherProfile;
+  final _i24.Profile otherProfile;
 }
 
 class ForumRoute extends _i1.PageRouteInfo<ForumRouteArgs> {
@@ -323,7 +353,7 @@ class ForumRouteArgs {
 }
 
 class ConvoSplashRoute extends _i1.PageRouteInfo<ConvoSplashRouteArgs> {
-  ConvoSplashRoute({_i2.Key? key, required _i22.Profile otherProfile})
+  ConvoSplashRoute({_i2.Key? key, required _i24.Profile otherProfile})
       : super(name,
             path: '/convo-splash-page',
             args: ConvoSplashRouteArgs(key: key, otherProfile: otherProfile));
@@ -336,11 +366,11 @@ class ConvoSplashRouteArgs {
 
   final _i2.Key? key;
 
-  final _i22.Profile otherProfile;
+  final _i24.Profile otherProfile;
 }
 
 class CommentRoute extends _i1.PageRouteInfo<CommentRouteArgs> {
-  CommentRoute({_i2.Key? key, required _i23.ForumPost forum})
+  CommentRoute({_i2.Key? key, required _i25.ForumPost forum})
       : super(name,
             path: '/comment-page',
             args: CommentRouteArgs(key: key, forum: forum));
@@ -353,11 +383,34 @@ class CommentRouteArgs {
 
   final _i2.Key? key;
 
-  final _i23.ForumPost forum;
+  final _i25.ForumPost forum;
 }
 
 class NotificationRoute extends _i1.PageRouteInfo {
   const NotificationRoute() : super(name, path: '/notification-page');
 
   static const String name = 'NotificationRoute';
+}
+
+class ModuleForumRoute extends _i1.PageRouteInfo<ModuleForumRouteArgs> {
+  ModuleForumRoute({_i2.Key? key, required String moduleCode})
+      : super(name,
+            path: '/module-forum-page',
+            args: ModuleForumRouteArgs(key: key, moduleCode: moduleCode));
+
+  static const String name = 'ModuleForumRoute';
+}
+
+class ModuleForumRouteArgs {
+  const ModuleForumRouteArgs({this.key, required this.moduleCode});
+
+  final _i2.Key? key;
+
+  final String moduleCode;
+}
+
+class ForumTabRoute extends _i1.PageRouteInfo {
+  const ForumTabRoute() : super(name, path: '/forum-tab-page');
+
+  static const String name = 'ForumTabRoute';
 }

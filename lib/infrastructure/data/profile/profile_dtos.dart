@@ -22,6 +22,8 @@ abstract class ProfileDto implements _$ProfileDto {
     required List<String> modules,
     required String uuid,
     required List<String> forumsPosted,
+    required List<String> following,
+    required List<String> followedBy,
   }) = _ProfileDto;
 
   factory ProfileDto.fromDomain(Profile profile) {
@@ -33,6 +35,8 @@ abstract class ProfileDto implements _$ProfileDto {
       modules: profile.modules,
       uuid: profile.uuid,
       forumsPosted: profile.forumsPosted,
+      following: profile.following,
+      followedBy: profile.followedBy,
     );
   }
 
@@ -45,6 +49,8 @@ abstract class ProfileDto implements _$ProfileDto {
       modules: modules,
       uuid: uuid,
       forumsPosted: forumsPosted,
+      following: following,
+      followedBy: followedBy,
     );
   }
 

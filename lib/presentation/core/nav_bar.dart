@@ -107,7 +107,7 @@ class NavigationBar extends StatelessWidget {
             tooltip: 'Forums',
             onPressed: () {
               print('Nav to forums');
-              context.replaceRoute(const ForumOverviewRoute());
+              context.replaceRoute(const ForumTabRoute());
             },
           ),
           IconButton(

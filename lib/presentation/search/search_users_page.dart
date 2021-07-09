@@ -8,6 +8,9 @@ import 'package:friendlinus/presentation/core/nav_bar.dart';
 import 'package:friendlinus/presentation/search/widgets/search_bar.dart';
 
 class SearchUsersPage extends StatelessWidget {
+  final String ownId;
+  const SearchUsersPage({Key? key, required this.ownId}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -17,7 +20,7 @@ class SearchUsersPage extends StatelessWidget {
           appBar:
               appBar(context: context, header: 'Search Users', canGoBack: true),
           bottomNavigationBar: const NavigationBar(),
-          body: SearchBar(),
+          body: SearchBar(ownId: ownId),
         ),
       ),
     );

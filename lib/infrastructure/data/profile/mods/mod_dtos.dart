@@ -29,9 +29,7 @@ abstract class ModDto implements _$ModDto {
 
   Mod toDomain() {
     return Mod(
-        moduleCode: moduleCode,
-        moduleTitle: title,
-        lastPosted: lastPosted == '0' ? 'No posts yet' : lastPosted);
+        moduleCode: moduleCode, moduleTitle: title, lastPosted: lastPosted);
   }
 
   factory ModDto.fromJson(Map<String, dynamic> json) => _$ModDtoFromJson(json);

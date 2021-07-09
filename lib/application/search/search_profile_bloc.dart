@@ -24,42 +24,27 @@ class SearchProfileBloc extends Bloc<SearchProfileEvent, SearchProfileState> {
   Stream<SearchProfileState> mapEventToState(
     SearchProfileEvent event,
   ) async* {
-    yield* event.map(searchChanged: (e) async* {
-      if (e.query == '') {
-        yield state.copyWith(
-          searchProfileResults: right([]),
-          displayResults: false,
-          isLoadedProfile: false,
-        );
-      } else {
-        yield state.copyWith(
-          isSearching: true,
-          displayResults: false,
-          isLoadedProfile: false,
-        );
-        final searchResults =
-            await _profileRepository.searchProfileByUsername(e.query);
-        yield state.copyWith(
-          searchProfileResults: searchResults,
-          isSearching: false,
-          displayResults: true,
-          isLoadedProfile: false,
-        );
-      }
-    }, profileSelected: (e) async* {
-      String ownId = await _profileRepository.getUserId();
-      yield state.copyWith(
-          isLoadingProfile: true,
-          isSearching: false,
-          displayResults: false,
-          isLoadedProfile: false,
-          ownId: ownId);
-      final profile = await _profileRepository.readOtherProfile(e.username);
-      yield state.copyWith(
-        isLoadingProfile: false,
-        isLoadedProfile: true,
-        selectedProfile: profile,
-      );
-    });
+    yield* event.map(
+      searchChanged: (e) async* {
+        if (e.query == '') {
+          yield state.copyWith(
+            searchProfileResults: right([]),
+            displayResults: false,
+          );
+        } else {
+          yield state.copyWith(
+            isSearching: true,
+            displayResults: false,
+          );
+          final searchResults =
+              await _profileRepository.searchProfileByUsername(e.query);
+          yield state.copyWith(
+            searchProfileResults: searchResults,
+            isSearching: false,
+            displayResults: true,
+          );
+        }
+      },
+    );
   }
 }

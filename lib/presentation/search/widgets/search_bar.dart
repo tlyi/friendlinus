@@ -5,6 +5,9 @@ import 'package:friendlinus/presentation/search/widgets/search_results.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 
 class SearchBar extends StatelessWidget {
+  final String ownId;
+  const SearchBar({Key? key, required this.ownId}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SearchProfileBloc, SearchProfileState>(
@@ -14,7 +17,7 @@ class SearchBar extends StatelessWidget {
           body: Stack(
             fit: StackFit.expand,
             children: [
-              _BuildFloatingSearchBar(),
+              _BuildFloatingSearchBar(ownId: ownId),
             ],
           ),
         );
@@ -24,13 +27,15 @@ class SearchBar extends StatelessWidget {
 }
 
 class _BuildFloatingSearchBar extends StatelessWidget {
+  final String ownId;
+  const _BuildFloatingSearchBar({Key? key, required this.ownId})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return FloatingSearchBar(
       automaticallyImplyBackButton: false,
       scrollPadding: const EdgeInsets.only(top: 16, bottom: 56),
-      progress: context.read<SearchProfileBloc>().state.isLoadingProfile ||
-          context.read<SearchProfileBloc>().state.isSearching,
+      progress: context.read<SearchProfileBloc>().state.isSearching,
       elevation: 10,
       transitionDuration: const Duration(milliseconds: 800),
       transitionCurve: Curves.easeInOut,
@@ -51,7 +56,6 @@ class _BuildFloatingSearchBar extends StatelessWidget {
       ],
       debounceDelay: const Duration(milliseconds: 500),
       onQueryChanged: (query) {
-        //call searchChanged event
         context
             .read<SearchProfileBloc>()
             .add(SearchProfileEvent.searchChanged(query));
@@ -59,7 +63,7 @@ class _BuildFloatingSearchBar extends StatelessWidget {
       builder: (BuildContext context, Animation<double> transition) {
         return ClipRRect(
           borderRadius: BorderRadius.circular(8),
-          child: SearchResults(),
+          child: SearchResults(ownId: ownId),
         );
       },
     );

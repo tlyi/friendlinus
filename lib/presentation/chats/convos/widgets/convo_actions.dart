@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:friendlinus/application/chats/convo_actor/convo_actor_bloc.dart';
 import 'package:friendlinus/domain/data/profile/profile.dart';
 import 'package:friendlinus/presentation/chats/convos/widgets/convo_messages.dart';
+import 'package:friendlinus/presentation/core/image_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
@@ -53,60 +54,14 @@ class _ConvoActionsState extends State<ConvoActions> {
                       size: 20,
                     ),
                     onPressed: () async {
-                      final picker = ImagePicker();
-                      PickedFile? pickedFile;
-                      await showDialog(
-                          context: context,
-                          builder: (BuildContext innerContext) {
-                            return AlertDialog(
-                              content: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Align(
-                                    alignment: Alignment.topRight,
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        Navigator.pop(innerContext);
-                                      },
-                                      child: const Icon(
-                                        Icons.close,
-                                        color: Colors.grey,
-                                        size: 30,
-                                      ),
-                                    ),
-                                  ),
-                                  TextButton(
-                                    onPressed: () async {
-                                      pickedFile = await picker.getImage(
-                                        source: ImageSource.gallery,
-                                        imageQuality: 70,
-                                      );
-                                      Navigator.pop(innerContext);
-                                    },
-                                    child: Text('from gallery'),
-                                  ),
-                                  TextButton(
-                                    onPressed: () async {
-                                      pickedFile = await picker.getImage(
-                                        source: ImageSource.camera,
-                                        imageQuality: 70,
-                                      );
-                                      Navigator.pop(innerContext);
-                                    },
-                                    child: Text('from camera'),
-                                  ),
-                                ],
-                              ),
-                            );
-                          });
-
+                      final PickedFile? pickedFile = await imagePicker(context);
                       File? pickedImage;
 
                       if (pickedFile == null) {
                         FlushbarHelper.createError(message: 'No image picked')
                             .show(context);
                       } else {
-                        pickedImage = File(pickedFile!.path);
+                        pickedImage = File(pickedFile.path);
                         showDialog(
                             context: context,
                             builder: (BuildContext innerContext) {

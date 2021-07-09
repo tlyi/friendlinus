@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
-part of 'search_profile_bloc.dart';
+part of 'search_forum_bloc.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,8 +13,8 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$SearchProfileEventTearOff {
-  const _$SearchProfileEventTearOff();
+class _$SearchForumEventTearOff {
+  const _$SearchForumEventTearOff();
 
   _SearchChanged searchChanged(String query) {
     return _SearchChanged(
@@ -24,10 +24,10 @@ class _$SearchProfileEventTearOff {
 }
 
 /// @nodoc
-const $SearchProfileEvent = _$SearchProfileEventTearOff();
+const $SearchForumEvent = _$SearchForumEventTearOff();
 
 /// @nodoc
-mixin _$SearchProfileEvent {
+mixin _$SearchForumEvent {
   String get query => throw _privateConstructorUsedError;
 
   @optionalTypeArgs
@@ -54,26 +54,26 @@ mixin _$SearchProfileEvent {
       throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $SearchProfileEventCopyWith<SearchProfileEvent> get copyWith =>
+  $SearchForumEventCopyWith<SearchForumEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $SearchProfileEventCopyWith<$Res> {
-  factory $SearchProfileEventCopyWith(
-          SearchProfileEvent value, $Res Function(SearchProfileEvent) then) =
-      _$SearchProfileEventCopyWithImpl<$Res>;
+abstract class $SearchForumEventCopyWith<$Res> {
+  factory $SearchForumEventCopyWith(
+          SearchForumEvent value, $Res Function(SearchForumEvent) then) =
+      _$SearchForumEventCopyWithImpl<$Res>;
   $Res call({String query});
 }
 
 /// @nodoc
-class _$SearchProfileEventCopyWithImpl<$Res>
-    implements $SearchProfileEventCopyWith<$Res> {
-  _$SearchProfileEventCopyWithImpl(this._value, this._then);
+class _$SearchForumEventCopyWithImpl<$Res>
+    implements $SearchForumEventCopyWith<$Res> {
+  _$SearchForumEventCopyWithImpl(this._value, this._then);
 
-  final SearchProfileEvent _value;
+  final SearchForumEvent _value;
   // ignore: unused_field
-  final $Res Function(SearchProfileEvent) _then;
+  final $Res Function(SearchForumEvent) _then;
 
   @override
   $Res call({
@@ -90,7 +90,7 @@ class _$SearchProfileEventCopyWithImpl<$Res>
 
 /// @nodoc
 abstract class _$SearchChangedCopyWith<$Res>
-    implements $SearchProfileEventCopyWith<$Res> {
+    implements $SearchForumEventCopyWith<$Res> {
   factory _$SearchChangedCopyWith(
           _SearchChanged value, $Res Function(_SearchChanged) then) =
       __$SearchChangedCopyWithImpl<$Res>;
@@ -100,7 +100,7 @@ abstract class _$SearchChangedCopyWith<$Res>
 
 /// @nodoc
 class __$SearchChangedCopyWithImpl<$Res>
-    extends _$SearchProfileEventCopyWithImpl<$Res>
+    extends _$SearchForumEventCopyWithImpl<$Res>
     implements _$SearchChangedCopyWith<$Res> {
   __$SearchChangedCopyWithImpl(
       _SearchChanged _value, $Res Function(_SearchChanged) _then)
@@ -124,15 +124,23 @@ class __$SearchChangedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SearchChanged implements _SearchChanged {
+class _$_SearchChanged with DiagnosticableTreeMixin implements _SearchChanged {
   const _$_SearchChanged(this.query);
 
   @override
   final String query;
 
   @override
-  String toString() {
-    return 'SearchProfileEvent.searchChanged(query: $query)';
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'SearchForumEvent.searchChanged(query: $query)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'SearchForumEvent.searchChanged'))
+      ..add(DiagnosticsProperty('query', query));
   }
 
   @override
@@ -193,7 +201,7 @@ class _$_SearchChanged implements _SearchChanged {
   }
 }
 
-abstract class _SearchChanged implements SearchProfileEvent {
+abstract class _SearchChanged implements SearchForumEvent {
   const factory _SearchChanged(String query) = _$_SearchChanged;
 
   @override
@@ -205,15 +213,15 @@ abstract class _SearchChanged implements SearchProfileEvent {
 }
 
 /// @nodoc
-class _$SearchProfileStateTearOff {
-  const _$SearchProfileStateTearOff();
+class _$SearchForumStateTearOff {
+  const _$SearchForumStateTearOff();
 
-  _SearchProfileState call(
-      {required Either<DataFailure, List<Profile>> searchProfileResults,
+  _SearchForumState call(
+      {required Either<DataFailure, List<ForumPost>> searchForumResults,
       required bool isSearching,
       required bool displayResults}) {
-    return _SearchProfileState(
-      searchProfileResults: searchProfileResults,
+    return _SearchForumState(
+      searchForumResults: searchForumResults,
       isSearching: isSearching,
       displayResults: displayResults,
     );
@@ -221,51 +229,51 @@ class _$SearchProfileStateTearOff {
 }
 
 /// @nodoc
-const $SearchProfileState = _$SearchProfileStateTearOff();
+const $SearchForumState = _$SearchForumStateTearOff();
 
 /// @nodoc
-mixin _$SearchProfileState {
-  Either<DataFailure, List<Profile>> get searchProfileResults =>
+mixin _$SearchForumState {
+  Either<DataFailure, List<ForumPost>> get searchForumResults =>
       throw _privateConstructorUsedError;
   bool get isSearching => throw _privateConstructorUsedError;
   bool get displayResults => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $SearchProfileStateCopyWith<SearchProfileState> get copyWith =>
+  $SearchForumStateCopyWith<SearchForumState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $SearchProfileStateCopyWith<$Res> {
-  factory $SearchProfileStateCopyWith(
-          SearchProfileState value, $Res Function(SearchProfileState) then) =
-      _$SearchProfileStateCopyWithImpl<$Res>;
+abstract class $SearchForumStateCopyWith<$Res> {
+  factory $SearchForumStateCopyWith(
+          SearchForumState value, $Res Function(SearchForumState) then) =
+      _$SearchForumStateCopyWithImpl<$Res>;
   $Res call(
-      {Either<DataFailure, List<Profile>> searchProfileResults,
+      {Either<DataFailure, List<ForumPost>> searchForumResults,
       bool isSearching,
       bool displayResults});
 }
 
 /// @nodoc
-class _$SearchProfileStateCopyWithImpl<$Res>
-    implements $SearchProfileStateCopyWith<$Res> {
-  _$SearchProfileStateCopyWithImpl(this._value, this._then);
+class _$SearchForumStateCopyWithImpl<$Res>
+    implements $SearchForumStateCopyWith<$Res> {
+  _$SearchForumStateCopyWithImpl(this._value, this._then);
 
-  final SearchProfileState _value;
+  final SearchForumState _value;
   // ignore: unused_field
-  final $Res Function(SearchProfileState) _then;
+  final $Res Function(SearchForumState) _then;
 
   @override
   $Res call({
-    Object? searchProfileResults = freezed,
+    Object? searchForumResults = freezed,
     Object? isSearching = freezed,
     Object? displayResults = freezed,
   }) {
     return _then(_value.copyWith(
-      searchProfileResults: searchProfileResults == freezed
-          ? _value.searchProfileResults
-          : searchProfileResults // ignore: cast_nullable_to_non_nullable
-              as Either<DataFailure, List<Profile>>,
+      searchForumResults: searchForumResults == freezed
+          ? _value.searchForumResults
+          : searchForumResults // ignore: cast_nullable_to_non_nullable
+              as Either<DataFailure, List<ForumPost>>,
       isSearching: isSearching == freezed
           ? _value.isSearching
           : isSearching // ignore: cast_nullable_to_non_nullable
@@ -279,40 +287,40 @@ class _$SearchProfileStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$SearchProfileStateCopyWith<$Res>
-    implements $SearchProfileStateCopyWith<$Res> {
-  factory _$SearchProfileStateCopyWith(
-          _SearchProfileState value, $Res Function(_SearchProfileState) then) =
-      __$SearchProfileStateCopyWithImpl<$Res>;
+abstract class _$SearchForumStateCopyWith<$Res>
+    implements $SearchForumStateCopyWith<$Res> {
+  factory _$SearchForumStateCopyWith(
+          _SearchForumState value, $Res Function(_SearchForumState) then) =
+      __$SearchForumStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {Either<DataFailure, List<Profile>> searchProfileResults,
+      {Either<DataFailure, List<ForumPost>> searchForumResults,
       bool isSearching,
       bool displayResults});
 }
 
 /// @nodoc
-class __$SearchProfileStateCopyWithImpl<$Res>
-    extends _$SearchProfileStateCopyWithImpl<$Res>
-    implements _$SearchProfileStateCopyWith<$Res> {
-  __$SearchProfileStateCopyWithImpl(
-      _SearchProfileState _value, $Res Function(_SearchProfileState) _then)
-      : super(_value, (v) => _then(v as _SearchProfileState));
+class __$SearchForumStateCopyWithImpl<$Res>
+    extends _$SearchForumStateCopyWithImpl<$Res>
+    implements _$SearchForumStateCopyWith<$Res> {
+  __$SearchForumStateCopyWithImpl(
+      _SearchForumState _value, $Res Function(_SearchForumState) _then)
+      : super(_value, (v) => _then(v as _SearchForumState));
 
   @override
-  _SearchProfileState get _value => super._value as _SearchProfileState;
+  _SearchForumState get _value => super._value as _SearchForumState;
 
   @override
   $Res call({
-    Object? searchProfileResults = freezed,
+    Object? searchForumResults = freezed,
     Object? isSearching = freezed,
     Object? displayResults = freezed,
   }) {
-    return _then(_SearchProfileState(
-      searchProfileResults: searchProfileResults == freezed
-          ? _value.searchProfileResults
-          : searchProfileResults // ignore: cast_nullable_to_non_nullable
-              as Either<DataFailure, List<Profile>>,
+    return _then(_SearchForumState(
+      searchForumResults: searchForumResults == freezed
+          ? _value.searchForumResults
+          : searchForumResults // ignore: cast_nullable_to_non_nullable
+              as Either<DataFailure, List<ForumPost>>,
       isSearching: isSearching == freezed
           ? _value.isSearching
           : isSearching // ignore: cast_nullable_to_non_nullable
@@ -327,31 +335,43 @@ class __$SearchProfileStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SearchProfileState implements _SearchProfileState {
-  const _$_SearchProfileState(
-      {required this.searchProfileResults,
+class _$_SearchForumState
+    with DiagnosticableTreeMixin
+    implements _SearchForumState {
+  const _$_SearchForumState(
+      {required this.searchForumResults,
       required this.isSearching,
       required this.displayResults});
 
   @override
-  final Either<DataFailure, List<Profile>> searchProfileResults;
+  final Either<DataFailure, List<ForumPost>> searchForumResults;
   @override
   final bool isSearching;
   @override
   final bool displayResults;
 
   @override
-  String toString() {
-    return 'SearchProfileState(searchProfileResults: $searchProfileResults, isSearching: $isSearching, displayResults: $displayResults)';
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'SearchForumState(searchForumResults: $searchForumResults, isSearching: $isSearching, displayResults: $displayResults)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'SearchForumState'))
+      ..add(DiagnosticsProperty('searchForumResults', searchForumResults))
+      ..add(DiagnosticsProperty('isSearching', isSearching))
+      ..add(DiagnosticsProperty('displayResults', displayResults));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _SearchProfileState &&
-            (identical(other.searchProfileResults, searchProfileResults) ||
-                const DeepCollectionEquality().equals(
-                    other.searchProfileResults, searchProfileResults)) &&
+        (other is _SearchForumState &&
+            (identical(other.searchForumResults, searchForumResults) ||
+                const DeepCollectionEquality()
+                    .equals(other.searchForumResults, searchForumResults)) &&
             (identical(other.isSearching, isSearching) ||
                 const DeepCollectionEquality()
                     .equals(other.isSearching, isSearching)) &&
@@ -363,24 +383,24 @@ class _$_SearchProfileState implements _SearchProfileState {
   @override
   int get hashCode =>
       runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(searchProfileResults) ^
+      const DeepCollectionEquality().hash(searchForumResults) ^
       const DeepCollectionEquality().hash(isSearching) ^
       const DeepCollectionEquality().hash(displayResults);
 
   @JsonKey(ignore: true)
   @override
-  _$SearchProfileStateCopyWith<_SearchProfileState> get copyWith =>
-      __$SearchProfileStateCopyWithImpl<_SearchProfileState>(this, _$identity);
+  _$SearchForumStateCopyWith<_SearchForumState> get copyWith =>
+      __$SearchForumStateCopyWithImpl<_SearchForumState>(this, _$identity);
 }
 
-abstract class _SearchProfileState implements SearchProfileState {
-  const factory _SearchProfileState(
-      {required Either<DataFailure, List<Profile>> searchProfileResults,
+abstract class _SearchForumState implements SearchForumState {
+  const factory _SearchForumState(
+      {required Either<DataFailure, List<ForumPost>> searchForumResults,
       required bool isSearching,
-      required bool displayResults}) = _$_SearchProfileState;
+      required bool displayResults}) = _$_SearchForumState;
 
   @override
-  Either<DataFailure, List<Profile>> get searchProfileResults =>
+  Either<DataFailure, List<ForumPost>> get searchForumResults =>
       throw _privateConstructorUsedError;
   @override
   bool get isSearching => throw _privateConstructorUsedError;
@@ -388,6 +408,6 @@ abstract class _SearchProfileState implements SearchProfileState {
   bool get displayResults => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$SearchProfileStateCopyWith<_SearchProfileState> get copyWith =>
+  _$SearchForumStateCopyWith<_SearchForumState> get copyWith =>
       throw _privateConstructorUsedError;
 }

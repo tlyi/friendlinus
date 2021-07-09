@@ -9,22 +9,13 @@ import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:friendlinus/domain/core/constants.dart' as constants;
 
 class SearchResults extends StatelessWidget {
+  final String ownId;
+  const SearchResults({Key? key, required this.ownId}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<SearchProfileBloc, SearchProfileState>(
-      listener: (context, state) {
-        if (state.isLoadedProfile) {
-          state.selectedProfile.fold(
-              (f) => FlushbarHelper.createError(message: 'Server error')
-                  .show(context),
-              (userProfile) => state.ownId == userProfile.uuid
-                  ? context.pushRoute(ProfileRoute(canGoBack: true))
-                  : context
-                      .pushRoute(OtherProfileRoute(userProfile: userProfile)));
-        }
-      },
+    return BlocBuilder<SearchProfileBloc, SearchProfileState>(
       builder: (context, state) {
-        if (state.isSearching || state.isLoadingProfile) {
+        if (state.isSearching) {
           return Container();
         } else if (state.displayResults) {
           final searchResults = context
@@ -52,10 +43,10 @@ class SearchResults extends StatelessWidget {
                     ),
                     title: Text(user.username.getOrCrash()),
                     onTap: () {
-                      print('tapped');
-                      context.read<SearchProfileBloc>().add(
-                          SearchProfileEvent.profileSelected(
-                              user.username.getOrCrash()));
+                      ownId == user.uuid
+                          ? context.pushRoute(ProfileRoute(canGoBack: true))
+                          : context
+                              .pushRoute(OtherProfileRoute(userProfile: user));
                     },
                   ),
                 );

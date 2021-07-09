@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
-part of 'module_watcher_bloc.dart';
+part of 'module_forum_watcher_bloc.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,247 +13,162 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$ModuleWatcherEventTearOff {
-  const _$ModuleWatcherEventTearOff();
+class _$ModuleForumWatcherEventTearOff {
+  const _$ModuleForumWatcherEventTearOff();
 
-  _RetrieveModulesStarted retrieveModulesStarted() {
-    return const _RetrieveModulesStarted();
+  _RetrieveForumsStarted retrieveForumsStarted(String moduleCode) {
+    return _RetrieveForumsStarted(
+      moduleCode,
+    );
   }
 
-  _ModulesReceived modulesReceived(
-      Either<DataFailure, List<Mod>> failureOrModules) {
-    return _ModulesReceived(
-      failureOrModules,
+  _ForumsReceived forumsReceived(
+      Either<DataFailure, List<ForumPost>> failureOrForums) {
+    return _ForumsReceived(
+      failureOrForums,
     );
   }
 }
 
 /// @nodoc
-const $ModuleWatcherEvent = _$ModuleWatcherEventTearOff();
+const $ModuleForumWatcherEvent = _$ModuleForumWatcherEventTearOff();
 
 /// @nodoc
-mixin _$ModuleWatcherEvent {
+mixin _$ModuleForumWatcherEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() retrieveModulesStarted,
-    required TResult Function(Either<DataFailure, List<Mod>> failureOrModules)
-        modulesReceived,
+    required TResult Function(String moduleCode) retrieveForumsStarted,
+    required TResult Function(
+            Either<DataFailure, List<ForumPost>> failureOrForums)
+        forumsReceived,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? retrieveModulesStarted,
-    TResult Function(Either<DataFailure, List<Mod>> failureOrModules)?
-        modulesReceived,
+    TResult Function(String moduleCode)? retrieveForumsStarted,
+    TResult Function(Either<DataFailure, List<ForumPost>> failureOrForums)?
+        forumsReceived,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_RetrieveModulesStarted value)
-        retrieveModulesStarted,
-    required TResult Function(_ModulesReceived value) modulesReceived,
+    required TResult Function(_RetrieveForumsStarted value)
+        retrieveForumsStarted,
+    required TResult Function(_ForumsReceived value) forumsReceived,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_RetrieveModulesStarted value)? retrieveModulesStarted,
-    TResult Function(_ModulesReceived value)? modulesReceived,
+    TResult Function(_RetrieveForumsStarted value)? retrieveForumsStarted,
+    TResult Function(_ForumsReceived value)? forumsReceived,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ModuleWatcherEventCopyWith<$Res> {
-  factory $ModuleWatcherEventCopyWith(
-          ModuleWatcherEvent value, $Res Function(ModuleWatcherEvent) then) =
-      _$ModuleWatcherEventCopyWithImpl<$Res>;
+abstract class $ModuleForumWatcherEventCopyWith<$Res> {
+  factory $ModuleForumWatcherEventCopyWith(ModuleForumWatcherEvent value,
+          $Res Function(ModuleForumWatcherEvent) then) =
+      _$ModuleForumWatcherEventCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$ModuleWatcherEventCopyWithImpl<$Res>
-    implements $ModuleWatcherEventCopyWith<$Res> {
-  _$ModuleWatcherEventCopyWithImpl(this._value, this._then);
+class _$ModuleForumWatcherEventCopyWithImpl<$Res>
+    implements $ModuleForumWatcherEventCopyWith<$Res> {
+  _$ModuleForumWatcherEventCopyWithImpl(this._value, this._then);
 
-  final ModuleWatcherEvent _value;
+  final ModuleForumWatcherEvent _value;
   // ignore: unused_field
-  final $Res Function(ModuleWatcherEvent) _then;
+  final $Res Function(ModuleForumWatcherEvent) _then;
 }
 
 /// @nodoc
-abstract class _$RetrieveModulesStartedCopyWith<$Res> {
-  factory _$RetrieveModulesStartedCopyWith(_RetrieveModulesStarted value,
-          $Res Function(_RetrieveModulesStarted) then) =
-      __$RetrieveModulesStartedCopyWithImpl<$Res>;
+abstract class _$RetrieveForumsStartedCopyWith<$Res> {
+  factory _$RetrieveForumsStartedCopyWith(_RetrieveForumsStarted value,
+          $Res Function(_RetrieveForumsStarted) then) =
+      __$RetrieveForumsStartedCopyWithImpl<$Res>;
+  $Res call({String moduleCode});
 }
 
 /// @nodoc
-class __$RetrieveModulesStartedCopyWithImpl<$Res>
-    extends _$ModuleWatcherEventCopyWithImpl<$Res>
-    implements _$RetrieveModulesStartedCopyWith<$Res> {
-  __$RetrieveModulesStartedCopyWithImpl(_RetrieveModulesStarted _value,
-      $Res Function(_RetrieveModulesStarted) _then)
-      : super(_value, (v) => _then(v as _RetrieveModulesStarted));
+class __$RetrieveForumsStartedCopyWithImpl<$Res>
+    extends _$ModuleForumWatcherEventCopyWithImpl<$Res>
+    implements _$RetrieveForumsStartedCopyWith<$Res> {
+  __$RetrieveForumsStartedCopyWithImpl(_RetrieveForumsStarted _value,
+      $Res Function(_RetrieveForumsStarted) _then)
+      : super(_value, (v) => _then(v as _RetrieveForumsStarted));
 
   @override
-  _RetrieveModulesStarted get _value => super._value as _RetrieveModulesStarted;
-}
-
-/// @nodoc
-
-class _$_RetrieveModulesStarted implements _RetrieveModulesStarted {
-  const _$_RetrieveModulesStarted();
-
-  @override
-  String toString() {
-    return 'ModuleWatcherEvent.retrieveModulesStarted()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _RetrieveModulesStarted);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() retrieveModulesStarted,
-    required TResult Function(Either<DataFailure, List<Mod>> failureOrModules)
-        modulesReceived,
-  }) {
-    return retrieveModulesStarted();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? retrieveModulesStarted,
-    TResult Function(Either<DataFailure, List<Mod>> failureOrModules)?
-        modulesReceived,
-    required TResult orElse(),
-  }) {
-    if (retrieveModulesStarted != null) {
-      return retrieveModulesStarted();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_RetrieveModulesStarted value)
-        retrieveModulesStarted,
-    required TResult Function(_ModulesReceived value) modulesReceived,
-  }) {
-    return retrieveModulesStarted(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_RetrieveModulesStarted value)? retrieveModulesStarted,
-    TResult Function(_ModulesReceived value)? modulesReceived,
-    required TResult orElse(),
-  }) {
-    if (retrieveModulesStarted != null) {
-      return retrieveModulesStarted(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _RetrieveModulesStarted implements ModuleWatcherEvent {
-  const factory _RetrieveModulesStarted() = _$_RetrieveModulesStarted;
-}
-
-/// @nodoc
-abstract class _$ModulesReceivedCopyWith<$Res> {
-  factory _$ModulesReceivedCopyWith(
-          _ModulesReceived value, $Res Function(_ModulesReceived) then) =
-      __$ModulesReceivedCopyWithImpl<$Res>;
-  $Res call({Either<DataFailure, List<Mod>> failureOrModules});
-}
-
-/// @nodoc
-class __$ModulesReceivedCopyWithImpl<$Res>
-    extends _$ModuleWatcherEventCopyWithImpl<$Res>
-    implements _$ModulesReceivedCopyWith<$Res> {
-  __$ModulesReceivedCopyWithImpl(
-      _ModulesReceived _value, $Res Function(_ModulesReceived) _then)
-      : super(_value, (v) => _then(v as _ModulesReceived));
-
-  @override
-  _ModulesReceived get _value => super._value as _ModulesReceived;
+  _RetrieveForumsStarted get _value => super._value as _RetrieveForumsStarted;
 
   @override
   $Res call({
-    Object? failureOrModules = freezed,
+    Object? moduleCode = freezed,
   }) {
-    return _then(_ModulesReceived(
-      failureOrModules == freezed
-          ? _value.failureOrModules
-          : failureOrModules // ignore: cast_nullable_to_non_nullable
-              as Either<DataFailure, List<Mod>>,
+    return _then(_RetrieveForumsStarted(
+      moduleCode == freezed
+          ? _value.moduleCode
+          : moduleCode // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_ModulesReceived implements _ModulesReceived {
-  const _$_ModulesReceived(this.failureOrModules);
+class _$_RetrieveForumsStarted implements _RetrieveForumsStarted {
+  const _$_RetrieveForumsStarted(this.moduleCode);
 
   @override
-  final Either<DataFailure, List<Mod>> failureOrModules;
+  final String moduleCode;
 
   @override
   String toString() {
-    return 'ModuleWatcherEvent.modulesReceived(failureOrModules: $failureOrModules)';
+    return 'ModuleForumWatcherEvent.retrieveForumsStarted(moduleCode: $moduleCode)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _ModulesReceived &&
-            (identical(other.failureOrModules, failureOrModules) ||
+        (other is _RetrieveForumsStarted &&
+            (identical(other.moduleCode, moduleCode) ||
                 const DeepCollectionEquality()
-                    .equals(other.failureOrModules, failureOrModules)));
+                    .equals(other.moduleCode, moduleCode)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(failureOrModules);
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(moduleCode);
 
   @JsonKey(ignore: true)
   @override
-  _$ModulesReceivedCopyWith<_ModulesReceived> get copyWith =>
-      __$ModulesReceivedCopyWithImpl<_ModulesReceived>(this, _$identity);
+  _$RetrieveForumsStartedCopyWith<_RetrieveForumsStarted> get copyWith =>
+      __$RetrieveForumsStartedCopyWithImpl<_RetrieveForumsStarted>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() retrieveModulesStarted,
-    required TResult Function(Either<DataFailure, List<Mod>> failureOrModules)
-        modulesReceived,
+    required TResult Function(String moduleCode) retrieveForumsStarted,
+    required TResult Function(
+            Either<DataFailure, List<ForumPost>> failureOrForums)
+        forumsReceived,
   }) {
-    return modulesReceived(failureOrModules);
+    return retrieveForumsStarted(moduleCode);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? retrieveModulesStarted,
-    TResult Function(Either<DataFailure, List<Mod>> failureOrModules)?
-        modulesReceived,
+    TResult Function(String moduleCode)? retrieveForumsStarted,
+    TResult Function(Either<DataFailure, List<ForumPost>> failureOrForums)?
+        forumsReceived,
     required TResult orElse(),
   }) {
-    if (modulesReceived != null) {
-      return modulesReceived(failureOrModules);
+    if (retrieveForumsStarted != null) {
+      return retrieveForumsStarted(moduleCode);
     }
     return orElse();
   }
@@ -261,41 +176,164 @@ class _$_ModulesReceived implements _ModulesReceived {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_RetrieveModulesStarted value)
-        retrieveModulesStarted,
-    required TResult Function(_ModulesReceived value) modulesReceived,
+    required TResult Function(_RetrieveForumsStarted value)
+        retrieveForumsStarted,
+    required TResult Function(_ForumsReceived value) forumsReceived,
   }) {
-    return modulesReceived(this);
+    return retrieveForumsStarted(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_RetrieveModulesStarted value)? retrieveModulesStarted,
-    TResult Function(_ModulesReceived value)? modulesReceived,
+    TResult Function(_RetrieveForumsStarted value)? retrieveForumsStarted,
+    TResult Function(_ForumsReceived value)? forumsReceived,
     required TResult orElse(),
   }) {
-    if (modulesReceived != null) {
-      return modulesReceived(this);
+    if (retrieveForumsStarted != null) {
+      return retrieveForumsStarted(this);
     }
     return orElse();
   }
 }
 
-abstract class _ModulesReceived implements ModuleWatcherEvent {
-  const factory _ModulesReceived(
-      Either<DataFailure, List<Mod>> failureOrModules) = _$_ModulesReceived;
+abstract class _RetrieveForumsStarted implements ModuleForumWatcherEvent {
+  const factory _RetrieveForumsStarted(String moduleCode) =
+      _$_RetrieveForumsStarted;
 
-  Either<DataFailure, List<Mod>> get failureOrModules =>
-      throw _privateConstructorUsedError;
+  String get moduleCode => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  _$ModulesReceivedCopyWith<_ModulesReceived> get copyWith =>
+  _$RetrieveForumsStartedCopyWith<_RetrieveForumsStarted> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-class _$ModuleWatcherStateTearOff {
-  const _$ModuleWatcherStateTearOff();
+abstract class _$ForumsReceivedCopyWith<$Res> {
+  factory _$ForumsReceivedCopyWith(
+          _ForumsReceived value, $Res Function(_ForumsReceived) then) =
+      __$ForumsReceivedCopyWithImpl<$Res>;
+  $Res call({Either<DataFailure, List<ForumPost>> failureOrForums});
+}
+
+/// @nodoc
+class __$ForumsReceivedCopyWithImpl<$Res>
+    extends _$ModuleForumWatcherEventCopyWithImpl<$Res>
+    implements _$ForumsReceivedCopyWith<$Res> {
+  __$ForumsReceivedCopyWithImpl(
+      _ForumsReceived _value, $Res Function(_ForumsReceived) _then)
+      : super(_value, (v) => _then(v as _ForumsReceived));
+
+  @override
+  _ForumsReceived get _value => super._value as _ForumsReceived;
+
+  @override
+  $Res call({
+    Object? failureOrForums = freezed,
+  }) {
+    return _then(_ForumsReceived(
+      failureOrForums == freezed
+          ? _value.failureOrForums
+          : failureOrForums // ignore: cast_nullable_to_non_nullable
+              as Either<DataFailure, List<ForumPost>>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_ForumsReceived implements _ForumsReceived {
+  const _$_ForumsReceived(this.failureOrForums);
+
+  @override
+  final Either<DataFailure, List<ForumPost>> failureOrForums;
+
+  @override
+  String toString() {
+    return 'ModuleForumWatcherEvent.forumsReceived(failureOrForums: $failureOrForums)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _ForumsReceived &&
+            (identical(other.failureOrForums, failureOrForums) ||
+                const DeepCollectionEquality()
+                    .equals(other.failureOrForums, failureOrForums)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(failureOrForums);
+
+  @JsonKey(ignore: true)
+  @override
+  _$ForumsReceivedCopyWith<_ForumsReceived> get copyWith =>
+      __$ForumsReceivedCopyWithImpl<_ForumsReceived>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String moduleCode) retrieveForumsStarted,
+    required TResult Function(
+            Either<DataFailure, List<ForumPost>> failureOrForums)
+        forumsReceived,
+  }) {
+    return forumsReceived(failureOrForums);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String moduleCode)? retrieveForumsStarted,
+    TResult Function(Either<DataFailure, List<ForumPost>> failureOrForums)?
+        forumsReceived,
+    required TResult orElse(),
+  }) {
+    if (forumsReceived != null) {
+      return forumsReceived(failureOrForums);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_RetrieveForumsStarted value)
+        retrieveForumsStarted,
+    required TResult Function(_ForumsReceived value) forumsReceived,
+  }) {
+    return forumsReceived(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_RetrieveForumsStarted value)? retrieveForumsStarted,
+    TResult Function(_ForumsReceived value)? forumsReceived,
+    required TResult orElse(),
+  }) {
+    if (forumsReceived != null) {
+      return forumsReceived(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _ForumsReceived implements ModuleForumWatcherEvent {
+  const factory _ForumsReceived(
+      Either<DataFailure, List<ForumPost>> failureOrForums) = _$_ForumsReceived;
+
+  Either<DataFailure, List<ForumPost>> get failureOrForums =>
+      throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$ForumsReceivedCopyWith<_ForumsReceived> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+class _$ModuleForumWatcherStateTearOff {
+  const _$ModuleForumWatcherStateTearOff();
 
   _Initial initial() {
     return const _Initial();
@@ -305,9 +343,9 @@ class _$ModuleWatcherStateTearOff {
     return const _LoadInProgress();
   }
 
-  _LoadSuccess loadSuccess(List<Mod> modules) {
+  _LoadSuccess loadSuccess(List<ForumPost> forums) {
     return _LoadSuccess(
-      modules,
+      forums,
     );
   }
 
@@ -319,15 +357,15 @@ class _$ModuleWatcherStateTearOff {
 }
 
 /// @nodoc
-const $ModuleWatcherState = _$ModuleWatcherStateTearOff();
+const $ModuleForumWatcherState = _$ModuleForumWatcherStateTearOff();
 
 /// @nodoc
-mixin _$ModuleWatcherState {
+mixin _$ModuleForumWatcherState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<Mod> modules) loadSuccess,
+    required TResult Function(List<ForumPost> forums) loadSuccess,
     required TResult Function(DataFailure dataFailure) loadFailure,
   }) =>
       throw _privateConstructorUsedError;
@@ -335,7 +373,7 @@ mixin _$ModuleWatcherState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<Mod> modules)? loadSuccess,
+    TResult Function(List<ForumPost> forums)? loadSuccess,
     TResult Function(DataFailure dataFailure)? loadFailure,
     required TResult orElse(),
   }) =>
@@ -360,20 +398,20 @@ mixin _$ModuleWatcherState {
 }
 
 /// @nodoc
-abstract class $ModuleWatcherStateCopyWith<$Res> {
-  factory $ModuleWatcherStateCopyWith(
-          ModuleWatcherState value, $Res Function(ModuleWatcherState) then) =
-      _$ModuleWatcherStateCopyWithImpl<$Res>;
+abstract class $ModuleForumWatcherStateCopyWith<$Res> {
+  factory $ModuleForumWatcherStateCopyWith(ModuleForumWatcherState value,
+          $Res Function(ModuleForumWatcherState) then) =
+      _$ModuleForumWatcherStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$ModuleWatcherStateCopyWithImpl<$Res>
-    implements $ModuleWatcherStateCopyWith<$Res> {
-  _$ModuleWatcherStateCopyWithImpl(this._value, this._then);
+class _$ModuleForumWatcherStateCopyWithImpl<$Res>
+    implements $ModuleForumWatcherStateCopyWith<$Res> {
+  _$ModuleForumWatcherStateCopyWithImpl(this._value, this._then);
 
-  final ModuleWatcherState _value;
+  final ModuleForumWatcherState _value;
   // ignore: unused_field
-  final $Res Function(ModuleWatcherState) _then;
+  final $Res Function(ModuleForumWatcherState) _then;
 }
 
 /// @nodoc
@@ -384,7 +422,7 @@ abstract class _$InitialCopyWith<$Res> {
 
 /// @nodoc
 class __$InitialCopyWithImpl<$Res>
-    extends _$ModuleWatcherStateCopyWithImpl<$Res>
+    extends _$ModuleForumWatcherStateCopyWithImpl<$Res>
     implements _$InitialCopyWith<$Res> {
   __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
       : super(_value, (v) => _then(v as _Initial));
@@ -400,7 +438,7 @@ class _$_Initial implements _Initial {
 
   @override
   String toString() {
-    return 'ModuleWatcherState.initial()';
+    return 'ModuleForumWatcherState.initial()';
   }
 
   @override
@@ -416,7 +454,7 @@ class _$_Initial implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<Mod> modules) loadSuccess,
+    required TResult Function(List<ForumPost> forums) loadSuccess,
     required TResult Function(DataFailure dataFailure) loadFailure,
   }) {
     return initial();
@@ -427,7 +465,7 @@ class _$_Initial implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<Mod> modules)? loadSuccess,
+    TResult Function(List<ForumPost> forums)? loadSuccess,
     TResult Function(DataFailure dataFailure)? loadFailure,
     required TResult orElse(),
   }) {
@@ -464,7 +502,7 @@ class _$_Initial implements _Initial {
   }
 }
 
-abstract class _Initial implements ModuleWatcherState {
+abstract class _Initial implements ModuleForumWatcherState {
   const factory _Initial() = _$_Initial;
 }
 
@@ -477,7 +515,7 @@ abstract class _$LoadInProgressCopyWith<$Res> {
 
 /// @nodoc
 class __$LoadInProgressCopyWithImpl<$Res>
-    extends _$ModuleWatcherStateCopyWithImpl<$Res>
+    extends _$ModuleForumWatcherStateCopyWithImpl<$Res>
     implements _$LoadInProgressCopyWith<$Res> {
   __$LoadInProgressCopyWithImpl(
       _LoadInProgress _value, $Res Function(_LoadInProgress) _then)
@@ -494,7 +532,7 @@ class _$_LoadInProgress implements _LoadInProgress {
 
   @override
   String toString() {
-    return 'ModuleWatcherState.loadInProgress()';
+    return 'ModuleForumWatcherState.loadInProgress()';
   }
 
   @override
@@ -510,7 +548,7 @@ class _$_LoadInProgress implements _LoadInProgress {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<Mod> modules) loadSuccess,
+    required TResult Function(List<ForumPost> forums) loadSuccess,
     required TResult Function(DataFailure dataFailure) loadFailure,
   }) {
     return loadInProgress();
@@ -521,7 +559,7 @@ class _$_LoadInProgress implements _LoadInProgress {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<Mod> modules)? loadSuccess,
+    TResult Function(List<ForumPost> forums)? loadSuccess,
     TResult Function(DataFailure dataFailure)? loadFailure,
     required TResult orElse(),
   }) {
@@ -558,7 +596,7 @@ class _$_LoadInProgress implements _LoadInProgress {
   }
 }
 
-abstract class _LoadInProgress implements ModuleWatcherState {
+abstract class _LoadInProgress implements ModuleForumWatcherState {
   const factory _LoadInProgress() = _$_LoadInProgress;
 }
 
@@ -567,12 +605,12 @@ abstract class _$LoadSuccessCopyWith<$Res> {
   factory _$LoadSuccessCopyWith(
           _LoadSuccess value, $Res Function(_LoadSuccess) then) =
       __$LoadSuccessCopyWithImpl<$Res>;
-  $Res call({List<Mod> modules});
+  $Res call({List<ForumPost> forums});
 }
 
 /// @nodoc
 class __$LoadSuccessCopyWithImpl<$Res>
-    extends _$ModuleWatcherStateCopyWithImpl<$Res>
+    extends _$ModuleForumWatcherStateCopyWithImpl<$Res>
     implements _$LoadSuccessCopyWith<$Res> {
   __$LoadSuccessCopyWithImpl(
       _LoadSuccess _value, $Res Function(_LoadSuccess) _then)
@@ -583,13 +621,13 @@ class __$LoadSuccessCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? modules = freezed,
+    Object? forums = freezed,
   }) {
     return _then(_LoadSuccess(
-      modules == freezed
-          ? _value.modules
-          : modules // ignore: cast_nullable_to_non_nullable
-              as List<Mod>,
+      forums == freezed
+          ? _value.forums
+          : forums // ignore: cast_nullable_to_non_nullable
+              as List<ForumPost>,
     ));
   }
 }
@@ -597,27 +635,27 @@ class __$LoadSuccessCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_LoadSuccess implements _LoadSuccess {
-  const _$_LoadSuccess(this.modules);
+  const _$_LoadSuccess(this.forums);
 
   @override
-  final List<Mod> modules;
+  final List<ForumPost> forums;
 
   @override
   String toString() {
-    return 'ModuleWatcherState.loadSuccess(modules: $modules)';
+    return 'ModuleForumWatcherState.loadSuccess(forums: $forums)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _LoadSuccess &&
-            (identical(other.modules, modules) ||
-                const DeepCollectionEquality().equals(other.modules, modules)));
+            (identical(other.forums, forums) ||
+                const DeepCollectionEquality().equals(other.forums, forums)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(modules);
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(forums);
 
   @JsonKey(ignore: true)
   @override
@@ -629,10 +667,10 @@ class _$_LoadSuccess implements _LoadSuccess {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<Mod> modules) loadSuccess,
+    required TResult Function(List<ForumPost> forums) loadSuccess,
     required TResult Function(DataFailure dataFailure) loadFailure,
   }) {
-    return loadSuccess(modules);
+    return loadSuccess(forums);
   }
 
   @override
@@ -640,12 +678,12 @@ class _$_LoadSuccess implements _LoadSuccess {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<Mod> modules)? loadSuccess,
+    TResult Function(List<ForumPost> forums)? loadSuccess,
     TResult Function(DataFailure dataFailure)? loadFailure,
     required TResult orElse(),
   }) {
     if (loadSuccess != null) {
-      return loadSuccess(modules);
+      return loadSuccess(forums);
     }
     return orElse();
   }
@@ -677,10 +715,10 @@ class _$_LoadSuccess implements _LoadSuccess {
   }
 }
 
-abstract class _LoadSuccess implements ModuleWatcherState {
-  const factory _LoadSuccess(List<Mod> modules) = _$_LoadSuccess;
+abstract class _LoadSuccess implements ModuleForumWatcherState {
+  const factory _LoadSuccess(List<ForumPost> forums) = _$_LoadSuccess;
 
-  List<Mod> get modules => throw _privateConstructorUsedError;
+  List<ForumPost> get forums => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$LoadSuccessCopyWith<_LoadSuccess> get copyWith =>
       throw _privateConstructorUsedError;
@@ -698,7 +736,7 @@ abstract class _$LoadFailureCopyWith<$Res> {
 
 /// @nodoc
 class __$LoadFailureCopyWithImpl<$Res>
-    extends _$ModuleWatcherStateCopyWithImpl<$Res>
+    extends _$ModuleForumWatcherStateCopyWithImpl<$Res>
     implements _$LoadFailureCopyWith<$Res> {
   __$LoadFailureCopyWithImpl(
       _LoadFailure _value, $Res Function(_LoadFailure) _then)
@@ -737,7 +775,7 @@ class _$_LoadFailure implements _LoadFailure {
 
   @override
   String toString() {
-    return 'ModuleWatcherState.loadFailure(dataFailure: $dataFailure)';
+    return 'ModuleForumWatcherState.loadFailure(dataFailure: $dataFailure)';
   }
 
   @override
@@ -763,7 +801,7 @@ class _$_LoadFailure implements _LoadFailure {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<Mod> modules) loadSuccess,
+    required TResult Function(List<ForumPost> forums) loadSuccess,
     required TResult Function(DataFailure dataFailure) loadFailure,
   }) {
     return loadFailure(dataFailure);
@@ -774,7 +812,7 @@ class _$_LoadFailure implements _LoadFailure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<Mod> modules)? loadSuccess,
+    TResult Function(List<ForumPost> forums)? loadSuccess,
     TResult Function(DataFailure dataFailure)? loadFailure,
     required TResult orElse(),
   }) {
@@ -811,7 +849,7 @@ class _$_LoadFailure implements _LoadFailure {
   }
 }
 
-abstract class _LoadFailure implements ModuleWatcherState {
+abstract class _LoadFailure implements ModuleForumWatcherState {
   const factory _LoadFailure(DataFailure dataFailure) = _$_LoadFailure;
 
   DataFailure get dataFailure => throw _privateConstructorUsedError;

@@ -263,10 +263,12 @@ class ModulesOfInterest extends StatelessWidget {
                   children: List<Widget>.generate(userProfile.modules.length,
                       (int index) {
                     final module = userProfile.modules[index];
-                    return Chip(
-                      key: Key(index.toString()),
-                      label: Text(module),
-                    );
+                    return ActionChip(
+                        onPressed: () {
+                          context
+                              .pushRoute(ModuleForumRoute(moduleCode: module));
+                        },
+                        label: Text(module));
                   })),
             )
         ],
@@ -436,7 +438,8 @@ class FollowingList extends StatelessWidget {
                             padding: EdgeInsets.only(top: 25, right: 10),
                             child: GestureDetector(
                               onTap: () async {
-                                await context.pushRoute(SearchUsersRoute());
+                                await context
+                                    .pushRoute(SearchUsersRoute(ownId: ownId));
                                 context.read<ProfileActorBloc>().add(
                                     const ProfileActorEvent
                                         .loadingOwnProfile());

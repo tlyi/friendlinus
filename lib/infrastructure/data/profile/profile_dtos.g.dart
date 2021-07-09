@@ -18,6 +18,10 @@ _$_ProfileDto _$_$_ProfileDtoFromJson(Map<String, dynamic> json) {
     forumsPosted: (json['forumsPosted'] as List<dynamic>)
         .map((e) => e as String)
         .toList(),
+    following:
+        (json['following'] as List<dynamic>).map((e) => e as String).toList(),
+    followedBy:
+        (json['followedBy'] as List<dynamic>).map((e) => e as String).toList(),
   );
 }
 
@@ -30,4 +34,6 @@ Map<String, dynamic> _$_$_ProfileDtoToJson(_$_ProfileDto instance) =>
       'modules': instance.modules,
       'uuid': instance.uuid,
       'forumsPosted': instance.forumsPosted,
+      'following': instance.following,
+      'followedBy': instance.followedBy,
     };

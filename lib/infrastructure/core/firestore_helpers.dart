@@ -84,4 +84,9 @@ extension FirestoreX on FirebaseFirestore {
         .doc(userId)
         .collection('notifications');
   }
+
+  //for following Feed
+  Future<CollectionReference> feedRef() async {
+    return FirebaseFirestore.instance.collection('feed');
+  }
 }

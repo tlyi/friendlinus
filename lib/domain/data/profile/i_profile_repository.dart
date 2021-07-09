@@ -46,4 +46,8 @@ abstract class IProfileRepository {
 
   Future<Either<DataFailure, List<String>>> searchModulesByModuleCode(
       String moduleCode);
+
+  Future<Either<DataFailure, Unit>> followModule(String moduleCode);
+
+  Future<Either<DataFailure, Unit>> unfollowModule(String moduleCode);
 }

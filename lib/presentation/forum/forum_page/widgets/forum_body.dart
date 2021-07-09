@@ -340,7 +340,11 @@ class _BuildTag extends StatelessWidget {
     return Expanded(
       child: Container(
         alignment: Alignment.topLeft,
-        child: Chip(label: Text(forumTag)),
+        child: ActionChip(
+            onPressed: () {
+              context.pushRoute(ModuleForumRoute(moduleCode: forumTag));
+            },
+            label: Text(forumTag)),
       ),
     );
   }

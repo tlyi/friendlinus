@@ -37,6 +37,7 @@ class ForumPostRepository implements IForumRepository {
   Future<Either<DataFailure, Unit>> create(
       ForumPost forumPost, String forumId) async {
     try {
+      //Create forum
       final forumsRef = await _firestore.forumsRef();
       final tag = forumPost.tag == '' ? 'General' : forumPost.tag;
       final forumPostDto =
@@ -46,14 +47,18 @@ class ForumPostRepository implements IForumRepository {
 
       final modulesRef = await _firestore.modulesRef();
       await _firestore.runTransaction((transaction) async {
+        //Update module last posted
         final tagDoc = modulesRef.doc(forumPost.tag);
         transaction.update(tagDoc,
             {'lastPosted': DateTime.now().millisecondsSinceEpoch.toString()});
 
+        //Update anonymous last posted
         if (forumPost.isAnon) {
           final anonDoc = modulesRef.doc('Anonymous');
           transaction.update(anonDoc,
               {'lastPosted': DateTime.now().millisecondsSinceEpoch.toString()});
+        } else {
+          //add to follower's feed
         }
       });
 
@@ -406,6 +411,15 @@ class ForumPostRepository implements IForumRepository {
             .delete()
             .onError((error, stackTrace) => null);
       }
+
+      //Remove from their forumsPosted in profile
+      final userDoc = await _firestore.userDocument();
+      userDoc.update({
+        'forumsPosted': FieldValue.arrayRemove([forumId])
+      });
+
+      //remove from followers' feeds
+
       return right(unit);
     } on FirebaseException catch (e) {
       if (e.message!.contains('PERMISSION_DENIED')) {
@@ -453,10 +467,11 @@ class ForumPostRepository implements IForumRepository {
       modulesFollowed = ProfileDto.fromFirestore(doc).toDomain().modules;
     });
 
+    modulesFollowed.addAll(['Anonymous', 'General']);
+    print(modulesFollowed);
     yield* modulesRef
         .where('moduleCode', whereIn: modulesFollowed)
-        .where('moduleCode', isEqualTo: 'Anonymous')
-        .where('moduleCode', isEqualTo: 'General')
+        .orderBy('lastPosted', descending: true)
         .snapshots()
         .map(
       (snapshot) {
@@ -480,6 +495,28 @@ class ForumPostRepository implements IForumRepository {
   Stream<Either<DataFailure, List<ForumPost>>> retrieveModuleForums(
       String moduleCode) async* {
     final forumRef = await _firestore.forumsRef();
+    if (moduleCode == "Anonymous") {
+      yield* forumRef
+          .where('isAnon', isEqualTo: true)
+          .orderBy('timestamp', descending: true)
+          .snapshots()
+          .map(
+            (snapshot) => right<DataFailure, List<ForumPost>>(
+              snapshot.docs
+                  .map((doc) => ForumPostDto.fromFirestore(doc).toDomain())
+                  .toList(),
+            ),
+          )
+          .handleError((e) {
+        if (e is FirebaseException &&
+            e.message!.contains('PERMISSION_DENIED')) {
+          return left(const DataFailure.insufficientPermission());
+        } else {
+          print(e);
+          return left(const DataFailure.unexpected());
+        }
+      });
+    }
     yield* forumRef
         .where('tag', isEqualTo: moduleCode)
         .orderBy('timestamp', descending: true)
@@ -559,5 +596,29 @@ class ForumPostRepository implements IForumRepository {
         return left(const DataFailure.unexpected());
       }
     });
+  }
+
+  @override
+  Future<Either<DataFailure, List<ForumPost>>> searchForumByTitle(
+      String queryStr) async {
+    final searchResults = <ForumPost>[];
+    final forumRef = await _firestore.forumsRef();
+    try {
+      QuerySnapshot query = await forumRef
+          .where('title', isGreaterThanOrEqualTo: queryStr)
+          .where('title', isLessThanOrEqualTo: '$queryStr~')
+          .get();
+      {
+        if (query.docs.isNotEmpty) {
+          for (final doc in query.docs) {
+            searchResults.add(ForumPostDto.fromFirestore(doc).toDomain());
+          }
+        }
+        return right(searchResults);
+      }
+    } on FirebaseException catch (e) {
+      print(e);
+      return left(const DataFailure.unexpected());
+    }
   }
 }

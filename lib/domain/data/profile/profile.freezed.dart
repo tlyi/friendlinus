@@ -23,7 +23,9 @@ class _$ProfileTearOff {
       required Bio bio,
       required List<String> modules,
       required String uuid,
-      required List<String> forumsPosted}) {
+      required List<String> forumsPosted,
+      required List<String> following,
+      required List<String> followedBy}) {
     return _Profile(
       photoUrl: photoUrl,
       username: username,
@@ -32,6 +34,8 @@ class _$ProfileTearOff {
       modules: modules,
       uuid: uuid,
       forumsPosted: forumsPosted,
+      following: following,
+      followedBy: followedBy,
     );
   }
 }
@@ -48,6 +52,8 @@ mixin _$Profile {
   List<String> get modules => throw _privateConstructorUsedError;
   String get uuid => throw _privateConstructorUsedError;
   List<String> get forumsPosted => throw _privateConstructorUsedError;
+  List<String> get following => throw _privateConstructorUsedError;
+  List<String> get followedBy => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ProfileCopyWith<Profile> get copyWith => throw _privateConstructorUsedError;
@@ -64,7 +70,9 @@ abstract class $ProfileCopyWith<$Res> {
       Bio bio,
       List<String> modules,
       String uuid,
-      List<String> forumsPosted});
+      List<String> forumsPosted,
+      List<String> following,
+      List<String> followedBy});
 }
 
 /// @nodoc
@@ -84,6 +92,8 @@ class _$ProfileCopyWithImpl<$Res> implements $ProfileCopyWith<$Res> {
     Object? modules = freezed,
     Object? uuid = freezed,
     Object? forumsPosted = freezed,
+    Object? following = freezed,
+    Object? followedBy = freezed,
   }) {
     return _then(_value.copyWith(
       photoUrl: photoUrl == freezed
@@ -114,6 +124,14 @@ class _$ProfileCopyWithImpl<$Res> implements $ProfileCopyWith<$Res> {
           ? _value.forumsPosted
           : forumsPosted // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      following: following == freezed
+          ? _value.following
+          : following // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      followedBy: followedBy == freezed
+          ? _value.followedBy
+          : followedBy // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -130,7 +148,9 @@ abstract class _$ProfileCopyWith<$Res> implements $ProfileCopyWith<$Res> {
       Bio bio,
       List<String> modules,
       String uuid,
-      List<String> forumsPosted});
+      List<String> forumsPosted,
+      List<String> following,
+      List<String> followedBy});
 }
 
 /// @nodoc
@@ -151,6 +171,8 @@ class __$ProfileCopyWithImpl<$Res> extends _$ProfileCopyWithImpl<$Res>
     Object? modules = freezed,
     Object? uuid = freezed,
     Object? forumsPosted = freezed,
+    Object? following = freezed,
+    Object? followedBy = freezed,
   }) {
     return _then(_Profile(
       photoUrl: photoUrl == freezed
@@ -181,6 +203,14 @@ class __$ProfileCopyWithImpl<$Res> extends _$ProfileCopyWithImpl<$Res>
           ? _value.forumsPosted
           : forumsPosted // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      following: following == freezed
+          ? _value.following
+          : following // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      followedBy: followedBy == freezed
+          ? _value.followedBy
+          : followedBy // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -195,7 +225,9 @@ class _$_Profile extends _Profile {
       required this.bio,
       required this.modules,
       required this.uuid,
-      required this.forumsPosted})
+      required this.forumsPosted,
+      required this.following,
+      required this.followedBy})
       : super._();
 
   @override
@@ -212,10 +244,14 @@ class _$_Profile extends _Profile {
   final String uuid;
   @override
   final List<String> forumsPosted;
+  @override
+  final List<String> following;
+  @override
+  final List<String> followedBy;
 
   @override
   String toString() {
-    return 'Profile(photoUrl: $photoUrl, username: $username, course: $course, bio: $bio, modules: $modules, uuid: $uuid, forumsPosted: $forumsPosted)';
+    return 'Profile(photoUrl: $photoUrl, username: $username, course: $course, bio: $bio, modules: $modules, uuid: $uuid, forumsPosted: $forumsPosted, following: $following, followedBy: $followedBy)';
   }
 
   @override
@@ -239,7 +275,13 @@ class _$_Profile extends _Profile {
                 const DeepCollectionEquality().equals(other.uuid, uuid)) &&
             (identical(other.forumsPosted, forumsPosted) ||
                 const DeepCollectionEquality()
-                    .equals(other.forumsPosted, forumsPosted)));
+                    .equals(other.forumsPosted, forumsPosted)) &&
+            (identical(other.following, following) ||
+                const DeepCollectionEquality()
+                    .equals(other.following, following)) &&
+            (identical(other.followedBy, followedBy) ||
+                const DeepCollectionEquality()
+                    .equals(other.followedBy, followedBy)));
   }
 
   @override
@@ -251,7 +293,9 @@ class _$_Profile extends _Profile {
       const DeepCollectionEquality().hash(bio) ^
       const DeepCollectionEquality().hash(modules) ^
       const DeepCollectionEquality().hash(uuid) ^
-      const DeepCollectionEquality().hash(forumsPosted);
+      const DeepCollectionEquality().hash(forumsPosted) ^
+      const DeepCollectionEquality().hash(following) ^
+      const DeepCollectionEquality().hash(followedBy);
 
   @JsonKey(ignore: true)
   @override
@@ -267,7 +311,9 @@ abstract class _Profile extends Profile {
       required Bio bio,
       required List<String> modules,
       required String uuid,
-      required List<String> forumsPosted}) = _$_Profile;
+      required List<String> forumsPosted,
+      required List<String> following,
+      required List<String> followedBy}) = _$_Profile;
   const _Profile._() : super._();
 
   @override
@@ -284,6 +330,10 @@ abstract class _Profile extends Profile {
   String get uuid => throw _privateConstructorUsedError;
   @override
   List<String> get forumsPosted => throw _privateConstructorUsedError;
+  @override
+  List<String> get following => throw _privateConstructorUsedError;
+  @override
+  List<String> get followedBy => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$ProfileCopyWith<_Profile> get copyWith =>
