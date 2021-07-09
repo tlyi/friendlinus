@@ -32,7 +32,9 @@ import 'package:friendlinus/presentation/splash/splash_page.dart';
     AutoRoute(page: VerifyEmailPage),
     AutoRoute(page: RegisterProfilePage),
     AutoRoute(page: ResetPasswordPage),
-    AutoRoute(page: ProfilePage),
+    AutoRoute(
+      page: ProfilePage,
+    ),
     AutoRoute(page: SearchUsersPage),
     AutoRoute(page: UpdateProfilePage),
     AutoRoute(page: OtherProfilePage),

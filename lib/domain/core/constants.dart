@@ -29,4 +29,6 @@ const String LOGO =
 
 const Color THEME_BLUE = Color(0xFF7BA5BB);
 
+const Color THEME_LIGHT_BLUE = Color(0xFFA6C5D6);
+
 const Color THEME_NOTIF_BG = Color(0xFFE44444);

@@ -48,63 +48,63 @@ class ModuleForumPage extends StatelessWidget {
             children: <Widget>[
               Text(moduleCode,
                   style: TextStyle(fontSize: 20, color: Colors.black)),
-              BlocConsumer<ModuleActorBloc, ModuleActorState>(
-                  listener: (context, state) {
-                state.failureOrSuccess.fold(
-                    (failure) => FlushbarHelper.createError(
-                            message: failure.map(
-                                unexpected: (_) => 'Unexpected error',
-                                insufficientPermission: (_) =>
-                                    'Insufficient permission',
-                                unableToUpdate: (_) => 'Unable to update'))
-                        .show(context),
-                    (success) => null);
-              }, builder: (context, state) {
-                if (state.rebuild) {
-                  return IconButton(
-                      onPressed: () {
-                        if (context
-                                .read<ModuleActorBloc>()
-                                .state
-                                .profile
-                                .modules
-                                .length >=
-                            8) {
-                          FlushbarHelper.createError(
-                                  message:
-                                      'Maximum number of modules that you can follow is 8')
-                              .show(context);
-                        } else if (context
-                            .read<ModuleActorBloc>()
-                            .state
-                            .profile
-                            .modules
-                            .contains(moduleCode)) {
-                          print("unfollowing module");
-                          context
-                              .read<ModuleActorBloc>()
-                              .add(ModuleActorEvent.moduleRemoved(moduleCode));
-                        } else {
-                          print("adding to list");
-                          context
-                              .read<ModuleActorBloc>()
-                              .add(ModuleActorEvent.moduleAdded(moduleCode));
-                        }
-                      },
-                      icon: Icon(
-                          (context
+              if (moduleCode != "Anonymous" && moduleCode != "General")
+                BlocConsumer<ModuleActorBloc, ModuleActorState>(
+                    listener: (context, state) {
+                  state.failureOrSuccess.fold(
+                      (failure) => FlushbarHelper.createError(
+                              message: failure.map(
+                                  unexpected: (_) => 'Unexpected error',
+                                  insufficientPermission: (_) =>
+                                      'Insufficient permission',
+                                  unableToUpdate: (_) => 'Unable to update'))
+                          .show(context),
+                      (success) => null);
+                }, builder: (context, state) {
+                  if (state.rebuild) {
+                    return IconButton(
+                        onPressed: () {
+                          if (context
                                   .read<ModuleActorBloc>()
                                   .state
                                   .profile
                                   .modules
-                                  .contains(moduleCode))
-                              ? Icons.check
-                              : Icons.add,
-                          color: Colors.black));
-                } else {
-                  return Container();
-                }
-              })
+                                  .length >=
+                              8) {
+                            FlushbarHelper.createError(
+                                    message:
+                                        'Maximum number of modules that you can follow is 8')
+                                .show(context);
+                          } else if (context
+                              .read<ModuleActorBloc>()
+                              .state
+                              .profile
+                              .modules
+                              .contains(moduleCode)) {
+                            print("unfollowing module");
+                            context.read<ModuleActorBloc>().add(
+                                ModuleActorEvent.moduleRemoved(moduleCode));
+                          } else {
+                            print("adding to list");
+                            context
+                                .read<ModuleActorBloc>()
+                                .add(ModuleActorEvent.moduleAdded(moduleCode));
+                          }
+                        },
+                        icon: Icon(
+                            (context
+                                    .read<ModuleActorBloc>()
+                                    .state
+                                    .profile
+                                    .modules
+                                    .contains(moduleCode))
+                                ? Icons.check
+                                : Icons.add,
+                            color: Colors.black));
+                  } else {
+                    return Container();
+                  }
+                })
             ],
           ),
           actions: [

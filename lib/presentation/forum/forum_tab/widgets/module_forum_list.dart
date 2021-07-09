@@ -30,6 +30,7 @@ class ModuleForumList extends StatelessWidget {
                 return const Center(child: Text('No posts yet :('));
               } else {
                 return ListView.builder(
+                    padding: EdgeInsets.all(10),
                     physics: const ScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: state.forums.length,

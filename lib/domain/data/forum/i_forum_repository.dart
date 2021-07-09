@@ -51,9 +51,10 @@ abstract class IForumRepository {
   Stream<Either<DataFailure, List<ForumPost>>> retrieveModuleForums(
       String moduleCode);
 
-  Stream<Either<DataFailure, List<ForumPost>>> retrieveHomeForums();
+  Stream<Either<DataFailure, List<ForumPost>>> retrieveModuleFeed();
 
-  Stream<Either<DataFailure, List<ForumPost>>> retrieveFollowingForums();
+  Future<Either<DataFailure, List<ForumPost>>> retrieveFriendFeed(
+      String userId);
 
   Future<Either<DataFailure, List<ForumPost>>> searchForumByTitle(
       String queryStr);

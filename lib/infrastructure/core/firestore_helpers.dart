@@ -4,7 +4,7 @@ import 'package:friendlinus/domain/core/errors.dart';
 import 'package:friendlinus/injection.dart';
 
 extension FirestoreX on FirebaseFirestore {
-  //For Profiles
+  //Profiles
   Future<DocumentReference> userDocument() async {
     final userOption = await getIt<IAuthFacade>().getSignedInUser();
     final user = userOption.getOrElse(() => throw NotAuthenticatedError());
@@ -17,12 +17,13 @@ extension FirestoreX on FirebaseFirestore {
     return FirebaseFirestore.instance.collection('users').doc(otherId);
   }
 
-  Future<CollectionReference> chatsRef() async {
-    return FirebaseFirestore.instance.collection('chats');
-  }
-
   Future<CollectionReference> usersRef() async {
     return FirebaseFirestore.instance.collection('users');
+  }
+
+  //Chats
+  Future<CollectionReference> chatsRef() async {
+    return FirebaseFirestore.instance.collection('chats');
   }
 
   Future<DocumentReference> chatDocumentById(String convoId) async {
@@ -45,7 +46,7 @@ extension FirestoreX on FirebaseFirestore {
         .collection('messages');
   }
 
-  //For Forums
+  //Forums
   Future<CollectionReference> forumsRef() async {
     return FirebaseFirestore.instance.collection('forums');
   }
@@ -85,8 +86,15 @@ extension FirestoreX on FirebaseFirestore {
         .collection('notifications');
   }
 
-  //for following Feed
-  Future<CollectionReference> feedRef() async {
-    return FirebaseFirestore.instance.collection('feed');
+  //Following Feed
+  Future<CollectionReference> followingFeedRef() async {
+    return FirebaseFirestore.instance.collection('followingFeed');
+  }
+
+  Future<CollectionReference> followingFeedUserRef(String userId) async {
+    return FirebaseFirestore.instance
+        .collection('followingFeed')
+        .doc(userId)
+        .collection('followingFeed');
   }
 }

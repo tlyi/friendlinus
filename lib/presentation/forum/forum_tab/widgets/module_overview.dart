@@ -29,6 +29,7 @@ class ModuleOverviewPage extends StatelessWidget {
                   const SizedBox(height: 60),
                   Expanded(
                     child: ListView.builder(
+                        padding: const EdgeInsets.all(10),
                         physics: const ScrollPhysics(),
                         shrinkWrap: true,
                         itemCount: state.modules.length,
@@ -38,9 +39,11 @@ class ModuleOverviewPage extends StatelessWidget {
                               ? 'No posts yet :('
                               : 'Last post ${getTime(module.lastPosted)}...';
                           return Card(
+                            color: constants.THEME_LIGHT_BLUE,
                             shape: RoundedRectangleBorder(
                               side: const BorderSide(
-                                  color: constants.THEME_BLUE, width: 2.0),
+                                  color: constants.THEME_LIGHT_BLUE,
+                                  width: 0.5),
                               borderRadius: BorderRadius.circular(15.0),
                             ),
                             child: ListTile(

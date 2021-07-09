@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,6 +9,7 @@ import 'package:friendlinus/domain/data/forum/forum_post/forum_post.dart';
 import 'package:friendlinus/domain/mods/mod.dart';
 import 'package:friendlinus/injection.dart';
 import 'package:friendlinus/presentation/core/app_bar.dart';
+import 'package:friendlinus/presentation/core/get_time.dart';
 import 'package:friendlinus/presentation/core/nav_bar.dart';
 import 'package:friendlinus/presentation/forum/forum_tab/widgets/module_overview.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
@@ -59,7 +62,7 @@ class _BuildFloatingSearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingSearchBar(
-      backdropColor: constants.THEME_BLUE,
+      backdropColor: constants.THEME_LIGHT_BLUE,
       automaticallyImplyBackButton: false,
       scrollPadding: const EdgeInsets.only(top: 16, bottom: 56),
       progress: context.read<SearchForumBloc>().state.isSearching,
@@ -126,14 +129,50 @@ class _BuildSearchResults extends StatelessWidget {
                     contentPadding: const EdgeInsets.only(
                         top: 10, left: 14, right: 8, bottom: 5),
                     title: Text(forum.title.getOrCrash()),
-                    subtitle: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Chip(
-                            label: Text(forum.tag,
-                                style: TextStyle(fontSize: 10)))),
-                    onTap: () {
-                      context.pushRoute(ForumRoute(
+                    subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          if (forum.body.getOrCrash() != '')
+                            Text(
+                              forum.body.getOrCrash(),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          Chip(
+                            label: Text(
+                              forum.tag,
+                              style: TextStyle(fontSize: 10),
+                            ),
+                            labelPadding: EdgeInsets.only(
+                                top: 0, bottom: 0, left: 4, right: 4),
+                          )
+                        ]),
+                    trailing: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        Text(getTime(forum.timestamp)),
+                        if (forum.pollAdded)
+                          Column(
+                            children: <Widget>[
+                              const SizedBox(height: 10),
+                              Transform.rotate(
+                                angle: 90 * pi / 180,
+                                child: const Icon(
+                                  Icons.poll_outlined,
+                                  color: constants.THEME_BLUE,
+                                  size: 20,
+                                ),
+                              ),
+                            ],
+                          ),
+                      ],
+                    ),
+                    isThreeLine: true,
+                    onTap: () async {
+                      await context.pushRoute(ForumRoute(
                           forumId: forum.forumId, pollAdded: forum.pollAdded));
+                      context.read<ModuleWatcherBloc>().add(
+                          const ModuleWatcherEvent.retrieveModulesStarted());
                     },
                   ),
                 );

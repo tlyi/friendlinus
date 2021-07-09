@@ -11,6 +11,7 @@ import 'package:friendlinus/domain/data/forum/poll/poll.dart';
 import 'package:friendlinus/domain/data/notifications/notification.dart';
 import 'package:friendlinus/domain/mods/mod.dart';
 import 'package:friendlinus/infrastructure/data/forum/comment_dtos/comment_dtos.dart';
+import 'package:friendlinus/infrastructure/data/forum/following_feed_dtos/following_feed_dtos.dart';
 import 'package:friendlinus/infrastructure/data/forum/forum_post_dtos/forum_post_dtos.dart';
 import 'package:friendlinus/infrastructure/data/forum/poll_dtos/poll_dtos.dart';
 import 'package:friendlinus/infrastructure/data/notifications/notification_dtos.dart';
@@ -539,7 +540,7 @@ class ForumPostRepository implements IForumRepository {
   }
 
   @override
-  Stream<Either<DataFailure, List<ForumPost>>> retrieveHomeForums() async* {
+  Stream<Either<DataFailure, List<ForumPost>>> retrieveModuleFeed() async* {
     final userDoc = await _firestore.userDocument();
     final forumRef = await _firestore.forumsRef();
     List<String> modulesFollowed = [];
@@ -567,35 +568,34 @@ class ForumPostRepository implements IForumRepository {
     });
   }
 
-  //Possibly split following list into "chunks of 10", retrieve separate s
   @override
-  Stream<Either<DataFailure, List<ForumPost>>>
-      retrieveFollowingForums() async* {
-    final userDoc = await _firestore.userDocument();
+  Future<Either<DataFailure, List<ForumPost>>> retrieveFriendFeed(
+      String userId) async {
+    List<String> forumIds = [];
+    List<ForumPost> forums = [];
+    final followingFeedUserRef = await _firestore.followingFeedUserRef(userId);
     final forumRef = await _firestore.forumsRef();
-    List<String> usersFollowing = [];
-    // await userDoc.get().then((DocumentSnapshot doc) {
-    //   usersFollowing = ProfileDto.fromFirestore(doc).toDomain().following;
-    // });
-    yield* forumRef
-        .where('tag', whereIn: usersFollowing)
-        .orderBy('timestamp', descending: true)
-        .snapshots()
-        .map(
-          (snapshot) => right<DataFailure, List<ForumPost>>(
-            snapshot.docs
-                .map((doc) => ForumPostDto.fromFirestore(doc).toDomain())
-                .toList(),
-          ),
-        )
-        .handleError((e) {
-      if (e is FirebaseException && e.message!.contains('PERMISSION_DENIED')) {
+    try {
+      QuerySnapshot query = await followingFeedUserRef
+          .orderBy('timestamp', descending: true)
+          .get();
+      if (query.docs.isNotEmpty) {
+        for (final doc in query.docs) {
+          forumIds.add(FollowingFeedDto.fromFirestore(doc).toDomain().forumId);
+        }
+      }
+      for (final forumId in forumIds) {
+        final doc = await forumRef.doc(forumId).get();
+        forums.add(ForumPostDto.fromFirestore(doc).toDomain());
+      }
+      return right(forums);
+    } on FirebaseException catch (e) {
+      if (e.message!.contains('PERMISSION_DENIED')) {
         return left(const DataFailure.insufficientPermission());
       } else {
-        print(e);
         return left(const DataFailure.unexpected());
       }
-    });
+    }
   }
 
   @override

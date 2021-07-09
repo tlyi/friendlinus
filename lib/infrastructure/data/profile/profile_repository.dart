@@ -6,10 +6,12 @@ import 'package:friendlinus/domain/core/errors.dart';
 import 'package:friendlinus/domain/core/value_objects.dart';
 import 'package:friendlinus/domain/data/data_failure.dart';
 import 'package:dartz/dartz.dart';
+import 'package:friendlinus/domain/data/forum/following_feed/following_feed.dart';
 import 'package:friendlinus/domain/data/forum/forum_post/forum_post.dart';
 import 'package:friendlinus/domain/data/notifications/notification.dart';
 import 'package:friendlinus/domain/data/profile/i_profile_repository.dart';
 import 'package:friendlinus/domain/data/profile/profile.dart';
+import 'package:friendlinus/infrastructure/data/forum/following_feed_dtos/following_feed_dtos.dart';
 import 'package:friendlinus/infrastructure/data/forum/forum_post_dtos/forum_post_dtos.dart';
 import 'package:friendlinus/infrastructure/data/notifications/notification_dtos.dart';
 import 'package:friendlinus/infrastructure/data/profile/profile_dtos.dart';
@@ -236,6 +238,9 @@ class ProfileRepository implements IProfileRepository {
       final ownId = await getUserId();
       final ownDoc = await _firestore.userDocument();
       final otherUserDoc = await _firestore.userDocumentById(userToFollowId);
+      final otherUserProfile = await otherUserDoc.get();
+      final otherUserForumIds =
+          ProfileDto.fromFirestore(otherUserProfile).toDomain().forumsPosted;
       final notifRef = await _firestore.notificationsUserRef(userToFollowId);
       final notifDoc = notifRef.doc();
       final notif = Notification.empty().copyWith(
@@ -243,6 +248,23 @@ class ProfileRepository implements IProfileRepository {
         notificationType: 'newFollower',
       );
       final notifDto = NotificationDto.fromDomain(notif).toJson();
+
+      for (final forumId in otherUserForumIds) {
+        final forumDoc = await _firestore.forumDocument(forumId);
+        final forumPost = await forumDoc.get();
+        final followingFeedRef = await _firestore.followingFeedUserRef(ownId);
+        final timestamp =
+            ForumPostDto.fromFirestore(forumPost).toDomain().timestamp;
+        FollowingFeed followingFeed = FollowingFeed.empty().copyWith(
+            forumId: forumId,
+            posterUserId: userToFollowId,
+            timestamp: timestamp);
+        final followingFeedDto =
+            FollowingFeedDto.fromDomain(followingFeed).toJson();
+        await followingFeedRef.doc(forumId).set(followingFeedDto);
+        print('set');
+      }
+
       WriteBatch batch = _firestore.batch();
       batch.set(notifDoc, notifDto);
       batch.update(ownDoc, {

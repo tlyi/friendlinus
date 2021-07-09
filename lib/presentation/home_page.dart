@@ -12,50 +12,45 @@ import 'package:intl/intl.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    String userId;
+    // return DefaultTabController(
+    //   length: 2,
     return Scaffold(
       appBar: appBar(context: context, header: 'Welcome'),
-      body: Container(
-        alignment: Alignment.topCenter,
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(30.0),
-          child: Column(
-            children: <Widget>[
-              Container(
-                alignment: Alignment.topLeft,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(DateFormat('d MMMM').format(DateTime.now()),
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 25,
-                          color: Colors.black87,
-                        )),
-                    Text(DateFormat('EEEE').format(DateTime.now()),
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 25,
-                          color: Colors.grey[600],
-                        )),
-                  ],
-                ),
-              ),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  const SizedBox(height: 50),
-                  Image(
-                    image: const AssetImage('images/logo.png'),
-                    height: MediaQuery.of(context).size.height * 0.3,
-                  ),
-                ],
-              ),
-            ],
+      body: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Container(
+            alignment: Alignment.topLeft,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(DateFormat('d MMMM').format(DateTime.now()),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25,
+                      color: Colors.black87,
+                    )),
+                Text(DateFormat('EEEE').format(DateTime.now()),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25,
+                      color: Colors.grey[600],
+                    )),
+              ],
+            ),
           ),
-        ),
+          // const TabBar(tabs: [
+          //   const Tab(icon: Icon(Icons.view_list_rounded)),
+          //   const Tab(icon: Icon(Icons.people_rounded))
+          // ]),
+          // Expanded(
+          //     child:
+          //         TabBarView(children: [Text('modules'), Text('friends')])),
+        ],
       ),
       bottomNavigationBar: const NavigationBar(),
+      //),
     );
   }
 }
