@@ -11,10 +11,10 @@ class ForumActorEvent with _$ForumActorEvent {
   const factory ForumActorEvent.anonStateChanged() = _AnonStateChanged;
   const factory ForumActorEvent.commentCreated(ForumPost forum) =
       _CommentCreated;
-  const factory ForumActorEvent.commentLiked(
-      ForumPost forum, Comment comment) = _CommentLiked;
+  const factory ForumActorEvent.commentLiked(ForumPost forum, Comment comment) =
+      _CommentLiked;
   const factory ForumActorEvent.commentUnliked(
       String forumId, String commentId) = _CommentUnliked;
-  const factory ForumActorEvent.forumDeleted(String forumId, bool hasPhoto) =
-      _ForumDeleted;
+  const factory ForumActorEvent.forumDeleted(
+      String forumId, bool hasPhoto, bool isAnon) = _ForumDeleted;
 }

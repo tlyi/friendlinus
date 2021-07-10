@@ -16,15 +16,15 @@ import 'application/chats/chat_bloc.dart' as _i30;
 import 'application/chats/chat_watcher/chat_watcher_bloc.dart' as _i32;
 import 'application/chats/convo_actor/convo_actor_bloc.dart' as _i34;
 import 'application/chats/convo_watcher/convo_watcher_bloc.dart' as _i35;
-import 'application/feed/bloc/friend_feed_bloc.dart' as _i40;
+import 'application/feed/feed_bloc.dart' as _i36;
 import 'application/forum/comment_watcher/comment_watcher_bloc.dart' as _i33;
-import 'application/forum/forum_actor/forum_actor_bloc.dart' as _i36;
-import 'application/forum/forum_form/forum_form_bloc.dart' as _i37;
+import 'application/forum/forum_actor/forum_actor_bloc.dart' as _i37;
+import 'application/forum/forum_form/forum_form_bloc.dart' as _i38;
 import 'application/forum/forum_post_watcher/forum_post_watcher_bloc.dart'
-    as _i38;
+    as _i39;
 import 'application/forum/forum_post_watcher/poll_watcher/poll_watcher_bloc.dart'
     as _i23;
-import 'application/forum/forum_watcher/forum_watcher_bloc.dart' as _i39;
+import 'application/forum/forum_watcher/forum_watcher_bloc.dart' as _i40;
 import 'application/forum/module_actor/module_actor_bloc.dart' as _i18;
 import 'application/forum/module_watcher/module_forum_watcher/module_forum_watcher_bloc.dart'
     as _i19;
@@ -114,16 +114,15 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       () => _i34.ConvoActorBloc(get<_i8.IChatRepository>()));
   gh.factory<_i35.ConvoWatcherBloc>(
       () => _i35.ConvoWatcherBloc(get<_i8.IChatRepository>()));
-  gh.factory<_i36.ForumActorBloc>(
-      () => _i36.ForumActorBloc(get<_i10.IForumRepository>()));
-  gh.factory<_i37.ForumFormBloc>(() => _i37.ForumFormBloc(
+  gh.factory<_i36.FeedBloc>(() => _i36.FeedBloc(get<_i10.IForumRepository>()));
+  gh.factory<_i37.ForumActorBloc>(
+      () => _i37.ForumActorBloc(get<_i10.IForumRepository>()));
+  gh.factory<_i38.ForumFormBloc>(() => _i38.ForumFormBloc(
       get<_i10.IForumRepository>(), get<_i16.IProfileRepository>()));
-  gh.factory<_i38.ForumPostWatcherBloc>(() => _i38.ForumPostWatcherBloc(
+  gh.factory<_i39.ForumPostWatcherBloc>(() => _i39.ForumPostWatcherBloc(
       get<_i10.IForumRepository>(), get<_i16.IProfileRepository>()));
-  gh.factory<_i39.ForumWatcherBloc>(
-      () => _i39.ForumWatcherBloc(get<_i10.IForumRepository>()));
-  gh.factory<_i40.FriendFeedBloc>(
-      () => _i40.FriendFeedBloc(get<_i10.IForumRepository>()));
+  gh.factory<_i40.ForumWatcherBloc>(
+      () => _i40.ForumWatcherBloc(get<_i10.IForumRepository>()));
   return get;
 }
 

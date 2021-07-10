@@ -30,8 +30,6 @@ abstract class IProfileRepository {
 
   Future<Either<DataFailure, bool>> verifyUserRegistered();
 
-  Future<Either<DataFailure, Unit>> addForum(String forumId);
-
   Future<bool> checkIfFollowing(String userId);
 
   Future<Either<DataFailure, Unit>> addFollower(String userToFollowId);

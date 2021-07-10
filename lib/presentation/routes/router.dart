@@ -9,7 +9,7 @@ import 'package:friendlinus/presentation/forum/forum_page/comment_page.dart';
 import 'package:friendlinus/presentation/forum/forum_page/forum_page.dart';
 import 'package:friendlinus/presentation/forum/forum_tab/forum_tab_page.dart';
 import 'package:friendlinus/presentation/forum/forum_tab/module_forum_page.dart';
-import 'package:friendlinus/presentation/home_page.dart';
+import 'package:friendlinus/presentation/home/home_page.dart';
 import 'package:friendlinus/presentation/notifications/notification_page.dart';
 import 'package:friendlinus/presentation/profile/other_profile_page.dart';
 import 'package:friendlinus/presentation/profile/profile_page.dart';

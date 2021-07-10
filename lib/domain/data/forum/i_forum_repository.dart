@@ -41,7 +41,8 @@ abstract class IForumRepository {
   Future<Either<DataFailure, Unit>> unlikeComment(
       String forumId, String commentId, String userId);
 
-  Future<Either<DataFailure, Unit>> deleteForum(String forumId, bool hasPhoto);
+  Future<Either<DataFailure, Unit>> deleteForum(
+      String forumId, bool hasPhoto, bool isAnon);
 
   Future<Either<DataFailure, List<String>>> searchModulesByModuleCode(
       String moduleCode);
@@ -51,7 +52,7 @@ abstract class IForumRepository {
   Stream<Either<DataFailure, List<ForumPost>>> retrieveModuleForums(
       String moduleCode);
 
-  Stream<Either<DataFailure, List<ForumPost>>> retrieveModuleFeed();
+  Future<Either<DataFailure, List<ForumPost>>> retrieveModuleFeed();
 
   Future<Either<DataFailure, List<ForumPost>>> retrieveFriendFeed(
       String userId);

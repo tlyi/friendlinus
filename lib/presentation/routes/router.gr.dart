@@ -26,7 +26,7 @@ import 'package:friendlinus/presentation/forum/forum_tab/forum_tab_page.dart'
     as _i23;
 import 'package:friendlinus/presentation/forum/forum_tab/module_forum_page.dart'
     as _i22;
-import 'package:friendlinus/presentation/home_page.dart' as _i5;
+import 'package:friendlinus/presentation/home/home_page.dart' as _i5;
 import 'package:friendlinus/presentation/notifications/notification_page.dart'
     as _i21;
 import 'package:friendlinus/presentation/profile/other_profile_page.dart'
@@ -64,7 +64,7 @@ class AppRouter extends _i1.RootStackRouter {
     HomeRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
         routeData: routeData,
         builder: (_) {
-          return _i5.HomePage();
+          return const _i5.HomePage();
         }),
     RegisterRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
         routeData: routeData,

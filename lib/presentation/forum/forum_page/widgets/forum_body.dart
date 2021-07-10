@@ -374,8 +374,8 @@ class _BuildDeleteButton extends StatelessWidget {
                         TextButton(
                             onPressed: () {
                               context.read<ForumActorBloc>().add(
-                                  ForumActorEvent.forumDeleted(
-                                      forum.forumId, forum.photoAdded));
+                                  ForumActorEvent.forumDeleted(forum.forumId,
+                                      forum.photoAdded, forum.isAnon));
                               Navigator.pop(innerContext);
                               context.popRoute();
                             },

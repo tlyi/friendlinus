@@ -156,7 +156,6 @@ class ForumFormBloc extends Bloc<ForumFormEvent, ForumFormState> {
               ),
               poll: state.poll.copyWith(creatorUuid: userId));
 
-          _profileRepository.addForum(state.forumPost.forumId);
           if (state.forumPost.pollAdded) {
             bool arePollOptionsValid = state.poll.optionList
                 .map((pollOption) => pollOption.isValid())

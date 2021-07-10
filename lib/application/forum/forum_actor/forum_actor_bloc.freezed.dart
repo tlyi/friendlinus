@@ -69,10 +69,11 @@ class _$ForumActorEventTearOff {
     );
   }
 
-  _ForumDeleted forumDeleted(String forumId, bool hasPhoto) {
+  _ForumDeleted forumDeleted(String forumId, bool hasPhoto, bool isAnon) {
     return _ForumDeleted(
       forumId,
       hasPhoto,
+      isAnon,
     );
   }
 }
@@ -93,7 +94,8 @@ mixin _$ForumActorEvent {
     required TResult Function(ForumPost forum) commentCreated,
     required TResult Function(ForumPost forum, Comment comment) commentLiked,
     required TResult Function(String forumId, String commentId) commentUnliked,
-    required TResult Function(String forumId, bool hasPhoto) forumDeleted,
+    required TResult Function(String forumId, bool hasPhoto, bool isAnon)
+        forumDeleted,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -107,7 +109,7 @@ mixin _$ForumActorEvent {
     TResult Function(ForumPost forum)? commentCreated,
     TResult Function(ForumPost forum, Comment comment)? commentLiked,
     TResult Function(String forumId, String commentId)? commentUnliked,
-    TResult Function(String forumId, bool hasPhoto)? forumDeleted,
+    TResult Function(String forumId, bool hasPhoto, bool isAnon)? forumDeleted,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -205,7 +207,8 @@ class _$_Started implements _Started {
     required TResult Function(ForumPost forum) commentCreated,
     required TResult Function(ForumPost forum, Comment comment) commentLiked,
     required TResult Function(String forumId, String commentId) commentUnliked,
-    required TResult Function(String forumId, bool hasPhoto) forumDeleted,
+    required TResult Function(String forumId, bool hasPhoto, bool isAnon)
+        forumDeleted,
   }) {
     return started();
   }
@@ -222,7 +225,7 @@ class _$_Started implements _Started {
     TResult Function(ForumPost forum)? commentCreated,
     TResult Function(ForumPost forum, Comment comment)? commentLiked,
     TResult Function(String forumId, String commentId)? commentUnliked,
-    TResult Function(String forumId, bool hasPhoto)? forumDeleted,
+    TResult Function(String forumId, bool hasPhoto, bool isAnon)? forumDeleted,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -357,7 +360,8 @@ class _$_ForumLiked implements _ForumLiked {
     required TResult Function(ForumPost forum) commentCreated,
     required TResult Function(ForumPost forum, Comment comment) commentLiked,
     required TResult Function(String forumId, String commentId) commentUnliked,
-    required TResult Function(String forumId, bool hasPhoto) forumDeleted,
+    required TResult Function(String forumId, bool hasPhoto, bool isAnon)
+        forumDeleted,
   }) {
     return forumLiked(forum);
   }
@@ -374,7 +378,7 @@ class _$_ForumLiked implements _ForumLiked {
     TResult Function(ForumPost forum)? commentCreated,
     TResult Function(ForumPost forum, Comment comment)? commentLiked,
     TResult Function(String forumId, String commentId)? commentUnliked,
-    TResult Function(String forumId, bool hasPhoto)? forumDeleted,
+    TResult Function(String forumId, bool hasPhoto, bool isAnon)? forumDeleted,
     required TResult orElse(),
   }) {
     if (forumLiked != null) {
@@ -505,7 +509,8 @@ class _$_ForumUnliked implements _ForumUnliked {
     required TResult Function(ForumPost forum) commentCreated,
     required TResult Function(ForumPost forum, Comment comment) commentLiked,
     required TResult Function(String forumId, String commentId) commentUnliked,
-    required TResult Function(String forumId, bool hasPhoto) forumDeleted,
+    required TResult Function(String forumId, bool hasPhoto, bool isAnon)
+        forumDeleted,
   }) {
     return forumUnliked(forumId);
   }
@@ -522,7 +527,7 @@ class _$_ForumUnliked implements _ForumUnliked {
     TResult Function(ForumPost forum)? commentCreated,
     TResult Function(ForumPost forum, Comment comment)? commentLiked,
     TResult Function(String forumId, String commentId)? commentUnliked,
-    TResult Function(String forumId, bool hasPhoto)? forumDeleted,
+    TResult Function(String forumId, bool hasPhoto, bool isAnon)? forumDeleted,
     required TResult orElse(),
   }) {
     if (forumUnliked != null) {
@@ -662,7 +667,8 @@ class _$_Voted implements _Voted {
     required TResult Function(ForumPost forum) commentCreated,
     required TResult Function(ForumPost forum, Comment comment) commentLiked,
     required TResult Function(String forumId, String commentId) commentUnliked,
-    required TResult Function(String forumId, bool hasPhoto) forumDeleted,
+    required TResult Function(String forumId, bool hasPhoto, bool isAnon)
+        forumDeleted,
   }) {
     return voted(forumId, index);
   }
@@ -679,7 +685,7 @@ class _$_Voted implements _Voted {
     TResult Function(ForumPost forum)? commentCreated,
     TResult Function(ForumPost forum, Comment comment)? commentLiked,
     TResult Function(String forumId, String commentId)? commentUnliked,
-    TResult Function(String forumId, bool hasPhoto)? forumDeleted,
+    TResult Function(String forumId, bool hasPhoto, bool isAnon)? forumDeleted,
     required TResult orElse(),
   }) {
     if (voted != null) {
@@ -811,7 +817,8 @@ class _$_CommentChanged implements _CommentChanged {
     required TResult Function(ForumPost forum) commentCreated,
     required TResult Function(ForumPost forum, Comment comment) commentLiked,
     required TResult Function(String forumId, String commentId) commentUnliked,
-    required TResult Function(String forumId, bool hasPhoto) forumDeleted,
+    required TResult Function(String forumId, bool hasPhoto, bool isAnon)
+        forumDeleted,
   }) {
     return commentChanged(commentStr);
   }
@@ -828,7 +835,7 @@ class _$_CommentChanged implements _CommentChanged {
     TResult Function(ForumPost forum)? commentCreated,
     TResult Function(ForumPost forum, Comment comment)? commentLiked,
     TResult Function(String forumId, String commentId)? commentUnliked,
-    TResult Function(String forumId, bool hasPhoto)? forumDeleted,
+    TResult Function(String forumId, bool hasPhoto, bool isAnon)? forumDeleted,
     required TResult orElse(),
   }) {
     if (commentChanged != null) {
@@ -934,7 +941,8 @@ class _$_AnonStateChanged implements _AnonStateChanged {
     required TResult Function(ForumPost forum) commentCreated,
     required TResult Function(ForumPost forum, Comment comment) commentLiked,
     required TResult Function(String forumId, String commentId) commentUnliked,
-    required TResult Function(String forumId, bool hasPhoto) forumDeleted,
+    required TResult Function(String forumId, bool hasPhoto, bool isAnon)
+        forumDeleted,
   }) {
     return anonStateChanged();
   }
@@ -951,7 +959,7 @@ class _$_AnonStateChanged implements _AnonStateChanged {
     TResult Function(ForumPost forum)? commentCreated,
     TResult Function(ForumPost forum, Comment comment)? commentLiked,
     TResult Function(String forumId, String commentId)? commentUnliked,
-    TResult Function(String forumId, bool hasPhoto)? forumDeleted,
+    TResult Function(String forumId, bool hasPhoto, bool isAnon)? forumDeleted,
     required TResult orElse(),
   }) {
     if (anonStateChanged != null) {
@@ -1086,7 +1094,8 @@ class _$_CommentCreated implements _CommentCreated {
     required TResult Function(ForumPost forum) commentCreated,
     required TResult Function(ForumPost forum, Comment comment) commentLiked,
     required TResult Function(String forumId, String commentId) commentUnliked,
-    required TResult Function(String forumId, bool hasPhoto) forumDeleted,
+    required TResult Function(String forumId, bool hasPhoto, bool isAnon)
+        forumDeleted,
   }) {
     return commentCreated(forum);
   }
@@ -1103,7 +1112,7 @@ class _$_CommentCreated implements _CommentCreated {
     TResult Function(ForumPost forum)? commentCreated,
     TResult Function(ForumPost forum, Comment comment)? commentLiked,
     TResult Function(String forumId, String commentId)? commentUnliked,
-    TResult Function(String forumId, bool hasPhoto)? forumDeleted,
+    TResult Function(String forumId, bool hasPhoto, bool isAnon)? forumDeleted,
     required TResult orElse(),
   }) {
     if (commentCreated != null) {
@@ -1262,7 +1271,8 @@ class _$_CommentLiked implements _CommentLiked {
     required TResult Function(ForumPost forum) commentCreated,
     required TResult Function(ForumPost forum, Comment comment) commentLiked,
     required TResult Function(String forumId, String commentId) commentUnliked,
-    required TResult Function(String forumId, bool hasPhoto) forumDeleted,
+    required TResult Function(String forumId, bool hasPhoto, bool isAnon)
+        forumDeleted,
   }) {
     return commentLiked(forum, comment);
   }
@@ -1279,7 +1289,7 @@ class _$_CommentLiked implements _CommentLiked {
     TResult Function(ForumPost forum)? commentCreated,
     TResult Function(ForumPost forum, Comment comment)? commentLiked,
     TResult Function(String forumId, String commentId)? commentUnliked,
-    TResult Function(String forumId, bool hasPhoto)? forumDeleted,
+    TResult Function(String forumId, bool hasPhoto, bool isAnon)? forumDeleted,
     required TResult orElse(),
   }) {
     if (commentLiked != null) {
@@ -1425,7 +1435,8 @@ class _$_CommentUnliked implements _CommentUnliked {
     required TResult Function(ForumPost forum) commentCreated,
     required TResult Function(ForumPost forum, Comment comment) commentLiked,
     required TResult Function(String forumId, String commentId) commentUnliked,
-    required TResult Function(String forumId, bool hasPhoto) forumDeleted,
+    required TResult Function(String forumId, bool hasPhoto, bool isAnon)
+        forumDeleted,
   }) {
     return commentUnliked(forumId, commentId);
   }
@@ -1442,7 +1453,7 @@ class _$_CommentUnliked implements _CommentUnliked {
     TResult Function(ForumPost forum)? commentCreated,
     TResult Function(ForumPost forum, Comment comment)? commentLiked,
     TResult Function(String forumId, String commentId)? commentUnliked,
-    TResult Function(String forumId, bool hasPhoto)? forumDeleted,
+    TResult Function(String forumId, bool hasPhoto, bool isAnon)? forumDeleted,
     required TResult orElse(),
   }) {
     if (commentUnliked != null) {
@@ -1506,7 +1517,7 @@ abstract class _$ForumDeletedCopyWith<$Res> {
   factory _$ForumDeletedCopyWith(
           _ForumDeleted value, $Res Function(_ForumDeleted) then) =
       __$ForumDeletedCopyWithImpl<$Res>;
-  $Res call({String forumId, bool hasPhoto});
+  $Res call({String forumId, bool hasPhoto, bool isAnon});
 }
 
 /// @nodoc
@@ -1524,6 +1535,7 @@ class __$ForumDeletedCopyWithImpl<$Res>
   $Res call({
     Object? forumId = freezed,
     Object? hasPhoto = freezed,
+    Object? isAnon = freezed,
   }) {
     return _then(_ForumDeleted(
       forumId == freezed
@@ -1534,6 +1546,10 @@ class __$ForumDeletedCopyWithImpl<$Res>
           ? _value.hasPhoto
           : hasPhoto // ignore: cast_nullable_to_non_nullable
               as bool,
+      isAnon == freezed
+          ? _value.isAnon
+          : isAnon // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -1541,16 +1557,18 @@ class __$ForumDeletedCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_ForumDeleted implements _ForumDeleted {
-  const _$_ForumDeleted(this.forumId, this.hasPhoto);
+  const _$_ForumDeleted(this.forumId, this.hasPhoto, this.isAnon);
 
   @override
   final String forumId;
   @override
   final bool hasPhoto;
+  @override
+  final bool isAnon;
 
   @override
   String toString() {
-    return 'ForumActorEvent.forumDeleted(forumId: $forumId, hasPhoto: $hasPhoto)';
+    return 'ForumActorEvent.forumDeleted(forumId: $forumId, hasPhoto: $hasPhoto, isAnon: $isAnon)';
   }
 
   @override
@@ -1562,14 +1580,17 @@ class _$_ForumDeleted implements _ForumDeleted {
                     .equals(other.forumId, forumId)) &&
             (identical(other.hasPhoto, hasPhoto) ||
                 const DeepCollectionEquality()
-                    .equals(other.hasPhoto, hasPhoto)));
+                    .equals(other.hasPhoto, hasPhoto)) &&
+            (identical(other.isAnon, isAnon) ||
+                const DeepCollectionEquality().equals(other.isAnon, isAnon)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(forumId) ^
-      const DeepCollectionEquality().hash(hasPhoto);
+      const DeepCollectionEquality().hash(hasPhoto) ^
+      const DeepCollectionEquality().hash(isAnon);
 
   @JsonKey(ignore: true)
   @override
@@ -1588,9 +1609,10 @@ class _$_ForumDeleted implements _ForumDeleted {
     required TResult Function(ForumPost forum) commentCreated,
     required TResult Function(ForumPost forum, Comment comment) commentLiked,
     required TResult Function(String forumId, String commentId) commentUnliked,
-    required TResult Function(String forumId, bool hasPhoto) forumDeleted,
+    required TResult Function(String forumId, bool hasPhoto, bool isAnon)
+        forumDeleted,
   }) {
-    return forumDeleted(forumId, hasPhoto);
+    return forumDeleted(forumId, hasPhoto, isAnon);
   }
 
   @override
@@ -1605,11 +1627,11 @@ class _$_ForumDeleted implements _ForumDeleted {
     TResult Function(ForumPost forum)? commentCreated,
     TResult Function(ForumPost forum, Comment comment)? commentLiked,
     TResult Function(String forumId, String commentId)? commentUnliked,
-    TResult Function(String forumId, bool hasPhoto)? forumDeleted,
+    TResult Function(String forumId, bool hasPhoto, bool isAnon)? forumDeleted,
     required TResult orElse(),
   }) {
     if (forumDeleted != null) {
-      return forumDeleted(forumId, hasPhoto);
+      return forumDeleted(forumId, hasPhoto, isAnon);
     }
     return orElse();
   }
@@ -1654,10 +1676,12 @@ class _$_ForumDeleted implements _ForumDeleted {
 }
 
 abstract class _ForumDeleted implements ForumActorEvent {
-  const factory _ForumDeleted(String forumId, bool hasPhoto) = _$_ForumDeleted;
+  const factory _ForumDeleted(String forumId, bool hasPhoto, bool isAnon) =
+      _$_ForumDeleted;
 
   String get forumId => throw _privateConstructorUsedError;
   bool get hasPhoto => throw _privateConstructorUsedError;
+  bool get isAnon => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$ForumDeletedCopyWith<_ForumDeleted> get copyWith =>
       throw _privateConstructorUsedError;

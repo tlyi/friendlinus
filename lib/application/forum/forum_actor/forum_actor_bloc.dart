@@ -62,7 +62,8 @@ class ForumActorBloc extends Bloc<ForumActorEvent, ForumActorState> {
               comment: state.comment
                   .copyWith(forumId: e.forum.forumId, userId: state.userId));
           failureOrSuccess = await _forumRepository.createComment(
-              state.comment.copyWith(userId: state.userId, forumId: e.forum.forumId),
+              state.comment
+                  .copyWith(userId: state.userId, forumId: e.forum.forumId),
               e.forum);
         }
 
@@ -72,15 +73,14 @@ class ForumActorBloc extends Bloc<ForumActorEvent, ForumActorState> {
             createFailureOrSuccessOption: optionOf(failureOrSuccess));
       },
       commentLiked: (e) async* {
-        await _forumRepository.likeComment(
-            e.forum, e.comment, state.userId);
+        await _forumRepository.likeComment(e.forum, e.comment, state.userId);
       },
       commentUnliked: (e) async* {
         await _forumRepository.unlikeComment(
             e.forumId, e.commentId, state.userId);
       },
       forumDeleted: (e) async* {
-        await _forumRepository.deleteForum(e.forumId, e.hasPhoto);
+        await _forumRepository.deleteForum(e.forumId, e.hasPhoto, e.isAnon);
       },
     );
   }

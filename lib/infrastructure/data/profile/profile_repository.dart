@@ -207,20 +207,6 @@ class ProfileRepository implements IProfileRepository {
   }
 
   @override
-  Future<Either<DataFailure, Unit>> addForum(String forumId) async {
-    try {
-      final userDoc = await _firestore.userDocument();
-      await userDoc.update({
-        'forumsPosted': FieldValue.arrayUnion([forumId])
-      });
-      return right(unit);
-    } on FirebaseException catch (e) {
-      print(e);
-      return left(const DataFailure.unexpected());
-    }
-  }
-
-  @override
   Future<bool> checkIfFollowing(String userId) async {
     final usersRef = await _firestore.usersRef();
     final ownId = await getUserId();
@@ -288,6 +274,17 @@ class ProfileRepository implements IProfileRepository {
       final ownId = await getUserId();
       final ownDoc = await _firestore.userDocument();
       final otherUserDoc = await _firestore.userDocumentById(userToFollowId);
+
+      final followingFeedRef = await _firestore.followingFeedUserRef(ownId);
+      await followingFeedRef
+          .where('posterUserId', isEqualTo: userToFollowId)
+          .get()
+          .then((snapshot) {
+        for (final DocumentSnapshot doc in snapshot.docs) {
+          doc.reference.delete();
+        }
+      });
+
       WriteBatch batch = _firestore.batch();
       batch.update(ownDoc, {
         'following': FieldValue.arrayRemove([userToFollowId])
