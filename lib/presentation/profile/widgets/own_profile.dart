@@ -9,7 +9,7 @@ import 'package:friendlinus/presentation/profile/widgets/profile_elements.dart';
 class OwnProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProfileFormBloc, ProfileFormState>(
+    return BlocBuilder<ProfileActorBloc, ProfileActorState>(
         builder: (context, state) {
       if (state.isLoading) {
         return const Center(
@@ -17,24 +17,10 @@ class OwnProfile extends StatelessWidget {
           child: CircularProgressIndicator(),
         );
       } else {
-        final userProfile =
-            context.read<ProfileFormBloc>().state.currentProfile.getOrElse(() {
-          FlushbarHelper.createError(message: 'Server error').show(context);
-          return Profile.empty();
-        });
-        return BlocBuilder<ProfileActorBloc, ProfileActorState>(
-          builder: (context, state) {
-            if (state.isLoading) {
-              return const Center(
-                heightFactor: 18,
-                child: CircularProgressIndicator(),
-              );
-            } else {
-              return ProfileElements(
-                  userProfile: userProfile, isOwnProfile: true);
-            }
-          },
-        );
+        return state.failureOrUserProfile.fold(
+            (f) => const Center(child: Text('ERROR retrieving profile')),
+            (profile) =>
+                ProfileElements(userProfile: profile, isOwnProfile: true));
       }
     });
   }

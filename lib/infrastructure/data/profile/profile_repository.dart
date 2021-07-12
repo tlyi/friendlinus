@@ -148,18 +148,11 @@ class ProfileRepository implements IProfileRepository {
   }
 
   @override
-  Future<Either<DataFailure, Profile>> readOtherProfile(String username) async {
-    final usersRef = await _firestore.usersRef();
+  Future<Either<DataFailure, Profile>> readOtherProfile(String uuid) async {
+    final otherUserDoc = await _firestore.userDocumentById(uuid);
     try {
-      QuerySnapshot query =
-          await usersRef.where('username', isEqualTo: username).get();
-      {
-        if (query.docs.isNotEmpty) {
-          return right(ProfileDto.fromFirestore(query.docs[0]).toDomain());
-        } else {
-          return right(Profile.empty());
-        }
-      }
+      return otherUserDoc.get().then((DocumentSnapshot doc) =>
+          right(ProfileDto.fromFirestore(doc).toDomain()));
     } on FirebaseException catch (e) {
       print(e);
       return left(const DataFailure.unexpected());

@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tags/flutter_tags.dart';
-import 'package:friendlinus/application/chats/chat_bloc.dart';
 import 'package:friendlinus/application/forum/forum_actor/forum_actor_bloc.dart';
 import 'package:friendlinus/application/forum/forum_watcher/forum_watcher_bloc.dart';
 import 'package:friendlinus/application/profile/profile_actor/profile_actor_bloc.dart';
@@ -44,7 +43,8 @@ class ProfileElements extends StatelessWidget {
             children: <Widget>[
               ProfileHeader(
                   userProfile: userProfile, isOwnProfile: isOwnProfile),
-              ModulesOfInterest(userProfile: userProfile),
+              ModulesOfInterest(
+                  userProfile: userProfile, isOwnProfile: isOwnProfile),
               FollowersList(
                   userProfile: userProfile, isOwnProfile: isOwnProfile),
               FollowingList(
@@ -235,8 +235,10 @@ class FollowProfileButton extends StatelessWidget {
 
 class ModulesOfInterest extends StatelessWidget {
   final Profile userProfile;
+  final bool isOwnProfile;
 
-  const ModulesOfInterest({Key? key, required this.userProfile})
+  const ModulesOfInterest(
+      {Key? key, required this.userProfile, required this.isOwnProfile})
       : super(key: key);
 
   @override
@@ -264,9 +266,15 @@ class ModulesOfInterest extends StatelessWidget {
                       (int index) {
                     final module = userProfile.modules[index];
                     return ActionChip(
-                        onPressed: () {
-                          context
+                        onPressed: () async {
+                          await context
                               .pushRoute(ModuleForumRoute(moduleCode: module));
+                          isOwnProfile
+                              ? context.read<ProfileActorBloc>().add(
+                                  const ProfileActorEvent.loadingOwnProfile())
+                              : context.read<ProfileActorBloc>().add(
+                                  ProfileActorEvent.loadingOtherProfile(
+                                      userProfile.uuid));
                         },
                         label: Text(module));
                   })),

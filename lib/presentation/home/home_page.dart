@@ -35,28 +35,6 @@ class HomePage extends StatelessWidget {
         appBar: appBar(context: context, header: 'FriendliNUS'),
         bottomNavigationBar: const NavigationBar(),
         body: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-          Container(
-            padding: const EdgeInsets.all(10),
-            alignment: Alignment.topLeft,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(DateFormat('d MMMM').format(DateTime.now()),
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 25,
-                      color: Colors.black87,
-                    )),
-                Text(DateFormat('EEEE').format(DateTime.now()),
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 25,
-                      color: Colors.grey[600],
-                    )),
-              ],
-            ),
-          ),
           Expanded(child: HomeFeedView()),
         ]),
       ),

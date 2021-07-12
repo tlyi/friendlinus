@@ -29,8 +29,10 @@ class ForumBody extends StatelessWidget {
         builder: (context, state) {
       return state.map(
         initial: (_) => Container(),
-        loadInProgress: (_) => const Center(
-          child: CircularProgressIndicator(),
+        loadInProgress: (_) => const Scaffold(
+          body: Center(
+            child: CircularProgressIndicator(),
+          ),
         ),
         loadSuccess: (state) {
           ForumPost forum = state.forum;

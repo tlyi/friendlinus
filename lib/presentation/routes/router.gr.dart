@@ -7,28 +7,24 @@
 import 'package:auto_route/auto_route.dart' as _i1;
 import 'package:flutter/material.dart' as _i2;
 import 'package:friendlinus/domain/data/forum/forum_post/forum_post.dart'
-    as _i25;
-import 'package:friendlinus/domain/data/profile/profile.dart' as _i24;
+    as _i23;
+import 'package:friendlinus/domain/data/profile/profile.dart' as _i22;
 import 'package:friendlinus/presentation/chats/chat_list/chat_list_page.dart'
-    as _i16;
-import 'package:friendlinus/presentation/chats/convos/convo_page.dart' as _i17;
-import 'package:friendlinus/presentation/chats/convos/convo_splash_page.dart'
-    as _i19;
-import 'package:friendlinus/presentation/forum/forum_form/forum_form_page.dart'
     as _i15;
-import 'package:friendlinus/presentation/forum/forum_overview/forum_overview_page.dart'
+import 'package:friendlinus/presentation/chats/convos/convo_page.dart' as _i16;
+import 'package:friendlinus/presentation/forum/forum_form/forum_form_page.dart'
     as _i14;
 import 'package:friendlinus/presentation/forum/forum_page/comment_page.dart'
-    as _i20;
-import 'package:friendlinus/presentation/forum/forum_page/forum_page.dart'
     as _i18;
+import 'package:friendlinus/presentation/forum/forum_page/forum_page.dart'
+    as _i17;
 import 'package:friendlinus/presentation/forum/forum_tab/forum_tab_page.dart'
-    as _i23;
+    as _i21;
 import 'package:friendlinus/presentation/forum/forum_tab/module_forum_page.dart'
-    as _i22;
+    as _i20;
 import 'package:friendlinus/presentation/home/home_page.dart' as _i5;
 import 'package:friendlinus/presentation/notifications/notification_page.dart'
-    as _i21;
+    as _i19;
 import 'package:friendlinus/presentation/profile/other_profile_page.dart'
     as _i13;
 import 'package:friendlinus/presentation/profile/profile_page.dart' as _i10;
@@ -110,63 +106,51 @@ class AppRouter extends _i1.RootStackRouter {
           return _i13.OtherProfilePage(
               key: args.key, userProfile: args.userProfile);
         }),
-    ForumOverviewRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
-        routeData: routeData,
-        builder: (_) {
-          return const _i14.ForumOverviewPage();
-        }),
     ForumFormRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
         routeData: routeData,
         builder: (_) {
-          return const _i15.ForumFormPage();
+          return const _i14.ForumFormPage();
         }),
     ChatListRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
         routeData: routeData,
         builder: (_) {
-          return _i16.ChatListPage();
+          return _i15.ChatListPage();
         }),
     ConvoRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
         routeData: routeData,
         builder: (data) {
           final args = data.argsAs<ConvoRouteArgs>();
-          return _i17.ConvoPage(key: args.key, otherProfile: args.otherProfile);
+          return _i16.ConvoPage(key: args.key, otherProfile: args.otherProfile);
         }),
     ForumRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
         routeData: routeData,
         builder: (data) {
           final args = data.argsAs<ForumRouteArgs>();
-          return _i18.ForumPage(
+          return _i17.ForumPage(
               key: args.key, forumId: args.forumId, pollAdded: args.pollAdded);
-        }),
-    ConvoSplashRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
-        routeData: routeData,
-        builder: (data) {
-          final args = data.argsAs<ConvoSplashRouteArgs>();
-          return _i19.ConvoSplashPage(
-              key: args.key, otherProfile: args.otherProfile);
         }),
     CommentRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
         routeData: routeData,
         builder: (data) {
           final args = data.argsAs<CommentRouteArgs>();
-          return _i20.CommentPage(key: args.key, forum: args.forum);
+          return _i18.CommentPage(key: args.key, forum: args.forum);
         }),
     NotificationRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
         routeData: routeData,
         builder: (_) {
-          return _i21.NotificationPage();
+          return _i19.NotificationPage();
         }),
     ModuleForumRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
         routeData: routeData,
         builder: (data) {
           final args = data.argsAs<ModuleForumRouteArgs>();
-          return _i22.ModuleForumPage(
+          return _i20.ModuleForumPage(
               key: args.key, moduleCode: args.moduleCode);
         }),
     ForumTabRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
         routeData: routeData,
         builder: (_) {
-          return const _i23.ForumTabPage();
+          return const _i21.ForumTabPage();
         })
   };
 
@@ -184,12 +168,10 @@ class AppRouter extends _i1.RootStackRouter {
         _i1.RouteConfig(SearchUsersRoute.name, path: '/search-users-page'),
         _i1.RouteConfig(UpdateProfileRoute.name, path: '/update-profile-page'),
         _i1.RouteConfig(OtherProfileRoute.name, path: '/other-profile-page'),
-        _i1.RouteConfig(ForumOverviewRoute.name, path: '/forum-overview-page'),
         _i1.RouteConfig(ForumFormRoute.name, path: '/forum-form-page'),
         _i1.RouteConfig(ChatListRoute.name, path: '/chat-list-page'),
         _i1.RouteConfig(ConvoRoute.name, path: '/convo-page'),
         _i1.RouteConfig(ForumRoute.name, path: '/forum-page'),
-        _i1.RouteConfig(ConvoSplashRoute.name, path: '/convo-splash-page'),
         _i1.RouteConfig(CommentRoute.name, path: '/comment-page'),
         _i1.RouteConfig(NotificationRoute.name, path: '/notification-page'),
         _i1.RouteConfig(ModuleForumRoute.name, path: '/module-forum-page'),
@@ -280,7 +262,7 @@ class UpdateProfileRoute extends _i1.PageRouteInfo {
 }
 
 class OtherProfileRoute extends _i1.PageRouteInfo<OtherProfileRouteArgs> {
-  OtherProfileRoute({_i2.Key? key, required _i24.Profile userProfile})
+  OtherProfileRoute({_i2.Key? key, required _i22.Profile userProfile})
       : super(name,
             path: '/other-profile-page',
             args: OtherProfileRouteArgs(key: key, userProfile: userProfile));
@@ -293,13 +275,7 @@ class OtherProfileRouteArgs {
 
   final _i2.Key? key;
 
-  final _i24.Profile userProfile;
-}
-
-class ForumOverviewRoute extends _i1.PageRouteInfo {
-  const ForumOverviewRoute() : super(name, path: '/forum-overview-page');
-
-  static const String name = 'ForumOverviewRoute';
+  final _i22.Profile userProfile;
 }
 
 class ForumFormRoute extends _i1.PageRouteInfo {
@@ -315,7 +291,7 @@ class ChatListRoute extends _i1.PageRouteInfo {
 }
 
 class ConvoRoute extends _i1.PageRouteInfo<ConvoRouteArgs> {
-  ConvoRoute({_i2.Key? key, required _i24.Profile otherProfile})
+  ConvoRoute({_i2.Key? key, required _i22.Profile otherProfile})
       : super(name,
             path: '/convo-page',
             args: ConvoRouteArgs(key: key, otherProfile: otherProfile));
@@ -328,7 +304,7 @@ class ConvoRouteArgs {
 
   final _i2.Key? key;
 
-  final _i24.Profile otherProfile;
+  final _i22.Profile otherProfile;
 }
 
 class ForumRoute extends _i1.PageRouteInfo<ForumRouteArgs> {
@@ -352,25 +328,8 @@ class ForumRouteArgs {
   final bool pollAdded;
 }
 
-class ConvoSplashRoute extends _i1.PageRouteInfo<ConvoSplashRouteArgs> {
-  ConvoSplashRoute({_i2.Key? key, required _i24.Profile otherProfile})
-      : super(name,
-            path: '/convo-splash-page',
-            args: ConvoSplashRouteArgs(key: key, otherProfile: otherProfile));
-
-  static const String name = 'ConvoSplashRoute';
-}
-
-class ConvoSplashRouteArgs {
-  const ConvoSplashRouteArgs({this.key, required this.otherProfile});
-
-  final _i2.Key? key;
-
-  final _i24.Profile otherProfile;
-}
-
 class CommentRoute extends _i1.PageRouteInfo<CommentRouteArgs> {
-  CommentRoute({_i2.Key? key, required _i25.ForumPost forum})
+  CommentRoute({_i2.Key? key, required _i23.ForumPost forum})
       : super(name,
             path: '/comment-page',
             args: CommentRouteArgs(key: key, forum: forum));
@@ -383,7 +342,7 @@ class CommentRouteArgs {
 
   final _i2.Key? key;
 
-  final _i25.ForumPost forum;
+  final _i23.ForumPost forum;
 }
 
 class NotificationRoute extends _i1.PageRouteInfo {

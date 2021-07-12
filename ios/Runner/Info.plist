@@ -45,6 +45,7 @@
 	<string>The app needs permission to browse and select images from your photo gallery to be used for profile, chats and forums.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>The app needs permission to take images to be used for profile, chats and forums.</string>
-
+    <key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app needs access to location when open to suggest nearby chatrooms.</string>
 </dict>
 </plist>

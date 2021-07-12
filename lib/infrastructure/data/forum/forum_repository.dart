@@ -50,7 +50,7 @@ class ForumPostRepository implements IForumRepository {
       final modulesRef = await _firestore.modulesRef();
       await _firestore.runTransaction((transaction) async {
         //Update module last posted
-        final tagDoc = modulesRef.doc(forumPost.tag);
+        final tagDoc = modulesRef.doc(tag);
         transaction.update(tagDoc,
             {'lastPosted': DateTime.now().millisecondsSinceEpoch.toString()});
 
@@ -500,7 +500,7 @@ class ForumPostRepository implements IForumRepository {
     });
 
     modulesFollowed.addAll(['Anonymous', 'General']);
-    print(modulesFollowed);
+    //print(modulesFollowed);
     yield* modulesRef
         .where('moduleCode', whereIn: modulesFollowed)
         .orderBy('lastPosted', descending: true)
@@ -582,13 +582,15 @@ class ForumPostRepository implements IForumRepository {
     });
 
     try {
-      QuerySnapshot query = await forumRef
-          .where('tag', whereIn: modulesFollowed)
-          .orderBy('timestamp', descending: true)
-          .get();
-      if (query.docs.isNotEmpty) {
-        for (final doc in query.docs) {
-          forums.add(ForumPostDto.fromFirestore(doc).toDomain());
+      if (modulesFollowed.isNotEmpty) {
+        QuerySnapshot query = await forumRef
+            .where('tag', whereIn: modulesFollowed)
+            .orderBy('timestamp', descending: true)
+            .get();
+        if (query.docs.isNotEmpty) {
+          for (final doc in query.docs) {
+            forums.add(ForumPostDto.fromFirestore(doc).toDomain());
+          }
         }
       }
       return right(forums);

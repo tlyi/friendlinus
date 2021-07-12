@@ -1,0 +1,320 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+
+part of 'location_chat_dtos.dart';
+
+// **************************************************************************
+// FreezedGenerator
+// **************************************************************************
+
+T _$identity<T>(T value) => value;
+
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
+LocationChatDto _$LocationChatDtoFromJson(Map<String, dynamic> json) {
+  return _LocationChatDto.fromJson(json);
+}
+
+/// @nodoc
+class _$LocationChatDtoTearOff {
+  const _$LocationChatDtoTearOff();
+
+  _LocationChatDto call(
+      {required String uuid,
+      required String lastMessage,
+      required String lastSenderId,
+      required String chatTitle,
+      required String timestamp,
+      required double longitude,
+      required double latitude}) {
+    return _LocationChatDto(
+      uuid: uuid,
+      lastMessage: lastMessage,
+      lastSenderId: lastSenderId,
+      chatTitle: chatTitle,
+      timestamp: timestamp,
+      longitude: longitude,
+      latitude: latitude,
+    );
+  }
+
+  LocationChatDto fromJson(Map<String, Object> json) {
+    return LocationChatDto.fromJson(json);
+  }
+}
+
+/// @nodoc
+const $LocationChatDto = _$LocationChatDtoTearOff();
+
+/// @nodoc
+mixin _$LocationChatDto {
+  String get uuid => throw _privateConstructorUsedError;
+  String get lastMessage => throw _privateConstructorUsedError;
+  String get lastSenderId => throw _privateConstructorUsedError;
+  String get chatTitle => throw _privateConstructorUsedError;
+  String get timestamp => throw _privateConstructorUsedError;
+  double get longitude => throw _privateConstructorUsedError;
+  double get latitude => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $LocationChatDtoCopyWith<LocationChatDto> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $LocationChatDtoCopyWith<$Res> {
+  factory $LocationChatDtoCopyWith(
+          LocationChatDto value, $Res Function(LocationChatDto) then) =
+      _$LocationChatDtoCopyWithImpl<$Res>;
+  $Res call(
+      {String uuid,
+      String lastMessage,
+      String lastSenderId,
+      String chatTitle,
+      String timestamp,
+      double longitude,
+      double latitude});
+}
+
+/// @nodoc
+class _$LocationChatDtoCopyWithImpl<$Res>
+    implements $LocationChatDtoCopyWith<$Res> {
+  _$LocationChatDtoCopyWithImpl(this._value, this._then);
+
+  final LocationChatDto _value;
+  // ignore: unused_field
+  final $Res Function(LocationChatDto) _then;
+
+  @override
+  $Res call({
+    Object? uuid = freezed,
+    Object? lastMessage = freezed,
+    Object? lastSenderId = freezed,
+    Object? chatTitle = freezed,
+    Object? timestamp = freezed,
+    Object? longitude = freezed,
+    Object? latitude = freezed,
+  }) {
+    return _then(_value.copyWith(
+      uuid: uuid == freezed
+          ? _value.uuid
+          : uuid // ignore: cast_nullable_to_non_nullable
+              as String,
+      lastMessage: lastMessage == freezed
+          ? _value.lastMessage
+          : lastMessage // ignore: cast_nullable_to_non_nullable
+              as String,
+      lastSenderId: lastSenderId == freezed
+          ? _value.lastSenderId
+          : lastSenderId // ignore: cast_nullable_to_non_nullable
+              as String,
+      chatTitle: chatTitle == freezed
+          ? _value.chatTitle
+          : chatTitle // ignore: cast_nullable_to_non_nullable
+              as String,
+      timestamp: timestamp == freezed
+          ? _value.timestamp
+          : timestamp // ignore: cast_nullable_to_non_nullable
+              as String,
+      longitude: longitude == freezed
+          ? _value.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
+              as double,
+      latitude: latitude == freezed
+          ? _value.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as double,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$LocationChatDtoCopyWith<$Res>
+    implements $LocationChatDtoCopyWith<$Res> {
+  factory _$LocationChatDtoCopyWith(
+          _LocationChatDto value, $Res Function(_LocationChatDto) then) =
+      __$LocationChatDtoCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {String uuid,
+      String lastMessage,
+      String lastSenderId,
+      String chatTitle,
+      String timestamp,
+      double longitude,
+      double latitude});
+}
+
+/// @nodoc
+class __$LocationChatDtoCopyWithImpl<$Res>
+    extends _$LocationChatDtoCopyWithImpl<$Res>
+    implements _$LocationChatDtoCopyWith<$Res> {
+  __$LocationChatDtoCopyWithImpl(
+      _LocationChatDto _value, $Res Function(_LocationChatDto) _then)
+      : super(_value, (v) => _then(v as _LocationChatDto));
+
+  @override
+  _LocationChatDto get _value => super._value as _LocationChatDto;
+
+  @override
+  $Res call({
+    Object? uuid = freezed,
+    Object? lastMessage = freezed,
+    Object? lastSenderId = freezed,
+    Object? chatTitle = freezed,
+    Object? timestamp = freezed,
+    Object? longitude = freezed,
+    Object? latitude = freezed,
+  }) {
+    return _then(_LocationChatDto(
+      uuid: uuid == freezed
+          ? _value.uuid
+          : uuid // ignore: cast_nullable_to_non_nullable
+              as String,
+      lastMessage: lastMessage == freezed
+          ? _value.lastMessage
+          : lastMessage // ignore: cast_nullable_to_non_nullable
+              as String,
+      lastSenderId: lastSenderId == freezed
+          ? _value.lastSenderId
+          : lastSenderId // ignore: cast_nullable_to_non_nullable
+              as String,
+      chatTitle: chatTitle == freezed
+          ? _value.chatTitle
+          : chatTitle // ignore: cast_nullable_to_non_nullable
+              as String,
+      timestamp: timestamp == freezed
+          ? _value.timestamp
+          : timestamp // ignore: cast_nullable_to_non_nullable
+              as String,
+      longitude: longitude == freezed
+          ? _value.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
+              as double,
+      latitude: latitude == freezed
+          ? _value.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as double,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_LocationChatDto extends _LocationChatDto {
+  const _$_LocationChatDto(
+      {required this.uuid,
+      required this.lastMessage,
+      required this.lastSenderId,
+      required this.chatTitle,
+      required this.timestamp,
+      required this.longitude,
+      required this.latitude})
+      : super._();
+
+  factory _$_LocationChatDto.fromJson(Map<String, dynamic> json) =>
+      _$_$_LocationChatDtoFromJson(json);
+
+  @override
+  final String uuid;
+  @override
+  final String lastMessage;
+  @override
+  final String lastSenderId;
+  @override
+  final String chatTitle;
+  @override
+  final String timestamp;
+  @override
+  final double longitude;
+  @override
+  final double latitude;
+
+  @override
+  String toString() {
+    return 'LocationChatDto(uuid: $uuid, lastMessage: $lastMessage, lastSenderId: $lastSenderId, chatTitle: $chatTitle, timestamp: $timestamp, longitude: $longitude, latitude: $latitude)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _LocationChatDto &&
+            (identical(other.uuid, uuid) ||
+                const DeepCollectionEquality().equals(other.uuid, uuid)) &&
+            (identical(other.lastMessage, lastMessage) ||
+                const DeepCollectionEquality()
+                    .equals(other.lastMessage, lastMessage)) &&
+            (identical(other.lastSenderId, lastSenderId) ||
+                const DeepCollectionEquality()
+                    .equals(other.lastSenderId, lastSenderId)) &&
+            (identical(other.chatTitle, chatTitle) ||
+                const DeepCollectionEquality()
+                    .equals(other.chatTitle, chatTitle)) &&
+            (identical(other.timestamp, timestamp) ||
+                const DeepCollectionEquality()
+                    .equals(other.timestamp, timestamp)) &&
+            (identical(other.longitude, longitude) ||
+                const DeepCollectionEquality()
+                    .equals(other.longitude, longitude)) &&
+            (identical(other.latitude, latitude) ||
+                const DeepCollectionEquality()
+                    .equals(other.latitude, latitude)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(uuid) ^
+      const DeepCollectionEquality().hash(lastMessage) ^
+      const DeepCollectionEquality().hash(lastSenderId) ^
+      const DeepCollectionEquality().hash(chatTitle) ^
+      const DeepCollectionEquality().hash(timestamp) ^
+      const DeepCollectionEquality().hash(longitude) ^
+      const DeepCollectionEquality().hash(latitude);
+
+  @JsonKey(ignore: true)
+  @override
+  _$LocationChatDtoCopyWith<_LocationChatDto> get copyWith =>
+      __$LocationChatDtoCopyWithImpl<_LocationChatDto>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$_$_LocationChatDtoToJson(this);
+  }
+}
+
+abstract class _LocationChatDto extends LocationChatDto {
+  const factory _LocationChatDto(
+      {required String uuid,
+      required String lastMessage,
+      required String lastSenderId,
+      required String chatTitle,
+      required String timestamp,
+      required double longitude,
+      required double latitude}) = _$_LocationChatDto;
+  const _LocationChatDto._() : super._();
+
+  factory _LocationChatDto.fromJson(Map<String, dynamic> json) =
+      _$_LocationChatDto.fromJson;
+
+  @override
+  String get uuid => throw _privateConstructorUsedError;
+  @override
+  String get lastMessage => throw _privateConstructorUsedError;
+  @override
+  String get lastSenderId => throw _privateConstructorUsedError;
+  @override
+  String get chatTitle => throw _privateConstructorUsedError;
+  @override
+  String get timestamp => throw _privateConstructorUsedError;
+  @override
+  double get longitude => throw _privateConstructorUsedError;
+  @override
+  double get latitude => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$LocationChatDtoCopyWith<_LocationChatDto> get copyWith =>
+      throw _privateConstructorUsedError;
+}
