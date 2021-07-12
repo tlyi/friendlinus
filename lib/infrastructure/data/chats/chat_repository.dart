@@ -5,12 +5,14 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:friendlinus/domain/core/value_objects.dart';
 import 'package:friendlinus/domain/data/chats/chat_message/chat_message.dart';
+import 'package:friendlinus/domain/data/chats/location_chat.dart';
 import 'package:friendlinus/domain/data/chats/value_objects.dart';
 import 'package:friendlinus/domain/data/data_failure.dart';
 import 'package:friendlinus/domain/data/chats/chat.dart';
 import 'package:friendlinus/domain/data/profile/profile.dart';
 import 'package:friendlinus/infrastructure/data/chats/chat_dtos.dart';
 import 'package:friendlinus/infrastructure/data/profile/profile_dtos.dart';
+import 'package:geolocator_platform_interface/src/models/position.dart';
 import 'package:injectable/injectable.dart';
 import 'package:friendlinus/domain/data/chats/i_chat_repository.dart';
 import 'package:friendlinus/infrastructure/core/firestore_helpers.dart';
@@ -30,51 +32,52 @@ class ChatRepository implements IChatRepository {
     return userDoc.id;
   }
 
-  @override
-  Future<Either<DataFailure, Chat>> createChat(
-      Chat chat, String userIdsCombined, String otherId) async {
-    try {
-      final chatsRef = await _firestore.chatsRef();
-      final chatDto = ChatDto.fromDomain(chat);
-      final userDoc = await _firestore.userDocument();
-      final otherUserDoc = await _firestore.userDocumentById(otherId);
-      final ownId = await getOwnId();
+//not being used
+  // @override
+  // Future<Either<DataFailure, Chat>> createChat(
+  //     Chat chat, String userIdsCombined, String otherId) async {
+  //   try {
+  //     final chatsRef = await _firestore.chatsRef();
+  //     final chatDto = ChatDto.fromDomain(chat);
+  //     final userDoc = await _firestore.userDocument();
+  //     final otherUserDoc = await _firestore.userDocumentById(otherId);
+  //     final ownId = await getOwnId();
 
-      DocumentSnapshot doc = await chatsRef.doc(userIdsCombined).get();
-      if (!doc.exists) {
-        try {
-          //If chat does not exist, create chat
-          await chatsRef.doc(userIdsCombined).set(chatDto.toJson());
-          await userDoc.update({
-            'chatsImIn': FieldValue.arrayUnion([otherId])
-          });
-          print('supposed to add to userdoc');
-          await otherUserDoc.update({
-            'chatsImIn': FieldValue.arrayUnion([ownId])
-          });
+  //     DocumentSnapshot doc = await chatsRef.doc(userIdsCombined).get();
+  //     if (!doc.exists) {
+  //       try {
+  //         //If chat does not exist, create chat
+  //         await chatsRef.doc(userIdsCombined).set(chatDto.toJson());
+  //         await userDoc.update({
+  //           'chatsImIn': FieldValue.arrayUnion([otherId])
+  //         });
+  //         print('supposed to add to userdoc');
+  //         await otherUserDoc.update({
+  //           'chatsImIn': FieldValue.arrayUnion([ownId])
+  //         });
 
-          print('chat created');
-          return right(chat);
-        } on FirebaseException catch (e) {
-          if (e.message!.contains('PERMISSION_DENIED')) {
-            return left(const DataFailure.insufficientPermission());
-          } else {
-            return left(const DataFailure.unexpected());
-          }
-        }
-      } else {
-        //If chat exists, just return
-        print('chat alr exists');
-        return right(ChatDto.fromFirestore(doc).toDomain());
-      }
-    } on FirebaseException catch (e) {
-      if (e.message!.contains('PERMISSION_DENIED')) {
-        return left(const DataFailure.insufficientPermission());
-      } else {
-        return left(const DataFailure.unexpected());
-      }
-    }
-  }
+  //         print('chat created');
+  //         return right(chat);
+  //       } on FirebaseException catch (e) {
+  //         if (e.message!.contains('PERMISSION_DENIED')) {
+  //           return left(const DataFailure.insufficientPermission());
+  //         } else {
+  //           return left(const DataFailure.unexpected());
+  //         }
+  //       }
+  //     } else {
+  //       //If chat exists, just return
+  //       print('chat alr exists');
+  //       return right(ChatDto.fromFirestore(doc).toDomain());
+  //     }
+  //   } on FirebaseException catch (e) {
+  //     if (e.message!.contains('PERMISSION_DENIED')) {
+  //       return left(const DataFailure.insufficientPermission());
+  //     } else {
+  //       return left(const DataFailure.unexpected());
+  //     }
+  //   }
+  // }
 
   @override
   Stream<Either<DataFailure, List<Chat>>> retrieveUserChats(
@@ -99,29 +102,6 @@ class ChatRepository implements IChatRepository {
         return left(const DataFailure.unexpected());
       }
     });
-  }
-
-  @override
-  Future<Either<DataFailure, Unit>> deleteEmptyChats() async {
-    //not used for now
-    try {
-      final chatsRef = await _firestore.chatsRef();
-      QuerySnapshot emptyChats =
-          await chatsRef.where('lastMessage', isEqualTo: '').get();
-      if (emptyChats.docs.isNotEmpty) {
-        for (final chat in emptyChats.docs) {
-          chat.reference.delete();
-          print('delete');
-        }
-      }
-      return right(unit);
-    } on FirebaseException catch (e) {
-      if (e.message!.contains('PERMISSION_DENIED')) {
-        return left(const DataFailure.insufficientPermission());
-      } else {
-        return left(const DataFailure.unexpected());
-      }
-    }
   }
 
   @override
@@ -162,7 +142,7 @@ class ChatRepository implements IChatRepository {
             'timestamp': chatMessageDto.timeSent,
           },
         );
-      }); //update last message in chat
+      }); //create chat if doesn't exist, update last message in chat
       return right(unit);
     } on FirebaseException catch (e) {
       if (e.message!.contains('PERMISSION_DENIED')) {
@@ -211,7 +191,6 @@ class ChatRepository implements IChatRepository {
   Future<Either<DataFailure, Unit>> updateMessageRead(
       {required String convoId, required String messageId}) async {
     try {
-      print('updating read');
       await _firestore.runTransaction((transaction) async {
         final messageDoc =
             await _firestore.messageDocumentById(convoId, messageId);
@@ -236,7 +215,6 @@ class ChatRepository implements IChatRepository {
   Future<Either<DataFailure, Unit>> updateLastMessageRead(
       {required String convoId}) async {
     try {
-      print('updating last message of chat read');
       await _firestore.runTransaction((transaction) async {
         final chatDoc = await _firestore.chatDocumentById(convoId);
         transaction.update(
@@ -280,10 +258,34 @@ class ChatRepository implements IChatRepository {
       }
     });
   }
+
+  @override
+  Future<Either<DataFailure, Unit>> createLocationChat(
+      Position position, String creatorId) {
+    // TODO: implement createLocationChat
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<DataFailure, Position>> getCurrentLocation() {
+    // TODO: implement getCurrentLocation
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<DataFailure, List<String>>> getNearestChatIds(
+      Position position) {
+    // TODO: implement getNearestChatIds
+    throw UnimplementedError();
+  }
+
+  @override
+  Stream<Either<DataFailure, List<LocationChat>>> retrieveLocationChats(
+      List<String> nearestChatIds) {
+    // TODO: implement retrieveLocationChats
+    throw UnimplementedError();
+  }
 }
-
-
-
 
 /*   try {
       final chatsRef = await _firestore.chatsRef();

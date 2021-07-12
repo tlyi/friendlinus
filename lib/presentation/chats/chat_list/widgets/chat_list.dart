@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:friendlinus/application/chats/chat_bloc.dart';
 import 'package:friendlinus/application/chats/chat_watcher/chat_watcher_bloc.dart';
 import 'package:friendlinus/presentation/chats/chat_list/chat_list_page.dart';
 import 'package:friendlinus/presentation/core/get_time.dart';
@@ -42,6 +41,7 @@ class ChatList extends StatelessWidget {
                       leading: CircleAvatar(
                         radius: 20,
                         backgroundImage: NetworkImage(profile.photoUrl),
+                        backgroundColor: Colors.white,
                       ),
                       title: Text(profile.username.getOrCrash()),
                       subtitle: Text(

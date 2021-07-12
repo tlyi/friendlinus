@@ -1,20 +1,16 @@
 import 'dart:io';
-
+import 'package:geolocator/geolocator.dart';
 import 'package:dartz/dartz.dart';
 import 'package:friendlinus/domain/core/value_objects.dart';
 import 'package:friendlinus/domain/data/chats/chat.dart';
 import 'package:friendlinus/domain/data/chats/chat_message/chat_message.dart';
+import 'package:friendlinus/domain/data/chats/location_chat.dart';
 import 'package:friendlinus/domain/data/chats/value_objects.dart';
 import 'package:friendlinus/domain/data/data_failure.dart';
 import 'package:friendlinus/domain/data/profile/profile.dart';
 
 abstract class IChatRepository {
   Future<String> getOwnId();
-
-  Future<Either<DataFailure, Chat>> createChat(
-      Chat chat, String userIdsCombined, String otherId);
-
-  Future<Either<DataFailure, Unit>> deleteEmptyChats();
 
   Stream<Either<DataFailure, List<Chat>>> retrieveUserChats(String userId);
 
@@ -41,4 +37,15 @@ abstract class IChatRepository {
 
   Future<Either<DataFailure, Unit>> deleteMessage(
       ChatMessage chatMessage); //to be implemented
+
+  Future<Either<DataFailure, Position>> getCurrentLocation();
+
+  Future<Either<DataFailure, Unit>> createLocationChat(
+      Position position, String creatorId);
+
+  Future<Either<DataFailure, List<String>>> getNearestChatIds(
+      Position position);
+
+  Stream<Either<DataFailure, List<LocationChat>>> retrieveLocationChats(
+      List<String> nearestChatIds);
 }
