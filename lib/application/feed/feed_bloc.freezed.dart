@@ -27,6 +27,22 @@ class _$FeedEventTearOff {
   _RefreshModuleFeed refreshModuleFeed() {
     return const _RefreshModuleFeed();
   }
+
+  _Liked liked(List<ForumPost> forums, int index, String userId) {
+    return _Liked(
+      forums,
+      index,
+      userId,
+    );
+  }
+
+  _Unliked unliked(List<ForumPost> forums, int index, String userId) {
+    return _Unliked(
+      forums,
+      index,
+      userId,
+    );
+  }
 }
 
 /// @nodoc
@@ -39,6 +55,10 @@ mixin _$FeedEvent {
     required TResult Function() loaded,
     required TResult Function() refreshFriendFeed,
     required TResult Function() refreshModuleFeed,
+    required TResult Function(List<ForumPost> forums, int index, String userId)
+        liked,
+    required TResult Function(List<ForumPost> forums, int index, String userId)
+        unliked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -46,6 +66,8 @@ mixin _$FeedEvent {
     TResult Function()? loaded,
     TResult Function()? refreshFriendFeed,
     TResult Function()? refreshModuleFeed,
+    TResult Function(List<ForumPost> forums, int index, String userId)? liked,
+    TResult Function(List<ForumPost> forums, int index, String userId)? unliked,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -54,6 +76,8 @@ mixin _$FeedEvent {
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_RefreshFriendFeed value) refreshFriendFeed,
     required TResult Function(_RefreshModuleFeed value) refreshModuleFeed,
+    required TResult Function(_Liked value) liked,
+    required TResult Function(_Unliked value) unliked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -61,6 +85,8 @@ mixin _$FeedEvent {
     TResult Function(_Loaded value)? loaded,
     TResult Function(_RefreshFriendFeed value)? refreshFriendFeed,
     TResult Function(_RefreshModuleFeed value)? refreshModuleFeed,
+    TResult Function(_Liked value)? liked,
+    TResult Function(_Unliked value)? unliked,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -121,6 +147,10 @@ class _$_Loaded implements _Loaded {
     required TResult Function() loaded,
     required TResult Function() refreshFriendFeed,
     required TResult Function() refreshModuleFeed,
+    required TResult Function(List<ForumPost> forums, int index, String userId)
+        liked,
+    required TResult Function(List<ForumPost> forums, int index, String userId)
+        unliked,
   }) {
     return loaded();
   }
@@ -131,6 +161,8 @@ class _$_Loaded implements _Loaded {
     TResult Function()? loaded,
     TResult Function()? refreshFriendFeed,
     TResult Function()? refreshModuleFeed,
+    TResult Function(List<ForumPost> forums, int index, String userId)? liked,
+    TResult Function(List<ForumPost> forums, int index, String userId)? unliked,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -145,6 +177,8 @@ class _$_Loaded implements _Loaded {
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_RefreshFriendFeed value) refreshFriendFeed,
     required TResult Function(_RefreshModuleFeed value) refreshModuleFeed,
+    required TResult Function(_Liked value) liked,
+    required TResult Function(_Unliked value) unliked,
   }) {
     return loaded(this);
   }
@@ -155,6 +189,8 @@ class _$_Loaded implements _Loaded {
     TResult Function(_Loaded value)? loaded,
     TResult Function(_RefreshFriendFeed value)? refreshFriendFeed,
     TResult Function(_RefreshModuleFeed value)? refreshModuleFeed,
+    TResult Function(_Liked value)? liked,
+    TResult Function(_Unliked value)? unliked,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -211,6 +247,10 @@ class _$_RefreshFriendFeed implements _RefreshFriendFeed {
     required TResult Function() loaded,
     required TResult Function() refreshFriendFeed,
     required TResult Function() refreshModuleFeed,
+    required TResult Function(List<ForumPost> forums, int index, String userId)
+        liked,
+    required TResult Function(List<ForumPost> forums, int index, String userId)
+        unliked,
   }) {
     return refreshFriendFeed();
   }
@@ -221,6 +261,8 @@ class _$_RefreshFriendFeed implements _RefreshFriendFeed {
     TResult Function()? loaded,
     TResult Function()? refreshFriendFeed,
     TResult Function()? refreshModuleFeed,
+    TResult Function(List<ForumPost> forums, int index, String userId)? liked,
+    TResult Function(List<ForumPost> forums, int index, String userId)? unliked,
     required TResult orElse(),
   }) {
     if (refreshFriendFeed != null) {
@@ -235,6 +277,8 @@ class _$_RefreshFriendFeed implements _RefreshFriendFeed {
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_RefreshFriendFeed value) refreshFriendFeed,
     required TResult Function(_RefreshModuleFeed value) refreshModuleFeed,
+    required TResult Function(_Liked value) liked,
+    required TResult Function(_Unliked value) unliked,
   }) {
     return refreshFriendFeed(this);
   }
@@ -245,6 +289,8 @@ class _$_RefreshFriendFeed implements _RefreshFriendFeed {
     TResult Function(_Loaded value)? loaded,
     TResult Function(_RefreshFriendFeed value)? refreshFriendFeed,
     TResult Function(_RefreshModuleFeed value)? refreshModuleFeed,
+    TResult Function(_Liked value)? liked,
+    TResult Function(_Unliked value)? unliked,
     required TResult orElse(),
   }) {
     if (refreshFriendFeed != null) {
@@ -301,6 +347,10 @@ class _$_RefreshModuleFeed implements _RefreshModuleFeed {
     required TResult Function() loaded,
     required TResult Function() refreshFriendFeed,
     required TResult Function() refreshModuleFeed,
+    required TResult Function(List<ForumPost> forums, int index, String userId)
+        liked,
+    required TResult Function(List<ForumPost> forums, int index, String userId)
+        unliked,
   }) {
     return refreshModuleFeed();
   }
@@ -311,6 +361,8 @@ class _$_RefreshModuleFeed implements _RefreshModuleFeed {
     TResult Function()? loaded,
     TResult Function()? refreshFriendFeed,
     TResult Function()? refreshModuleFeed,
+    TResult Function(List<ForumPost> forums, int index, String userId)? liked,
+    TResult Function(List<ForumPost> forums, int index, String userId)? unliked,
     required TResult orElse(),
   }) {
     if (refreshModuleFeed != null) {
@@ -325,6 +377,8 @@ class _$_RefreshModuleFeed implements _RefreshModuleFeed {
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_RefreshFriendFeed value) refreshFriendFeed,
     required TResult Function(_RefreshModuleFeed value) refreshModuleFeed,
+    required TResult Function(_Liked value) liked,
+    required TResult Function(_Unliked value) unliked,
   }) {
     return refreshModuleFeed(this);
   }
@@ -335,6 +389,8 @@ class _$_RefreshModuleFeed implements _RefreshModuleFeed {
     TResult Function(_Loaded value)? loaded,
     TResult Function(_RefreshFriendFeed value)? refreshFriendFeed,
     TResult Function(_RefreshModuleFeed value)? refreshModuleFeed,
+    TResult Function(_Liked value)? liked,
+    TResult Function(_Unliked value)? unliked,
     required TResult orElse(),
   }) {
     if (refreshModuleFeed != null) {
@@ -346,6 +402,307 @@ class _$_RefreshModuleFeed implements _RefreshModuleFeed {
 
 abstract class _RefreshModuleFeed implements FeedEvent {
   const factory _RefreshModuleFeed() = _$_RefreshModuleFeed;
+}
+
+/// @nodoc
+abstract class _$LikedCopyWith<$Res> {
+  factory _$LikedCopyWith(_Liked value, $Res Function(_Liked) then) =
+      __$LikedCopyWithImpl<$Res>;
+  $Res call({List<ForumPost> forums, int index, String userId});
+}
+
+/// @nodoc
+class __$LikedCopyWithImpl<$Res> extends _$FeedEventCopyWithImpl<$Res>
+    implements _$LikedCopyWith<$Res> {
+  __$LikedCopyWithImpl(_Liked _value, $Res Function(_Liked) _then)
+      : super(_value, (v) => _then(v as _Liked));
+
+  @override
+  _Liked get _value => super._value as _Liked;
+
+  @override
+  $Res call({
+    Object? forums = freezed,
+    Object? index = freezed,
+    Object? userId = freezed,
+  }) {
+    return _then(_Liked(
+      forums == freezed
+          ? _value.forums
+          : forums // ignore: cast_nullable_to_non_nullable
+              as List<ForumPost>,
+      index == freezed
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int,
+      userId == freezed
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_Liked implements _Liked {
+  const _$_Liked(this.forums, this.index, this.userId);
+
+  @override
+  final List<ForumPost> forums;
+  @override
+  final int index;
+  @override
+  final String userId;
+
+  @override
+  String toString() {
+    return 'FeedEvent.liked(forums: $forums, index: $index, userId: $userId)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _Liked &&
+            (identical(other.forums, forums) ||
+                const DeepCollectionEquality().equals(other.forums, forums)) &&
+            (identical(other.index, index) ||
+                const DeepCollectionEquality().equals(other.index, index)) &&
+            (identical(other.userId, userId) ||
+                const DeepCollectionEquality().equals(other.userId, userId)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(forums) ^
+      const DeepCollectionEquality().hash(index) ^
+      const DeepCollectionEquality().hash(userId);
+
+  @JsonKey(ignore: true)
+  @override
+  _$LikedCopyWith<_Liked> get copyWith =>
+      __$LikedCopyWithImpl<_Liked>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() loaded,
+    required TResult Function() refreshFriendFeed,
+    required TResult Function() refreshModuleFeed,
+    required TResult Function(List<ForumPost> forums, int index, String userId)
+        liked,
+    required TResult Function(List<ForumPost> forums, int index, String userId)
+        unliked,
+  }) {
+    return liked(forums, index, userId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loaded,
+    TResult Function()? refreshFriendFeed,
+    TResult Function()? refreshModuleFeed,
+    TResult Function(List<ForumPost> forums, int index, String userId)? liked,
+    TResult Function(List<ForumPost> forums, int index, String userId)? unliked,
+    required TResult orElse(),
+  }) {
+    if (liked != null) {
+      return liked(forums, index, userId);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_RefreshFriendFeed value) refreshFriendFeed,
+    required TResult Function(_RefreshModuleFeed value) refreshModuleFeed,
+    required TResult Function(_Liked value) liked,
+    required TResult Function(_Unliked value) unliked,
+  }) {
+    return liked(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Loaded value)? loaded,
+    TResult Function(_RefreshFriendFeed value)? refreshFriendFeed,
+    TResult Function(_RefreshModuleFeed value)? refreshModuleFeed,
+    TResult Function(_Liked value)? liked,
+    TResult Function(_Unliked value)? unliked,
+    required TResult orElse(),
+  }) {
+    if (liked != null) {
+      return liked(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Liked implements FeedEvent {
+  const factory _Liked(List<ForumPost> forums, int index, String userId) =
+      _$_Liked;
+
+  List<ForumPost> get forums => throw _privateConstructorUsedError;
+  int get index => throw _privateConstructorUsedError;
+  String get userId => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$LikedCopyWith<_Liked> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$UnlikedCopyWith<$Res> {
+  factory _$UnlikedCopyWith(_Unliked value, $Res Function(_Unliked) then) =
+      __$UnlikedCopyWithImpl<$Res>;
+  $Res call({List<ForumPost> forums, int index, String userId});
+}
+
+/// @nodoc
+class __$UnlikedCopyWithImpl<$Res> extends _$FeedEventCopyWithImpl<$Res>
+    implements _$UnlikedCopyWith<$Res> {
+  __$UnlikedCopyWithImpl(_Unliked _value, $Res Function(_Unliked) _then)
+      : super(_value, (v) => _then(v as _Unliked));
+
+  @override
+  _Unliked get _value => super._value as _Unliked;
+
+  @override
+  $Res call({
+    Object? forums = freezed,
+    Object? index = freezed,
+    Object? userId = freezed,
+  }) {
+    return _then(_Unliked(
+      forums == freezed
+          ? _value.forums
+          : forums // ignore: cast_nullable_to_non_nullable
+              as List<ForumPost>,
+      index == freezed
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int,
+      userId == freezed
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_Unliked implements _Unliked {
+  const _$_Unliked(this.forums, this.index, this.userId);
+
+  @override
+  final List<ForumPost> forums;
+  @override
+  final int index;
+  @override
+  final String userId;
+
+  @override
+  String toString() {
+    return 'FeedEvent.unliked(forums: $forums, index: $index, userId: $userId)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _Unliked &&
+            (identical(other.forums, forums) ||
+                const DeepCollectionEquality().equals(other.forums, forums)) &&
+            (identical(other.index, index) ||
+                const DeepCollectionEquality().equals(other.index, index)) &&
+            (identical(other.userId, userId) ||
+                const DeepCollectionEquality().equals(other.userId, userId)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(forums) ^
+      const DeepCollectionEquality().hash(index) ^
+      const DeepCollectionEquality().hash(userId);
+
+  @JsonKey(ignore: true)
+  @override
+  _$UnlikedCopyWith<_Unliked> get copyWith =>
+      __$UnlikedCopyWithImpl<_Unliked>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() loaded,
+    required TResult Function() refreshFriendFeed,
+    required TResult Function() refreshModuleFeed,
+    required TResult Function(List<ForumPost> forums, int index, String userId)
+        liked,
+    required TResult Function(List<ForumPost> forums, int index, String userId)
+        unliked,
+  }) {
+    return unliked(forums, index, userId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loaded,
+    TResult Function()? refreshFriendFeed,
+    TResult Function()? refreshModuleFeed,
+    TResult Function(List<ForumPost> forums, int index, String userId)? liked,
+    TResult Function(List<ForumPost> forums, int index, String userId)? unliked,
+    required TResult orElse(),
+  }) {
+    if (unliked != null) {
+      return unliked(forums, index, userId);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_RefreshFriendFeed value) refreshFriendFeed,
+    required TResult Function(_RefreshModuleFeed value) refreshModuleFeed,
+    required TResult Function(_Liked value) liked,
+    required TResult Function(_Unliked value) unliked,
+  }) {
+    return unliked(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Loaded value)? loaded,
+    TResult Function(_RefreshFriendFeed value)? refreshFriendFeed,
+    TResult Function(_RefreshModuleFeed value)? refreshModuleFeed,
+    TResult Function(_Liked value)? liked,
+    TResult Function(_Unliked value)? unliked,
+    required TResult orElse(),
+  }) {
+    if (unliked != null) {
+      return unliked(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Unliked implements FeedEvent {
+  const factory _Unliked(List<ForumPost> forums, int index, String userId) =
+      _$_Unliked;
+
+  List<ForumPost> get forums => throw _privateConstructorUsedError;
+  int get index => throw _privateConstructorUsedError;
+  String get userId => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$UnlikedCopyWith<_Unliked> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -362,6 +719,12 @@ class _$FeedStateTearOff {
 
   _LoadSuccess loadSuccess(List<ForumPost> forums) {
     return _LoadSuccess(
+      forums,
+    );
+  }
+
+  _LoadLike loadLike(List<ForumPost> forums) {
+    return _LoadLike(
       forums,
     );
   }
@@ -383,6 +746,7 @@ mixin _$FeedState {
     required TResult Function() initial,
     required TResult Function() loadInProgress,
     required TResult Function(List<ForumPost> forums) loadSuccess,
+    required TResult Function(List<ForumPost> forums) loadLike,
     required TResult Function(DataFailure dataFailure) loadFailure,
   }) =>
       throw _privateConstructorUsedError;
@@ -391,6 +755,7 @@ mixin _$FeedState {
     TResult Function()? initial,
     TResult Function()? loadInProgress,
     TResult Function(List<ForumPost> forums)? loadSuccess,
+    TResult Function(List<ForumPost> forums)? loadLike,
     TResult Function(DataFailure dataFailure)? loadFailure,
     required TResult orElse(),
   }) =>
@@ -400,6 +765,7 @@ mixin _$FeedState {
     required TResult Function(_Initial value) initial,
     required TResult Function(_LoadInProgress value) loadInProgress,
     required TResult Function(_LoadSuccess value) loadSuccess,
+    required TResult Function(_LoadLike value) loadLike,
     required TResult Function(_LoadFailure value) loadFailure,
   }) =>
       throw _privateConstructorUsedError;
@@ -408,6 +774,7 @@ mixin _$FeedState {
     TResult Function(_Initial value)? initial,
     TResult Function(_LoadInProgress value)? loadInProgress,
     TResult Function(_LoadSuccess value)? loadSuccess,
+    TResult Function(_LoadLike value)? loadLike,
     TResult Function(_LoadFailure value)? loadFailure,
     required TResult orElse(),
   }) =>
@@ -469,6 +836,7 @@ class _$_Initial implements _Initial {
     required TResult Function() initial,
     required TResult Function() loadInProgress,
     required TResult Function(List<ForumPost> forums) loadSuccess,
+    required TResult Function(List<ForumPost> forums) loadLike,
     required TResult Function(DataFailure dataFailure) loadFailure,
   }) {
     return initial();
@@ -480,6 +848,7 @@ class _$_Initial implements _Initial {
     TResult Function()? initial,
     TResult Function()? loadInProgress,
     TResult Function(List<ForumPost> forums)? loadSuccess,
+    TResult Function(List<ForumPost> forums)? loadLike,
     TResult Function(DataFailure dataFailure)? loadFailure,
     required TResult orElse(),
   }) {
@@ -495,6 +864,7 @@ class _$_Initial implements _Initial {
     required TResult Function(_Initial value) initial,
     required TResult Function(_LoadInProgress value) loadInProgress,
     required TResult Function(_LoadSuccess value) loadSuccess,
+    required TResult Function(_LoadLike value) loadLike,
     required TResult Function(_LoadFailure value) loadFailure,
   }) {
     return initial(this);
@@ -506,6 +876,7 @@ class _$_Initial implements _Initial {
     TResult Function(_Initial value)? initial,
     TResult Function(_LoadInProgress value)? loadInProgress,
     TResult Function(_LoadSuccess value)? loadSuccess,
+    TResult Function(_LoadLike value)? loadLike,
     TResult Function(_LoadFailure value)? loadFailure,
     required TResult orElse(),
   }) {
@@ -562,6 +933,7 @@ class _$_LoadInProgress implements _LoadInProgress {
     required TResult Function() initial,
     required TResult Function() loadInProgress,
     required TResult Function(List<ForumPost> forums) loadSuccess,
+    required TResult Function(List<ForumPost> forums) loadLike,
     required TResult Function(DataFailure dataFailure) loadFailure,
   }) {
     return loadInProgress();
@@ -573,6 +945,7 @@ class _$_LoadInProgress implements _LoadInProgress {
     TResult Function()? initial,
     TResult Function()? loadInProgress,
     TResult Function(List<ForumPost> forums)? loadSuccess,
+    TResult Function(List<ForumPost> forums)? loadLike,
     TResult Function(DataFailure dataFailure)? loadFailure,
     required TResult orElse(),
   }) {
@@ -588,6 +961,7 @@ class _$_LoadInProgress implements _LoadInProgress {
     required TResult Function(_Initial value) initial,
     required TResult Function(_LoadInProgress value) loadInProgress,
     required TResult Function(_LoadSuccess value) loadSuccess,
+    required TResult Function(_LoadLike value) loadLike,
     required TResult Function(_LoadFailure value) loadFailure,
   }) {
     return loadInProgress(this);
@@ -599,6 +973,7 @@ class _$_LoadInProgress implements _LoadInProgress {
     TResult Function(_Initial value)? initial,
     TResult Function(_LoadInProgress value)? loadInProgress,
     TResult Function(_LoadSuccess value)? loadSuccess,
+    TResult Function(_LoadLike value)? loadLike,
     TResult Function(_LoadFailure value)? loadFailure,
     required TResult orElse(),
   }) {
@@ -680,6 +1055,7 @@ class _$_LoadSuccess implements _LoadSuccess {
     required TResult Function() initial,
     required TResult Function() loadInProgress,
     required TResult Function(List<ForumPost> forums) loadSuccess,
+    required TResult Function(List<ForumPost> forums) loadLike,
     required TResult Function(DataFailure dataFailure) loadFailure,
   }) {
     return loadSuccess(forums);
@@ -691,6 +1067,7 @@ class _$_LoadSuccess implements _LoadSuccess {
     TResult Function()? initial,
     TResult Function()? loadInProgress,
     TResult Function(List<ForumPost> forums)? loadSuccess,
+    TResult Function(List<ForumPost> forums)? loadLike,
     TResult Function(DataFailure dataFailure)? loadFailure,
     required TResult orElse(),
   }) {
@@ -706,6 +1083,7 @@ class _$_LoadSuccess implements _LoadSuccess {
     required TResult Function(_Initial value) initial,
     required TResult Function(_LoadInProgress value) loadInProgress,
     required TResult Function(_LoadSuccess value) loadSuccess,
+    required TResult Function(_LoadLike value) loadLike,
     required TResult Function(_LoadFailure value) loadFailure,
   }) {
     return loadSuccess(this);
@@ -717,6 +1095,7 @@ class _$_LoadSuccess implements _LoadSuccess {
     TResult Function(_Initial value)? initial,
     TResult Function(_LoadInProgress value)? loadInProgress,
     TResult Function(_LoadSuccess value)? loadSuccess,
+    TResult Function(_LoadLike value)? loadLike,
     TResult Function(_LoadFailure value)? loadFailure,
     required TResult orElse(),
   }) {
@@ -733,6 +1112,131 @@ abstract class _LoadSuccess implements FeedState {
   List<ForumPost> get forums => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$LoadSuccessCopyWith<_LoadSuccess> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$LoadLikeCopyWith<$Res> {
+  factory _$LoadLikeCopyWith(_LoadLike value, $Res Function(_LoadLike) then) =
+      __$LoadLikeCopyWithImpl<$Res>;
+  $Res call({List<ForumPost> forums});
+}
+
+/// @nodoc
+class __$LoadLikeCopyWithImpl<$Res> extends _$FeedStateCopyWithImpl<$Res>
+    implements _$LoadLikeCopyWith<$Res> {
+  __$LoadLikeCopyWithImpl(_LoadLike _value, $Res Function(_LoadLike) _then)
+      : super(_value, (v) => _then(v as _LoadLike));
+
+  @override
+  _LoadLike get _value => super._value as _LoadLike;
+
+  @override
+  $Res call({
+    Object? forums = freezed,
+  }) {
+    return _then(_LoadLike(
+      forums == freezed
+          ? _value.forums
+          : forums // ignore: cast_nullable_to_non_nullable
+              as List<ForumPost>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_LoadLike implements _LoadLike {
+  const _$_LoadLike(this.forums);
+
+  @override
+  final List<ForumPost> forums;
+
+  @override
+  String toString() {
+    return 'FeedState.loadLike(forums: $forums)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _LoadLike &&
+            (identical(other.forums, forums) ||
+                const DeepCollectionEquality().equals(other.forums, forums)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(forums);
+
+  @JsonKey(ignore: true)
+  @override
+  _$LoadLikeCopyWith<_LoadLike> get copyWith =>
+      __$LoadLikeCopyWithImpl<_LoadLike>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loadInProgress,
+    required TResult Function(List<ForumPost> forums) loadSuccess,
+    required TResult Function(List<ForumPost> forums) loadLike,
+    required TResult Function(DataFailure dataFailure) loadFailure,
+  }) {
+    return loadLike(forums);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loadInProgress,
+    TResult Function(List<ForumPost> forums)? loadSuccess,
+    TResult Function(List<ForumPost> forums)? loadLike,
+    TResult Function(DataFailure dataFailure)? loadFailure,
+    required TResult orElse(),
+  }) {
+    if (loadLike != null) {
+      return loadLike(forums);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_LoadInProgress value) loadInProgress,
+    required TResult Function(_LoadSuccess value) loadSuccess,
+    required TResult Function(_LoadLike value) loadLike,
+    required TResult Function(_LoadFailure value) loadFailure,
+  }) {
+    return loadLike(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_LoadInProgress value)? loadInProgress,
+    TResult Function(_LoadSuccess value)? loadSuccess,
+    TResult Function(_LoadLike value)? loadLike,
+    TResult Function(_LoadFailure value)? loadFailure,
+    required TResult orElse(),
+  }) {
+    if (loadLike != null) {
+      return loadLike(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _LoadLike implements FeedState {
+  const factory _LoadLike(List<ForumPost> forums) = _$_LoadLike;
+
+  List<ForumPost> get forums => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$LoadLikeCopyWith<_LoadLike> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -813,6 +1317,7 @@ class _$_LoadFailure implements _LoadFailure {
     required TResult Function() initial,
     required TResult Function() loadInProgress,
     required TResult Function(List<ForumPost> forums) loadSuccess,
+    required TResult Function(List<ForumPost> forums) loadLike,
     required TResult Function(DataFailure dataFailure) loadFailure,
   }) {
     return loadFailure(dataFailure);
@@ -824,6 +1329,7 @@ class _$_LoadFailure implements _LoadFailure {
     TResult Function()? initial,
     TResult Function()? loadInProgress,
     TResult Function(List<ForumPost> forums)? loadSuccess,
+    TResult Function(List<ForumPost> forums)? loadLike,
     TResult Function(DataFailure dataFailure)? loadFailure,
     required TResult orElse(),
   }) {
@@ -839,6 +1345,7 @@ class _$_LoadFailure implements _LoadFailure {
     required TResult Function(_Initial value) initial,
     required TResult Function(_LoadInProgress value) loadInProgress,
     required TResult Function(_LoadSuccess value) loadSuccess,
+    required TResult Function(_LoadLike value) loadLike,
     required TResult Function(_LoadFailure value) loadFailure,
   }) {
     return loadFailure(this);
@@ -850,6 +1357,7 @@ class _$_LoadFailure implements _LoadFailure {
     TResult Function(_Initial value)? initial,
     TResult Function(_LoadInProgress value)? loadInProgress,
     TResult Function(_LoadSuccess value)? loadSuccess,
+    TResult Function(_LoadLike value)? loadLike,
     TResult Function(_LoadFailure value)? loadFailure,
     required TResult orElse(),
   }) {

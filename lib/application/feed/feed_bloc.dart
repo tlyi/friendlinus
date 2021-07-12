@@ -44,6 +44,26 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
         yield failureOrForums.fold((f) => FeedState.loadFailure(f),
             (forums) => FeedState.loadSuccess(forums));
       },
+      liked: (e) async* {
+        List<ForumPost> forums = e.forums;
+        ForumPost forumLiked = forums[e.index];
+        List<String> likedUserIds = forumLiked.likedUserIds;
+        likedUserIds.add(e.userId);
+        forums[e.index] = forumLiked.copyWith(
+            likes: forumLiked.likes + 1,
+            likedUserIds: likedUserIds);
+        yield FeedState.loadLike(forums);
+      },
+      unliked: (e) async* {
+        List<ForumPost> forums = e.forums;
+        ForumPost forumLiked = forums[e.index];
+        List<String> likedUserIds = forumLiked.likedUserIds;
+        likedUserIds.remove(e.userId);
+        forums[e.index] = forumLiked.copyWith(
+            likes: forumLiked.likes - 1,
+            likedUserIds: likedUserIds);
+        yield FeedState.loadLike(forums);
+      },
     );
   }
 }
