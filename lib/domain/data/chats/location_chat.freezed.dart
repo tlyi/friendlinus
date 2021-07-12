@@ -17,7 +17,8 @@ class _$LocationChatTearOff {
   const _$LocationChatTearOff();
 
   _LocationChat call(
-      {required String uuid,
+      {required String chatId,
+      required String creatorUserId,
       required String lastMessage,
       required String lastSenderId,
       required Title chatTitle,
@@ -25,7 +26,8 @@ class _$LocationChatTearOff {
       required double longitude,
       required double latitude}) {
     return _LocationChat(
-      uuid: uuid,
+      chatId: chatId,
+      creatorUserId: creatorUserId,
       lastMessage: lastMessage,
       lastSenderId: lastSenderId,
       chatTitle: chatTitle,
@@ -41,7 +43,8 @@ const $LocationChat = _$LocationChatTearOff();
 
 /// @nodoc
 mixin _$LocationChat {
-  String get uuid => throw _privateConstructorUsedError;
+  String get chatId => throw _privateConstructorUsedError;
+  String get creatorUserId => throw _privateConstructorUsedError;
   String get lastMessage => throw _privateConstructorUsedError;
   String get lastSenderId => throw _privateConstructorUsedError;
   Title get chatTitle => throw _privateConstructorUsedError;
@@ -60,7 +63,8 @@ abstract class $LocationChatCopyWith<$Res> {
           LocationChat value, $Res Function(LocationChat) then) =
       _$LocationChatCopyWithImpl<$Res>;
   $Res call(
-      {String uuid,
+      {String chatId,
+      String creatorUserId,
       String lastMessage,
       String lastSenderId,
       Title chatTitle,
@@ -79,7 +83,8 @@ class _$LocationChatCopyWithImpl<$Res> implements $LocationChatCopyWith<$Res> {
 
   @override
   $Res call({
-    Object? uuid = freezed,
+    Object? chatId = freezed,
+    Object? creatorUserId = freezed,
     Object? lastMessage = freezed,
     Object? lastSenderId = freezed,
     Object? chatTitle = freezed,
@@ -88,9 +93,13 @@ class _$LocationChatCopyWithImpl<$Res> implements $LocationChatCopyWith<$Res> {
     Object? latitude = freezed,
   }) {
     return _then(_value.copyWith(
-      uuid: uuid == freezed
-          ? _value.uuid
-          : uuid // ignore: cast_nullable_to_non_nullable
+      chatId: chatId == freezed
+          ? _value.chatId
+          : chatId // ignore: cast_nullable_to_non_nullable
+              as String,
+      creatorUserId: creatorUserId == freezed
+          ? _value.creatorUserId
+          : creatorUserId // ignore: cast_nullable_to_non_nullable
               as String,
       lastMessage: lastMessage == freezed
           ? _value.lastMessage
@@ -128,7 +137,8 @@ abstract class _$LocationChatCopyWith<$Res>
       __$LocationChatCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String uuid,
+      {String chatId,
+      String creatorUserId,
       String lastMessage,
       String lastSenderId,
       Title chatTitle,
@@ -149,7 +159,8 @@ class __$LocationChatCopyWithImpl<$Res> extends _$LocationChatCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? uuid = freezed,
+    Object? chatId = freezed,
+    Object? creatorUserId = freezed,
     Object? lastMessage = freezed,
     Object? lastSenderId = freezed,
     Object? chatTitle = freezed,
@@ -158,9 +169,13 @@ class __$LocationChatCopyWithImpl<$Res> extends _$LocationChatCopyWithImpl<$Res>
     Object? latitude = freezed,
   }) {
     return _then(_LocationChat(
-      uuid: uuid == freezed
-          ? _value.uuid
-          : uuid // ignore: cast_nullable_to_non_nullable
+      chatId: chatId == freezed
+          ? _value.chatId
+          : chatId // ignore: cast_nullable_to_non_nullable
+              as String,
+      creatorUserId: creatorUserId == freezed
+          ? _value.creatorUserId
+          : creatorUserId // ignore: cast_nullable_to_non_nullable
               as String,
       lastMessage: lastMessage == freezed
           ? _value.lastMessage
@@ -194,7 +209,8 @@ class __$LocationChatCopyWithImpl<$Res> extends _$LocationChatCopyWithImpl<$Res>
 
 class _$_LocationChat extends _LocationChat {
   const _$_LocationChat(
-      {required this.uuid,
+      {required this.chatId,
+      required this.creatorUserId,
       required this.lastMessage,
       required this.lastSenderId,
       required this.chatTitle,
@@ -204,7 +220,9 @@ class _$_LocationChat extends _LocationChat {
       : super._();
 
   @override
-  final String uuid;
+  final String chatId;
+  @override
+  final String creatorUserId;
   @override
   final String lastMessage;
   @override
@@ -220,15 +238,18 @@ class _$_LocationChat extends _LocationChat {
 
   @override
   String toString() {
-    return 'LocationChat(uuid: $uuid, lastMessage: $lastMessage, lastSenderId: $lastSenderId, chatTitle: $chatTitle, timestamp: $timestamp, longitude: $longitude, latitude: $latitude)';
+    return 'LocationChat(chatId: $chatId, creatorUserId: $creatorUserId, lastMessage: $lastMessage, lastSenderId: $lastSenderId, chatTitle: $chatTitle, timestamp: $timestamp, longitude: $longitude, latitude: $latitude)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _LocationChat &&
-            (identical(other.uuid, uuid) ||
-                const DeepCollectionEquality().equals(other.uuid, uuid)) &&
+            (identical(other.chatId, chatId) ||
+                const DeepCollectionEquality().equals(other.chatId, chatId)) &&
+            (identical(other.creatorUserId, creatorUserId) ||
+                const DeepCollectionEquality()
+                    .equals(other.creatorUserId, creatorUserId)) &&
             (identical(other.lastMessage, lastMessage) ||
                 const DeepCollectionEquality()
                     .equals(other.lastMessage, lastMessage)) &&
@@ -252,7 +273,8 @@ class _$_LocationChat extends _LocationChat {
   @override
   int get hashCode =>
       runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(uuid) ^
+      const DeepCollectionEquality().hash(chatId) ^
+      const DeepCollectionEquality().hash(creatorUserId) ^
       const DeepCollectionEquality().hash(lastMessage) ^
       const DeepCollectionEquality().hash(lastSenderId) ^
       const DeepCollectionEquality().hash(chatTitle) ^
@@ -268,7 +290,8 @@ class _$_LocationChat extends _LocationChat {
 
 abstract class _LocationChat extends LocationChat {
   const factory _LocationChat(
-      {required String uuid,
+      {required String chatId,
+      required String creatorUserId,
       required String lastMessage,
       required String lastSenderId,
       required Title chatTitle,
@@ -278,7 +301,9 @@ abstract class _LocationChat extends LocationChat {
   const _LocationChat._() : super._();
 
   @override
-  String get uuid => throw _privateConstructorUsedError;
+  String get chatId => throw _privateConstructorUsedError;
+  @override
+  String get creatorUserId => throw _privateConstructorUsedError;
   @override
   String get lastMessage => throw _privateConstructorUsedError;
   @override

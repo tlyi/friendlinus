@@ -96,7 +96,7 @@ class NavigationBar extends StatelessWidget {
             ),
             tooltip: 'Location Chats',
             onPressed: () {
-              print('Nav to location chats');
+              context.replaceRoute(const LocationChatRoute());
             },
           ),
           IconButton(

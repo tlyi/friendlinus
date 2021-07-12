@@ -6,17 +6,18 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:friendlinus/domain/core/value_objects.dart';
 import 'package:friendlinus/domain/data/chats/chat_message/chat_message.dart';
 import 'package:friendlinus/domain/data/chats/location_chat.dart';
+import 'package:friendlinus/domain/data/chats/location_failure.dart';
 import 'package:friendlinus/domain/data/chats/value_objects.dart';
 import 'package:friendlinus/domain/data/data_failure.dart';
 import 'package:friendlinus/domain/data/chats/chat.dart';
 import 'package:friendlinus/domain/data/profile/profile.dart';
 import 'package:friendlinus/infrastructure/data/chats/chat_dtos.dart';
+import 'package:friendlinus/infrastructure/data/chats/location_chat/location_chat_dtos.dart';
 import 'package:friendlinus/infrastructure/data/profile/profile_dtos.dart';
-import 'package:geolocator_platform_interface/src/models/position.dart';
 import 'package:injectable/injectable.dart';
 import 'package:friendlinus/domain/data/chats/i_chat_repository.dart';
 import 'package:friendlinus/infrastructure/core/firestore_helpers.dart';
-
+import 'package:geolocator/geolocator.dart';
 import 'chat_message/chat_message_dtos.dart';
 
 @LazySingleton(as: IChatRepository)
@@ -261,29 +262,88 @@ class ChatRepository implements IChatRepository {
 
   @override
   Future<Either<DataFailure, Unit>> createLocationChat(
-      Position position, String creatorId) {
-    // TODO: implement createLocationChat
-    throw UnimplementedError();
+      LocationChat locationChat) async {
+    try {
+      print('trying to create chat');
+      final locationChatsRef = await _firestore.locationChatsRef();
+      final locationChatDto = LocationChatDto.fromDomain(locationChat.copyWith(
+          timestamp: DateTime.now().millisecondsSinceEpoch.toString()));
+
+      await locationChatsRef
+          .doc(locationChatDto.chatId)
+          .set(locationChatDto.toJson());
+      print('location chat created');
+      return right(unit);
+    } on FirebaseException catch (e) {
+      if (e.message!.contains('PERMISSION_DENIED')) {
+        return left(const DataFailure.insufficientPermission());
+      } else {
+        return left(const DataFailure.unexpected());
+      }
+    }
   }
 
   @override
-  Future<Either<DataFailure, Position>> getCurrentLocation() {
-    // TODO: implement getCurrentLocation
-    throw UnimplementedError();
+  Future<Either<LocationFailure, Position>> getLastKnownLocation() async {
+    try {
+      Position? position = await Geolocator.getLastKnownPosition();
+      return right(position!);
+    } catch (e) {
+      return left(const LocationFailure.unexpected());
+    }
+  }
+
+  @override
+  Future<Either<LocationFailure, Position>> getCurrentLocation() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Test if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      print('Service not enabled');
+      return left(const LocationFailure.serviceNotEnabled());
+    }
+
+    // Test if permissions are enabled.
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        print('Insufficient permission');
+        return left(const LocationFailure.insufficientPermission());
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are denied forever, handle appropriately.
+      print('Permission denied');
+      return left(const LocationFailure.permissionDeniedForever());
+    }
+
+    // When we reach here, permissions are granted and we can
+    // continue accessing the position of the device.
+    try {
+      Position position = await Geolocator.getCurrentPosition();
+      return right(position);
+    } catch (e) {
+      print('Unexpected error');
+      return left(const LocationFailure.unexpected());
+    }
   }
 
   @override
   Future<Either<DataFailure, List<String>>> getNearestChatIds(
-      Position position) {
+      Position position) async {
     // TODO: implement getNearestChatIds
     throw UnimplementedError();
   }
 
   @override
   Stream<Either<DataFailure, List<LocationChat>>> retrieveLocationChats(
-      List<String> nearestChatIds) {
+      List<String> nearestChatIds) async* {
     // TODO: implement retrieveLocationChats
-    throw UnimplementedError();
+    yield* Stream.empty();
   }
 }
 

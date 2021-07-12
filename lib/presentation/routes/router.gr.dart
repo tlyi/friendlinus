@@ -7,8 +7,8 @@
 import 'package:auto_route/auto_route.dart' as _i1;
 import 'package:flutter/material.dart' as _i2;
 import 'package:friendlinus/domain/data/forum/forum_post/forum_post.dart'
-    as _i23;
-import 'package:friendlinus/domain/data/profile/profile.dart' as _i22;
+    as _i25;
+import 'package:friendlinus/domain/data/profile/profile.dart' as _i24;
 import 'package:friendlinus/presentation/chats/chat_list/chat_list_page.dart'
     as _i15;
 import 'package:friendlinus/presentation/chats/convos/convo_page.dart' as _i16;
@@ -23,6 +23,10 @@ import 'package:friendlinus/presentation/forum/forum_tab/forum_tab_page.dart'
 import 'package:friendlinus/presentation/forum/forum_tab/module_forum_page.dart'
     as _i20;
 import 'package:friendlinus/presentation/home/home_page.dart' as _i5;
+import 'package:friendlinus/presentation/location_chats/location_chat_form_page.dart'
+    as _i22;
+import 'package:friendlinus/presentation/location_chats/location_chat_page.dart'
+    as _i23;
 import 'package:friendlinus/presentation/notifications/notification_page.dart'
     as _i19;
 import 'package:friendlinus/presentation/profile/other_profile_page.dart'
@@ -151,6 +155,16 @@ class AppRouter extends _i1.RootStackRouter {
         routeData: routeData,
         builder: (_) {
           return const _i21.ForumTabPage();
+        }),
+    LocationChatFormRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
+        routeData: routeData,
+        builder: (_) {
+          return const _i22.LocationChatFormPage();
+        }),
+    LocationChatRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
+        routeData: routeData,
+        builder: (_) {
+          return const _i23.LocationChatPage();
         })
   };
 
@@ -175,7 +189,10 @@ class AppRouter extends _i1.RootStackRouter {
         _i1.RouteConfig(CommentRoute.name, path: '/comment-page'),
         _i1.RouteConfig(NotificationRoute.name, path: '/notification-page'),
         _i1.RouteConfig(ModuleForumRoute.name, path: '/module-forum-page'),
-        _i1.RouteConfig(ForumTabRoute.name, path: '/forum-tab-page')
+        _i1.RouteConfig(ForumTabRoute.name, path: '/forum-tab-page'),
+        _i1.RouteConfig(LocationChatFormRoute.name,
+            path: '/location-chat-form-page'),
+        _i1.RouteConfig(LocationChatRoute.name, path: '/location-chat-page')
       ];
 }
 
@@ -262,7 +279,7 @@ class UpdateProfileRoute extends _i1.PageRouteInfo {
 }
 
 class OtherProfileRoute extends _i1.PageRouteInfo<OtherProfileRouteArgs> {
-  OtherProfileRoute({_i2.Key? key, required _i22.Profile userProfile})
+  OtherProfileRoute({_i2.Key? key, required _i24.Profile userProfile})
       : super(name,
             path: '/other-profile-page',
             args: OtherProfileRouteArgs(key: key, userProfile: userProfile));
@@ -275,7 +292,7 @@ class OtherProfileRouteArgs {
 
   final _i2.Key? key;
 
-  final _i22.Profile userProfile;
+  final _i24.Profile userProfile;
 }
 
 class ForumFormRoute extends _i1.PageRouteInfo {
@@ -291,7 +308,7 @@ class ChatListRoute extends _i1.PageRouteInfo {
 }
 
 class ConvoRoute extends _i1.PageRouteInfo<ConvoRouteArgs> {
-  ConvoRoute({_i2.Key? key, required _i22.Profile otherProfile})
+  ConvoRoute({_i2.Key? key, required _i24.Profile otherProfile})
       : super(name,
             path: '/convo-page',
             args: ConvoRouteArgs(key: key, otherProfile: otherProfile));
@@ -304,7 +321,7 @@ class ConvoRouteArgs {
 
   final _i2.Key? key;
 
-  final _i22.Profile otherProfile;
+  final _i24.Profile otherProfile;
 }
 
 class ForumRoute extends _i1.PageRouteInfo<ForumRouteArgs> {
@@ -329,7 +346,7 @@ class ForumRouteArgs {
 }
 
 class CommentRoute extends _i1.PageRouteInfo<CommentRouteArgs> {
-  CommentRoute({_i2.Key? key, required _i23.ForumPost forum})
+  CommentRoute({_i2.Key? key, required _i25.ForumPost forum})
       : super(name,
             path: '/comment-page',
             args: CommentRouteArgs(key: key, forum: forum));
@@ -342,7 +359,7 @@ class CommentRouteArgs {
 
   final _i2.Key? key;
 
-  final _i23.ForumPost forum;
+  final _i25.ForumPost forum;
 }
 
 class NotificationRoute extends _i1.PageRouteInfo {
@@ -372,4 +389,16 @@ class ForumTabRoute extends _i1.PageRouteInfo {
   const ForumTabRoute() : super(name, path: '/forum-tab-page');
 
   static const String name = 'ForumTabRoute';
+}
+
+class LocationChatFormRoute extends _i1.PageRouteInfo {
+  const LocationChatFormRoute() : super(name, path: '/location-chat-form-page');
+
+  static const String name = 'LocationChatFormRoute';
+}
+
+class LocationChatRoute extends _i1.PageRouteInfo {
+  const LocationChatRoute() : super(name, path: '/location-chat-page');
+
+  static const String name = 'LocationChatRoute';
 }

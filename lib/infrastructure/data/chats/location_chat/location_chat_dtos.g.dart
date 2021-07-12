@@ -8,7 +8,8 @@ part of 'location_chat_dtos.dart';
 
 _$_LocationChatDto _$_$_LocationChatDtoFromJson(Map<String, dynamic> json) {
   return _$_LocationChatDto(
-    uuid: json['uuid'] as String,
+    chatId: json['chatId'] as String,
+    creatorUserId: json['creatorUserId'] as String,
     lastMessage: json['lastMessage'] as String,
     lastSenderId: json['lastSenderId'] as String,
     chatTitle: json['chatTitle'] as String,
@@ -20,7 +21,8 @@ _$_LocationChatDto _$_$_LocationChatDtoFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$_$_LocationChatDtoToJson(_$_LocationChatDto instance) =>
     <String, dynamic>{
-      'uuid': instance.uuid,
+      'chatId': instance.chatId,
+      'creatorUserId': instance.creatorUserId,
       'lastMessage': instance.lastMessage,
       'lastSenderId': instance.lastSenderId,
       'chatTitle': instance.chatTitle,

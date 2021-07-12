@@ -15,3 +15,17 @@ class MessageBody extends ValueObject<String> {
 
   const MessageBody._(this.value);
 }
+
+class IntroMessage extends ValueObject<String> {
+  @override
+  final Either<ValueFailure<String>, String> value;
+
+  static const maxLength = 1000;
+
+  factory IntroMessage(String input) {
+    return IntroMessage._(validateMaxStringLength(input, maxLength)
+        .flatMap(validateStringNotEmpty));
+  }
+
+  const IntroMessage._(this.value);
+}

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:friendlinus/domain/data/chats/location_failure.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:dartz/dartz.dart';
 import 'package:friendlinus/domain/core/value_objects.dart';
@@ -38,10 +39,12 @@ abstract class IChatRepository {
   Future<Either<DataFailure, Unit>> deleteMessage(
       ChatMessage chatMessage); //to be implemented
 
-  Future<Either<DataFailure, Position>> getCurrentLocation();
+  Future<Either<LocationFailure, Position>> getLastKnownLocation();
+
+  Future<Either<LocationFailure, Position>> getCurrentLocation();
 
   Future<Either<DataFailure, Unit>> createLocationChat(
-      Position position, String creatorId);
+      LocationChat locationChat);
 
   Future<Either<DataFailure, List<String>>> getNearestChatIds(
       Position position);

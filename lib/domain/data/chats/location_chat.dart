@@ -9,7 +9,8 @@ abstract class LocationChat implements _$LocationChat {
   const LocationChat._();
 
   const factory LocationChat({
-    required String uuid,
+    required String chatId,
+    required String creatorUserId,
     required String lastMessage,
     required String lastSenderId,
     required Title chatTitle,
@@ -19,7 +20,8 @@ abstract class LocationChat implements _$LocationChat {
   }) = _LocationChat;
 
   factory LocationChat.empty() => LocationChat(
-        uuid: UniqueId('').getOrCrash(),
+        chatId: UniqueId('').getOrCrash(),
+        creatorUserId: '',
         lastMessage: '',
         lastSenderId: '',
         chatTitle: Title(''),

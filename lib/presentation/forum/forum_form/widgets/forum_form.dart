@@ -190,7 +190,7 @@ class _BuildBody extends StatelessWidget {
         return context.read<ForumFormBloc>().state.forumPost.body.value.fold(
             (f) => f.maybeMap(
                 exceedingLength: (_) =>
-                    'Title too long, maximum of 200 characters only',
+                    'Text too long, maximum of 200 characters only',
                 orElse: () => null),
             (_) => null);
       },
@@ -387,7 +387,6 @@ class _BuildAddImageButton extends StatelessWidget {
             tooltip: 'Add Image',
             onPressed: () async {
               void pickPhoto() async {
-               
                 final PickedFile? pickedFile = await imagePicker(context);
                 File? pickedImage;
                 if (pickedFile == null) {

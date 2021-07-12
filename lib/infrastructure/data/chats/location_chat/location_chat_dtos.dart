@@ -11,7 +11,8 @@ abstract class LocationChatDto implements _$LocationChatDto {
   const LocationChatDto._();
 
   const factory LocationChatDto({
-    required String uuid,
+    required String chatId,
+    required String creatorUserId,
     required String lastMessage,
     required String lastSenderId,
     required String chatTitle,
@@ -22,7 +23,8 @@ abstract class LocationChatDto implements _$LocationChatDto {
 
   factory LocationChatDto.fromDomain(LocationChat locationChat) {
     return LocationChatDto(
-        uuid: locationChat.uuid,
+        chatId: locationChat.chatId,
+        creatorUserId: locationChat.creatorUserId,
         lastMessage: locationChat.lastMessage,
         lastSenderId: locationChat.lastSenderId,
         chatTitle: locationChat.chatTitle.getOrCrash(),
@@ -33,7 +35,8 @@ abstract class LocationChatDto implements _$LocationChatDto {
 
   LocationChat toDomain() {
     return LocationChat(
-        uuid: uuid,
+        chatId: chatId,
+        creatorUserId: creatorUserId,
         lastMessage: lastMessage,
         lastSenderId: lastSenderId,
         chatTitle: Title(chatTitle),
