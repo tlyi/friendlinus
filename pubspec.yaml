@@ -54,6 +54,7 @@ dependencies:
   flutter_tags: ^1.0.0-nullsafety.1
   tap_debouncer: ^2.0.0
   geolocator: ^7.2.0+1
+  sortedmap: ^0.5.1
 
 #Stuff that you need during development
 dev_dependencies:

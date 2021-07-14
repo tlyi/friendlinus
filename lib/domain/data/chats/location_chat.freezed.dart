@@ -24,7 +24,8 @@ class _$LocationChatTearOff {
       required Title chatTitle,
       required String timestamp,
       required double longitude,
-      required double latitude}) {
+      required double latitude,
+      required double distance}) {
     return _LocationChat(
       chatId: chatId,
       creatorUserId: creatorUserId,
@@ -34,6 +35,7 @@ class _$LocationChatTearOff {
       timestamp: timestamp,
       longitude: longitude,
       latitude: latitude,
+      distance: distance,
     );
   }
 }
@@ -51,6 +53,7 @@ mixin _$LocationChat {
   String get timestamp => throw _privateConstructorUsedError;
   double get longitude => throw _privateConstructorUsedError;
   double get latitude => throw _privateConstructorUsedError;
+  double get distance => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $LocationChatCopyWith<LocationChat> get copyWith =>
@@ -70,7 +73,8 @@ abstract class $LocationChatCopyWith<$Res> {
       Title chatTitle,
       String timestamp,
       double longitude,
-      double latitude});
+      double latitude,
+      double distance});
 }
 
 /// @nodoc
@@ -91,6 +95,7 @@ class _$LocationChatCopyWithImpl<$Res> implements $LocationChatCopyWith<$Res> {
     Object? timestamp = freezed,
     Object? longitude = freezed,
     Object? latitude = freezed,
+    Object? distance = freezed,
   }) {
     return _then(_value.copyWith(
       chatId: chatId == freezed
@@ -125,6 +130,10 @@ class _$LocationChatCopyWithImpl<$Res> implements $LocationChatCopyWith<$Res> {
           ? _value.latitude
           : latitude // ignore: cast_nullable_to_non_nullable
               as double,
+      distance: distance == freezed
+          ? _value.distance
+          : distance // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 }
@@ -144,7 +153,8 @@ abstract class _$LocationChatCopyWith<$Res>
       Title chatTitle,
       String timestamp,
       double longitude,
-      double latitude});
+      double latitude,
+      double distance});
 }
 
 /// @nodoc
@@ -167,6 +177,7 @@ class __$LocationChatCopyWithImpl<$Res> extends _$LocationChatCopyWithImpl<$Res>
     Object? timestamp = freezed,
     Object? longitude = freezed,
     Object? latitude = freezed,
+    Object? distance = freezed,
   }) {
     return _then(_LocationChat(
       chatId: chatId == freezed
@@ -201,6 +212,10 @@ class __$LocationChatCopyWithImpl<$Res> extends _$LocationChatCopyWithImpl<$Res>
           ? _value.latitude
           : latitude // ignore: cast_nullable_to_non_nullable
               as double,
+      distance: distance == freezed
+          ? _value.distance
+          : distance // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 }
@@ -216,7 +231,8 @@ class _$_LocationChat extends _LocationChat {
       required this.chatTitle,
       required this.timestamp,
       required this.longitude,
-      required this.latitude})
+      required this.latitude,
+      required this.distance})
       : super._();
 
   @override
@@ -235,10 +251,12 @@ class _$_LocationChat extends _LocationChat {
   final double longitude;
   @override
   final double latitude;
+  @override
+  final double distance;
 
   @override
   String toString() {
-    return 'LocationChat(chatId: $chatId, creatorUserId: $creatorUserId, lastMessage: $lastMessage, lastSenderId: $lastSenderId, chatTitle: $chatTitle, timestamp: $timestamp, longitude: $longitude, latitude: $latitude)';
+    return 'LocationChat(chatId: $chatId, creatorUserId: $creatorUserId, lastMessage: $lastMessage, lastSenderId: $lastSenderId, chatTitle: $chatTitle, timestamp: $timestamp, longitude: $longitude, latitude: $latitude, distance: $distance)';
   }
 
   @override
@@ -267,7 +285,10 @@ class _$_LocationChat extends _LocationChat {
                     .equals(other.longitude, longitude)) &&
             (identical(other.latitude, latitude) ||
                 const DeepCollectionEquality()
-                    .equals(other.latitude, latitude)));
+                    .equals(other.latitude, latitude)) &&
+            (identical(other.distance, distance) ||
+                const DeepCollectionEquality()
+                    .equals(other.distance, distance)));
   }
 
   @override
@@ -280,7 +301,8 @@ class _$_LocationChat extends _LocationChat {
       const DeepCollectionEquality().hash(chatTitle) ^
       const DeepCollectionEquality().hash(timestamp) ^
       const DeepCollectionEquality().hash(longitude) ^
-      const DeepCollectionEquality().hash(latitude);
+      const DeepCollectionEquality().hash(latitude) ^
+      const DeepCollectionEquality().hash(distance);
 
   @JsonKey(ignore: true)
   @override
@@ -297,7 +319,8 @@ abstract class _LocationChat extends LocationChat {
       required Title chatTitle,
       required String timestamp,
       required double longitude,
-      required double latitude}) = _$_LocationChat;
+      required double latitude,
+      required double distance}) = _$_LocationChat;
   const _LocationChat._() : super._();
 
   @override
@@ -316,6 +339,8 @@ abstract class _LocationChat extends LocationChat {
   double get longitude => throw _privateConstructorUsedError;
   @override
   double get latitude => throw _privateConstructorUsedError;
+  @override
+  double get distance => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$LocationChatCopyWith<_LocationChat> get copyWith =>

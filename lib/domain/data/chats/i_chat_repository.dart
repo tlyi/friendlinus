@@ -46,9 +46,14 @@ abstract class IChatRepository {
   Future<Either<DataFailure, Unit>> createLocationChat(
       LocationChat locationChat);
 
-  Future<Either<DataFailure, List<String>>> getNearestChatIds(
+  Future<Either<DataFailure, Map<String, double>>> getNearestChatIds(
       Position position);
 
   Stream<Either<DataFailure, List<LocationChat>>> retrieveLocationChats(
       List<String> nearestChatIds);
+
+  Future<Either<DataFailure, Unit>> createLocationMessage(
+      {required String convoId,
+      required String messageId,
+      required ChatMessage chatMessage});
 }

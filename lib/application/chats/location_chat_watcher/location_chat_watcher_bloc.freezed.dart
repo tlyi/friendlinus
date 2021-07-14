@@ -32,9 +32,11 @@ class _$LocationChatWatcherEventTearOff {
   }
 
   _ChatsReceived chatsReceived(
-      Either<DataFailure, List<LocationChat>> failureOrChats) {
+      Either<DataFailure, List<LocationChat>> failureOrChats,
+      List<double> distances) {
     return _ChatsReceived(
       failureOrChats,
+      distances,
     );
   }
 }
@@ -51,7 +53,8 @@ mixin _$LocationChatWatcherEvent {
     required TResult Function(Position position)
         retrieveChatsFromNewLocationStarted,
     required TResult Function(
-            Either<DataFailure, List<LocationChat>> failureOrChats)
+            Either<DataFailure, List<LocationChat>> failureOrChats,
+            List<double> distances)
         chatsReceived,
   }) =>
       throw _privateConstructorUsedError;
@@ -60,7 +63,8 @@ mixin _$LocationChatWatcherEvent {
     TResult Function()? retrieveChatsStarted,
     TResult Function()? refreshedLocation,
     TResult Function(Position position)? retrieveChatsFromNewLocationStarted,
-    TResult Function(Either<DataFailure, List<LocationChat>> failureOrChats)?
+    TResult Function(Either<DataFailure, List<LocationChat>> failureOrChats,
+            List<double> distances)?
         chatsReceived,
     required TResult orElse(),
   }) =>
@@ -148,7 +152,8 @@ class _$_RetrieveChatsStarted implements _RetrieveChatsStarted {
     required TResult Function(Position position)
         retrieveChatsFromNewLocationStarted,
     required TResult Function(
-            Either<DataFailure, List<LocationChat>> failureOrChats)
+            Either<DataFailure, List<LocationChat>> failureOrChats,
+            List<double> distances)
         chatsReceived,
   }) {
     return retrieveChatsStarted();
@@ -160,7 +165,8 @@ class _$_RetrieveChatsStarted implements _RetrieveChatsStarted {
     TResult Function()? retrieveChatsStarted,
     TResult Function()? refreshedLocation,
     TResult Function(Position position)? retrieveChatsFromNewLocationStarted,
-    TResult Function(Either<DataFailure, List<LocationChat>> failureOrChats)?
+    TResult Function(Either<DataFailure, List<LocationChat>> failureOrChats,
+            List<double> distances)?
         chatsReceived,
     required TResult orElse(),
   }) {
@@ -248,7 +254,8 @@ class _$_RefreshedLocation implements _RefreshedLocation {
     required TResult Function(Position position)
         retrieveChatsFromNewLocationStarted,
     required TResult Function(
-            Either<DataFailure, List<LocationChat>> failureOrChats)
+            Either<DataFailure, List<LocationChat>> failureOrChats,
+            List<double> distances)
         chatsReceived,
   }) {
     return refreshedLocation();
@@ -260,7 +267,8 @@ class _$_RefreshedLocation implements _RefreshedLocation {
     TResult Function()? retrieveChatsStarted,
     TResult Function()? refreshedLocation,
     TResult Function(Position position)? retrieveChatsFromNewLocationStarted,
-    TResult Function(Either<DataFailure, List<LocationChat>> failureOrChats)?
+    TResult Function(Either<DataFailure, List<LocationChat>> failureOrChats,
+            List<double> distances)?
         chatsReceived,
     required TResult orElse(),
   }) {
@@ -380,7 +388,8 @@ class _$_RetrieveChatsFromNewLocationStarted
     required TResult Function(Position position)
         retrieveChatsFromNewLocationStarted,
     required TResult Function(
-            Either<DataFailure, List<LocationChat>> failureOrChats)
+            Either<DataFailure, List<LocationChat>> failureOrChats,
+            List<double> distances)
         chatsReceived,
   }) {
     return retrieveChatsFromNewLocationStarted(position);
@@ -392,7 +401,8 @@ class _$_RetrieveChatsFromNewLocationStarted
     TResult Function()? retrieveChatsStarted,
     TResult Function()? refreshedLocation,
     TResult Function(Position position)? retrieveChatsFromNewLocationStarted,
-    TResult Function(Either<DataFailure, List<LocationChat>> failureOrChats)?
+    TResult Function(Either<DataFailure, List<LocationChat>> failureOrChats,
+            List<double> distances)?
         chatsReceived,
     required TResult orElse(),
   }) {
@@ -448,7 +458,9 @@ abstract class _$ChatsReceivedCopyWith<$Res> {
   factory _$ChatsReceivedCopyWith(
           _ChatsReceived value, $Res Function(_ChatsReceived) then) =
       __$ChatsReceivedCopyWithImpl<$Res>;
-  $Res call({Either<DataFailure, List<LocationChat>> failureOrChats});
+  $Res call(
+      {Either<DataFailure, List<LocationChat>> failureOrChats,
+      List<double> distances});
 }
 
 /// @nodoc
@@ -465,12 +477,17 @@ class __$ChatsReceivedCopyWithImpl<$Res>
   @override
   $Res call({
     Object? failureOrChats = freezed,
+    Object? distances = freezed,
   }) {
     return _then(_ChatsReceived(
       failureOrChats == freezed
           ? _value.failureOrChats
           : failureOrChats // ignore: cast_nullable_to_non_nullable
               as Either<DataFailure, List<LocationChat>>,
+      distances == freezed
+          ? _value.distances
+          : distances // ignore: cast_nullable_to_non_nullable
+              as List<double>,
     ));
   }
 }
@@ -478,14 +495,16 @@ class __$ChatsReceivedCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_ChatsReceived implements _ChatsReceived {
-  const _$_ChatsReceived(this.failureOrChats);
+  const _$_ChatsReceived(this.failureOrChats, this.distances);
 
   @override
   final Either<DataFailure, List<LocationChat>> failureOrChats;
+  @override
+  final List<double> distances;
 
   @override
   String toString() {
-    return 'LocationChatWatcherEvent.chatsReceived(failureOrChats: $failureOrChats)';
+    return 'LocationChatWatcherEvent.chatsReceived(failureOrChats: $failureOrChats, distances: $distances)';
   }
 
   @override
@@ -494,13 +513,17 @@ class _$_ChatsReceived implements _ChatsReceived {
         (other is _ChatsReceived &&
             (identical(other.failureOrChats, failureOrChats) ||
                 const DeepCollectionEquality()
-                    .equals(other.failureOrChats, failureOrChats)));
+                    .equals(other.failureOrChats, failureOrChats)) &&
+            (identical(other.distances, distances) ||
+                const DeepCollectionEquality()
+                    .equals(other.distances, distances)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(failureOrChats);
+      const DeepCollectionEquality().hash(failureOrChats) ^
+      const DeepCollectionEquality().hash(distances);
 
   @JsonKey(ignore: true)
   @override
@@ -515,10 +538,11 @@ class _$_ChatsReceived implements _ChatsReceived {
     required TResult Function(Position position)
         retrieveChatsFromNewLocationStarted,
     required TResult Function(
-            Either<DataFailure, List<LocationChat>> failureOrChats)
+            Either<DataFailure, List<LocationChat>> failureOrChats,
+            List<double> distances)
         chatsReceived,
   }) {
-    return chatsReceived(failureOrChats);
+    return chatsReceived(failureOrChats, distances);
   }
 
   @override
@@ -527,12 +551,13 @@ class _$_ChatsReceived implements _ChatsReceived {
     TResult Function()? retrieveChatsStarted,
     TResult Function()? refreshedLocation,
     TResult Function(Position position)? retrieveChatsFromNewLocationStarted,
-    TResult Function(Either<DataFailure, List<LocationChat>> failureOrChats)?
+    TResult Function(Either<DataFailure, List<LocationChat>> failureOrChats,
+            List<double> distances)?
         chatsReceived,
     required TResult orElse(),
   }) {
     if (chatsReceived != null) {
-      return chatsReceived(failureOrChats);
+      return chatsReceived(failureOrChats, distances);
     }
     return orElse();
   }
@@ -568,11 +593,12 @@ class _$_ChatsReceived implements _ChatsReceived {
 
 abstract class _ChatsReceived implements LocationChatWatcherEvent {
   const factory _ChatsReceived(
-          Either<DataFailure, List<LocationChat>> failureOrChats) =
-      _$_ChatsReceived;
+      Either<DataFailure, List<LocationChat>> failureOrChats,
+      List<double> distances) = _$_ChatsReceived;
 
   Either<DataFailure, List<LocationChat>> get failureOrChats =>
       throw _privateConstructorUsedError;
+  List<double> get distances => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$ChatsReceivedCopyWith<_ChatsReceived> get copyWith =>
       throw _privateConstructorUsedError;
@@ -590,9 +616,10 @@ class _$LocationChatWatcherStateTearOff {
     return const _LoadInProgress();
   }
 
-  _LoadSuccess loadSuccess(List<LocationChat> chats) {
+  _LoadSuccess loadSuccess(List<LocationChat> chats, List<double> distances) {
     return _LoadSuccess(
       chats,
+      distances,
     );
   }
 
@@ -618,7 +645,8 @@ mixin _$LocationChatWatcherState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<LocationChat> chats) loadSuccess,
+    required TResult Function(List<LocationChat> chats, List<double> distances)
+        loadSuccess,
     required TResult Function(DataFailure dataFailure) loadDataFailure,
     required TResult Function(LocationFailure locationFailure)
         loadLocationFailure,
@@ -628,7 +656,8 @@ mixin _$LocationChatWatcherState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<LocationChat> chats)? loadSuccess,
+    TResult Function(List<LocationChat> chats, List<double> distances)?
+        loadSuccess,
     TResult Function(DataFailure dataFailure)? loadDataFailure,
     TResult Function(LocationFailure locationFailure)? loadLocationFailure,
     required TResult orElse(),
@@ -712,7 +741,8 @@ class _$_Initial implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<LocationChat> chats) loadSuccess,
+    required TResult Function(List<LocationChat> chats, List<double> distances)
+        loadSuccess,
     required TResult Function(DataFailure dataFailure) loadDataFailure,
     required TResult Function(LocationFailure locationFailure)
         loadLocationFailure,
@@ -725,7 +755,8 @@ class _$_Initial implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<LocationChat> chats)? loadSuccess,
+    TResult Function(List<LocationChat> chats, List<double> distances)?
+        loadSuccess,
     TResult Function(DataFailure dataFailure)? loadDataFailure,
     TResult Function(LocationFailure locationFailure)? loadLocationFailure,
     required TResult orElse(),
@@ -811,7 +842,8 @@ class _$_LoadInProgress implements _LoadInProgress {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<LocationChat> chats) loadSuccess,
+    required TResult Function(List<LocationChat> chats, List<double> distances)
+        loadSuccess,
     required TResult Function(DataFailure dataFailure) loadDataFailure,
     required TResult Function(LocationFailure locationFailure)
         loadLocationFailure,
@@ -824,7 +856,8 @@ class _$_LoadInProgress implements _LoadInProgress {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<LocationChat> chats)? loadSuccess,
+    TResult Function(List<LocationChat> chats, List<double> distances)?
+        loadSuccess,
     TResult Function(DataFailure dataFailure)? loadDataFailure,
     TResult Function(LocationFailure locationFailure)? loadLocationFailure,
     required TResult orElse(),
@@ -873,7 +906,7 @@ abstract class _$LoadSuccessCopyWith<$Res> {
   factory _$LoadSuccessCopyWith(
           _LoadSuccess value, $Res Function(_LoadSuccess) then) =
       __$LoadSuccessCopyWithImpl<$Res>;
-  $Res call({List<LocationChat> chats});
+  $Res call({List<LocationChat> chats, List<double> distances});
 }
 
 /// @nodoc
@@ -890,12 +923,17 @@ class __$LoadSuccessCopyWithImpl<$Res>
   @override
   $Res call({
     Object? chats = freezed,
+    Object? distances = freezed,
   }) {
     return _then(_LoadSuccess(
       chats == freezed
           ? _value.chats
           : chats // ignore: cast_nullable_to_non_nullable
               as List<LocationChat>,
+      distances == freezed
+          ? _value.distances
+          : distances // ignore: cast_nullable_to_non_nullable
+              as List<double>,
     ));
   }
 }
@@ -903,14 +941,16 @@ class __$LoadSuccessCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_LoadSuccess implements _LoadSuccess {
-  const _$_LoadSuccess(this.chats);
+  const _$_LoadSuccess(this.chats, this.distances);
 
   @override
   final List<LocationChat> chats;
+  @override
+  final List<double> distances;
 
   @override
   String toString() {
-    return 'LocationChatWatcherState.loadSuccess(chats: $chats)';
+    return 'LocationChatWatcherState.loadSuccess(chats: $chats, distances: $distances)';
   }
 
   @override
@@ -918,12 +958,17 @@ class _$_LoadSuccess implements _LoadSuccess {
     return identical(this, other) ||
         (other is _LoadSuccess &&
             (identical(other.chats, chats) ||
-                const DeepCollectionEquality().equals(other.chats, chats)));
+                const DeepCollectionEquality().equals(other.chats, chats)) &&
+            (identical(other.distances, distances) ||
+                const DeepCollectionEquality()
+                    .equals(other.distances, distances)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(chats);
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(chats) ^
+      const DeepCollectionEquality().hash(distances);
 
   @JsonKey(ignore: true)
   @override
@@ -935,12 +980,13 @@ class _$_LoadSuccess implements _LoadSuccess {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<LocationChat> chats) loadSuccess,
+    required TResult Function(List<LocationChat> chats, List<double> distances)
+        loadSuccess,
     required TResult Function(DataFailure dataFailure) loadDataFailure,
     required TResult Function(LocationFailure locationFailure)
         loadLocationFailure,
   }) {
-    return loadSuccess(chats);
+    return loadSuccess(chats, distances);
   }
 
   @override
@@ -948,13 +994,14 @@ class _$_LoadSuccess implements _LoadSuccess {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<LocationChat> chats)? loadSuccess,
+    TResult Function(List<LocationChat> chats, List<double> distances)?
+        loadSuccess,
     TResult Function(DataFailure dataFailure)? loadDataFailure,
     TResult Function(LocationFailure locationFailure)? loadLocationFailure,
     required TResult orElse(),
   }) {
     if (loadSuccess != null) {
-      return loadSuccess(chats);
+      return loadSuccess(chats, distances);
     }
     return orElse();
   }
@@ -989,9 +1036,11 @@ class _$_LoadSuccess implements _LoadSuccess {
 }
 
 abstract class _LoadSuccess implements LocationChatWatcherState {
-  const factory _LoadSuccess(List<LocationChat> chats) = _$_LoadSuccess;
+  const factory _LoadSuccess(List<LocationChat> chats, List<double> distances) =
+      _$_LoadSuccess;
 
   List<LocationChat> get chats => throw _privateConstructorUsedError;
+  List<double> get distances => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$LoadSuccessCopyWith<_LoadSuccess> get copyWith =>
       throw _privateConstructorUsedError;
@@ -1074,7 +1123,8 @@ class _$_LoadDataFailure implements _LoadDataFailure {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<LocationChat> chats) loadSuccess,
+    required TResult Function(List<LocationChat> chats, List<double> distances)
+        loadSuccess,
     required TResult Function(DataFailure dataFailure) loadDataFailure,
     required TResult Function(LocationFailure locationFailure)
         loadLocationFailure,
@@ -1087,7 +1137,8 @@ class _$_LoadDataFailure implements _LoadDataFailure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<LocationChat> chats)? loadSuccess,
+    TResult Function(List<LocationChat> chats, List<double> distances)?
+        loadSuccess,
     TResult Function(DataFailure dataFailure)? loadDataFailure,
     TResult Function(LocationFailure locationFailure)? loadLocationFailure,
     required TResult orElse(),
@@ -1215,7 +1266,8 @@ class _$_LoadLocationFailure implements _LoadLocationFailure {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<LocationChat> chats) loadSuccess,
+    required TResult Function(List<LocationChat> chats, List<double> distances)
+        loadSuccess,
     required TResult Function(DataFailure dataFailure) loadDataFailure,
     required TResult Function(LocationFailure locationFailure)
         loadLocationFailure,
@@ -1228,7 +1280,8 @@ class _$_LoadLocationFailure implements _LoadLocationFailure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<LocationChat> chats)? loadSuccess,
+    TResult Function(List<LocationChat> chats, List<double> distances)?
+        loadSuccess,
     TResult Function(DataFailure dataFailure)? loadDataFailure,
     TResult Function(LocationFailure locationFailure)? loadLocationFailure,
     required TResult orElse(),

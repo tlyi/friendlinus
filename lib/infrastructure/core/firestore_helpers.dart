@@ -30,10 +30,6 @@ extension FirestoreX on FirebaseFirestore {
     return FirebaseFirestore.instance.collection('locationChats');
   }
 
-  Future<DocumentReference> locationChatDocumentById(String convoId) async {
-    return FirebaseFirestore.instance.collection('locationChats').doc(convoId);
-  }
-
   Future<DocumentReference> chatDocumentById(String convoId) async {
     return FirebaseFirestore.instance.collection('chats').doc(convoId);
   }
@@ -52,6 +48,17 @@ extension FirestoreX on FirebaseFirestore {
         .collection('messages')
         .doc(convoId)
         .collection('messages');
+  }
+
+  Future<CollectionReference> locationConvoMessagesRef(String convoId) async {
+    return FirebaseFirestore.instance
+        .collection('locationMessages')
+        .doc(convoId)
+        .collection('locationMessages');
+  }
+
+  Future<DocumentReference> locationChatDocumentById(String convoId) async {
+    return FirebaseFirestore.instance.collection('locationChats').doc(convoId);
   }
 
   //Forums

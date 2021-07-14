@@ -44,21 +44,27 @@ class LocationChatWatcherBloc
         } else {
           DataFailure? dataFailure;
           List<String>? chatIds = [];
-          Either<DataFailure, List<String>> failureOrChatIds =
+          List<double> distances = [];
+          Either<DataFailure, Map<String, double>> failureOrChatIdMaps =
               await _chatRepository.getNearestChatIds(lastKnownPosition!);
-          failureOrChatIds.fold((f) => dataFailure = f, (ids) => chatIds = ids);
+          failureOrChatIdMaps.fold((f) => dataFailure = f, (pairs) {
+            chatIds = pairs.keys.toList();
+            distances = pairs.values.toList();
+          });
           if (dataFailure != null) {
             yield LocationChatWatcherState.loadDataFailure(dataFailure!);
           } else {
             await _chatStreamSubscription?.cancel();
             _chatStreamSubscription = _chatRepository
-                .retrieveLocationChats(chatIds!)
+                .retrieveLocationChats(chatIds!.take(10).toList())
                 .listen((failureOrChats) => add(
-                    LocationChatWatcherEvent.chatsReceived(failureOrChats)));
+                    LocationChatWatcherEvent.chatsReceived(
+                        failureOrChats, distances)));
           }
         }
       },
       refreshedLocation: (e) async* {
+        yield const LocationChatWatcherState.loadInProgress();
         await _chatStreamSubscription?.cancel();
         Either<LocationFailure, Position> failureOrPosition =
             await _chatRepository.getCurrentLocation();
@@ -69,8 +75,8 @@ class LocationChatWatcherBloc
         if (failure != null) {
           yield LocationChatWatcherState.loadLocationFailure(failure!);
         } else {
-          print('latitude:' + newPosition!.latitude.toString());
-          print('longitude:' + newPosition!.longitude.toString());
+          // print('latitude:' + newPosition!.latitude.toString());
+          // print('longitude:' + newPosition!.longitude.toString());
           add(LocationChatWatcherEvent.retrieveChatsFromNewLocationStarted(
               newPosition!));
         }
@@ -78,23 +84,28 @@ class LocationChatWatcherBloc
       retrieveChatsFromNewLocationStarted: (e) async* {
         DataFailure? dataFailure;
         List<String>? chatIds = [];
-        Either<DataFailure, List<String>> failureOrChatIds =
+        List<double> distances = [];
+        Either<DataFailure, Map<String, double>> failureOrChatIdMaps =
             await _chatRepository.getNearestChatIds(e.position);
-        failureOrChatIds.fold((f) => dataFailure = f, (ids) => chatIds = ids);
+        failureOrChatIdMaps.fold((f) => dataFailure = f, (pairs) {
+          chatIds = pairs.keys.toList();
+          distances = pairs.values.toList();
+        });
         if (dataFailure != null) {
           yield LocationChatWatcherState.loadDataFailure(dataFailure!);
         } else {
           await _chatStreamSubscription?.cancel();
           _chatStreamSubscription = _chatRepository
-              .retrieveLocationChats(chatIds!)
-              .listen((failureOrChats) =>
-                  add(LocationChatWatcherEvent.chatsReceived(failureOrChats)));
+              .retrieveLocationChats(chatIds!.take(10).toList())
+              .listen((failureOrChats) => add(
+                  LocationChatWatcherEvent.chatsReceived(
+                      failureOrChats, distances)));
         }
       },
       chatsReceived: (e) async* {
         yield e.failureOrChats.fold(
             (f) => LocationChatWatcherState.loadDataFailure(f),
-            (c) => LocationChatWatcherState.loadSuccess(c));
+            (c) => LocationChatWatcherState.loadSuccess(c, e.distances));
       },
     );
   }

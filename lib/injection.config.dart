@@ -10,38 +10,42 @@ import 'package:firebase_storage/firebase_storage.dart' as _i5;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
-import 'application/auth/auth_bloc.dart' as _i31;
-import 'application/auth/sign_in_form/sign_in_form_bloc.dart' as _i30;
-import 'application/chats/chat_watcher/chat_watcher_bloc.dart' as _i33;
-import 'application/chats/convo_actor/convo_actor_bloc.dart' as _i35;
-import 'application/chats/convo_watcher/convo_watcher_bloc.dart' as _i36;
+import 'application/auth/auth_bloc.dart' as _i33;
+import 'application/auth/sign_in_form/sign_in_form_bloc.dart' as _i32;
+import 'application/chats/chat_watcher/chat_watcher_bloc.dart' as _i35;
+import 'application/chats/convo_actor/convo_actor_bloc.dart' as _i37;
+import 'application/chats/convo_watcher/convo_watcher_bloc.dart' as _i38;
 import 'application/chats/location_chat_form/location_chat_form_bloc.dart'
     as _i18;
 import 'application/chats/location_chat_watcher/location_chat_watcher_bloc.dart'
     as _i19;
-import 'application/feed/feed_bloc.dart' as _i37;
-import 'application/forum/comment_watcher/comment_watcher_bloc.dart' as _i34;
-import 'application/forum/forum_actor/forum_actor_bloc.dart' as _i38;
-import 'application/forum/forum_form/forum_form_bloc.dart' as _i39;
-import 'application/forum/forum_post_watcher/forum_post_watcher_bloc.dart'
-    as _i40;
-import 'application/forum/forum_post_watcher/poll_watcher/poll_watcher_bloc.dart'
-    as _i25;
-import 'application/forum/forum_watcher/forum_watcher_bloc.dart' as _i41;
-import 'application/forum/module_actor/module_actor_bloc.dart' as _i20;
-import 'application/forum/module_watcher/module_forum_watcher/module_forum_watcher_bloc.dart'
+import 'application/chats/location_convo_actor/location_convo_actor_bloc.dart'
+    as _i20;
+import 'application/chats/location_convo_watcher/location_convo_watcher_bloc.dart'
     as _i21;
-import 'application/forum/module_watcher/module_watcher_bloc.dart' as _i22;
-import 'application/forum/search_forum/search_forum_bloc.dart' as _i28;
-import 'application/notifications/chat_counter_watcher/chat_counter_watcher_bloc.dart'
-    as _i32;
-import 'application/notifications/notif_counter_watcher/notif_counter_watcher_bloc.dart'
+import 'application/feed/feed_bloc.dart' as _i39;
+import 'application/forum/comment_watcher/comment_watcher_bloc.dart' as _i36;
+import 'application/forum/forum_actor/forum_actor_bloc.dart' as _i40;
+import 'application/forum/forum_form/forum_form_bloc.dart' as _i41;
+import 'application/forum/forum_post_watcher/forum_post_watcher_bloc.dart'
+    as _i42;
+import 'application/forum/forum_post_watcher/poll_watcher/poll_watcher_bloc.dart'
+    as _i27;
+import 'application/forum/forum_watcher/forum_watcher_bloc.dart' as _i43;
+import 'application/forum/module_actor/module_actor_bloc.dart' as _i22;
+import 'application/forum/module_watcher/module_forum_watcher/module_forum_watcher_bloc.dart'
     as _i23;
+import 'application/forum/module_watcher/module_watcher_bloc.dart' as _i24;
+import 'application/forum/search_forum/search_forum_bloc.dart' as _i30;
+import 'application/notifications/chat_counter_watcher/chat_counter_watcher_bloc.dart'
+    as _i34;
+import 'application/notifications/notif_counter_watcher/notif_counter_watcher_bloc.dart'
+    as _i25;
 import 'application/notifications/notification_watcher/notification_watcher_bloc.dart'
-    as _i24;
-import 'application/profile/profile_actor/profile_actor_bloc.dart' as _i26;
-import 'application/profile/profile_form/profile_form_bloc.dart' as _i27;
-import 'application/search/search_profile_bloc.dart' as _i29;
+    as _i26;
+import 'application/profile/profile_actor/profile_actor_bloc.dart' as _i28;
+import 'application/profile/profile_form/profile_form_bloc.dart' as _i29;
+import 'application/search/search_profile_bloc.dart' as _i31;
 import 'domain/auth/i_auth_facade.dart' as _i6;
 import 'domain/data/chats/i_chat_repository.dart' as _i8;
 import 'domain/data/forum/i_forum_repository.dart' as _i10;
@@ -49,7 +53,7 @@ import 'domain/data/notifications/i_notification_repository.dart' as _i14;
 import 'domain/data/profile/i_profile_repository.dart' as _i16;
 import 'domain/mods/i_mod_repository.dart' as _i12;
 import 'infrastructure/auth/firebase_auth_facade.dart' as _i7;
-import 'infrastructure/core/firebase_injectable_module.dart' as _i42;
+import 'infrastructure/core/firebase_injectable_module.dart' as _i44;
 import 'infrastructure/data/chats/chat_repository.dart' as _i9;
 import 'infrastructure/data/forum/forum_repository.dart' as _i11;
 import 'infrastructure/data/notifications/notification_repository.dart' as _i15;
@@ -86,50 +90,54 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       () => _i18.LocationChatFormBloc(get<_i8.IChatRepository>()));
   gh.factory<_i19.LocationChatWatcherBloc>(
       () => _i19.LocationChatWatcherBloc(get<_i8.IChatRepository>()));
-  gh.factory<_i20.ModuleActorBloc>(
-      () => _i20.ModuleActorBloc(get<_i16.IProfileRepository>()));
-  gh.factory<_i21.ModuleForumWatcherBloc>(
-      () => _i21.ModuleForumWatcherBloc(get<_i10.IForumRepository>()));
-  gh.factory<_i22.ModuleWatcherBloc>(
-      () => _i22.ModuleWatcherBloc(get<_i10.IForumRepository>()));
-  gh.factory<_i23.NotifCounterWatcherBloc>(
-      () => _i23.NotifCounterWatcherBloc(get<_i14.INotificationRepository>()));
-  gh.factory<_i24.NotificationWatcherBloc>(
-      () => _i24.NotificationWatcherBloc(get<_i14.INotificationRepository>()));
-  gh.factory<_i25.PollWatcherBloc>(
-      () => _i25.PollWatcherBloc(get<_i10.IForumRepository>()));
-  gh.factory<_i26.ProfileActorBloc>(
-      () => _i26.ProfileActorBloc(get<_i16.IProfileRepository>()));
-  gh.factory<_i27.ProfileFormBloc>(
-      () => _i27.ProfileFormBloc(get<_i16.IProfileRepository>()));
-  gh.factory<_i28.SearchForumBloc>(
-      () => _i28.SearchForumBloc(get<_i10.IForumRepository>()));
-  gh.factory<_i29.SearchProfileBloc>(
-      () => _i29.SearchProfileBloc(get<_i16.IProfileRepository>()));
-  gh.factory<_i30.SignInFormBloc>(
-      () => _i30.SignInFormBloc(get<_i6.IAuthFacade>()));
-  gh.factory<_i31.AuthBloc>(() => _i31.AuthBloc(get<_i6.IAuthFacade>(),
+  gh.factory<_i20.LocationConvoActorBloc>(
+      () => _i20.LocationConvoActorBloc(get<_i8.IChatRepository>()));
+  gh.factory<_i21.LocationConvoWatcherBloc>(() => _i21.LocationConvoWatcherBloc(
+      get<_i8.IChatRepository>(), get<_i16.IProfileRepository>()));
+  gh.factory<_i22.ModuleActorBloc>(
+      () => _i22.ModuleActorBloc(get<_i16.IProfileRepository>()));
+  gh.factory<_i23.ModuleForumWatcherBloc>(
+      () => _i23.ModuleForumWatcherBloc(get<_i10.IForumRepository>()));
+  gh.factory<_i24.ModuleWatcherBloc>(
+      () => _i24.ModuleWatcherBloc(get<_i10.IForumRepository>()));
+  gh.factory<_i25.NotifCounterWatcherBloc>(
+      () => _i25.NotifCounterWatcherBloc(get<_i14.INotificationRepository>()));
+  gh.factory<_i26.NotificationWatcherBloc>(
+      () => _i26.NotificationWatcherBloc(get<_i14.INotificationRepository>()));
+  gh.factory<_i27.PollWatcherBloc>(
+      () => _i27.PollWatcherBloc(get<_i10.IForumRepository>()));
+  gh.factory<_i28.ProfileActorBloc>(
+      () => _i28.ProfileActorBloc(get<_i16.IProfileRepository>()));
+  gh.factory<_i29.ProfileFormBloc>(
+      () => _i29.ProfileFormBloc(get<_i16.IProfileRepository>()));
+  gh.factory<_i30.SearchForumBloc>(
+      () => _i30.SearchForumBloc(get<_i10.IForumRepository>()));
+  gh.factory<_i31.SearchProfileBloc>(
+      () => _i31.SearchProfileBloc(get<_i16.IProfileRepository>()));
+  gh.factory<_i32.SignInFormBloc>(
+      () => _i32.SignInFormBloc(get<_i6.IAuthFacade>()));
+  gh.factory<_i33.AuthBloc>(() => _i33.AuthBloc(get<_i6.IAuthFacade>(),
       get<_i16.IProfileRepository>(), get<_i12.IModRepository>()));
-  gh.factory<_i32.ChatCounterWatcherBloc>(
-      () => _i32.ChatCounterWatcherBloc(get<_i14.INotificationRepository>()));
-  gh.factory<_i33.ChatWatcherBloc>(
-      () => _i33.ChatWatcherBloc(get<_i8.IChatRepository>()));
-  gh.factory<_i34.CommentWatcherBloc>(() => _i34.CommentWatcherBloc(
+  gh.factory<_i34.ChatCounterWatcherBloc>(
+      () => _i34.ChatCounterWatcherBloc(get<_i14.INotificationRepository>()));
+  gh.factory<_i35.ChatWatcherBloc>(
+      () => _i35.ChatWatcherBloc(get<_i8.IChatRepository>()));
+  gh.factory<_i36.CommentWatcherBloc>(() => _i36.CommentWatcherBloc(
       get<_i10.IForumRepository>(), get<_i16.IProfileRepository>()));
-  gh.factory<_i35.ConvoActorBloc>(
-      () => _i35.ConvoActorBloc(get<_i8.IChatRepository>()));
-  gh.factory<_i36.ConvoWatcherBloc>(
-      () => _i36.ConvoWatcherBloc(get<_i8.IChatRepository>()));
-  gh.factory<_i37.FeedBloc>(() => _i37.FeedBloc(get<_i10.IForumRepository>()));
-  gh.factory<_i38.ForumActorBloc>(
-      () => _i38.ForumActorBloc(get<_i10.IForumRepository>()));
-  gh.factory<_i39.ForumFormBloc>(() => _i39.ForumFormBloc(
+  gh.factory<_i37.ConvoActorBloc>(
+      () => _i37.ConvoActorBloc(get<_i8.IChatRepository>()));
+  gh.factory<_i38.ConvoWatcherBloc>(
+      () => _i38.ConvoWatcherBloc(get<_i8.IChatRepository>()));
+  gh.factory<_i39.FeedBloc>(() => _i39.FeedBloc(get<_i10.IForumRepository>()));
+  gh.factory<_i40.ForumActorBloc>(
+      () => _i40.ForumActorBloc(get<_i10.IForumRepository>()));
+  gh.factory<_i41.ForumFormBloc>(() => _i41.ForumFormBloc(
       get<_i10.IForumRepository>(), get<_i16.IProfileRepository>()));
-  gh.factory<_i40.ForumPostWatcherBloc>(() => _i40.ForumPostWatcherBloc(
+  gh.factory<_i42.ForumPostWatcherBloc>(() => _i42.ForumPostWatcherBloc(
       get<_i10.IForumRepository>(), get<_i16.IProfileRepository>()));
-  gh.factory<_i41.ForumWatcherBloc>(
-      () => _i41.ForumWatcherBloc(get<_i10.IForumRepository>()));
+  gh.factory<_i43.ForumWatcherBloc>(
+      () => _i43.ForumWatcherBloc(get<_i10.IForumRepository>()));
   return get;
 }
 
-class _$FirebaseInjectableModule extends _i42.FirebaseInjectableModule {}
+class _$FirebaseInjectableModule extends _i44.FirebaseInjectableModule {}

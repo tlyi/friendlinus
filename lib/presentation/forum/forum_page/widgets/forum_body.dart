@@ -234,7 +234,22 @@ class _BuildPhoto extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return 
+    // FullScreenWidget(
+    //   child: Center(
+    //     child: Hero(
+    //       tag: "smallImage",
+    //       child: ClipRRect(
+    //         borderRadius: BorderRadius.circular(16),
+    //         child: Image.network(
+    //           photoUrl,
+    //           fit: BoxFit.cover,
+    //         ),
+    //       ),
+    //     ),
+    //   ),
+    // );
+    Column(
       children: <Widget>[
         SizedBox(
             height: MediaQuery.of(context).size.height * 0.5,
@@ -263,6 +278,7 @@ class _BuildPoll extends StatelessWidget {
           ),
           loadSuccess: (state) {
             Poll poll = state.poll;
+            int votes = poll.voteList.reduce((a, b) => a+b).toInt();
             return Container(
               alignment: Alignment.center,
               width: MediaQuery.of(context).size.width * 0.80,
@@ -293,7 +309,16 @@ class _BuildPoll extends StatelessWidget {
                           .add(ForumActorEvent.voted(forumId, choice - 1));
                     },
                   ),
-                  const SizedBox(height: 10),
+                  
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 8.0, right: 8, top: 4),
+                          child: Text(votes == 1 ? '$votes vote' : '$votes votes'),
+                        ),
+                      ),
+                    
+                  
                 ],
               ),
             );

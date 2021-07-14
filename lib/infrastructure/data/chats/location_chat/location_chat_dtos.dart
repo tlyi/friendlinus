@@ -42,7 +42,8 @@ abstract class LocationChatDto implements _$LocationChatDto {
         chatTitle: Title(chatTitle),
         timestamp: timestamp,
         longitude: longitude,
-        latitude: latitude);
+        latitude: latitude,
+        distance: 0);
   }
 
   factory LocationChatDto.fromJson(Map<String, dynamic> json) =>

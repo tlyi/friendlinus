@@ -9,5 +9,6 @@ class LocationChatWatcherEvent with _$LocationChatWatcherEvent {
   const factory LocationChatWatcherEvent.retrieveChatsFromNewLocationStarted(
       Position position) = _RetrieveChatsFromNewLocationStarted;
   const factory LocationChatWatcherEvent.chatsReceived(
-      Either<DataFailure, List<LocationChat>> failureOrChats) = _ChatsReceived;
+      Either<DataFailure, List<LocationChat>> failureOrChats,
+      List<double> distances) = _ChatsReceived;
 }

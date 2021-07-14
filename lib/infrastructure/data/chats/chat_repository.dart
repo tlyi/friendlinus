@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
@@ -18,7 +19,9 @@ import 'package:injectable/injectable.dart';
 import 'package:friendlinus/domain/data/chats/i_chat_repository.dart';
 import 'package:friendlinus/infrastructure/core/firestore_helpers.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:sortedmap/sortedmap.dart';
 import 'chat_message/chat_message_dtos.dart';
+import 'package:sortedmap/sortedmap.dart' as sortedMap;
 
 @LazySingleton(as: IChatRepository)
 class ChatRepository implements IChatRepository {
@@ -32,53 +35,6 @@ class ChatRepository implements IChatRepository {
     final userDoc = await _firestore.userDocument();
     return userDoc.id;
   }
-
-//not being used
-  // @override
-  // Future<Either<DataFailure, Chat>> createChat(
-  //     Chat chat, String userIdsCombined, String otherId) async {
-  //   try {
-  //     final chatsRef = await _firestore.chatsRef();
-  //     final chatDto = ChatDto.fromDomain(chat);
-  //     final userDoc = await _firestore.userDocument();
-  //     final otherUserDoc = await _firestore.userDocumentById(otherId);
-  //     final ownId = await getOwnId();
-
-  //     DocumentSnapshot doc = await chatsRef.doc(userIdsCombined).get();
-  //     if (!doc.exists) {
-  //       try {
-  //         //If chat does not exist, create chat
-  //         await chatsRef.doc(userIdsCombined).set(chatDto.toJson());
-  //         await userDoc.update({
-  //           'chatsImIn': FieldValue.arrayUnion([otherId])
-  //         });
-  //         print('supposed to add to userdoc');
-  //         await otherUserDoc.update({
-  //           'chatsImIn': FieldValue.arrayUnion([ownId])
-  //         });
-
-  //         print('chat created');
-  //         return right(chat);
-  //       } on FirebaseException catch (e) {
-  //         if (e.message!.contains('PERMISSION_DENIED')) {
-  //           return left(const DataFailure.insufficientPermission());
-  //         } else {
-  //           return left(const DataFailure.unexpected());
-  //         }
-  //       }
-  //     } else {
-  //       //If chat exists, just return
-  //       print('chat alr exists');
-  //       return right(ChatDto.fromFirestore(doc).toDomain());
-  //     }
-  //   } on FirebaseException catch (e) {
-  //     if (e.message!.contains('PERMISSION_DENIED')) {
-  //       return left(const DataFailure.insufficientPermission());
-  //     } else {
-  //       return left(const DataFailure.unexpected());
-  //     }
-  //   }
-  // }
 
   @override
   Stream<Either<DataFailure, List<Chat>>> retrieveUserChats(
@@ -333,26 +289,94 @@ class ChatRepository implements IChatRepository {
   }
 
   @override
-  Future<Either<DataFailure, List<String>>> getNearestChatIds(
+  Future<Either<DataFailure, Map<String, double>>> getNearestChatIds(
       Position position) async {
-    // TODO: implement getNearestChatIds
-    throw UnimplementedError();
+    final locationChatRef = await _firestore.locationChatsRef();
+    List<LocationChat> locationChats = [];
+    try {
+      QuerySnapshot query = await locationChatRef.get();
+
+      if (query.docs.isNotEmpty) {
+        for (final doc in query.docs) {
+          locationChats.add(LocationChatDto.fromFirestore(doc).toDomain());
+        }
+      }
+    } on FirebaseException catch (e) {
+      print(e);
+      return left(const DataFailure.unexpected());
+    }
+    MapEntry<String, double> distanceCalculator(LocationChat locationChat) {
+      double distance = Geolocator.distanceBetween(position.latitude,
+          position.longitude, locationChat.latitude, locationChat.longitude);
+
+      return MapEntry(locationChat.chatId, distance);
+    }
+
+    Iterable<MapEntry<String, double>> mapEntries =
+        locationChats.map(distanceCalculator);
+    var map = SortedMap<String, double>(const sortedMap.Ordering.byValue());
+    map.addEntries(mapEntries);
+
+    return right(map);
   }
 
   @override
   Stream<Either<DataFailure, List<LocationChat>>> retrieveLocationChats(
       List<String> nearestChatIds) async* {
-    // TODO: implement retrieveLocationChats
-    yield* Stream.empty();
+    final locationChatRef = await _firestore.locationChatsRef();
+    yield* locationChatRef
+        .where('chatId', whereIn: nearestChatIds)
+        .snapshots()
+        .map(
+          (snapshot) => right<DataFailure, List<LocationChat>>(
+            snapshot.docs
+                .map((doc) => LocationChatDto.fromFirestore(doc).toDomain())
+                .toList(),
+          ),
+        )
+        .handleError((e) {
+      if (e is FirebaseException && e.message!.contains('PERMISSION_DENIED')) {
+        return left(const DataFailure.insufficientPermission());
+      } else {
+        print(e);
+        return left(const DataFailure.unexpected());
+      }
+    });
   }
-}
 
-/*   try {
-      final chatsRef = await _firestore.chatsRef();
+  @override
+  Future<Either<DataFailure, Unit>> createLocationMessage(
+      {required String convoId,
+      required String messageId,
+      required ChatMessage chatMessage}) async {
+    try {
+      final chatMessageDto = ChatMessageDto.fromDomain(chatMessage);
+      final locationConvoMessagesRef =
+          await _firestore.locationConvoMessagesRef(convoId);
+
+      await locationConvoMessagesRef
+          .doc(messageId).set(chatMessageDto.toJson());
+      await _firestore.runTransaction((transaction) async {
+        final locationChatDoc =
+            await _firestore.locationChatDocumentById(convoId);
+        transaction.set(
+          locationChatDoc,
+          {
+            'lastMessage': chatMessageDto.photoUrl == ''
+                ? chatMessageDto.messageBody
+                : '(Photo) ${chatMessageDto.messageBody}',
+            'lastSenderId': chatMessageDto.senderId,
+            'timestamp': chatMessageDto.timeSent,
+          },
+        );
+      }); //create chat if doesn't exist, update last message in chat
+      return right(unit);
     } on FirebaseException catch (e) {
       if (e.message!.contains('PERMISSION_DENIED')) {
         return left(const DataFailure.insufficientPermission());
       } else {
         return left(const DataFailure.unexpected());
       }
-*/
+    }
+  }
+}

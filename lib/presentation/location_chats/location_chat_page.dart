@@ -6,6 +6,7 @@ import 'package:friendlinus/injection.dart';
 import 'package:friendlinus/presentation/core/app_bar.dart';
 import 'package:friendlinus/presentation/core/nav_bar.dart';
 import 'package:friendlinus/domain/core/constants.dart' as constants;
+import 'package:friendlinus/presentation/location_chats/widgets/location_chat_list.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 
@@ -15,9 +16,8 @@ class LocationChatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => getIt<LocationChatWatcherBloc>(),
-      // ..add(const LocationChatWatcherEvent
-      //     .refreshedLocation()), //to change to retrieveChatsStarted() in future
+      create: (context) => getIt<LocationChatWatcherBloc>()
+        ..add(const LocationChatWatcherEvent.retrieveChatsStarted()),
       child: BlocBuilder<LocationChatWatcherBloc, LocationChatWatcherState>(
         builder: (context, state) {
           return Scaffold(
@@ -99,7 +99,7 @@ class LocationChatPage extends StatelessWidget {
                 backgroundColor: constants.THEME_BLUE,
                 child: const Icon(Icons.location_searching),
               ),
-              body: Container());
+              body: LocationChatList());
         },
       ),
     );

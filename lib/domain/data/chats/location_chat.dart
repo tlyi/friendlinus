@@ -8,25 +8,25 @@ part 'location_chat.freezed.dart';
 abstract class LocationChat implements _$LocationChat {
   const LocationChat._();
 
-  const factory LocationChat({
-    required String chatId,
-    required String creatorUserId,
-    required String lastMessage,
-    required String lastSenderId,
-    required Title chatTitle,
-    required String timestamp,
-    required double longitude,
-    required double latitude,
-  }) = _LocationChat;
+  const factory LocationChat(
+      {required String chatId,
+      required String creatorUserId,
+      required String lastMessage,
+      required String lastSenderId,
+      required Title chatTitle,
+      required String timestamp,
+      required double longitude,
+      required double latitude,
+      required double distance}) = _LocationChat;
 
   factory LocationChat.empty() => LocationChat(
-        chatId: UniqueId('').getOrCrash(),
-        creatorUserId: '',
-        lastMessage: '',
-        lastSenderId: '',
-        chatTitle: Title(''),
-        timestamp: '',
-        longitude: 0,
-        latitude: 0,
-      );
+      chatId: UniqueId('').getOrCrash(),
+      creatorUserId: '',
+      lastMessage: '',
+      lastSenderId: '',
+      chatTitle: Title(''),
+      timestamp: '',
+      longitude: 0,
+      latitude: 0,
+      distance: 0);
 }
