@@ -132,6 +132,7 @@ class ProfileRepository implements IProfileRepository {
       QuerySnapshot query = await usersRef
           .where('username', isGreaterThanOrEqualTo: username)
           .where('username', isLessThanOrEqualTo: '$username~')
+          .where('username', isNotEqualTo: 'anonymous')
           .get();
       {
         if (query.docs.isNotEmpty) {
@@ -175,6 +176,7 @@ class ProfileRepository implements IProfileRepository {
   Future<Either<DataFailure, bool>> verifyUsernameUnique(
       String username) async {
     final otherProfile = await readOtherProfile(username);
+
     return otherProfile.fold((_) => left(const DataFailure.unexpected()),
         (profile) {
       if (profile == Profile.empty()) {

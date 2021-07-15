@@ -50,11 +50,9 @@ import 'package:friendlinus/presentation/splash/splash_page.dart';
     AutoRoute(page: ForumTabPage),
     AutoRoute(page: LocationChatFormPage),
     AutoRoute(page: LocationChatPage),
-<<<<<<< HEAD
     AutoRoute(page: LocationConvoPage),
     AutoRoute(page: FullScreenPhotoPage),
 
->>>>>>> a48fa3b9e4f55d58e2c2212c93a1c023bdb4d064
   ],
 )
 class $AppRouter {}
