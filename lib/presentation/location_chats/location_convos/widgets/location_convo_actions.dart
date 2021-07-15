@@ -3,22 +3,24 @@ import 'dart:io';
 import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:friendlinus/application/chats/convo_actor/convo_actor_bloc.dart';
+import 'package:friendlinus/application/chats/location_convo_actor/location_convo_actor_bloc.dart';
+
 import 'package:friendlinus/domain/data/profile/profile.dart';
-import 'package:friendlinus/presentation/chats/convos/widgets/convo_messages.dart';
+
 import 'package:friendlinus/presentation/core/image_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-class ConvoActions extends StatefulWidget {
-  final Profile otherProfile;
-  const ConvoActions({Key? key, required this.otherProfile}) : super(key: key);
+class LocationConvoActions extends StatefulWidget {
+  final String convoId;
+  const LocationConvoActions({Key? key, required this.convoId})
+      : super(key: key);
 
   @override
-  _ConvoActionsState createState() => _ConvoActionsState();
+  _LocationConvoActionsState createState() => _LocationConvoActionsState();
 }
 
-class _ConvoActionsState extends State<ConvoActions> {
+class _LocationConvoActionsState extends State<LocationConvoActions> {
   final textController = TextEditingController();
 
   void clearText() {
@@ -27,7 +29,7 @@ class _ConvoActionsState extends State<ConvoActions> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ConvoActorBloc, ConvoActorState>(
+    return BlocBuilder<LocationConvoActorBloc, LocationConvoActorState>(
       builder: (context, state) {
         return Align(
           alignment: Alignment.bottomLeft,
@@ -91,14 +93,16 @@ class _ConvoActionsState extends State<ConvoActions> {
                                             border: InputBorder.none,
                                           ),
                                           onChanged: (message) {
-                                            context.read<ConvoActorBloc>().add(
-                                                ConvoActorEvent.messageChanged(
-                                                    message));
+                                            context
+                                                .read<LocationConvoActorBloc>()
+                                                .add(LocationConvoActorEvent
+                                                    .messageChanged(message));
                                           },
                                           onSubmitted: (_) {
-                                            context.read<ConvoActorBloc>().add(
-                                                ConvoActorEvent.photoSent(
-                                                    pickedImage!));
+                                            context
+                                                .read<LocationConvoActorBloc>()
+                                                .add(LocationConvoActorEvent
+                                                    .photoSent(pickedImage!));
                                             Navigator.pop(innerContext);
                                           },
                                         ),
@@ -118,9 +122,10 @@ class _ConvoActionsState extends State<ConvoActions> {
                                             size: 18,
                                           ),
                                           onPressed: () {
-                                            context.read<ConvoActorBloc>().add(
-                                                ConvoActorEvent.photoSent(
-                                                    pickedImage!));
+                                            context
+                                                .read<LocationConvoActorBloc>()
+                                                .add(LocationConvoActorEvent
+                                                    .photoSent(pickedImage!));
                                             Navigator.pop(innerContext);
                                           },
                                         ),
@@ -146,21 +151,21 @@ class _ConvoActionsState extends State<ConvoActions> {
                     ),
                     onChanged: (message) {
                       context
-                          .read<ConvoActorBloc>()
-                          .add(ConvoActorEvent.messageChanged(message));
+                          .read<LocationConvoActorBloc>()
+                          .add(LocationConvoActorEvent.messageChanged(message));
                     },
                     controller: textController,
                     onSubmitted: (_) {
                       if (context
-                              .read<ConvoActorBloc>()
+                              .read<LocationConvoActorBloc>()
                               .state
                               .chatMessage
                               .messageBody
                               .getOrCrash() !=
                           '') {
                         context
-                            .read<ConvoActorBloc>()
-                            .add(const ConvoActorEvent.messageSent());
+                            .read<LocationConvoActorBloc>()
+                            .add(const LocationConvoActorEvent.messageSent());
                         clearText();
                       }
                     },
@@ -184,7 +189,7 @@ class _ConvoActionsState extends State<ConvoActions> {
                     ),
                     onPressed: () {
                       if (context
-                          .read<ConvoActorBloc>()
+                          .read<LocationConvoActorBloc>()
                           .state
                           .chatMessage
                           .messageBody
@@ -195,15 +200,15 @@ class _ConvoActionsState extends State<ConvoActions> {
                                     'Message exceeds maximum characters of 4096')
                             .show(context);
                       } else if (context
-                              .read<ConvoActorBloc>()
+                              .read<LocationConvoActorBloc>()
                               .state
                               .chatMessage
                               .messageBody
                               .getOrCrash() !=
                           '') {
                         context
-                            .read<ConvoActorBloc>()
-                            .add(const ConvoActorEvent.messageSent());
+                            .read<LocationConvoActorBloc>()
+                            .add(const LocationConvoActorEvent.messageSent());
                         clearText();
                       }
                     },

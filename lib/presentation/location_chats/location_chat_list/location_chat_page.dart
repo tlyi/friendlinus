@@ -6,7 +6,8 @@ import 'package:friendlinus/injection.dart';
 import 'package:friendlinus/presentation/core/app_bar.dart';
 import 'package:friendlinus/presentation/core/nav_bar.dart';
 import 'package:friendlinus/domain/core/constants.dart' as constants;
-import 'package:friendlinus/presentation/location_chats/widgets/location_chat_list.dart';
+import 'package:friendlinus/presentation/location_chats/location_chat_list/widgets/location_chat_list.dart';
+
 import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 
@@ -29,8 +30,10 @@ class LocationChatPage extends StatelessWidget {
                     style: TextStyle(color: Colors.black, fontSize: 20),
                   ),
                   leading: IconButton(
-                      onPressed: () {
-                        context.pushRoute(LocationChatFormRoute());
+                      onPressed: () async {
+                        await context.pushRoute(LocationChatFormRoute());
+                        context.read<LocationChatWatcherBloc>().add(
+                            const LocationChatWatcherEvent.refreshedLocation());
                       },
                       icon: const Icon(Icons.add_box, color: Colors.grey),
                       tooltip: 'Create New Chat'),

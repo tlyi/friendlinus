@@ -4,7 +4,7 @@ import 'package:friendlinus/application/chats/location_chat_form/location_chat_f
 import 'package:friendlinus/injection.dart';
 import 'package:friendlinus/presentation/core/app_bar.dart';
 import 'package:friendlinus/presentation/core/dismiss_keyboard.dart';
-import 'package:friendlinus/presentation/location_chats/widgets/location_chat_form.dart';
+import 'package:friendlinus/presentation/location_chats/location_chat_list/widgets/location_chat_form.dart';
 
 class LocationChatFormPage extends StatelessWidget {
   const LocationChatFormPage({Key? key}) : super(key: key);

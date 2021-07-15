@@ -56,4 +56,7 @@ abstract class IChatRepository {
       {required String convoId,
       required String messageId,
       required ChatMessage chatMessage});
+
+  Stream<Either<DataFailure, List<ChatMessage>>> getLocationConvo(
+      String convoId);
 }

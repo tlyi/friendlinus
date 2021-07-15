@@ -221,10 +221,25 @@ class ChatRepository implements IChatRepository {
       LocationChat locationChat) async {
     try {
       print('trying to create chat');
+      final timestamp = DateTime.now().millisecondsSinceEpoch.toString();
       final locationChatsRef = await _firestore.locationChatsRef();
-      final locationChatDto = LocationChatDto.fromDomain(locationChat.copyWith(
-          timestamp: DateTime.now().millisecondsSinceEpoch.toString()));
+      final locationChatDto = LocationChatDto.fromDomain(
+          locationChat.copyWith(timestamp: timestamp));
 
+      final messageId = UniqueId('').getOrCrash();
+      final locationConvoMessagesRef =
+          await _firestore.locationConvoMessagesRef(locationChatDto.chatId);
+      final chatMessageDto =
+          ChatMessageDto.fromDomain(ChatMessage.empty().copyWith(
+        senderId: locationChatDto.creatorUserId,
+        messageBody: MessageBody(locationChatDto.lastMessage),
+        messageId: messageId,
+      ));
+
+      await locationConvoMessagesRef
+          .doc(messageId)
+          .set(chatMessageDto.toJson());
+      print('first message sent');
       await locationChatsRef
           .doc(locationChatDto.chatId)
           .set(locationChatDto.toJson());
@@ -355,11 +370,12 @@ class ChatRepository implements IChatRepository {
           await _firestore.locationConvoMessagesRef(convoId);
 
       await locationConvoMessagesRef
-          .doc(messageId).set(chatMessageDto.toJson());
+          .doc(messageId)
+          .set(chatMessageDto.toJson());
       await _firestore.runTransaction((transaction) async {
         final locationChatDoc =
             await _firestore.locationChatDocumentById(convoId);
-        transaction.set(
+        transaction.update(
           locationChatDoc,
           {
             'lastMessage': chatMessageDto.photoUrl == ''
@@ -369,7 +385,7 @@ class ChatRepository implements IChatRepository {
             'timestamp': chatMessageDto.timeSent,
           },
         );
-      }); //create chat if doesn't exist, update last message in chat
+      });
       return right(unit);
     } on FirebaseException catch (e) {
       if (e.message!.contains('PERMISSION_DENIED')) {
@@ -378,5 +394,31 @@ class ChatRepository implements IChatRepository {
         return left(const DataFailure.unexpected());
       }
     }
+  }
+
+  @override
+  Stream<Either<DataFailure, List<ChatMessage>>> getLocationConvo(
+      String convoId) async* {
+    final locationConvoMessagesRef =
+        await _firestore.locationConvoMessagesRef(convoId);
+    print("retrieving messages");
+    yield* locationConvoMessagesRef
+        .orderBy('timeSent', descending: true)
+        .snapshots()
+        .map(
+          (snapshot) => right<DataFailure, List<ChatMessage>>(
+            snapshot.docs
+                .map((doc) => ChatMessageDto.fromFirestore(doc).toDomain())
+                .toList(),
+          ),
+        )
+        .handleError((e) {
+      if (e is FirebaseException && e.message!.contains('PERMISSION_DENIED')) {
+        return left(const DataFailure.insufficientPermission());
+      } else {
+        print(e);
+        return left(const DataFailure.unexpected());
+      }
+    });
   }
 }

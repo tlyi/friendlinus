@@ -38,20 +38,25 @@ class LocationChatList extends StatelessWidget {
                   final int distance = state.distances[index].toInt();
                   return Card(
                     child: ListTile(
-                      leading: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            Icons.near_me,
-                            color: distance > 1000
-                                ? Colors.grey
-                                : constants.THEME_BLUE,
-                            size: 20,
-                          ),
-                          Text(distance > 1000
-                              ? '${(distance / 1000).toInt()}km'
-                              : '${distance}m'),
-                        ],
+                      leading: Container(
+                        width: 50,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              Icons.near_me,
+                              color: distance > 1000
+                                  ? Colors.grey
+                                  : constants.THEME_BLUE,
+                              size: 20,
+                            ),
+                            Flexible(
+                              child: Text(distance > 1000
+                                  ? '${(distance / 1000).toInt()}km'
+                                  : '${distance}m'),
+                            ),
+                          ],
+                        ),
                       ),
                       title: Text(chat.chatTitle.getOrCrash()),
                       subtitle: Text(
@@ -61,7 +66,9 @@ class LocationChatList extends StatelessWidget {
                       ),
                       trailing: Text(getTime(chat.timestamp)),
                       onTap: () {
-                        // to push convo route
+                        context.pushRoute(LocationConvoRoute(
+                            convoId: chat.chatId,
+                            title: chat.chatTitle.getOrCrash()));
                       },
                     ),
                   );

@@ -36,8 +36,9 @@ class LocationConvoWatcherBloc
         yield const LocationConvoWatcherState.loadMessagesInProgress();
 
         await _convoStreamSubscription?.cancel();
-        _convoStreamSubscription = _chatRepository.getConvo(e.convoId).listen(
-            (failureOrMessages) => add(
+        _convoStreamSubscription = _chatRepository
+            .getLocationConvo(e.convoId)
+            .listen((failureOrMessages) => add(
                 LocationConvoWatcherEvent.convoReceived(failureOrMessages)));
       },
       retrieveConvoEnded: (e) async* {
