@@ -7,11 +7,12 @@
 import 'package:auto_route/auto_route.dart' as _i1;
 import 'package:flutter/material.dart' as _i2;
 import 'package:friendlinus/domain/data/forum/forum_post/forum_post.dart'
-    as _i26;
-import 'package:friendlinus/domain/data/profile/profile.dart' as _i25;
+    as _i27;
+import 'package:friendlinus/domain/data/profile/profile.dart' as _i26;
 import 'package:friendlinus/presentation/chats/chat_list/chat_list_page.dart'
     as _i15;
 import 'package:friendlinus/presentation/chats/convos/convo_page.dart' as _i16;
+import 'package:friendlinus/presentation/core/full_screen_photo.dart' as _i25;
 import 'package:friendlinus/presentation/forum/forum_form/forum_form_page.dart'
     as _i14;
 import 'package:friendlinus/presentation/forum/forum_page/comment_page.dart'
@@ -174,6 +175,13 @@ class AppRouter extends _i1.RootStackRouter {
           final args = data.argsAs<LocationConvoRouteArgs>();
           return _i24.LocationConvoPage(
               key: args.key, convoId: args.convoId, title: args.title);
+        }),
+    FullScreenPhotoRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
+        routeData: routeData,
+        builder: (data) {
+          final args = data.argsAs<FullScreenPhotoRouteArgs>();
+          return _i25.FullScreenPhotoPage(
+              key: args.key, photoUrl: args.photoUrl);
         })
   };
 
@@ -202,7 +210,9 @@ class AppRouter extends _i1.RootStackRouter {
         _i1.RouteConfig(LocationChatFormRoute.name,
             path: '/location-chat-form-page'),
         _i1.RouteConfig(LocationChatRoute.name, path: '/location-chat-page'),
-        _i1.RouteConfig(LocationConvoRoute.name, path: '/location-convo-page')
+        _i1.RouteConfig(LocationConvoRoute.name, path: '/location-convo-page'),
+        _i1.RouteConfig(FullScreenPhotoRoute.name,
+            path: '/full-screen-photo-page')
       ];
 }
 
@@ -289,7 +299,7 @@ class UpdateProfileRoute extends _i1.PageRouteInfo {
 }
 
 class OtherProfileRoute extends _i1.PageRouteInfo<OtherProfileRouteArgs> {
-  OtherProfileRoute({_i2.Key? key, required _i25.Profile userProfile})
+  OtherProfileRoute({_i2.Key? key, required _i26.Profile userProfile})
       : super(name,
             path: '/other-profile-page',
             args: OtherProfileRouteArgs(key: key, userProfile: userProfile));
@@ -302,7 +312,7 @@ class OtherProfileRouteArgs {
 
   final _i2.Key? key;
 
-  final _i25.Profile userProfile;
+  final _i26.Profile userProfile;
 }
 
 class ForumFormRoute extends _i1.PageRouteInfo {
@@ -318,7 +328,7 @@ class ChatListRoute extends _i1.PageRouteInfo {
 }
 
 class ConvoRoute extends _i1.PageRouteInfo<ConvoRouteArgs> {
-  ConvoRoute({_i2.Key? key, required _i25.Profile otherProfile})
+  ConvoRoute({_i2.Key? key, required _i26.Profile otherProfile})
       : super(name,
             path: '/convo-page',
             args: ConvoRouteArgs(key: key, otherProfile: otherProfile));
@@ -331,7 +341,7 @@ class ConvoRouteArgs {
 
   final _i2.Key? key;
 
-  final _i25.Profile otherProfile;
+  final _i26.Profile otherProfile;
 }
 
 class ForumRoute extends _i1.PageRouteInfo<ForumRouteArgs> {
@@ -356,7 +366,7 @@ class ForumRouteArgs {
 }
 
 class CommentRoute extends _i1.PageRouteInfo<CommentRouteArgs> {
-  CommentRoute({_i2.Key? key, required _i26.ForumPost forum})
+  CommentRoute({_i2.Key? key, required _i27.ForumPost forum})
       : super(name,
             path: '/comment-page',
             args: CommentRouteArgs(key: key, forum: forum));
@@ -369,7 +379,7 @@ class CommentRouteArgs {
 
   final _i2.Key? key;
 
-  final _i26.ForumPost forum;
+  final _i27.ForumPost forum;
 }
 
 class NotificationRoute extends _i1.PageRouteInfo {
@@ -433,4 +443,21 @@ class LocationConvoRouteArgs {
   final String convoId;
 
   final String title;
+}
+
+class FullScreenPhotoRoute extends _i1.PageRouteInfo<FullScreenPhotoRouteArgs> {
+  FullScreenPhotoRoute({_i2.Key? key, required String photoUrl})
+      : super(name,
+            path: '/full-screen-photo-page',
+            args: FullScreenPhotoRouteArgs(key: key, photoUrl: photoUrl));
+
+  static const String name = 'FullScreenPhotoRoute';
+}
+
+class FullScreenPhotoRouteArgs {
+  const FullScreenPhotoRouteArgs({this.key, required this.photoUrl});
+
+  final _i2.Key? key;
+
+  final String photoUrl;
 }

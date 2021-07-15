@@ -1,5 +1,6 @@
 import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:bubble/bubble.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:friendlinus/application/chats/convo_actor/convo_actor_bloc.dart';
@@ -10,6 +11,8 @@ import 'package:friendlinus/domain/core/constants.dart' as constants;
 import 'package:friendlinus/presentation/core/get_time.dart';
 import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:friendlinus/presentation/routes/router.gr.dart';
+import 'package:auto_route/auto_route.dart';
 
 class ConvoMessages extends StatelessWidget {
   final Profile otherProfile;
@@ -71,11 +74,20 @@ class ConvoMessages extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  FadeInImage(
-                                    fit: BoxFit.contain,
-                                    image: NetworkImage(message.photoUrl),
-                                    placeholder: const AssetImage(
-                                        'images/loading_image.png'),
+                                  GestureDetector(
+                                    onTap: () => context.pushRoute(
+                                        FullScreenPhotoRoute(
+                                            photoUrl: message.photoUrl)),
+                                    child: Hero(
+                                      tag: 'photo',
+                                      child: FadeInImage(
+                                        fit: BoxFit.contain,
+                                        image: CachedNetworkImageProvider(
+                                            message.photoUrl),
+                                        placeholder: const AssetImage(
+                                            'images/loading_image.png'),
+                                      ),
+                                    ),
                                   ),
                                   if (message.messageBody.getOrCrash() != '')
                                     const SizedBox(height: 5),

@@ -525,7 +525,11 @@ class ForumPostRepository implements IForumRepository {
 
   @override
   Stream<Either<DataFailure, List<ForumPost>>> retrieveModuleForums(
-      String moduleCode) async* {
+      String moduleCode, String sortedBy) async* {
+    String orderBy = sortedBy == 'Most Liked' ? 'likes' : 'timestamp';
+    bool descending = sortedBy == 'Oldest' ? false : true;
+    String oneWeekAgo =
+        (DateTime.now().millisecondsSinceEpoch - 604800000).toString();
     final forumRef = await _firestore.forumsRef();
     if (moduleCode == "Anonymous") {
       yield* forumRef

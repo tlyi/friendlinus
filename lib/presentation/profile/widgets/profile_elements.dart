@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:another_flushbar/flushbar_helper.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -83,10 +84,24 @@ class ProfileHeader extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                CircleAvatar(
-                  radius: MediaQuery.of(context).size.width * 0.15,
-                  backgroundImage: NetworkImage(userProfile.photoUrl),
-                  backgroundColor: Colors.white,
+                GestureDetector(
+                  onTap: () => context.pushRoute(
+                      FullScreenPhotoRoute(photoUrl: userProfile.photoUrl)),
+                  child: Stack(children: [
+                    Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: CircularProgressIndicator(),
+                    ),
+                    Hero(
+                      tag: "photo",
+                      child: CircleAvatar(
+                        radius: MediaQuery.of(context).size.width * 0.15,
+                        backgroundImage:
+                            CachedNetworkImageProvider(userProfile.photoUrl),
+                        backgroundColor: Colors.white,
+                      ),
+                    ),
+                  ]),
                 ),
                 const SizedBox(height: 10),
                 if (isOwnProfile)
