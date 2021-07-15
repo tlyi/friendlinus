@@ -17,7 +17,17 @@ class ModuleForumList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ModuleForumWatcherBloc, ModuleForumWatcherState>(
+    return BlocConsumer<ModuleForumWatcherBloc, ModuleForumWatcherState>(
+      listener: (context, state) {
+        state.maybeMap(
+            loadFailure: (state) => FlushbarHelper.createError(
+                  message: state.dataFailure.map(
+                      unexpected: (_) => 'Unexpected error',
+                      insufficientPermission: (_) => 'Insufficient permission',
+                      unableToUpdate: (_) => 'Unable to update'),
+                ).show(context),
+            orElse: () {});
+      },
       builder: (context, state) {
         final userId = context.read<ForumActorBloc>().state.userId;
         return state.map(
@@ -149,12 +159,6 @@ class ModuleForumList extends StatelessWidget {
               }
             },
             loadFailure: (state) {
-              FlushbarHelper.createError(
-                message: state.dataFailure.map(
-                    unexpected: (_) => 'Unexpected error',
-                    insufficientPermission: (_) => 'Insufficient permission',
-                    unableToUpdate: (_) => 'Unable to update'),
-              ).show(context);
               return Container();
             });
       },

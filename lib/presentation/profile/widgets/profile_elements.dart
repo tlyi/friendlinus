@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tags/flutter_tags.dart';
 import 'package:friendlinus/application/forum/forum_actor/forum_actor_bloc.dart';
-import 'package:friendlinus/application/forum/forum_watcher/forum_watcher_bloc.dart';
 import 'package:friendlinus/application/profile/profile_actor/profile_actor_bloc.dart';
 import 'package:friendlinus/application/profile/profile_form/profile_form_bloc.dart';
 import 'package:friendlinus/domain/data/data_failure.dart';
@@ -85,23 +84,27 @@ class ProfileHeader extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 GestureDetector(
-                  onTap: () => context.pushRoute(
-                      FullScreenPhotoRoute(photoUrl: userProfile.photoUrl, tag: "profilePhoto")),
-                  child: Stack(children: [
-                    Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: CircularProgressIndicator(),
-                    ),
-                    Hero(
-                      tag: "profilePhoto",
-                      child: CircleAvatar(
-                        radius: MediaQuery.of(context).size.width * 0.15,
-                        backgroundImage:
-                            CachedNetworkImageProvider(userProfile.photoUrl),
-                        backgroundColor: Colors.white,
+                  onTap: () => context.pushRoute(FullScreenPhotoRoute(
+                      photoUrl: userProfile.photoUrl, tag: "profilePhoto")),
+                  child: Container(
+                    alignment: Alignment.center,
+                    width: MediaQuery.of(context).size.width * 0.3,
+                    height: MediaQuery.of(context).size.width * 0.3,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle, color: Colors.white),
+                    child: ClipOval(
+                      child: Hero(
+                        tag: "profilePhoto",
+                        child: CachedNetworkImage(
+                            fit: BoxFit.cover,
+                            height: MediaQuery.of(context).size.width * 0.3,
+                            width: MediaQuery.of(context).size.width * 0.3,
+                            imageUrl: userProfile.photoUrl,
+                            placeholder: (context, url) =>
+                                Center(child: CircularProgressIndicator())),
                       ),
                     ),
-                  ]),
+                  ),
                 ),
                 const SizedBox(height: 10),
                 if (isOwnProfile)

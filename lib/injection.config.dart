@@ -31,7 +31,6 @@ import 'application/forum/forum_post_watcher/forum_post_watcher_bloc.dart'
     as _i42;
 import 'application/forum/forum_post_watcher/poll_watcher/poll_watcher_bloc.dart'
     as _i27;
-import 'application/forum/forum_watcher/forum_watcher_bloc.dart' as _i43;
 import 'application/forum/module_actor/module_actor_bloc.dart' as _i22;
 import 'application/forum/module_watcher/module_forum_watcher/module_forum_watcher_bloc.dart'
     as _i23;
@@ -53,7 +52,7 @@ import 'domain/data/notifications/i_notification_repository.dart' as _i14;
 import 'domain/data/profile/i_profile_repository.dart' as _i16;
 import 'domain/mods/i_mod_repository.dart' as _i12;
 import 'infrastructure/auth/firebase_auth_facade.dart' as _i7;
-import 'infrastructure/core/firebase_injectable_module.dart' as _i44;
+import 'infrastructure/core/firebase_injectable_module.dart' as _i43;
 import 'infrastructure/data/chats/chat_repository.dart' as _i9;
 import 'infrastructure/data/forum/forum_repository.dart' as _i11;
 import 'infrastructure/data/notifications/notification_repository.dart' as _i15;
@@ -135,9 +134,7 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       get<_i10.IForumRepository>(), get<_i16.IProfileRepository>()));
   gh.factory<_i42.ForumPostWatcherBloc>(() => _i42.ForumPostWatcherBloc(
       get<_i10.IForumRepository>(), get<_i16.IProfileRepository>()));
-  gh.factory<_i43.ForumWatcherBloc>(
-      () => _i43.ForumWatcherBloc(get<_i10.IForumRepository>()));
   return get;
 }
 
-class _$FirebaseInjectableModule extends _i44.FirebaseInjectableModule {}
+class _$FirebaseInjectableModule extends _i43.FirebaseInjectableModule {}

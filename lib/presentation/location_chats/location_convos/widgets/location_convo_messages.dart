@@ -22,8 +22,17 @@ class LocationConvoMessages extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ownId = context.read<LocationConvoActorBloc>().state.ownId;
-    return BlocBuilder<LocationConvoWatcherBloc, LocationConvoWatcherState>(
-        builder: (context, state) {
+    return BlocConsumer<LocationConvoWatcherBloc, LocationConvoWatcherState>(
+        listener: (context, state) {
+      state.maybeMap(
+          loadMessagesFailure: (state) => FlushbarHelper.createError(
+                message: state.dataFailure.map(
+                    unexpected: (_) => 'Unexpected error',
+                    insufficientPermission: (_) => 'Insufficient permission',
+                    unableToUpdate: (_) => 'Unable to update'),
+              ).show(context),
+          orElse: () {});
+    }, builder: (context, state) {
       return state.map(
         initial: (_) => Container(),
         loadMessagesInProgress: (_) => const Center(
@@ -138,9 +147,10 @@ class LocationConvoMessages extends StatelessWidget {
                                         GestureDetector(
                                           onTap: () => context.pushRoute(
                                               FullScreenPhotoRoute(
-                                                  photoUrl: message.photoUrl)),
+                                                  photoUrl: message.photoUrl,
+                                                  tag: message.photoUrl)),
                                           child: Hero(
-                                            tag: 'photo',
+                                            tag: message.photoUrl,
                                             child: CachedNetworkImage(
                                               imageUrl: message.photoUrl,
                                               placeholder: (context, url) =>
@@ -181,12 +191,6 @@ class LocationConvoMessages extends StatelessWidget {
           }
         },
         loadMessagesFailure: (state) {
-          FlushbarHelper.createError(
-            message: state.dataFailure.map(
-                unexpected: (_) => 'Unexpected error',
-                insufficientPermission: (_) => 'Insufficient permission',
-                unableToUpdate: (_) => 'Unable to update'),
-          ).show(context);
           return Container();
         },
       );

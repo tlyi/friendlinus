@@ -33,7 +33,8 @@ class LocationChatForm extends StatelessWidget {
                     insufficientPermission: (_) => '',
                     permissionDeniedForever: (_) => '',
                     serviceNotEnabled: (_) => 'Location service not enabled',
-                    unexpected: (_) => 'Unexpected error')).show(context);
+                    unexpected: (_) =>
+                        'Unexpected error in getting location')).show(context);
           },
           (_) {},
         );

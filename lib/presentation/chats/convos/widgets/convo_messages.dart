@@ -20,8 +20,19 @@ class ConvoMessages extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ConvoWatcherBloc, ConvoWatcherState>(
-        builder: (context, state) {
+    return BlocConsumer<ConvoWatcherBloc, ConvoWatcherState>(
+        listener: (context, state) {
+      state.maybeMap(
+          loadMessagesFailure: (state) {
+            FlushbarHelper.createError(
+              message: state.dataFailure.map(
+                  unexpected: (_) => 'Unexpected error',
+                  insufficientPermission: (_) => 'Insufficient permission',
+                  unableToUpdate: (_) => 'Unable to update'),
+            ).show(context);
+          },
+          orElse: () {});
+    }, builder: (context, state) {
       return state.map(
         initial: (_) => Container(),
         loadMessagesInProgress: (_) => const Center(
@@ -112,12 +123,6 @@ class ConvoMessages extends StatelessWidget {
           }
         },
         loadMessagesFailure: (state) {
-          FlushbarHelper.createError(
-            message: state.dataFailure.map(
-                unexpected: (_) => 'Unexpected error',
-                insufficientPermission: (_) => 'Insufficient permission',
-                unableToUpdate: (_) => 'Unable to update'),
-          ).show(context);
           return Container();
         },
       );

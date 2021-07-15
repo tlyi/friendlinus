@@ -17,83 +17,83 @@ class LocationChatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => getIt<LocationChatWatcherBloc>()
-        ..add(const LocationChatWatcherEvent.retrieveChatsStarted()),
-      child: BlocBuilder<LocationChatWatcherBloc, LocationChatWatcherState>(
-        builder: (context, state) {
+        create: (context) => getIt<LocationChatWatcherBloc>()
+          ..add(const LocationChatWatcherEvent.retrieveChatsStarted()),
+        child: BlocBuilder<LocationChatWatcherBloc, LocationChatWatcherState>(
+            builder: (context, state) {
           return Scaffold(
-              appBar: AppBar(
-                  backgroundColor: Colors.white,
-                  centerTitle: true,
-                  title: const Text(
-                    'Location Chats',
-                    style: TextStyle(color: Colors.black, fontSize: 20),
-                  ),
-                  leading: IconButton(
-                      onPressed: () async {
-                        await context.pushRoute(LocationChatFormRoute());
-                        context.read<LocationChatWatcherBloc>().add(
-                            const LocationChatWatcherEvent.refreshedLocation());
+            appBar: AppBar(
+                backgroundColor: Colors.white,
+                centerTitle: true,
+                title: const Text(
+                  'Location Chats',
+                  style: TextStyle(color: Colors.black, fontSize: 20),
+                ),
+                leading: IconButton(
+                    onPressed: () async {
+                      await context.pushRoute(LocationChatFormRoute());
+                      context.read<LocationChatWatcherBloc>().add(
+                          const LocationChatWatcherEvent.refreshedLocation());
+                    },
+                    icon: const Icon(Icons.add_box, color: Colors.grey),
+                    tooltip: 'Create New Chat'),
+                actions: [
+                  Stack(children: [
+                    IconButton(
+                      icon: const Icon(Icons.notifications_none,
+                          color: Colors.grey),
+                      onPressed: () {
+                        print('opening notifs');
+                        context.pushRoute(NotificationRoute());
                       },
-                      icon: const Icon(Icons.add_box, color: Colors.grey),
-                      tooltip: 'Create New Chat'),
-                  actions: [
-                    Stack(children: [
-                      IconButton(
-                        icon: const Icon(Icons.notifications_none,
-                            color: Colors.grey),
-                        onPressed: () {
-                          print('opening notifs');
-                          context.pushRoute(NotificationRoute());
-                        },
-                        padding: const EdgeInsets.only(right: 20),
-                      ),
-                      BlocBuilder<NotifCounterWatcherBloc,
-                          NotifCounterWatcherState>(
-                        builder: (context, state) {
-                          return Positioned(
-                            top: 5,
-                            right: 12,
-                            child: (state is LoadSuccess)
-                                ? state.unread == 0
-                                    ? Container()
-                                    : ClipOval(
-                                        child: Container(
-                                            alignment: Alignment.center,
-                                            width: 20,
-                                            height: 20,
-                                            color: constants.THEME_NOTIF_BG,
-                                            child: Text(
-                                                state.unread > 100
-                                                    ? '+'
-                                                    : state.unread.toString(),
-                                                style: const TextStyle(
-                                                    fontSize: 14,
-                                                    color: Colors.white,
-                                                    fontWeight:
-                                                        FontWeight.w300))))
-                                : ClipOval(
-                                    child: Container(
-                                      alignment: Alignment.center,
-                                      width: 20,
-                                      height: 20,
-                                      color: constants.THEME_NOTIF_BG,
-                                      child: const Padding(
-                                        padding: EdgeInsets.all(5.0),
-                                        child: CircularProgressIndicator(
-                                          color: Colors.white,
-                                          strokeWidth: 1,
-                                        ),
+                      padding: const EdgeInsets.only(right: 20),
+                    ),
+                    BlocBuilder<NotifCounterWatcherBloc,
+                        NotifCounterWatcherState>(
+                      builder: (context, state) {
+                        return Positioned(
+                          top: 5,
+                          right: 12,
+                          child: (state is LoadSuccess)
+                              ? state.unread == 0
+                                  ? Container()
+                                  : ClipOval(
+                                      child: Container(
+                                          alignment: Alignment.center,
+                                          width: 20,
+                                          height: 20,
+                                          color: constants.THEME_NOTIF_BG,
+                                          child: Text(
+                                              state.unread > 100
+                                                  ? '+'
+                                                  : state.unread.toString(),
+                                              style: const TextStyle(
+                                                  fontSize: 14,
+                                                  color: Colors.white,
+                                                  fontWeight:
+                                                      FontWeight.w300))))
+                              : ClipOval(
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    width: 20,
+                                    height: 20,
+                                    color: constants.THEME_NOTIF_BG,
+                                    child: const Padding(
+                                      padding: EdgeInsets.all(5.0),
+                                      child: CircularProgressIndicator(
+                                        color: Colors.white,
+                                        strokeWidth: 1,
                                       ),
                                     ),
                                   ),
-                          );
-                        },
-                      ),
-                    ])
-                  ]),
-              bottomNavigationBar: const NavigationBar(),
-              floatingActionButton: FloatingActionButton(
+                                ),
+                        );
+                      },
+                    ),
+                  ])
+                ]),
+            bottomNavigationBar: const NavigationBar(),
+            floatingActionButton: FloatingActionButton(
                 tooltip: 'Find Nearby Chats',
                 onPressed: () {
                   context
@@ -101,11 +101,9 @@ class LocationChatPage extends StatelessWidget {
                       .add(const LocationChatWatcherEvent.refreshedLocation());
                 },
                 backgroundColor: constants.THEME_BLUE,
-                child: const Icon(Icons.location_searching),
-              ),
-              body: LocationChatList());
-        },
-      ),
-    );
+                child: const Icon(Icons.location_searching)),
+            body: LocationChatList(),
+          );
+        }));
   }
 }

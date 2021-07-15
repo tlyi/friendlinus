@@ -7,5 +7,5 @@ class NotificationWatcherState with _$NotificationWatcherState {
   const factory NotificationWatcherState.loadSuccess(
       List<Notification> notifications, List<Profile> profiles) = LoadSuccess;
   const factory NotificationWatcherState.loadFailure(DataFailure dataFailure) =
-      LoadFailure;
+      _LoadFailure;
 }

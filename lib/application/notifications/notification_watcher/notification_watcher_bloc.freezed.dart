@@ -488,8 +488,8 @@ class _$NotificationWatcherStateTearOff {
     );
   }
 
-  LoadFailure loadFailure(DataFailure dataFailure) {
-    return LoadFailure(
+  _LoadFailure loadFailure(DataFailure dataFailure) {
+    return _LoadFailure(
       dataFailure,
     );
   }
@@ -525,7 +525,7 @@ mixin _$NotificationWatcherState {
     required TResult Function(_Initial value) initial,
     required TResult Function(LoadInProgress value) loadInProgress,
     required TResult Function(LoadSuccess value) loadSuccess,
-    required TResult Function(LoadFailure value) loadFailure,
+    required TResult Function(_LoadFailure value) loadFailure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -533,7 +533,7 @@ mixin _$NotificationWatcherState {
     TResult Function(_Initial value)? initial,
     TResult Function(LoadInProgress value)? loadInProgress,
     TResult Function(LoadSuccess value)? loadSuccess,
-    TResult Function(LoadFailure value)? loadFailure,
+    TResult Function(_LoadFailure value)? loadFailure,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -626,7 +626,7 @@ class _$_Initial implements _Initial {
     required TResult Function(_Initial value) initial,
     required TResult Function(LoadInProgress value) loadInProgress,
     required TResult Function(LoadSuccess value) loadSuccess,
-    required TResult Function(LoadFailure value) loadFailure,
+    required TResult Function(_LoadFailure value) loadFailure,
   }) {
     return initial(this);
   }
@@ -637,7 +637,7 @@ class _$_Initial implements _Initial {
     TResult Function(_Initial value)? initial,
     TResult Function(LoadInProgress value)? loadInProgress,
     TResult Function(LoadSuccess value)? loadSuccess,
-    TResult Function(LoadFailure value)? loadFailure,
+    TResult Function(_LoadFailure value)? loadFailure,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -723,7 +723,7 @@ class _$LoadInProgress implements LoadInProgress {
     required TResult Function(_Initial value) initial,
     required TResult Function(LoadInProgress value) loadInProgress,
     required TResult Function(LoadSuccess value) loadSuccess,
-    required TResult Function(LoadFailure value) loadFailure,
+    required TResult Function(_LoadFailure value) loadFailure,
   }) {
     return loadInProgress(this);
   }
@@ -734,7 +734,7 @@ class _$LoadInProgress implements LoadInProgress {
     TResult Function(_Initial value)? initial,
     TResult Function(LoadInProgress value)? loadInProgress,
     TResult Function(LoadSuccess value)? loadSuccess,
-    TResult Function(LoadFailure value)? loadFailure,
+    TResult Function(_LoadFailure value)? loadFailure,
     required TResult orElse(),
   }) {
     if (loadInProgress != null) {
@@ -858,7 +858,7 @@ class _$LoadSuccess implements LoadSuccess {
     required TResult Function(_Initial value) initial,
     required TResult Function(LoadInProgress value) loadInProgress,
     required TResult Function(LoadSuccess value) loadSuccess,
-    required TResult Function(LoadFailure value) loadFailure,
+    required TResult Function(_LoadFailure value) loadFailure,
   }) {
     return loadSuccess(this);
   }
@@ -869,7 +869,7 @@ class _$LoadSuccess implements LoadSuccess {
     TResult Function(_Initial value)? initial,
     TResult Function(LoadInProgress value)? loadInProgress,
     TResult Function(LoadSuccess value)? loadSuccess,
-    TResult Function(LoadFailure value)? loadFailure,
+    TResult Function(_LoadFailure value)? loadFailure,
     required TResult orElse(),
   }) {
     if (loadSuccess != null) {
@@ -891,31 +891,31 @@ abstract class LoadSuccess implements NotificationWatcherState {
 }
 
 /// @nodoc
-abstract class $LoadFailureCopyWith<$Res> {
-  factory $LoadFailureCopyWith(
-          LoadFailure value, $Res Function(LoadFailure) then) =
-      _$LoadFailureCopyWithImpl<$Res>;
+abstract class _$LoadFailureCopyWith<$Res> {
+  factory _$LoadFailureCopyWith(
+          _LoadFailure value, $Res Function(_LoadFailure) then) =
+      __$LoadFailureCopyWithImpl<$Res>;
   $Res call({DataFailure dataFailure});
 
   $DataFailureCopyWith<$Res> get dataFailure;
 }
 
 /// @nodoc
-class _$LoadFailureCopyWithImpl<$Res>
+class __$LoadFailureCopyWithImpl<$Res>
     extends _$NotificationWatcherStateCopyWithImpl<$Res>
-    implements $LoadFailureCopyWith<$Res> {
-  _$LoadFailureCopyWithImpl(
-      LoadFailure _value, $Res Function(LoadFailure) _then)
-      : super(_value, (v) => _then(v as LoadFailure));
+    implements _$LoadFailureCopyWith<$Res> {
+  __$LoadFailureCopyWithImpl(
+      _LoadFailure _value, $Res Function(_LoadFailure) _then)
+      : super(_value, (v) => _then(v as _LoadFailure));
 
   @override
-  LoadFailure get _value => super._value as LoadFailure;
+  _LoadFailure get _value => super._value as _LoadFailure;
 
   @override
   $Res call({
     Object? dataFailure = freezed,
   }) {
-    return _then(LoadFailure(
+    return _then(_LoadFailure(
       dataFailure == freezed
           ? _value.dataFailure
           : dataFailure // ignore: cast_nullable_to_non_nullable
@@ -933,8 +933,8 @@ class _$LoadFailureCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$LoadFailure implements LoadFailure {
-  const _$LoadFailure(this.dataFailure);
+class _$_LoadFailure implements _LoadFailure {
+  const _$_LoadFailure(this.dataFailure);
 
   @override
   final DataFailure dataFailure;
@@ -947,7 +947,7 @@ class _$LoadFailure implements LoadFailure {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is LoadFailure &&
+        (other is _LoadFailure &&
             (identical(other.dataFailure, dataFailure) ||
                 const DeepCollectionEquality()
                     .equals(other.dataFailure, dataFailure)));
@@ -959,8 +959,8 @@ class _$LoadFailure implements LoadFailure {
 
   @JsonKey(ignore: true)
   @override
-  $LoadFailureCopyWith<LoadFailure> get copyWith =>
-      _$LoadFailureCopyWithImpl<LoadFailure>(this, _$identity);
+  _$LoadFailureCopyWith<_LoadFailure> get copyWith =>
+      __$LoadFailureCopyWithImpl<_LoadFailure>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -997,7 +997,7 @@ class _$LoadFailure implements LoadFailure {
     required TResult Function(_Initial value) initial,
     required TResult Function(LoadInProgress value) loadInProgress,
     required TResult Function(LoadSuccess value) loadSuccess,
-    required TResult Function(LoadFailure value) loadFailure,
+    required TResult Function(_LoadFailure value) loadFailure,
   }) {
     return loadFailure(this);
   }
@@ -1008,7 +1008,7 @@ class _$LoadFailure implements LoadFailure {
     TResult Function(_Initial value)? initial,
     TResult Function(LoadInProgress value)? loadInProgress,
     TResult Function(LoadSuccess value)? loadSuccess,
-    TResult Function(LoadFailure value)? loadFailure,
+    TResult Function(_LoadFailure value)? loadFailure,
     required TResult orElse(),
   }) {
     if (loadFailure != null) {
@@ -1018,11 +1018,11 @@ class _$LoadFailure implements LoadFailure {
   }
 }
 
-abstract class LoadFailure implements NotificationWatcherState {
-  const factory LoadFailure(DataFailure dataFailure) = _$LoadFailure;
+abstract class _LoadFailure implements NotificationWatcherState {
+  const factory _LoadFailure(DataFailure dataFailure) = _$_LoadFailure;
 
   DataFailure get dataFailure => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $LoadFailureCopyWith<LoadFailure> get copyWith =>
+  _$LoadFailureCopyWith<_LoadFailure> get copyWith =>
       throw _privateConstructorUsedError;
 }

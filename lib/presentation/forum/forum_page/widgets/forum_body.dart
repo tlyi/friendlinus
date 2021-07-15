@@ -26,8 +26,17 @@ class ForumBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final ownId = context.read<ForumActorBloc>().state.userId;
 
-    return BlocBuilder<ForumPostWatcherBloc, ForumPostWatcherState>(
-        builder: (context, state) {
+    return BlocConsumer<ForumPostWatcherBloc, ForumPostWatcherState>(
+        listener: (context, state) {
+      state.maybeMap(
+          loadFailure: (state) => FlushbarHelper.createError(
+                message: state.dataFailure.map(
+                    unexpected: (_) => 'Unexpected error',
+                    insufficientPermission: (_) => 'Insufficient permission',
+                    unableToUpdate: (_) => 'Unable to update'),
+              ).show(context),
+          orElse: () {});
+    }, builder: (context, state) {
       return state.map(
         initial: (_) => Container(),
         loadInProgress: (_) => const Scaffold(
@@ -110,12 +119,6 @@ class ForumBody extends StatelessWidget {
               ));
         },
         loadFailure: (state) {
-          FlushbarHelper.createError(
-            message: state.dataFailure.map(
-                unexpected: (_) => 'Unexpected error',
-                insufficientPermission: (_) => 'Insufficient permission',
-                unableToUpdate: (_) => 'Unable to update'),
-          ).show(context);
           return Container();
         },
       );
@@ -239,16 +242,17 @@ class _BuildPhoto extends StatelessWidget {
       children: <Widget>[
         GestureDetector(
           onTap: () {
-            context.pushRoute(FullScreenPhotoRoute(photoUrl: photoUrl, tag: "forumPhoto"));
+            context.pushRoute(
+                FullScreenPhotoRoute(photoUrl: photoUrl, tag: "forumPhoto"));
           },
           child: SizedBox(
               height: MediaQuery.of(context).size.height * 0.5,
               child: Hero(
-                  
                   tag: "forumPhoto",
                   child: CachedNetworkImage(
                     imageUrl: photoUrl,
-                    placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                    placeholder: (context, url) =>
+                        const Center(child: CircularProgressIndicator()),
                   ))),
         ),
         const SizedBox(height: 10),
@@ -263,7 +267,17 @@ class _BuildPoll extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PollWatcherBloc, PollWatcherState>(
+    return BlocConsumer<PollWatcherBloc, PollWatcherState>(
+      listener: (context, state) {
+        state.maybeMap(
+            loadFailure: (state) => FlushbarHelper.createError(
+                  message: state.dataFailure.map(
+                      unexpected: (_) => 'Unexpected error',
+                      insufficientPermission: (_) => 'Insufficient permission',
+                      unableToUpdate: (_) => 'Unable to update'),
+                ).show(context),
+            orElse: () {});
+      },
       builder: (context, state) {
         return state.map(
           initial: (_) => Container(),
@@ -316,12 +330,6 @@ class _BuildPoll extends StatelessWidget {
             );
           },
           loadFailure: (state) {
-            FlushbarHelper.createError(
-              message: state.dataFailure.map(
-                  unexpected: (_) => 'Unexpected error',
-                  insufficientPermission: (_) => 'Insufficient permission',
-                  unableToUpdate: (_) => 'Unable to update'),
-            ).show(context);
             return Container();
           },
         );
@@ -455,7 +463,17 @@ class _BuildComments extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ownId = context.read<ForumActorBloc>().state.userId;
-    return BlocBuilder<CommentWatcherBloc, CommentWatcherState>(
+    return BlocConsumer<CommentWatcherBloc, CommentWatcherState>(
+      listener: (context, state) {
+        state.maybeMap(
+            loadFailure: (state) => FlushbarHelper.createError(
+                  message: state.dataFailure.map(
+                      unexpected: (_) => 'Unexpected error',
+                      insufficientPermission: (_) => 'Insufficient permission',
+                      unableToUpdate: (_) => 'Unable to update'),
+                ).show(context),
+            orElse: () {});
+      },
       builder: (context, state) {
         return state.map(
             initial: (_) => Container(),
@@ -613,12 +631,6 @@ class _BuildComments extends StatelessWidget {
                   });
             },
             loadFailure: (state) {
-              FlushbarHelper.createError(
-                message: state.dataFailure.map(
-                    unexpected: (_) => 'Unexpected error',
-                    insufficientPermission: (_) => 'Insufficient permission',
-                    unableToUpdate: (_) => 'Unable to update'),
-              ).show(context);
               return Container();
             });
       },
