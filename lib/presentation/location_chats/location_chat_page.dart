@@ -49,7 +49,8 @@ class LocationChatPage extends StatelessWidget {
                           NotifCounterWatcherState>(
                         builder: (context, state) {
                           return Positioned(
-                            right: 10,
+                            top: 5,
+                            right: 12,
                             child: (state is LoadSuccess)
                                 ? state.unread == 0
                                     ? Container()

@@ -16,9 +16,11 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$ModuleForumWatcherEventTearOff {
   const _$ModuleForumWatcherEventTearOff();
 
-  _RetrieveForumsStarted retrieveForumsStarted(String moduleCode) {
+  _RetrieveForumsStarted retrieveForumsStarted(
+      String moduleCode, String sortedBy) {
     return _RetrieveForumsStarted(
       moduleCode,
+      sortedBy,
     );
   }
 
@@ -37,7 +39,8 @@ const $ModuleForumWatcherEvent = _$ModuleForumWatcherEventTearOff();
 mixin _$ModuleForumWatcherEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String moduleCode) retrieveForumsStarted,
+    required TResult Function(String moduleCode, String sortedBy)
+        retrieveForumsStarted,
     required TResult Function(
             Either<DataFailure, List<ForumPost>> failureOrForums)
         forumsReceived,
@@ -45,7 +48,7 @@ mixin _$ModuleForumWatcherEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String moduleCode)? retrieveForumsStarted,
+    TResult Function(String moduleCode, String sortedBy)? retrieveForumsStarted,
     TResult Function(Either<DataFailure, List<ForumPost>> failureOrForums)?
         forumsReceived,
     required TResult orElse(),
@@ -89,7 +92,7 @@ abstract class _$RetrieveForumsStartedCopyWith<$Res> {
   factory _$RetrieveForumsStartedCopyWith(_RetrieveForumsStarted value,
           $Res Function(_RetrieveForumsStarted) then) =
       __$RetrieveForumsStartedCopyWithImpl<$Res>;
-  $Res call({String moduleCode});
+  $Res call({String moduleCode, String sortedBy});
 }
 
 /// @nodoc
@@ -106,11 +109,16 @@ class __$RetrieveForumsStartedCopyWithImpl<$Res>
   @override
   $Res call({
     Object? moduleCode = freezed,
+    Object? sortedBy = freezed,
   }) {
     return _then(_RetrieveForumsStarted(
       moduleCode == freezed
           ? _value.moduleCode
           : moduleCode // ignore: cast_nullable_to_non_nullable
+              as String,
+      sortedBy == freezed
+          ? _value.sortedBy
+          : sortedBy // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -119,14 +127,16 @@ class __$RetrieveForumsStartedCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_RetrieveForumsStarted implements _RetrieveForumsStarted {
-  const _$_RetrieveForumsStarted(this.moduleCode);
+  const _$_RetrieveForumsStarted(this.moduleCode, this.sortedBy);
 
   @override
   final String moduleCode;
+  @override
+  final String sortedBy;
 
   @override
   String toString() {
-    return 'ModuleForumWatcherEvent.retrieveForumsStarted(moduleCode: $moduleCode)';
+    return 'ModuleForumWatcherEvent.retrieveForumsStarted(moduleCode: $moduleCode, sortedBy: $sortedBy)';
   }
 
   @override
@@ -135,12 +145,17 @@ class _$_RetrieveForumsStarted implements _RetrieveForumsStarted {
         (other is _RetrieveForumsStarted &&
             (identical(other.moduleCode, moduleCode) ||
                 const DeepCollectionEquality()
-                    .equals(other.moduleCode, moduleCode)));
+                    .equals(other.moduleCode, moduleCode)) &&
+            (identical(other.sortedBy, sortedBy) ||
+                const DeepCollectionEquality()
+                    .equals(other.sortedBy, sortedBy)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(moduleCode);
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(moduleCode) ^
+      const DeepCollectionEquality().hash(sortedBy);
 
   @JsonKey(ignore: true)
   @override
@@ -151,24 +166,25 @@ class _$_RetrieveForumsStarted implements _RetrieveForumsStarted {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String moduleCode) retrieveForumsStarted,
+    required TResult Function(String moduleCode, String sortedBy)
+        retrieveForumsStarted,
     required TResult Function(
             Either<DataFailure, List<ForumPost>> failureOrForums)
         forumsReceived,
   }) {
-    return retrieveForumsStarted(moduleCode);
+    return retrieveForumsStarted(moduleCode, sortedBy);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String moduleCode)? retrieveForumsStarted,
+    TResult Function(String moduleCode, String sortedBy)? retrieveForumsStarted,
     TResult Function(Either<DataFailure, List<ForumPost>> failureOrForums)?
         forumsReceived,
     required TResult orElse(),
   }) {
     if (retrieveForumsStarted != null) {
-      return retrieveForumsStarted(moduleCode);
+      return retrieveForumsStarted(moduleCode, sortedBy);
     }
     return orElse();
   }
@@ -198,10 +214,11 @@ class _$_RetrieveForumsStarted implements _RetrieveForumsStarted {
 }
 
 abstract class _RetrieveForumsStarted implements ModuleForumWatcherEvent {
-  const factory _RetrieveForumsStarted(String moduleCode) =
+  const factory _RetrieveForumsStarted(String moduleCode, String sortedBy) =
       _$_RetrieveForumsStarted;
 
   String get moduleCode => throw _privateConstructorUsedError;
+  String get sortedBy => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$RetrieveForumsStartedCopyWith<_RetrieveForumsStarted> get copyWith =>
       throw _privateConstructorUsedError;
@@ -274,7 +291,8 @@ class _$_ForumsReceived implements _ForumsReceived {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String moduleCode) retrieveForumsStarted,
+    required TResult Function(String moduleCode, String sortedBy)
+        retrieveForumsStarted,
     required TResult Function(
             Either<DataFailure, List<ForumPost>> failureOrForums)
         forumsReceived,
@@ -285,7 +303,7 @@ class _$_ForumsReceived implements _ForumsReceived {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String moduleCode)? retrieveForumsStarted,
+    TResult Function(String moduleCode, String sortedBy)? retrieveForumsStarted,
     TResult Function(Either<DataFailure, List<ForumPost>> failureOrForums)?
         forumsReceived,
     required TResult orElse(),

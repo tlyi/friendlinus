@@ -50,7 +50,7 @@ abstract class IForumRepository {
   Stream<Either<DataFailure, List<Mod>>> retrieveModules();
 
   Stream<Either<DataFailure, List<ForumPost>>> retrieveModuleForums(
-      String moduleCode);
+      String moduleCode, String sortedBy);
 
   Future<Either<DataFailure, List<ForumPost>>> retrieveModuleFeed();
 

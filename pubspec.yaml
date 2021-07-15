@@ -55,6 +55,8 @@ dependencies:
   tap_debouncer: ^2.0.0
   geolocator: ^7.2.0+1
   sortedmap: ^0.5.1
+  photo_view: ^0.11.1
+  cached_network_image: ^3.0.0
 
 #Stuff that you need during development
 dev_dependencies:

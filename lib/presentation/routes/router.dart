@@ -5,6 +5,7 @@ import 'package:friendlinus/presentation/chats/convos/convo_page.dart';
 import 'package:friendlinus/presentation/forum/forum_form/forum_form_page.dart';
 import 'package:friendlinus/presentation/forum/forum_page/comment_page.dart';
 import 'package:friendlinus/presentation/forum/forum_page/forum_page.dart';
+import 'package:friendlinus/presentation/core/full_screen_photo.dart';
 import 'package:friendlinus/presentation/forum/forum_tab/forum_tab_page.dart';
 import 'package:friendlinus/presentation/forum/forum_tab/module_forum_page.dart';
 import 'package:friendlinus/presentation/home/home_page.dart';
@@ -33,7 +34,7 @@ import 'package:friendlinus/presentation/splash/splash_page.dart';
     AutoRoute(page: RegisterProfilePage),
     AutoRoute(page: ResetPasswordPage),
     AutoRoute(
-      page: ProfilePage,
+      page: ProfilePage
     ),
     AutoRoute(page: SearchUsersPage),
     AutoRoute(page: UpdateProfilePage),
@@ -48,6 +49,8 @@ import 'package:friendlinus/presentation/splash/splash_page.dart';
     AutoRoute(page: ForumTabPage),
     AutoRoute(page: LocationChatFormPage),
     AutoRoute(page: LocationChatPage),
+        AutoRoute(page: FullScreenPhotoPage),
+
   ],
 )
 class $AppRouter {}

@@ -1,4 +1,5 @@
 import 'package:another_flushbar/flushbar_helper.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:friendlinus/application/forum/comment_watcher/comment_watcher_bloc.dart';
@@ -234,29 +235,22 @@ class _BuildPhoto extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return 
-    // FullScreenWidget(
-    //   child: Center(
-    //     child: Hero(
-    //       tag: "smallImage",
-    //       child: ClipRRect(
-    //         borderRadius: BorderRadius.circular(16),
-    //         child: Image.network(
-    //           photoUrl,
-    //           fit: BoxFit.cover,
-    //         ),
-    //       ),
-    //     ),
-    //   ),
-    // );
-    Column(
+    return Column(
       children: <Widget>[
-        SizedBox(
-            height: MediaQuery.of(context).size.height * 0.5,
-            child: Image(
-              fit: BoxFit.contain,
-              image: NetworkImage(photoUrl),
-            )),
+        GestureDetector(
+          onTap: () {
+            context.pushRoute(FullScreenPhotoRoute(photoUrl: photoUrl));
+          },
+          child: SizedBox(
+              height: MediaQuery.of(context).size.height * 0.5,
+              child: Hero(
+                  
+                  tag: "photo",
+                  child: CachedNetworkImage(
+                    imageUrl: photoUrl,
+                    placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                  ))),
+        ),
         const SizedBox(height: 10),
       ],
     );
@@ -278,7 +272,7 @@ class _BuildPoll extends StatelessWidget {
           ),
           loadSuccess: (state) {
             Poll poll = state.poll;
-            int votes = poll.voteList.reduce((a, b) => a+b).toInt();
+            int votes = poll.voteList.reduce((a, b) => a + b).toInt();
             return Container(
               alignment: Alignment.center,
               width: MediaQuery.of(context).size.width * 0.80,
@@ -309,16 +303,14 @@ class _BuildPoll extends StatelessWidget {
                           .add(ForumActorEvent.voted(forumId, choice - 1));
                     },
                   ),
-                  
-                      Align(
-                        alignment: Alignment.topRight,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 8.0, right: 8, top: 4),
-                          child: Text(votes == 1 ? '$votes vote' : '$votes votes'),
-                        ),
-                      ),
-                    
-                  
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Padding(
+                      padding:
+                          const EdgeInsets.only(left: 8.0, right: 8, top: 4),
+                      child: Text(votes == 1 ? '$votes vote' : '$votes votes'),
+                    ),
+                  ),
                 ],
               ),
             );
