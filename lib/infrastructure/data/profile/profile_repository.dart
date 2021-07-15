@@ -174,15 +174,18 @@ class ProfileRepository implements IProfileRepository {
   @override
   Future<Either<DataFailure, bool>> verifyUsernameUnique(
       String username) async {
-    final otherProfile = await readOtherProfile(username);
-    return otherProfile.fold((_) => left(const DataFailure.unexpected()),
-        (profile) {
-      if (profile == Profile.empty()) {
-        return right(true);
-      } else {
-        return right(false);
-      }
-    });
+    final usersRef = await _firestore.usersRef();
+    try {
+      return await usersRef
+          .where('username', isEqualTo: username)
+          .get()
+          .then((QuerySnapshot querySnapshot) {
+        return right(querySnapshot.docs.isEmpty);
+      });
+    } on FirebaseException catch (e) {
+      print(e);
+      return left(const DataFailure.unexpected());
+    }
   }
 
   @override

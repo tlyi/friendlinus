@@ -239,13 +239,13 @@ class _BuildPhoto extends StatelessWidget {
       children: <Widget>[
         GestureDetector(
           onTap: () {
-            context.pushRoute(FullScreenPhotoRoute(photoUrl: photoUrl));
+            context.pushRoute(FullScreenPhotoRoute(photoUrl: photoUrl, tag: "forumPhoto"));
           },
           child: SizedBox(
               height: MediaQuery.of(context).size.height * 0.5,
               child: Hero(
                   
-                  tag: "photo",
+                  tag: "forumPhoto",
                   child: CachedNetworkImage(
                     imageUrl: photoUrl,
                     placeholder: (context, url) => const Center(child: CircularProgressIndicator()),

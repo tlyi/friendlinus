@@ -141,7 +141,7 @@ class ModuleForumList extends StatelessWidget {
                                 pollAdded: forum.pollAdded));
                             context.read<ModuleForumWatcherBloc>().add(
                                 ModuleForumWatcherEvent.retrieveForumsStarted(
-                                    forum.tag));
+                                    forum.tag, 'Recent'));
                           },
                         ),
                       );

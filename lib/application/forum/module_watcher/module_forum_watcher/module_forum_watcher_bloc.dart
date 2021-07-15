@@ -33,7 +33,7 @@ class ModuleForumWatcherBloc
         await _forumStreamSubscription?.cancel();
 
         _forumStreamSubscription = _forumRepository
-            .retrieveModuleForums(e.moduleCode)
+            .retrieveModuleForums(e.moduleCode, e.sortedBy)
             .listen((failureOrForums) =>
                 add(ModuleForumWatcherEvent.forumsReceived(failureOrForums)));
       },

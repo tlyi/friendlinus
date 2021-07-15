@@ -69,6 +69,7 @@ class LocationChatList extends StatelessWidget {
                         context.pushRoute(LocationConvoRoute(
                             convoId: chat.chatId,
                             title: chat.chatTitle.getOrCrash()));
+                        
                       },
                     ),
                   );

@@ -86,14 +86,14 @@ class ProfileHeader extends StatelessWidget {
               children: <Widget>[
                 GestureDetector(
                   onTap: () => context.pushRoute(
-                      FullScreenPhotoRoute(photoUrl: userProfile.photoUrl)),
+                      FullScreenPhotoRoute(photoUrl: userProfile.photoUrl, tag: "profilePhoto")),
                   child: Stack(children: [
                     Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: CircularProgressIndicator(),
                     ),
                     Hero(
-                      tag: "photo",
+                      tag: "profilePhoto",
                       child: CircleAvatar(
                         radius: MediaQuery.of(context).size.width * 0.15,
                         backgroundImage:

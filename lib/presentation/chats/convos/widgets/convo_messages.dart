@@ -77,9 +77,10 @@ class ConvoMessages extends StatelessWidget {
                                   GestureDetector(
                                     onTap: () => context.pushRoute(
                                         FullScreenPhotoRoute(
-                                            photoUrl: message.photoUrl)),
+                                            photoUrl: message.photoUrl,
+                                            tag: "chatPhoto")),
                                     child: Hero(
-                                      tag: 'photo',
+                                      tag: 'chatPhoto',
                                       child: FadeInImage(
                                         fit: BoxFit.contain,
                                         image: CachedNetworkImageProvider(

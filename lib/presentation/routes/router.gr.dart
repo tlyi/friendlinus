@@ -181,7 +181,7 @@ class AppRouter extends _i1.RootStackRouter {
         builder: (data) {
           final args = data.argsAs<FullScreenPhotoRouteArgs>();
           return _i25.FullScreenPhotoPage(
-              key: args.key, photoUrl: args.photoUrl);
+              key: args.key, photoUrl: args.photoUrl, tag: args.tag);
         })
   };
 
@@ -446,18 +446,23 @@ class LocationConvoRouteArgs {
 }
 
 class FullScreenPhotoRoute extends _i1.PageRouteInfo<FullScreenPhotoRouteArgs> {
-  FullScreenPhotoRoute({_i2.Key? key, required String photoUrl})
+  FullScreenPhotoRoute(
+      {_i2.Key? key, required String photoUrl, required String tag})
       : super(name,
             path: '/full-screen-photo-page',
-            args: FullScreenPhotoRouteArgs(key: key, photoUrl: photoUrl));
+            args: FullScreenPhotoRouteArgs(
+                key: key, photoUrl: photoUrl, tag: tag));
 
   static const String name = 'FullScreenPhotoRoute';
 }
 
 class FullScreenPhotoRouteArgs {
-  const FullScreenPhotoRouteArgs({this.key, required this.photoUrl});
+  const FullScreenPhotoRouteArgs(
+      {this.key, required this.photoUrl, required this.tag});
 
   final _i2.Key? key;
 
   final String photoUrl;
+
+  final String tag;
 }
