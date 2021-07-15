@@ -6,7 +6,8 @@ import 'package:auto_route/auto_route.dart';
 
 class FullScreenPhotoPage extends StatelessWidget {
   final String photoUrl;
-  const FullScreenPhotoPage({Key? key, required this.photoUrl})
+  final String tag;
+  const FullScreenPhotoPage({Key? key, required this.photoUrl, required this.tag})
       : super(key: key);
 
   @override
@@ -22,7 +23,7 @@ class FullScreenPhotoPage extends StatelessWidget {
         floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
         body: PhotoView(
           imageProvider: CachedNetworkImageProvider(photoUrl),
-          heroAttributes: const PhotoViewHeroAttributes(tag: "photo"),
+          heroAttributes: PhotoViewHeroAttributes(tag: tag),
         ));
   }
 }

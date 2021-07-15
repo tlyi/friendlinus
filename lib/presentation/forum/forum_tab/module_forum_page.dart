@@ -25,8 +25,7 @@ class ModuleForumPage extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => getIt<ModuleForumWatcherBloc>()
-            ..add(ModuleForumWatcherEvent.retrieveForumsStarted(
-                moduleCode, 'Recent')),
+            ..add(ModuleForumWatcherEvent.retrieveForumsStarted(moduleCode, 'Recent')),
         ),
         BlocProvider(
             create: (context) =>

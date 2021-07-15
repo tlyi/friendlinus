@@ -1,7 +1,6 @@
 import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:friendlinus/application/forum/forum_watcher/forum_watcher_bloc.dart';
 import 'package:friendlinus/application/forum/module_watcher/module_forum_watcher/module_forum_watcher_bloc.dart';
 import 'package:friendlinus/application/forum/module_watcher/module_watcher_bloc.dart';
 import 'package:auto_route/auto_route.dart';
@@ -15,7 +14,17 @@ class ModuleOverviewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ModuleWatcherBloc, ModuleWatcherState>(
+    return BlocConsumer<ModuleWatcherBloc, ModuleWatcherState>(
+      listener: (context, state) {
+        state.maybeMap(
+            loadFailure: (state) => FlushbarHelper.createError(
+                  message: state.dataFailure.map(
+                      unexpected: (_) => 'Unexpected error',
+                      insufficientPermission: (_) => 'Insufficient permission',
+                      unableToUpdate: (_) => 'Unable to update'),
+                ).show(context),
+            orElse: () {});
+      },
       builder: (context, state) {
         return state.map(
             initial: (_) => Container(),
@@ -70,12 +79,6 @@ class ModuleOverviewPage extends StatelessWidget {
               );
             },
             loadFailure: (state) {
-              FlushbarHelper.createError(
-                message: state.dataFailure.map(
-                    unexpected: (_) => 'Unexpected error',
-                    insufficientPermission: (_) => 'Insufficient permission',
-                    unableToUpdate: (_) => 'Unable to update'),
-              ).show(context);
               return Container();
             });
       },

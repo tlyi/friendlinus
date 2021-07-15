@@ -260,6 +260,7 @@ class ChatRepository implements IChatRepository {
       Position? position = await Geolocator.getLastKnownPosition();
       return right(position!);
     } catch (e) {
+      print(e);
       return left(const LocationFailure.unexpected());
     }
   }

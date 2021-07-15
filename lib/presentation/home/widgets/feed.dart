@@ -17,7 +17,17 @@ class Feed extends StatelessWidget {
   const Feed({Key? key, required this.feedType}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<FeedBloc, FeedState>(
+    return BlocConsumer<FeedBloc, FeedState>(
+      listener: (context, state) {
+        state.maybeMap(
+            loadFailure: (state) => FlushbarHelper.createError(
+                  message: state.dataFailure.map(
+                      unexpected: (_) => 'Unexpected error',
+                      insufficientPermission: (_) => 'Insufficient permission',
+                      unableToUpdate: (_) => 'Unable to update'),
+                ).show(context),
+            orElse: () {});
+      },
       builder: (context, state) {
         final userId = context.read<ForumActorBloc>().state.userId;
 
@@ -180,12 +190,6 @@ class Feed extends StatelessWidget {
               }
             },
             loadFailure: (state) {
-              FlushbarHelper.createError(
-                message: state.dataFailure.map(
-                    unexpected: (_) => 'Unexpected error',
-                    insufficientPermission: (_) => 'Insufficient permission',
-                    unableToUpdate: (_) => 'Unable to update'),
-              ).show(context);
               return Container();
             },
             loadLike: (state) {

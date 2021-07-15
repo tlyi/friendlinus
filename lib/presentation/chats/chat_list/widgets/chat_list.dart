@@ -17,7 +17,18 @@ class ChatList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ChatWatcherBloc, ChatWatcherState>(
+    return BlocConsumer<ChatWatcherBloc, ChatWatcherState>(
+      listener: (context, state) {
+    state.maybeMap(
+          loadFailure: (state) => FlushbarHelper.createError(
+                message: state.dataFailure.map(
+                    unexpected: (_) => 'Unexpected error',
+                    insufficientPermission: (_) => 'Insufficient permission',
+                    unableToUpdate: (_) => 'Unable to update'),
+              ).show(context),
+          orElse: () {});
+
+      },
         builder: (context, state) {
       return state.map(
           initial: (_) => Container(),
@@ -74,12 +85,6 @@ class ChatList extends StatelessWidget {
             }
           },
           loadFailure: (state) {
-            FlushbarHelper.createError(
-              message: state.dataFailure.map(
-                  unexpected: (_) => 'Unexpected error',
-                  insufficientPermission: (_) => 'Insufficient permission',
-                  unableToUpdate: (_) => 'Unable to update'),
-            ).show(context);
             return Container();
           });
     });
