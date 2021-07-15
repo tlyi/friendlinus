@@ -1,7 +1,9 @@
 import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:bubble/bubble.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:friendlinus/application/chats/location_convo_actor/location_convo_actor_bloc.dart';
 import 'package:friendlinus/application/chats/location_convo_watcher/location_convo_watcher_bloc.dart';
 import 'package:friendlinus/domain/data/chats/chat_message/chat_message.dart';
 import 'package:friendlinus/domain/data/profile/profile.dart';
@@ -14,13 +16,12 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 
 class LocationConvoMessages extends StatelessWidget {
   final String convoId;
-  final String ownId;
-  const LocationConvoMessages(
-      {Key? key, required this.convoId, required this.ownId})
+  const LocationConvoMessages({Key? key, required this.convoId})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final ownId = context.read<LocationConvoActorBloc>().state.ownId;
     return BlocBuilder<LocationConvoWatcherBloc, LocationConvoWatcherState>(
         builder: (context, state) {
       return state.map(
@@ -106,20 +107,51 @@ class LocationConvoMessages extends StatelessWidget {
                                       children: [
                                         if (isFirstFromThisSender &&
                                             isOtherSender)
-                                          Text(
-                                            profile.username.getOrCrash(),
-                                            style: const TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.w700),
+                                          GestureDetector(
+                                            onTap: () async {
+                                              print('tap');
+                                              context
+                                                  .read<
+                                                      LocationConvoWatcherBloc>()
+                                                  .add(const LocationConvoWatcherEvent
+                                                      .retrieveConvoEnded());
+                                              await context.pushRoute(
+                                                  OtherProfileRoute(
+                                                      userProfile: profile));
+                                              context
+                                                  .read<
+                                                      LocationConvoWatcherBloc>()
+                                                  .add(LocationConvoWatcherEvent
+                                                      .retrieveConvoStarted(
+                                                          convoId));
+                                            },
+                                            child: Text(
+                                              profile.username.getOrCrash(),
+                                              style: const TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.w700),
+                                            ),
                                           ),
                                         if (isFirstFromThisSender &&
                                             isOtherSender)
                                           const SizedBox(height: 5),
-                                        FadeInImage(
-                                          fit: BoxFit.contain,
-                                          image: NetworkImage(message.photoUrl),
-                                          placeholder: const AssetImage(
-                                              'images/loading_image.png'),
+                                        GestureDetector(
+                                          onTap: () => context.pushRoute(
+                                              FullScreenPhotoRoute(
+                                                  photoUrl: message.photoUrl)),
+                                          child: Hero(
+                                            tag: 'photo',
+                                            child: CachedNetworkImage(
+                                              imageUrl: message.photoUrl,
+                                              placeholder: (context, url) =>
+                                                  const Center(
+                                                      child:
+                                                          CircularProgressIndicator(
+                                                              strokeWidth: 2.0,
+                                                              color: Colors
+                                                                  .white)),
+                                            ),
+                                          ),
                                         ),
                                         if (message.messageBody.getOrCrash() !=
                                             '')
@@ -136,6 +168,7 @@ class LocationConvoMessages extends StatelessWidget {
                                     isOtherSender: isOtherSender,
                                     isFirstFromThisSender:
                                         isFirstFromThisSender,
+                                    convoId: convoId,
                                   ),
                           ),
                         ),
@@ -166,12 +199,14 @@ class _MessageBody extends StatelessWidget {
   final Profile senderProfile;
   final bool isOtherSender;
   final bool isFirstFromThisSender;
+  final String convoId;
   const _MessageBody(
       {Key? key,
       required this.message,
       required this.senderProfile,
       required this.isOtherSender,
-      required this.isFirstFromThisSender})
+      required this.isFirstFromThisSender,
+      required this.convoId})
       : super(key: key);
 
   @override
@@ -181,11 +216,24 @@ class _MessageBody extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         if (isFirstFromThisSender && isOtherSender)
-          Text(
-            senderProfile.username.getOrCrash(),
-            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
+          GestureDetector(
+            onTap: () async {
+              print('tap');
+              context
+                  .read<LocationConvoWatcherBloc>()
+                  .add(const LocationConvoWatcherEvent.retrieveConvoEnded());
+              await context
+                  .pushRoute(OtherProfileRoute(userProfile: senderProfile));
+              context
+                  .read<LocationConvoWatcherBloc>()
+                  .add(LocationConvoWatcherEvent.retrieveConvoStarted(convoId));
+            },
+            child: Text(
+              senderProfile.username.getOrCrash(),
+              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
+            ),
           ),
-        if (isFirstFromThisSender && isOtherSender) SizedBox(height: 5),
+        if (isFirstFromThisSender && isOtherSender) const SizedBox(height: 5),
         Wrap(
           alignment: WrapAlignment.end,
           runSpacing: -15,

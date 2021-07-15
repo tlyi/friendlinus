@@ -132,6 +132,7 @@ class ProfileRepository implements IProfileRepository {
       QuerySnapshot query = await usersRef
           .where('username', isGreaterThanOrEqualTo: username)
           .where('username', isLessThanOrEqualTo: '$username~')
+          .where('username', isNotEqualTo: 'anonymous')
           .get();
       {
         if (query.docs.isNotEmpty) {

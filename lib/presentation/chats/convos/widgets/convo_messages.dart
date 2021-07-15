@@ -81,12 +81,14 @@ class ConvoMessages extends StatelessWidget {
                                             tag: "chatPhoto")),
                                     child: Hero(
                                       tag: 'chatPhoto',
-                                      child: FadeInImage(
-                                        fit: BoxFit.contain,
-                                        image: CachedNetworkImageProvider(
-                                            message.photoUrl),
-                                        placeholder: const AssetImage(
-                                            'images/loading_image.png'),
+                                      child: CachedNetworkImage(
+                                        imageUrl: message.photoUrl,
+                                        placeholder: (context, url) =>
+                                            const Center(
+                                                child:
+                                                    CircularProgressIndicator(
+                                                        strokeWidth: 2.0,
+                                                        color: Colors.white)),
                                       ),
                                     ),
                                   ),
