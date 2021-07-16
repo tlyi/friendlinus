@@ -16,12 +16,13 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 
 class LocationConvoMessages extends StatelessWidget {
   final String convoId;
-  const LocationConvoMessages({Key? key, required this.convoId})
+  final String ownId;
+  const LocationConvoMessages(
+      {Key? key, required this.convoId, required this.ownId})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final ownId = context.read<LocationConvoActorBloc>().state.ownId;
     return BlocConsumer<LocationConvoWatcherBloc, LocationConvoWatcherState>(
         listener: (context, state) {
       state.maybeMap(
