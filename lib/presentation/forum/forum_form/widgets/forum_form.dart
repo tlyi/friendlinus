@@ -125,12 +125,13 @@ class _BuildTag extends StatelessWidget {
                 context
                     .read<ForumFormBloc>()
                     .add(ForumFormEvent.searchedModule(value));
-
-                return context
-                    .read<ForumFormBloc>()
-                    .state
-                    .moduleSuggestions
-                    .getOrElse(() => []);
+                return Future.delayed(const Duration(milliseconds: 500), () {
+                  return context
+                      .read<ForumFormBloc>()
+                      .state
+                      .moduleSuggestions
+                      .getOrElse(() => []);
+                });
               }, itemBuilder: (context, suggestion) {
                 return ListTile(title: Text(suggestion.toString()));
               }, onSuggestionSelected: (String value) {

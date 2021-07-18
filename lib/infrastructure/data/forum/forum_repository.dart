@@ -526,52 +526,102 @@ class ForumPostRepository implements IForumRepository {
   @override
   Stream<Either<DataFailure, List<ForumPost>>> retrieveModuleForums(
       String moduleCode, String sortedBy) async* {
-    String orderBy = sortedBy == 'Most Liked' ? 'likes' : 'timestamp';
+    //['Recent', 'Oldest', 'Most Liked']
     bool descending = sortedBy == 'Oldest' ? false : true;
     String oneWeekAgo =
         (DateTime.now().millisecondsSinceEpoch - 604800000).toString();
     final forumRef = await _firestore.forumsRef();
     if (moduleCode == "Anonymous") {
-      yield* forumRef
-          .where('isAnon', isEqualTo: true)
-          .orderBy('timestamp', descending: true)
-          .snapshots()
-          .map(
-            (snapshot) => right<DataFailure, List<ForumPost>>(
-              snapshot.docs
-                  .map((doc) => ForumPostDto.fromFirestore(doc).toDomain())
-                  .toList(),
-            ),
-          )
-          .handleError((e) {
-        if (e is FirebaseException &&
-            e.message!.contains('PERMISSION_DENIED')) {
-          return left(const DataFailure.insufficientPermission());
-        } else {
-          print(e);
-          return left(const DataFailure.unexpected());
-        }
-      });
-    }
-    yield* forumRef
-        .where('tag', isEqualTo: moduleCode)
-        .orderBy('timestamp', descending: true)
-        .snapshots()
-        .map(
-          (snapshot) => right<DataFailure, List<ForumPost>>(
-            snapshot.docs
-                .map((doc) => ForumPostDto.fromFirestore(doc).toDomain())
-                .toList(),
-          ),
-        )
-        .handleError((e) {
-      if (e is FirebaseException && e.message!.contains('PERMISSION_DENIED')) {
-        return left(const DataFailure.insufficientPermission());
+      if (sortedBy != 'Most Liked') {
+        yield* forumRef
+            .where('isAnon', isEqualTo: true)
+            .orderBy('timestamp', descending: descending)
+            .snapshots()
+            .map(
+              (snapshot) => right<DataFailure, List<ForumPost>>(
+                snapshot.docs
+                    .map((doc) => ForumPostDto.fromFirestore(doc).toDomain())
+                    .toList(),
+              ),
+            )
+            .handleError((e) {
+          if (e is FirebaseException &&
+              e.message!.contains('PERMISSION_DENIED')) {
+            return left(const DataFailure.insufficientPermission());
+          } else {
+            print(e);
+            return left(const DataFailure.unexpected());
+          }
+        });
       } else {
-        print(e);
-        return left(const DataFailure.unexpected());
+        yield* forumRef
+            .where('isAnon', isEqualTo: true)
+            .where('timestamp', isGreaterThanOrEqualTo: oneWeekAgo)
+            .orderBy('likes', descending: descending)
+            .snapshots()
+            .map(
+              (snapshot) => right<DataFailure, List<ForumPost>>(
+                snapshot.docs
+                    .map((doc) => ForumPostDto.fromFirestore(doc).toDomain())
+                    .toList(),
+              ),
+            )
+            .handleError((e) {
+          if (e is FirebaseException &&
+              e.message!.contains('PERMISSION_DENIED')) {
+            return left(const DataFailure.insufficientPermission());
+          } else {
+            print(e);
+            return left(const DataFailure.unexpected());
+          }
+        });
       }
-    });
+    } else {
+      if (sortedBy != 'Most Liked') {
+        yield* forumRef
+            .where('tag', isEqualTo: moduleCode)
+            .orderBy('timestamp', descending: descending)
+            .snapshots()
+            .map(
+              (snapshot) => right<DataFailure, List<ForumPost>>(
+                snapshot.docs
+                    .map((doc) => ForumPostDto.fromFirestore(doc).toDomain())
+                    .toList(),
+              ),
+            )
+            .handleError((e) {
+          if (e is FirebaseException &&
+              e.message!.contains('PERMISSION_DENIED')) {
+            return left(const DataFailure.insufficientPermission());
+          } else {
+            print(e);
+            return left(const DataFailure.unexpected());
+          }
+        });
+      } else {
+        yield* forumRef            
+            //.where('timestamp', isGreaterThanOrEqualTo: oneWeekAgo)
+            .where('tag', isEqualTo: moduleCode)
+            .orderBy('likes', descending: descending)
+            .snapshots()
+            .map(
+              (snapshot) => right<DataFailure, List<ForumPost>>(
+                snapshot.docs
+                    .map((doc) => ForumPostDto.fromFirestore(doc).toDomain())
+                    .toList(),
+              ),
+            )
+            .handleError((e) {
+          if (e is FirebaseException &&
+              e.message!.contains('PERMISSION_DENIED')) {
+            return left(const DataFailure.insufficientPermission());
+          } else {
+            print(e);
+            return left(const DataFailure.unexpected());
+          }
+        });
+      }
+    }
   }
 
   @override

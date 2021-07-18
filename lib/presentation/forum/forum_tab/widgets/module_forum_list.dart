@@ -17,6 +17,56 @@ class ModuleForumList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Column(children: <Widget>[
+      Padding(
+        padding: const EdgeInsets.only(top: 10.0, left: 12),
+        child: _BuildSortForumsOption(moduleCode: moduleCode),
+      ),
+      Expanded(child: _BuildForumList())
+    ]);
+  }
+}
+
+class _BuildSortForumsOption extends StatefulWidget {
+  final String moduleCode;
+  const _BuildSortForumsOption({Key? key, required this.moduleCode})
+      : super(key: key);
+
+  @override
+  __BuildSortForumsOptionState createState() => __BuildSortForumsOptionState();
+}
+
+class __BuildSortForumsOptionState extends State<_BuildSortForumsOption> {
+  String selected = 'Recent';
+  @override
+  Widget build(BuildContext context) {
+    List<String> sortingOptions = ['Recent', 'Oldest', 'Most Liked'];
+    return Row(
+      children: <Widget>[
+        const Text('Sort forums by'),
+        const SizedBox(width: 8),
+        DropdownButton<String>(
+          value: selected,
+          items: sortingOptions.map((String value) {
+            return DropdownMenuItem<String>(value: value, child: Text(value));
+          }).toList(),
+          onChanged: (String? newValue) {
+            setState(() {
+              selected = newValue!;
+            });
+            context.read<ModuleForumWatcherBloc>().add(
+                ModuleForumWatcherEvent.retrieveForumsStarted(
+                    widget.moduleCode, newValue!));
+          },
+        ),
+      ],
+    );
+  }
+}
+
+class _BuildForumList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     return BlocConsumer<ModuleForumWatcherBloc, ModuleForumWatcherState>(
       listener: (context, state) {
         state.maybeMap(
@@ -145,13 +195,10 @@ class ModuleForumList extends StatelessWidget {
                           ),
                           isThreeLine: true,
 
-                          onTap: () async {
-                            await context.pushRoute(ForumRoute(
+                          onTap: () {
+                            context.pushRoute(ForumRoute(
                                 forumId: forum.forumId,
                                 pollAdded: forum.pollAdded));
-                            context.read<ModuleForumWatcherBloc>().add(
-                                ModuleForumWatcherEvent.retrieveForumsStarted(
-                                    forum.tag, 'Recent'));
                           },
                         ),
                       );
