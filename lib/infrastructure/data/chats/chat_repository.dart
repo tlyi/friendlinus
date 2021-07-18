@@ -422,4 +422,28 @@ class ChatRepository implements IChatRepository {
       }
     });
   }
+
+  @override
+  Future<Either<DataFailure, List<LocationChat>>> searchLocationChatByTitle(
+      String locationChatTitle) async {
+    final searchResults = <LocationChat>[];
+    final locationChatRef = await _firestore.locationChatsRef();
+    try {
+      QuerySnapshot query = await locationChatRef
+          .where('chatTitle', isGreaterThanOrEqualTo: locationChatTitle)
+          .where('chatTitle', isLessThanOrEqualTo: '$locationChatTitle~')
+          .get();
+      {
+        if (query.docs.isNotEmpty) {
+          for (final doc in query.docs) {
+            searchResults.add(LocationChatDto.fromFirestore(doc).toDomain());
+          }
+        }
+        return right(searchResults);
+      }
+    } on FirebaseException catch (e) {
+      print(e);
+      return left(const DataFailure.unexpected());
+    }
+  }
 }

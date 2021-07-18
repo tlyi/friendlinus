@@ -59,4 +59,7 @@ abstract class IChatRepository {
 
   Stream<Either<DataFailure, List<ChatMessage>>> getLocationConvo(
       String convoId);
+
+  Future<Either<DataFailure, List<LocationChat>>> searchLocationChatByTitle(
+      String locationChatTitle);
 }

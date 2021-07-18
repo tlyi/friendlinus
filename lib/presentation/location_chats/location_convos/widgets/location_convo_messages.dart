@@ -16,12 +16,13 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 
 class LocationConvoMessages extends StatelessWidget {
   final String convoId;
-  const LocationConvoMessages({Key? key, required this.convoId})
+  final String ownId;
+  const LocationConvoMessages(
+      {Key? key, required this.convoId, required this.ownId})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final ownId = context.read<LocationConvoActorBloc>().state.ownId;
     return BlocConsumer<LocationConvoWatcherBloc, LocationConvoWatcherState>(
         listener: (context, state) {
       state.maybeMap(
@@ -58,133 +59,154 @@ class LocationConvoMessages extends StatelessWidget {
                 final isLastFromThisSender = index == 0 ||
                     state.messages[index - 1].senderId != message.senderId;
                 final isOtherSender = message.senderId != ownId;
-                return Container(
-                  padding: const EdgeInsets.only(
-                      left: 14, right: 14, top: 5, bottom: 5),
-                  child: Align(
-                    alignment:
-                        isOtherSender ? Alignment.topLeft : Alignment.topRight,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        if (isOtherSender)
-                          SizedBox(
-                            width: 40,
-                            child: isLastFromThisSender
-                                ? GestureDetector(
-                                    onTap: () async {
-                                      context
-                                          .read<LocationConvoWatcherBloc>()
-                                          .add(const LocationConvoWatcherEvent
-                                              .retrieveConvoEnded());
-                                      await context.pushRoute(OtherProfileRoute(
-                                          userProfile: profile));
-                                      context
-                                          .read<LocationConvoWatcherBloc>()
-                                          .add(LocationConvoWatcherEvent
-                                              .retrieveConvoStarted(convoId));
-                                    },
-                                    child: CircleAvatar(
-                                        backgroundImage:
-                                            NetworkImage(profile.photoUrl),
-                                        backgroundColor: Colors.white,
-                                        radius: 20),
-                                  )
-                                : const SizedBox(),
-                          ),
-                        Flexible(
-                          child: Bubble(
-                            radius: const Radius.circular(10),
-                            color: isOtherSender
-                                ? Colors.grey[400]
-                                : constants.THEME_BLUE,
-                            padding: const BubbleEdges.all(8),
-                            nip: isOtherSender
-                                ? BubbleNip.leftBottom
-                                : BubbleNip.rightBottom,
-                            showNip: index == 0 ||
-                                state.messages[index - 1].senderId !=
-                                    message.senderId,
-                            child: message.photoUrl != ''
-                                ? Container(
-                                    width: 200,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        if (isFirstFromThisSender &&
-                                            isOtherSender)
-                                          GestureDetector(
-                                            onTap: () async {
-                                              print('tap');
-                                              context
-                                                  .read<
-                                                      LocationConvoWatcherBloc>()
-                                                  .add(const LocationConvoWatcherEvent
+                return Column(
+                  children: [
+                    if (index == state.messages.length - 1 ||
+                        getDate(message.timeSent) !=
+                            getDate(state.messages[index + 1].timeSent))
+                      Bubble(
+                          color: constants.THEME_LIGHT_BLUE,
+                          child: Text(getDate(message.timeSent),
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(fontSize: 10.0))),
+                    Container(
+                      padding: const EdgeInsets.only(
+                          left: 14, right: 14, top: 5, bottom: 5),
+                      child: Align(
+                        alignment: isOtherSender
+                            ? Alignment.topLeft
+                            : Alignment.topRight,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            if (isOtherSender)
+                              SizedBox(
+                                width: 40,
+                                child: isLastFromThisSender
+                                    ? GestureDetector(
+                                        onTap: () async {
+                                          context
+                                              .read<LocationConvoWatcherBloc>()
+                                              .add(
+                                                  const LocationConvoWatcherEvent
                                                       .retrieveConvoEnded());
-                                              await context.pushRoute(
-                                                  OtherProfileRoute(
-                                                      userProfile: profile));
-                                              context
-                                                  .read<
-                                                      LocationConvoWatcherBloc>()
-                                                  .add(LocationConvoWatcherEvent
-                                                      .retrieveConvoStarted(
-                                                          convoId));
-                                            },
-                                            child: Text(
-                                              profile.username.getOrCrash(),
-                                              style: const TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.w700),
+                                          await context.pushRoute(
+                                              OtherProfileRoute(
+                                                  userProfile: profile));
+                                          context
+                                              .read<LocationConvoWatcherBloc>()
+                                              .add(LocationConvoWatcherEvent
+                                                  .retrieveConvoStarted(
+                                                      convoId));
+                                        },
+                                        child: CircleAvatar(
+                                            backgroundImage:
+                                                NetworkImage(profile.photoUrl),
+                                            backgroundColor: Colors.white,
+                                            radius: 20),
+                                      )
+                                    : const SizedBox(),
+                              ),
+                            Flexible(
+                              child: Bubble(
+                                radius: const Radius.circular(10),
+                                color: isOtherSender
+                                    ? Colors.grey[400]
+                                    : constants.THEME_BLUE,
+                                padding: const BubbleEdges.all(8),
+                                nip: isOtherSender
+                                    ? BubbleNip.leftBottom
+                                    : BubbleNip.rightBottom,
+                                showNip: index == 0 ||
+                                    state.messages[index - 1].senderId !=
+                                        message.senderId,
+                                child: message.photoUrl != ''
+                                    ? Container(
+                                        width: 200,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            if (isFirstFromThisSender &&
+                                                isOtherSender)
+                                              GestureDetector(
+                                                onTap: () async {
+                                                  print('tap');
+                                                  context
+                                                      .read<
+                                                          LocationConvoWatcherBloc>()
+                                                      .add(const LocationConvoWatcherEvent
+                                                          .retrieveConvoEnded());
+                                                  await context.pushRoute(
+                                                      OtherProfileRoute(
+                                                          userProfile:
+                                                              profile));
+                                                  context
+                                                      .read<
+                                                          LocationConvoWatcherBloc>()
+                                                      .add(LocationConvoWatcherEvent
+                                                          .retrieveConvoStarted(
+                                                              convoId));
+                                                },
+                                                child: Text(
+                                                  profile.username.getOrCrash(),
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.w700),
+                                                ),
+                                              ),
+                                            if (isFirstFromThisSender &&
+                                                isOtherSender)
+                                              const SizedBox(height: 5),
+                                            GestureDetector(
+                                              onTap: () => context.pushRoute(
+                                                  FullScreenPhotoRoute(
+                                                      photoUrl:
+                                                          message.photoUrl,
+                                                      tag: message.photoUrl)),
+                                              child: Hero(
+                                                tag: message.photoUrl,
+                                                child: CachedNetworkImage(
+                                                  imageUrl: message.photoUrl,
+                                                  placeholder: (context, url) =>
+                                                      const Center(
+                                                          child:
+                                                              CircularProgressIndicator(
+                                                                  strokeWidth:
+                                                                      2.0,
+                                                                  color: Colors
+                                                                      .white)),
+                                                ),
+                                              ),
                                             ),
-                                          ),
-                                        if (isFirstFromThisSender &&
-                                            isOtherSender)
-                                          const SizedBox(height: 5),
-                                        GestureDetector(
-                                          onTap: () => context.pushRoute(
-                                              FullScreenPhotoRoute(
-                                                  photoUrl: message.photoUrl,
-                                                  tag: message.photoUrl)),
-                                          child: Hero(
-                                            tag: message.photoUrl,
-                                            child: CachedNetworkImage(
-                                              imageUrl: message.photoUrl,
-                                              placeholder: (context, url) =>
-                                                  const Center(
-                                                      child:
-                                                          CircularProgressIndicator(
-                                                              strokeWidth: 2.0,
-                                                              color: Colors
-                                                                  .white)),
-                                            ),
-                                          ),
+                                            if (message.messageBody
+                                                    .getOrCrash() !=
+                                                '')
+                                              const SizedBox(height: 5),
+                                            _CaptionBody(
+                                                message: message,
+                                                isOtherSender: isOtherSender),
+                                          ],
                                         ),
-                                        if (message.messageBody.getOrCrash() !=
-                                            '')
-                                          const SizedBox(height: 5),
-                                        _CaptionBody(
-                                            message: message,
-                                            isOtherSender: isOtherSender),
-                                      ],
-                                    ),
-                                  )
-                                : _MessageBody(
-                                    message: message,
-                                    senderProfile: profile,
-                                    isOtherSender: isOtherSender,
-                                    isFirstFromThisSender:
-                                        isFirstFromThisSender,
-                                    convoId: convoId,
-                                  ),
-                          ),
+                                      )
+                                    : _MessageBody(
+                                        message: message,
+                                        senderProfile: profile,
+                                        isOtherSender: isOtherSender,
+                                        isFirstFromThisSender:
+                                            isFirstFromThisSender,
+                                        convoId: convoId,
+                                      ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                  ),
+                  ],
                 );
               },
             );
@@ -250,7 +272,7 @@ class _MessageBody extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 10, top: 10),
                 child: Text(
-                  getTime(message.timeSent),
+                  getTimeExact(message.timeSent),
                   style: const TextStyle(fontSize: 10),
                 ),
               ),
@@ -293,7 +315,7 @@ class _CaptionBody extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 10, top: 10),
                 child: Text(
-                  getTime(message.timeSent),
+                  getTimeExact(message.timeSent),
                   style: const TextStyle(fontSize: 10),
                 ),
               ),

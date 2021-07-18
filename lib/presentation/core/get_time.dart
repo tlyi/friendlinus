@@ -47,3 +47,28 @@ String getTimeForum(String timestamp) {
 
   return timeAgo(dateTime);
 }
+
+String getDate(String timestamp) {
+  final DateTime dateTime =
+      DateTime.fromMillisecondsSinceEpoch(int.parse(timestamp));
+
+  if (DateTime.now().year == dateTime.year &&
+      DateTime.now().month == dateTime.month &&
+      DateTime.now().day == dateTime.day) {
+    return 'Today';
+  } //E.g Today (if same day)
+
+  else if (DateTime.now().year == dateTime.year) {
+    return DateFormat('MMMd').format(dateTime);
+  } //E.g July 9 (if same year as current)
+
+  return DateFormat('MMM' ' ' 'd' ', ' 'y').format(dateTime);
+  //E.g July 9, 2020 (if different year)
+}
+
+String getTimeExact(String timestamp) {
+  final DateTime dateTime =
+      DateTime.fromMillisecondsSinceEpoch(int.parse(timestamp));
+
+  return DateFormat('jm').format(dateTime);
+}

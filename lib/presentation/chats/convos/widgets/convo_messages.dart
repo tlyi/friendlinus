@@ -61,62 +61,79 @@ class ConvoMessages extends StatelessWidget {
                       .read<ConvoActorBloc>()
                       .add(const ConvoActorEvent.lastMessageRead());
                 }
-                return Container(
-                  padding: const EdgeInsets.only(
-                      left: 14, right: 14, top: 5, bottom: 5),
-                  child: Align(
-                    alignment:
-                        isOtherSender ? Alignment.topLeft : Alignment.topRight,
-                    child: Bubble(
-                      radius: const Radius.circular(10),
-                      color: isOtherSender
-                          ? Colors.grey[400]
-                          : constants.THEME_BLUE,
-                      padding: const BubbleEdges.all(8),
-                      nip: isOtherSender
-                          ? BubbleNip.leftBottom
-                          : BubbleNip.rightBottom,
-                      showNip: index == 0 ||
-                          state.messages[index - 1].senderId !=
-                              message.senderId,
-                      child: message.photoUrl != ''
-                          ? Container(
-                              width: 200,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  GestureDetector(
-                                    onTap: () => context.pushRoute(
-                                        FullScreenPhotoRoute(
-                                            photoUrl: message.photoUrl,
-                                            tag: "chatPhoto")),
-                                    child: Hero(
-                                      tag: 'chatPhoto',
-                                      child: CachedNetworkImage(
-                                        imageUrl: message.photoUrl,
-                                        placeholder: (context, url) =>
-                                            const Center(
-                                                child:
-                                                    CircularProgressIndicator(
-                                                        strokeWidth: 2.0,
-                                                        color: Colors.white)),
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (index == state.messages.length-1 ||
+                        getDate(message.timeSent) !=
+                            getDate(state.messages[index + 1].timeSent))
+                      Bubble(
+                          color: constants.THEME_LIGHT_BLUE,
+                          child: Text(getDate(message.timeSent),
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(fontSize: 10.0))),
+                    Container(
+                      padding: const EdgeInsets.only(
+                          left: 14, right: 14, top: 5, bottom: 5),
+                      child: Align(
+                        alignment: isOtherSender
+                            ? Alignment.topLeft
+                            : Alignment.topRight,
+                        child: Bubble(
+                          radius: const Radius.circular(10),
+                          color: isOtherSender
+                              ? Colors.grey[400]
+                              : constants.THEME_BLUE,
+                          padding: const BubbleEdges.all(8),
+                          nip: isOtherSender
+                              ? BubbleNip.leftBottom
+                              : BubbleNip.rightBottom,
+                          showNip: index == 0 ||
+                              state.messages[index - 1].senderId !=
+                                  message.senderId,
+                          child: message.photoUrl != ''
+                              ? Container(
+                                  width: 200,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () => context.pushRoute(
+                                            FullScreenPhotoRoute(
+                                                photoUrl: message.photoUrl,
+                                                tag: "chatPhoto")),
+                                        child: Hero(
+                                          tag: 'chatPhoto',
+                                          child: CachedNetworkImage(
+                                            imageUrl: message.photoUrl,
+                                            placeholder: (context, url) =>
+                                                const Center(
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                            strokeWidth: 2.0,
+                                                            color:
+                                                                Colors.white)),
+                                          ),
+                                        ),
                                       ),
-                                    ),
+                                      if (message.messageBody.getOrCrash() !=
+                                          '')
+                                        const SizedBox(height: 5),
+                                      _CaptionBody(
+                                          message: message,
+                                          isOtherSender: isOtherSender),
+                                    ],
                                   ),
-                                  if (message.messageBody.getOrCrash() != '')
-                                    const SizedBox(height: 5),
-                                  _CaptionBody(
-                                      message: message,
-                                      isOtherSender: isOtherSender),
-                                ],
-                              ),
-                            )
-                          : _MessageBody(
-                              message: message,
-                              isOtherSender: isOtherSender,
-                            ),
+                                )
+                              : _MessageBody(
+                                  message: message,
+                                  isOtherSender: isOtherSender,
+                                ),
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 );
               },
             );
@@ -151,7 +168,7 @@ class _MessageBody extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 10, top: 10),
             child: Text(
-              getTime(message.timeSent),
+              getTimeExact(message.timeSent),
               style: const TextStyle(fontSize: 10),
             ),
           ),
@@ -195,7 +212,7 @@ class _CaptionBody extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 10, top: 10),
             child: Text(
-              getTime(message.timeSent),
+              getTimeExact(message.timeSent),
               style: const TextStyle(fontSize: 10),
             ),
           ),

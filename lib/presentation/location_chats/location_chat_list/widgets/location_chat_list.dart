@@ -51,48 +51,55 @@ class LocationChatList extends StatelessWidget {
                 child: Text('No chats nearby, create one now!'),
               );
             } else {
-              return ListView.builder(
-                itemCount: state.chats.length,
-                itemBuilder: (context, index) {
-                  final chat = state.chats[index];
-                  final int distance = state.distances[index].toInt();
-                  return Card(
-                    child: ListTile(
-                      leading: Container(
-                        width: 50,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              Icons.near_me,
-                              color: distance > 1000
-                                  ? Colors.grey
-                                  : constants.THEME_BLUE,
-                              size: 20,
+              return Column(
+                children: [
+                  const SizedBox(height: 60),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: state.chats.length,
+                      itemBuilder: (context, index) {
+                        final chat = state.chats[index];
+                        final int distance = state.distances[index].toInt();
+                        return Card(
+                          child: ListTile(
+                            leading: Container(
+                              width: 50,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    Icons.near_me,
+                                    color: distance > 1000
+                                        ? Colors.grey
+                                        : constants.THEME_BLUE,
+                                    size: 20,
+                                  ),
+                                  Flexible(
+                                    child: Text(distance > 1000
+                                        ? '${(distance / 1000).toInt()}km'
+                                        : '${distance}m'),
+                                  ),
+                                ],
+                              ),
                             ),
-                            Flexible(
-                              child: Text(distance > 1000
-                                  ? '${(distance / 1000).toInt()}km'
-                                  : '${distance}m'),
+                            title: Text(chat.chatTitle.getOrCrash()),
+                            subtitle: Text(
+                              chat.lastMessage,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ),
-                          ],
-                        ),
-                      ),
-                      title: Text(chat.chatTitle.getOrCrash()),
-                      subtitle: Text(
-                        chat.lastMessage,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      trailing: Text(getTime(chat.timestamp)),
-                      onTap: () {
-                        context.pushRoute(LocationConvoRoute(
-                            convoId: chat.chatId,
-                            title: chat.chatTitle.getOrCrash()));
+                            trailing: Text(getTime(chat.timestamp)),
+                            onTap: () {
+                              context.pushRoute(LocationConvoRoute(
+                                  convoId: chat.chatId,
+                                  title: chat.chatTitle.getOrCrash()));
+                            },
+                          ),
+                        );
                       },
                     ),
-                  );
-                },
+                  ),
+                ],
               );
             }
           },

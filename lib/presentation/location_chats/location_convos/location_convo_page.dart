@@ -35,7 +35,15 @@ class LocationConvoPage extends StatelessWidget {
         body: Column(children: [
           Expanded(
             child: ClipRRect(
-              child: LocationConvoMessages(convoId: convoId),
+              child:
+                  BlocBuilder<LocationConvoActorBloc, LocationConvoActorState>(
+                builder: (context, state) {
+                  return LocationConvoMessages(
+                      convoId: convoId,
+                      ownId:
+                          context.read<LocationConvoActorBloc>().state.ownId);
+                },
+              ),
             ),
           ),
           LocationConvoActions(convoId: convoId),
