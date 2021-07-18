@@ -35,8 +35,8 @@ class ProfileElements extends StatelessWidget {
         Container(
           alignment: Alignment.topLeft,
           padding: const EdgeInsets.only(
-            left: 40,
-            right: 40,
+            left: 30,
+            right: 30,
             bottom: 50,
           ),
           child: Column(
@@ -73,15 +73,17 @@ class ProfileHeader extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height * 0.3,
-      padding: EdgeInsets.only(top: 50),
+      padding: EdgeInsets.only(top: 30),
       alignment: Alignment.topLeft,
       child: Row(
         children: <Widget>[
           Container(
-            width: MediaQuery.of(context).size.width * 0.4,
+            width: MediaQuery.of(context).size.width * 0.45,
+            // color: Colors.red,
             alignment: Alignment.topLeft,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              // crossAxisAlignment: CrossAxisAlignment.start,
+              //  mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 GestureDetector(
                   onTap: () => context.pushRoute(FullScreenPhotoRoute(
@@ -106,11 +108,11 @@ class ProfileHeader extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 10),
                 if (isOwnProfile)
                   UpdateProfileButton(userProfile: userProfile)
                 else
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       MessageProfileButton(userProfile: userProfile),
                       const Padding(padding: EdgeInsets.only(left: 5)),
@@ -681,20 +683,20 @@ class WaveClipper extends CustomClipper<Path> {
   Path getClip(Size size) {
     print(size.height);
     final path = Path();
-    path.lineTo(0.0, size.height * 0.7);
+    path.lineTo(0.0, size.height * 0.60);
 
-    final firstControlPoint = Offset(size.width / 4.3, size.height * 0.65);
-    final firstEndPoint = Offset(size.width / 2.4, size.height * 0.49);
+    final firstControlPoint = Offset(size.width / 4.3, size.height * 0.55);
+    final firstEndPoint = Offset(size.width / 2.4, size.height * 0.40);
     path.quadraticBezierTo(firstControlPoint.dx, firstControlPoint.dy,
         firstEndPoint.dx, firstEndPoint.dy);
 
     final secondControlPoint =
-        Offset(size.width - (size.width / 3.2), size.height * 0.29);
-    final secondEndPoint = Offset(size.width, size.height * 0.49);
+        Offset(size.width - (size.width / 3.5), size.height * 0.17);
+    final secondEndPoint = Offset(size.width, size.height * 0.33);
     path.quadraticBezierTo(secondControlPoint.dx, secondControlPoint.dy,
         secondEndPoint.dx, secondEndPoint.dy);
 
-    path.lineTo(size.width, size.height * 0.83);
+    path.lineTo(size.width, size.height * 0.6);
     path.lineTo(size.width, 0.0);
     path.close();
 
@@ -706,23 +708,3 @@ class WaveClipper extends CustomClipper<Path> {
     return true;
   }
 }
-
-/* 
-    final path = Path();
-    path.lineTo(0.0, size.height - 65);
-
-    final firstControlPoint = Offset(size.width / 4.3, size.height - 80);
-    final firstEndPoint = Offset(size.width / 2.4, size.height - 120);
-    path.quadraticBezierTo(firstControlPoint.dx, firstControlPoint.dy,
-        firstEndPoint.dx, firstEndPoint.dy);
-
-    final secondControlPoint =
-        Offset(size.width - (size.width / 3.1), size.height - 165);
-    final secondEndPoint = Offset(size.width, size.height - 125);
-    path.quadraticBezierTo(secondControlPoint.dx, secondControlPoint.dy,
-        secondEndPoint.dx, secondEndPoint.dy);
-
-    path.lineTo(size.width, size.height - 40);
-    path.lineTo(size.width, 0.0);
-    path.close();
-*/

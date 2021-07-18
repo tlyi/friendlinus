@@ -18,8 +18,8 @@ class ChatList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ChatWatcherBloc, ChatWatcherState>(
-      listener: (context, state) {
-    state.maybeMap(
+        listener: (context, state) {
+      state.maybeMap(
           loadFailure: (state) => FlushbarHelper.createError(
                 message: state.dataFailure.map(
                     unexpected: (_) => 'Unexpected error',
@@ -27,9 +27,7 @@ class ChatList extends StatelessWidget {
                     unableToUpdate: (_) => 'Unable to update'),
               ).show(context),
           orElse: () {});
-
-      },
-        builder: (context, state) {
+    }, builder: (context, state) {
       return state.map(
           initial: (_) => Container(),
           loadInProgress: (_) => const Center(
