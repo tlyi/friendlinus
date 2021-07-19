@@ -102,9 +102,10 @@ class ConvoMessages extends StatelessWidget {
                                         onTap: () => context.pushRoute(
                                             FullScreenPhotoRoute(
                                                 photoUrl: message.photoUrl,
-                                                tag: "chatPhoto")),
+                                                tag: message.photoUrl,
+                                        )),
                                         child: Hero(
-                                          tag: 'chatPhoto',
+                                          tag: message.photoUrl,
                                           child: CachedNetworkImage(
                                             imageUrl: message.photoUrl,
                                             placeholder: (context, url) =>

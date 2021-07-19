@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:another_flushbar/flushbar_helper.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:friendlinus/application/chats/chat_watcher/chat_watcher_bloc.dart';
@@ -47,11 +48,24 @@ class ChatList extends StatelessWidget {
 
                   return Card(
                     child: ListTile(
-                      leading: CircleAvatar(
-                        radius: 20,
-                        backgroundImage: NetworkImage(profile.photoUrl),
-                        backgroundColor: Colors.white,
+                      leading: Container(
+                        alignment: Alignment.center,
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle, color: Colors.white),
+                        child: ClipOval(
+                          child: CachedNetworkImage(
+                              fit: BoxFit.cover,
+                              height: 40,
+                              width: 40,
+                              imageUrl: profile.photoUrl,
+                              placeholder: (context, url) =>
+                                  Center(child: CircularProgressIndicator())),
+                        ),
                       ),
+                      
+                      
                       title: Text(profile.username.getOrCrash()),
                       subtitle: Text(
                         chat.lastMessage,

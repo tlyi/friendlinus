@@ -1,4 +1,5 @@
 import 'package:another_flushbar/flushbar_helper.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:friendlinus/application/search/search_profile_bloc.dart';
@@ -36,11 +37,23 @@ class SearchResults extends StatelessWidget {
                 final user = searchResults[index];
                 return Card(
                   child: ListTile(
-                    leading: CircleAvatar(
-                      radius: 20,
-                      backgroundImage: NetworkImage(user.photoUrl),
-                      backgroundColor: Colors.white,
+                    leading: Container(
+                      alignment: Alignment.center,
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle, color: Colors.white),
+                      child: ClipOval(
+                        child: CachedNetworkImage(
+                            fit: BoxFit.cover,
+                            height: 40,
+                            width: 40,
+                            imageUrl: user.photoUrl,
+                            placeholder: (context, url) =>
+                                Center(child: CircularProgressIndicator())),
+                      ),
                     ),
+                   
                     title: Text(user.username.getOrCrash()),
                     onTap: () {
                       ownId == user.uuid

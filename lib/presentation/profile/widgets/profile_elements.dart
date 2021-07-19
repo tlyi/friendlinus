@@ -389,12 +389,15 @@ class FollowersList extends StatelessWidget {
                                           padding: const EdgeInsets.only(
                                               left: 5.0, right: 5.0),
                                           child: Column(children: [
+                                            
                                             ClipOval(
-                                              child: Image.network(
-                                                profile.photoUrl,
+                                              child: CachedNetworkImage(
+                                                imageUrl: profile.photoUrl,
                                                 width: 60.0,
                                                 height: 60.0,
                                                 fit: BoxFit.cover,
+                                                placeholder: (context, url) =>
+                                 const Center(child: CircularProgressIndicator()),
                                               ),
                                             ),
                                             Text(profile.username.getOrCrash()),
@@ -530,8 +533,10 @@ class FollowingList extends StatelessWidget {
                                                 left: 5.0, right: 5.0),
                                             child: Column(children: [
                                               ClipOval(
-                                                child: Image.network(
-                                                  profile.photoUrl,
+                                                child: CachedNetworkImage(
+                                                  imageUrl: profile.photoUrl,
+                                                  placeholder: (context, url) =>
+                                  Center(child: CircularProgressIndicator()),
                                                   width: 60.0,
                                                   height: 60.0,
                                                   fit: BoxFit.cover,
