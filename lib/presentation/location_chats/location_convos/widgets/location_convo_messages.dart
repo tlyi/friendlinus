@@ -71,7 +71,7 @@ class LocationConvoMessages extends StatelessWidget {
                               style: const TextStyle(fontSize: 10.0))),
                     Container(
                       padding: const EdgeInsets.only(
-                          left: 14, right: 14, top: 5, bottom: 5),
+                          left: 14, right: 14, top: 10, bottom: 10),
                       child: Align(
                         alignment: isOtherSender
                             ? Alignment.topLeft

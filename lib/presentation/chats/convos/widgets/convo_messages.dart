@@ -64,7 +64,7 @@ class ConvoMessages extends StatelessWidget {
                 return Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    if (index == state.messages.length-1 ||
+                    if (index == state.messages.length - 1 ||
                         getDate(message.timeSent) !=
                             getDate(state.messages[index + 1].timeSent))
                       Bubble(
@@ -74,7 +74,7 @@ class ConvoMessages extends StatelessWidget {
                               style: const TextStyle(fontSize: 10.0))),
                     Container(
                       padding: const EdgeInsets.only(
-                          left: 14, right: 14, top: 5, bottom: 5),
+                          left: 14, right: 14, top: 10, bottom: 10),
                       child: Align(
                         alignment: isOtherSender
                             ? Alignment.topLeft

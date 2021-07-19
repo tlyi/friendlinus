@@ -85,7 +85,7 @@ class ChatList extends StatelessWidget {
                                       size: 17, color: constants.THEME_BLUE)
                                   : const Icon(MdiIcons.check, size: 17),
                         ),
-                        Text(getTime(chat.timestamp))
+                        Text(getTimeOrDate(chat.timestamp))
                       ]),
                       onTap: () {
                         context.pushRoute(ConvoRoute(otherProfile: profile));

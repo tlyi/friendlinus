@@ -85,7 +85,7 @@ class _BuildSearchResults extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    trailing: Text(getTime(chat.timestamp)),
+                    trailing: Text(getTimeOrDate(chat.timestamp)),
                     onTap: () {
                       context.pushRoute(LocationConvoRoute(
                           convoId: chat.chatId,
