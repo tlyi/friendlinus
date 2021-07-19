@@ -28,7 +28,8 @@ class _$LocationChatDtoTearOff {
       required String chatTitle,
       required String timestamp,
       required double longitude,
-      required double latitude}) {
+      required double latitude,
+      required List<String> keywords}) {
     return _LocationChatDto(
       chatId: chatId,
       creatorUserId: creatorUserId,
@@ -38,6 +39,7 @@ class _$LocationChatDtoTearOff {
       timestamp: timestamp,
       longitude: longitude,
       latitude: latitude,
+      keywords: keywords,
     );
   }
 
@@ -59,6 +61,7 @@ mixin _$LocationChatDto {
   String get timestamp => throw _privateConstructorUsedError;
   double get longitude => throw _privateConstructorUsedError;
   double get latitude => throw _privateConstructorUsedError;
+  List<String> get keywords => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -79,7 +82,8 @@ abstract class $LocationChatDtoCopyWith<$Res> {
       String chatTitle,
       String timestamp,
       double longitude,
-      double latitude});
+      double latitude,
+      List<String> keywords});
 }
 
 /// @nodoc
@@ -101,6 +105,7 @@ class _$LocationChatDtoCopyWithImpl<$Res>
     Object? timestamp = freezed,
     Object? longitude = freezed,
     Object? latitude = freezed,
+    Object? keywords = freezed,
   }) {
     return _then(_value.copyWith(
       chatId: chatId == freezed
@@ -135,6 +140,10 @@ class _$LocationChatDtoCopyWithImpl<$Res>
           ? _value.latitude
           : latitude // ignore: cast_nullable_to_non_nullable
               as double,
+      keywords: keywords == freezed
+          ? _value.keywords
+          : keywords // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -154,7 +163,8 @@ abstract class _$LocationChatDtoCopyWith<$Res>
       String chatTitle,
       String timestamp,
       double longitude,
-      double latitude});
+      double latitude,
+      List<String> keywords});
 }
 
 /// @nodoc
@@ -178,6 +188,7 @@ class __$LocationChatDtoCopyWithImpl<$Res>
     Object? timestamp = freezed,
     Object? longitude = freezed,
     Object? latitude = freezed,
+    Object? keywords = freezed,
   }) {
     return _then(_LocationChatDto(
       chatId: chatId == freezed
@@ -212,6 +223,10 @@ class __$LocationChatDtoCopyWithImpl<$Res>
           ? _value.latitude
           : latitude // ignore: cast_nullable_to_non_nullable
               as double,
+      keywords: keywords == freezed
+          ? _value.keywords
+          : keywords // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -227,7 +242,8 @@ class _$_LocationChatDto extends _LocationChatDto {
       required this.chatTitle,
       required this.timestamp,
       required this.longitude,
-      required this.latitude})
+      required this.latitude,
+      required this.keywords})
       : super._();
 
   factory _$_LocationChatDto.fromJson(Map<String, dynamic> json) =>
@@ -249,10 +265,12 @@ class _$_LocationChatDto extends _LocationChatDto {
   final double longitude;
   @override
   final double latitude;
+  @override
+  final List<String> keywords;
 
   @override
   String toString() {
-    return 'LocationChatDto(chatId: $chatId, creatorUserId: $creatorUserId, lastMessage: $lastMessage, lastSenderId: $lastSenderId, chatTitle: $chatTitle, timestamp: $timestamp, longitude: $longitude, latitude: $latitude)';
+    return 'LocationChatDto(chatId: $chatId, creatorUserId: $creatorUserId, lastMessage: $lastMessage, lastSenderId: $lastSenderId, chatTitle: $chatTitle, timestamp: $timestamp, longitude: $longitude, latitude: $latitude, keywords: $keywords)';
   }
 
   @override
@@ -281,7 +299,10 @@ class _$_LocationChatDto extends _LocationChatDto {
                     .equals(other.longitude, longitude)) &&
             (identical(other.latitude, latitude) ||
                 const DeepCollectionEquality()
-                    .equals(other.latitude, latitude)));
+                    .equals(other.latitude, latitude)) &&
+            (identical(other.keywords, keywords) ||
+                const DeepCollectionEquality()
+                    .equals(other.keywords, keywords)));
   }
 
   @override
@@ -294,7 +315,8 @@ class _$_LocationChatDto extends _LocationChatDto {
       const DeepCollectionEquality().hash(chatTitle) ^
       const DeepCollectionEquality().hash(timestamp) ^
       const DeepCollectionEquality().hash(longitude) ^
-      const DeepCollectionEquality().hash(latitude);
+      const DeepCollectionEquality().hash(latitude) ^
+      const DeepCollectionEquality().hash(keywords);
 
   @JsonKey(ignore: true)
   @override
@@ -316,7 +338,8 @@ abstract class _LocationChatDto extends LocationChatDto {
       required String chatTitle,
       required String timestamp,
       required double longitude,
-      required double latitude}) = _$_LocationChatDto;
+      required double latitude,
+      required List<String> keywords}) = _$_LocationChatDto;
   const _LocationChatDto._() : super._();
 
   factory _LocationChatDto.fromJson(Map<String, dynamic> json) =
@@ -338,6 +361,8 @@ abstract class _LocationChatDto extends LocationChatDto {
   double get longitude => throw _privateConstructorUsedError;
   @override
   double get latitude => throw _privateConstructorUsedError;
+  @override
+  List<String> get keywords => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$LocationChatDtoCopyWith<_LocationChatDto> get copyWith =>

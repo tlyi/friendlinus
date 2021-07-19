@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:friendlinus/application/chats/location_chat_watcher/location_chat_watcher_bloc.dart';
 import 'package:friendlinus/presentation/chats/chat_list/chat_list_page.dart';
 import 'package:friendlinus/presentation/core/get_time.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
@@ -27,17 +28,38 @@ class LocationChatList extends StatelessWidget {
                     insufficientPermission: (_) => 'Insufficient permission',
                     unableToUpdate: (_) => 'Unable to update'),
               ).show(context),
-          loadLocationFailure: (state) => FlushbarHelper.createError(
-                message: state.locationFailure.map(
-                    unexpected: (_) =>
-                        'Unexpected error in getting location. Try pressing blue button to get location',
-                    insufficientPermission: (_) =>
-                        'Insufficient permission, please allow FriendliNUS access to location services in Settings.',
-                    permissionDeniedForever: (_) =>
-                        'Insufficient permission, please allow FriendliNUS access to location services in Settings.',
-                    serviceNotEnabled: (_) =>
-                        'No location service detected, please turn on your location so that FriendliNUS can connect you to the nearest chats available.'),
-              ).show(context),
+          loadLocationFailure: (state) {
+            showDialog(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                      title: const Text('Location Error'),
+                      content: const Text(
+                          'Turn on permissions/location in settings so that FriendliNUS can connect you to the nearest chats available.'),
+                      actions: <Widget>[
+                        TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text('Close')),
+                        TextButton(
+                            onPressed: () async {
+                              await Geolocator.openLocationSettings();
+                              Navigator.pop(context);
+                            },
+                            child: const Text('Settings'))
+                      ],
+                    ));
+
+            return FlushbarHelper.createError(
+              message: state.locationFailure.map(
+                  unexpected: (_) =>
+                      'Unexpected error in getting location. Check if location services are turned on or press the blue button to try again.',
+                  insufficientPermission: (_) =>
+                      'Insufficient permission, please allow FriendliNUS access to location services in Settings.',
+                  permissionDeniedForever: (_) =>
+                      'Insufficient permission, please allow FriendliNUS access to location services in Settings.',
+                  serviceNotEnabled: (_) =>
+                      'No location service detected, please turn on your location so that FriendliNUS can connect you to the nearest chats available.'),
+            ).show(context);
+          },
           orElse: () {});
     }, builder: (context, state) {
       return state.map(

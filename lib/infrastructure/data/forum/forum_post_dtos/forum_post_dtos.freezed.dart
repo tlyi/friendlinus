@@ -32,7 +32,8 @@ class _$ForumPostDtoTearOff {
       required String photoUrl,
       required bool photoAdded,
       required bool pollAdded,
-      required String timestamp}) {
+      required String timestamp,
+      required List<String> keywords}) {
     return _ForumPostDto(
       forumId: forumId,
       title: title,
@@ -46,6 +47,7 @@ class _$ForumPostDtoTearOff {
       photoAdded: photoAdded,
       pollAdded: pollAdded,
       timestamp: timestamp,
+      keywords: keywords,
     );
   }
 
@@ -71,6 +73,7 @@ mixin _$ForumPostDto {
   bool get photoAdded => throw _privateConstructorUsedError;
   bool get pollAdded => throw _privateConstructorUsedError;
   String get timestamp => throw _privateConstructorUsedError;
+  List<String> get keywords => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -95,7 +98,8 @@ abstract class $ForumPostDtoCopyWith<$Res> {
       String photoUrl,
       bool photoAdded,
       bool pollAdded,
-      String timestamp});
+      String timestamp,
+      List<String> keywords});
 }
 
 /// @nodoc
@@ -120,6 +124,7 @@ class _$ForumPostDtoCopyWithImpl<$Res> implements $ForumPostDtoCopyWith<$Res> {
     Object? photoAdded = freezed,
     Object? pollAdded = freezed,
     Object? timestamp = freezed,
+    Object? keywords = freezed,
   }) {
     return _then(_value.copyWith(
       forumId: forumId == freezed
@@ -170,6 +175,10 @@ class _$ForumPostDtoCopyWithImpl<$Res> implements $ForumPostDtoCopyWith<$Res> {
           ? _value.timestamp
           : timestamp // ignore: cast_nullable_to_non_nullable
               as String,
+      keywords: keywords == freezed
+          ? _value.keywords
+          : keywords // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -193,7 +202,8 @@ abstract class _$ForumPostDtoCopyWith<$Res>
       String photoUrl,
       bool photoAdded,
       bool pollAdded,
-      String timestamp});
+      String timestamp,
+      List<String> keywords});
 }
 
 /// @nodoc
@@ -220,6 +230,7 @@ class __$ForumPostDtoCopyWithImpl<$Res> extends _$ForumPostDtoCopyWithImpl<$Res>
     Object? photoAdded = freezed,
     Object? pollAdded = freezed,
     Object? timestamp = freezed,
+    Object? keywords = freezed,
   }) {
     return _then(_ForumPostDto(
       forumId: forumId == freezed
@@ -270,6 +281,10 @@ class __$ForumPostDtoCopyWithImpl<$Res> extends _$ForumPostDtoCopyWithImpl<$Res>
           ? _value.timestamp
           : timestamp // ignore: cast_nullable_to_non_nullable
               as String,
+      keywords: keywords == freezed
+          ? _value.keywords
+          : keywords // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -289,7 +304,8 @@ class _$_ForumPostDto extends _ForumPostDto {
       required this.photoUrl,
       required this.photoAdded,
       required this.pollAdded,
-      required this.timestamp})
+      required this.timestamp,
+      required this.keywords})
       : super._();
 
   factory _$_ForumPostDto.fromJson(Map<String, dynamic> json) =>
@@ -319,10 +335,12 @@ class _$_ForumPostDto extends _ForumPostDto {
   final bool pollAdded;
   @override
   final String timestamp;
+  @override
+  final List<String> keywords;
 
   @override
   String toString() {
-    return 'ForumPostDto(forumId: $forumId, title: $title, tag: $tag, body: $body, likes: $likes, likedUserIds: $likedUserIds, posterUserId: $posterUserId, isAnon: $isAnon, photoUrl: $photoUrl, photoAdded: $photoAdded, pollAdded: $pollAdded, timestamp: $timestamp)';
+    return 'ForumPostDto(forumId: $forumId, title: $title, tag: $tag, body: $body, likes: $likes, likedUserIds: $likedUserIds, posterUserId: $posterUserId, isAnon: $isAnon, photoUrl: $photoUrl, photoAdded: $photoAdded, pollAdded: $pollAdded, timestamp: $timestamp, keywords: $keywords)';
   }
 
   @override
@@ -359,7 +377,10 @@ class _$_ForumPostDto extends _ForumPostDto {
                     .equals(other.pollAdded, pollAdded)) &&
             (identical(other.timestamp, timestamp) ||
                 const DeepCollectionEquality()
-                    .equals(other.timestamp, timestamp)));
+                    .equals(other.timestamp, timestamp)) &&
+            (identical(other.keywords, keywords) ||
+                const DeepCollectionEquality()
+                    .equals(other.keywords, keywords)));
   }
 
   @override
@@ -376,7 +397,8 @@ class _$_ForumPostDto extends _ForumPostDto {
       const DeepCollectionEquality().hash(photoUrl) ^
       const DeepCollectionEquality().hash(photoAdded) ^
       const DeepCollectionEquality().hash(pollAdded) ^
-      const DeepCollectionEquality().hash(timestamp);
+      const DeepCollectionEquality().hash(timestamp) ^
+      const DeepCollectionEquality().hash(keywords);
 
   @JsonKey(ignore: true)
   @override
@@ -402,7 +424,8 @@ abstract class _ForumPostDto extends ForumPostDto {
       required String photoUrl,
       required bool photoAdded,
       required bool pollAdded,
-      required String timestamp}) = _$_ForumPostDto;
+      required String timestamp,
+      required List<String> keywords}) = _$_ForumPostDto;
   const _ForumPostDto._() : super._();
 
   factory _ForumPostDto.fromJson(Map<String, dynamic> json) =
@@ -432,6 +455,8 @@ abstract class _ForumPostDto extends ForumPostDto {
   bool get pollAdded => throw _privateConstructorUsedError;
   @override
   String get timestamp => throw _privateConstructorUsedError;
+  @override
+  List<String> get keywords => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$ForumPostDtoCopyWith<_ForumPostDto> get copyWith =>

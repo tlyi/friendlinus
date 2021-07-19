@@ -7,7 +7,7 @@ class Title extends ValueObject<String> {
   @override
   final Either<ValueFailure<String>, String> value;
 
-  static const maxLength = 25;
+  static const maxLength = 50;
 
   factory Title(String input) {
     return Title._(validateMaxStringLength(input, maxLength)

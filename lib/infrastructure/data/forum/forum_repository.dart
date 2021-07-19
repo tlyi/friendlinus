@@ -528,8 +528,14 @@ class ForumPostRepository implements IForumRepository {
       String moduleCode, String sortedBy) async* {
     //['Recent', 'Oldest', 'Most Liked']
     bool descending = sortedBy == 'Oldest' ? false : true;
-    String oneWeekAgo =
-        (DateTime.now().millisecondsSinceEpoch - 604800000).toString();
+
+    bool isOneWeekAgo(String timestamp) {
+      final DateTime dateTime =
+          DateTime.fromMillisecondsSinceEpoch(int.parse(timestamp));
+      final diff = DateTime.now().difference(dateTime);
+      return diff.inDays <= 7;
+    }
+
     final forumRef = await _firestore.forumsRef();
     if (moduleCode == "Anonymous") {
       if (sortedBy != 'Most Liked') {
@@ -556,7 +562,7 @@ class ForumPostRepository implements IForumRepository {
       } else {
         yield* forumRef
             .where('isAnon', isEqualTo: true)
-            .where('timestamp', isGreaterThanOrEqualTo: oneWeekAgo)
+            // .where('timestamp', isGreaterThanOrEqualTo: oneWeekAgo)
             .orderBy('likes', descending: descending)
             .snapshots()
             .map(
@@ -599,19 +605,22 @@ class ForumPostRepository implements IForumRepository {
           }
         });
       } else {
-        yield* forumRef            
-            //.where('timestamp', isGreaterThanOrEqualTo: oneWeekAgo)
+        yield* forumRef
             .where('tag', isEqualTo: moduleCode)
             .orderBy('likes', descending: descending)
             .snapshots()
             .map(
-              (snapshot) => right<DataFailure, List<ForumPost>>(
-                snapshot.docs
-                    .map((doc) => ForumPostDto.fromFirestore(doc).toDomain())
-                    .toList(),
-              ),
-            )
-            .handleError((e) {
+          (snapshot) {
+            List<ForumPost> forums = [];
+            for (final doc in snapshot.docs) {
+              final forumPost = ForumPostDto.fromFirestore(doc).toDomain();
+              if (isOneWeekAgo(forumPost.timestamp)) {
+                forums.add(forumPost);
+              }
+            }
+            return right<DataFailure, List<ForumPost>>(forums);
+          },
+        ).handleError((e) {
           if (e is FirebaseException &&
               e.message!.contains('PERMISSION_DENIED')) {
             return left(const DataFailure.insufficientPermission());
@@ -694,8 +703,7 @@ class ForumPostRepository implements IForumRepository {
     final forumRef = await _firestore.forumsRef();
     try {
       QuerySnapshot query = await forumRef
-          .where('title', isGreaterThanOrEqualTo: queryStr)
-          .where('title', isLessThanOrEqualTo: '$queryStr~')
+          .where('keywords', arrayContains: queryStr.toLowerCase())
           .get();
       {
         if (query.docs.isNotEmpty) {

@@ -389,7 +389,6 @@ class FollowersList extends StatelessWidget {
                                           padding: const EdgeInsets.only(
                                               left: 5.0, right: 5.0),
                                           child: Column(children: [
-                                            
                                             ClipOval(
                                               child: CachedNetworkImage(
                                                 imageUrl: profile.photoUrl,
@@ -397,7 +396,9 @@ class FollowersList extends StatelessWidget {
                                                 height: 60.0,
                                                 fit: BoxFit.cover,
                                                 placeholder: (context, url) =>
-                                 const Center(child: CircularProgressIndicator()),
+                                                    const Center(
+                                                        child:
+                                                            CircularProgressIndicator()),
                                               ),
                                             ),
                                             Text(profile.username.getOrCrash()),
@@ -536,7 +537,9 @@ class FollowingList extends StatelessWidget {
                                                 child: CachedNetworkImage(
                                                   imageUrl: profile.photoUrl,
                                                   placeholder: (context, url) =>
-                                  Center(child: CircularProgressIndicator()),
+                                                      Center(
+                                                          child:
+                                                              CircularProgressIndicator()),
                                                   width: 60.0,
                                                   height: 60.0,
                                                   fit: BoxFit.cover,
@@ -600,7 +603,7 @@ class RecentPosts extends StatelessWidget {
             ListView.builder(
                 physics: const AlwaysScrollableScrollPhysics(),
                 shrinkWrap: true,
-                padding: EdgeInsets.only(top: 15.0),
+                padding: EdgeInsets.only(top: 15.0, left: 0, right: 0),
                 itemCount: forums.length,
                 itemBuilder: (context, index) {
                   final forum = forums[index];
@@ -612,7 +615,9 @@ class RecentPosts extends StatelessWidget {
                               color: Color(0xFF7BA5BB), width: 2.0),
                           borderRadius: BorderRadius.circular(15.0),
                         ),
+                        margin: EdgeInsets.only(bottom: 5, top: 5),
                         child: ListTile(
+                          contentPadding: EdgeInsets.all(15),
                           title: Text(forum.title.getOrCrash()),
                           subtitle: Text(
                             forum.body.getOrCrash(),
@@ -623,26 +628,34 @@ class RecentPosts extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(getTime(forum.timestamp)),
-                              SizedBox(height: 5),
                               Row(
                                 mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   if (forum.pollAdded)
-                                    Transform.rotate(
-                                      angle: 90 * pi / 180,
-                                      child: const Icon(
-                                        Icons.poll_outlined,
-                                        color: constants.THEME_BLUE,
-                                        size: 20,
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 10.0),
+                                      child: Transform.rotate(
+                                        angle: 90 * pi / 180,
+                                        child: Icon(
+                                          Icons.poll_outlined,
+                                          color: constants.THEME_BLUE,
+                                          size: 20,
+                                        ),
                                       ),
                                     ),
                                   if (forum.isAnon)
-                                    const Icon(MdiIcons.incognito, size: 20),
+                                    const Padding(
+                                      padding: EdgeInsets.only(
+                                        top: 10.0,
+                                      ),
+                                      child: Icon(MdiIcons.incognito, size: 20),
+                                    ),
                                 ],
                               ),
                             ],
                           ),
-                          isThreeLine: true,
                           onTap: () async {
                             await context.pushRoute(ForumRoute(
                                 forumId: forum.forumId,

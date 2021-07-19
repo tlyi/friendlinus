@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:friendlinus/domain/core/keyword_generator.dart';
 import 'package:friendlinus/domain/data/chats/location_chat.dart';
 import 'package:friendlinus/domain/data/forum/value_objects.dart';
 
@@ -19,6 +20,7 @@ abstract class LocationChatDto implements _$LocationChatDto {
     required String timestamp,
     required double longitude,
     required double latitude,
+    required List<String> keywords,
   }) = _LocationChatDto;
 
   factory LocationChatDto.fromDomain(LocationChat locationChat) {
@@ -30,7 +32,8 @@ abstract class LocationChatDto implements _$LocationChatDto {
         chatTitle: locationChat.chatTitle.getOrCrash(),
         timestamp: locationChat.timestamp,
         longitude: locationChat.longitude,
-        latitude: locationChat.latitude);
+        latitude: locationChat.latitude,
+        keywords: generateKeywords(locationChat.chatTitle.getOrCrash()));
   }
 
   LocationChat toDomain() {

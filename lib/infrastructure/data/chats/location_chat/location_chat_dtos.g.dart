@@ -16,6 +16,8 @@ _$_LocationChatDto _$_$_LocationChatDtoFromJson(Map<String, dynamic> json) {
     timestamp: json['timestamp'] as String,
     longitude: (json['longitude'] as num).toDouble(),
     latitude: (json['latitude'] as num).toDouble(),
+    keywords:
+        (json['keywords'] as List<dynamic>).map((e) => e as String).toList(),
   );
 }
 
@@ -29,4 +31,5 @@ Map<String, dynamic> _$_$_LocationChatDtoToJson(_$_LocationChatDto instance) =>
       'timestamp': instance.timestamp,
       'longitude': instance.longitude,
       'latitude': instance.latitude,
+      'keywords': instance.keywords,
     };

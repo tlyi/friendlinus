@@ -430,8 +430,7 @@ class ChatRepository implements IChatRepository {
     final locationChatRef = await _firestore.locationChatsRef();
     try {
       QuerySnapshot query = await locationChatRef
-          .where('chatTitle', isGreaterThanOrEqualTo: locationChatTitle)
-          .where('chatTitle', isLessThanOrEqualTo: '$locationChatTitle~')
+          .where('keywords', arrayContains: locationChatTitle.toLowerCase())
           .get();
       {
         if (query.docs.isNotEmpty) {

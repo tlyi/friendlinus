@@ -90,7 +90,7 @@ class _BuildTitle extends StatelessWidget {
                 (f) => f.maybeMap(
                     emptyString: (_) => 'Title cannot be empty',
                     exceedingLength: (_) =>
-                        'Title too long, maximum of 25 characters only',
+                        'Title too long, maximum of 50 characters only',
                     orElse: () => null),
                 (_) => null);
       },

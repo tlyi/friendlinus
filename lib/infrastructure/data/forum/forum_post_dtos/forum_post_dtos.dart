@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:friendlinus/domain/core/keyword_generator.dart';
 import 'package:friendlinus/domain/data/forum/forum_post/forum_post.dart';
 import 'package:friendlinus/domain/data/forum/value_objects.dart';
 
@@ -23,9 +24,13 @@ abstract class ForumPostDto implements _$ForumPostDto {
     required bool photoAdded,
     required bool pollAdded,
     required String timestamp,
+    required List<String> keywords,
   }) = _ForumPostDto;
 
   factory ForumPostDto.fromDomain(ForumPost forumPost) {
+    List<String> keywords =
+        generateKeywords(forumPost.title.getOrCrash().toLowerCase());
+    keywords.add(forumPost.tag.toLowerCase());
     return ForumPostDto(
       forumId: forumPost.forumId,
       title: forumPost.title.getOrCrash(),
@@ -39,6 +44,7 @@ abstract class ForumPostDto implements _$ForumPostDto {
       photoAdded: forumPost.photoAdded,
       pollAdded: forumPost.pollAdded,
       timestamp: DateTime.now().millisecondsSinceEpoch.toString(),
+      keywords: keywords,
     );
   }
 

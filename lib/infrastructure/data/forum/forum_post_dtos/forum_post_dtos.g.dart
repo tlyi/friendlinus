@@ -22,6 +22,8 @@ _$_ForumPostDto _$_$_ForumPostDtoFromJson(Map<String, dynamic> json) {
     photoAdded: json['photoAdded'] as bool,
     pollAdded: json['pollAdded'] as bool,
     timestamp: json['timestamp'] as String,
+    keywords:
+        (json['keywords'] as List<dynamic>).map((e) => e as String).toList(),
   );
 }
 
@@ -39,4 +41,5 @@ Map<String, dynamic> _$_$_ForumPostDtoToJson(_$_ForumPostDto instance) =>
       'photoAdded': instance.photoAdded,
       'pollAdded': instance.pollAdded,
       'timestamp': instance.timestamp,
+      'keywords': instance.keywords,
     };

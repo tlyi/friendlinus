@@ -64,14 +64,15 @@ class LocationConvoMessages extends StatelessWidget {
                     if (index == state.messages.length - 1 ||
                         getDate(message.timeSent) !=
                             getDate(state.messages[index + 1].timeSent))
-                      Bubble(
-                          color: constants.THEME_LIGHT_BLUE,
+                      Container(
+                          padding: const EdgeInsets.only(top: 5, bottom: 5),
                           child: Text(getDate(message.timeSent),
                               textAlign: TextAlign.center,
-                              style: const TextStyle(fontSize: 10.0))),
+                              style: const TextStyle(
+                                  fontSize: 12, color: Colors.black87))),
                     Container(
                       padding: const EdgeInsets.only(
-                          left: 14, right: 14, top: 10, bottom: 10),
+                          left: 14, right: 14, top: 5, bottom: 5),
                       child: Align(
                         alignment: isOtherSender
                             ? Alignment.topLeft

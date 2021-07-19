@@ -263,11 +263,13 @@ class _BuildModule extends StatelessWidget {
                 .read<ProfileFormBloc>()
                 .add(ProfileFormEvent.searchedModule(value));
 
-            return context
-                .read<ProfileFormBloc>()
-                .state
-                .moduleSuggestions
-                .getOrElse(() => []);
+            return Future.delayed(const Duration(milliseconds: 500), () {
+              return context
+                  .read<ProfileFormBloc>()
+                  .state
+                  .moduleSuggestions
+                  .getOrElse(() => []);
+            });
           },
           itemBuilder: (context, suggestion) {
             return ListTile(title: Text(suggestion.toString()));
