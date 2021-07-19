@@ -72,3 +72,21 @@ String getTimeExact(String timestamp) {
 
   return DateFormat('jm').format(dateTime);
 }
+
+String getTimeOrDate(String timestamp) {
+  final DateTime dateTime =
+      DateTime.fromMillisecondsSinceEpoch(int.parse(timestamp));
+
+  if (DateTime.now().year == dateTime.year &&
+      DateTime.now().month == dateTime.month &&
+      DateTime.now().day == dateTime.day) {
+    return DateFormat('jm').format(dateTime);
+  } //E.g 3.30pm (if same day)
+
+  else if (DateTime.now().year == dateTime.year) {
+    return DateFormat('d' '/' 'M').format(dateTime);
+  } //E.g 9/7 (if same year as current)
+
+  return DateFormat('d' '/' 'M' '/' 'y').format(dateTime);
+  //E.g 9/7/2020 (if different year)
+}
