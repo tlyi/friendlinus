@@ -340,24 +340,29 @@ class ChatRepository implements IChatRepository {
   Stream<Either<DataFailure, List<LocationChat>>> retrieveLocationChats(
       List<String> nearestChatIds) async* {
     final locationChatRef = await _firestore.locationChatsRef();
-    yield* locationChatRef
-        .where('chatId', whereIn: nearestChatIds)
-        .snapshots()
-        .map(
-          (snapshot) => right<DataFailure, List<LocationChat>>(
-            snapshot.docs
-                .map((doc) => LocationChatDto.fromFirestore(doc).toDomain())
-                .toList(),
-          ),
-        )
-        .handleError((e) {
-      if (e is FirebaseException && e.message!.contains('PERMISSION_DENIED')) {
-        return left(const DataFailure.insufficientPermission());
-      } else {
-        print(e);
-        return left(const DataFailure.unexpected());
-      }
-    });
+    if (nearestChatIds.isNotEmpty) {
+      yield* locationChatRef
+          .where('chatId', whereIn: nearestChatIds)
+          .snapshots()
+          .map(
+            (snapshot) => right<DataFailure, List<LocationChat>>(
+              snapshot.docs
+                  .map((doc) => LocationChatDto.fromFirestore(doc).toDomain())
+                  .toList(),
+            ),
+          )
+          .handleError((e) {
+        if (e is FirebaseException &&
+            e.message!.contains('PERMISSION_DENIED')) {
+          return left(const DataFailure.insufficientPermission());
+        } else {
+          print(e);
+          return left(const DataFailure.unexpected());
+        }
+      });
+    } else {
+      yield* Stream.value(right([]));
+    }
   }
 
   @override

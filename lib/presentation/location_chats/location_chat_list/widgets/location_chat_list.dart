@@ -53,11 +53,10 @@ class LocationChatList extends StatelessWidget {
                   unexpected: (_) =>
                       'Unexpected error in getting location. Check if location services are turned on or press the blue button to try again.',
                   insufficientPermission: (_) =>
-                      'Insufficient permission, please allow FriendliNUS access to location services in Settings.',
+                      'Insufficient location permission.',
                   permissionDeniedForever: (_) =>
-                      'Insufficient permission, please allow FriendliNUS access to location services in Settings.',
-                  serviceNotEnabled: (_) =>
-                      'No location service detected, please turn on your location so that FriendliNUS can connect you to the nearest chats available.'),
+                      'Insufficient location permission.',
+                  serviceNotEnabled: (_) => 'No location service detected.'),
             ).show(context);
           },
           orElse: () {});

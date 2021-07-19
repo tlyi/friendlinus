@@ -20,12 +20,11 @@ class Username extends ValueObject<String> {
   const Username._(this.value);
 }
 
-//course; TO DO: Validate against database of courses
 class Course extends ValueObject<String> {
   @override
   final Either<ValueFailure<String>, String> value;
 
-  static const maxLength = 30;
+  static const maxLength = 80;
 
   factory Course(String input) {
     return Course._(validateMaxStringLength(input, maxLength)

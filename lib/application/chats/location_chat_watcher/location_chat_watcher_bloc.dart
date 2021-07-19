@@ -75,8 +75,6 @@ class LocationChatWatcherBloc
         if (failure != null) {
           yield LocationChatWatcherState.loadLocationFailure(failure!);
         } else {
-          // print('latitude:' + newPosition!.latitude.toString());
-          // print('longitude:' + newPosition!.longitude.toString());
           add(LocationChatWatcherEvent.retrieveChatsFromNewLocationStarted(
               newPosition!));
         }

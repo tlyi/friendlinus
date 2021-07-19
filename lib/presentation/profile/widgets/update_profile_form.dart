@@ -204,7 +204,7 @@ class _BuildCourse extends StatelessWidget {
                 (f) => f.maybeMap(
                   emptyString: (_) => 'Please input your course of study',
                   exceedingLength: (_) =>
-                      'Course name is too long, maximum of 20 characters only',
+                      'Course name is too long, maximum of 80 characters only',
                   orElse: () => null,
                 ),
                 (_) => null,
@@ -244,10 +244,21 @@ class _BuildBio extends StatelessWidget {
   }
 }
 
-class _BuildModule extends StatelessWidget {
+class _BuildModule extends StatefulWidget {
   final Profile userProfile;
 
   const _BuildModule({Key? key, required this.userProfile}) : super(key: key);
+
+  @override
+  __BuildModuleState createState() => __BuildModuleState();
+}
+
+class __BuildModuleState extends State<_BuildModule> {
+  final textController = TextEditingController();
+
+  void clearText() {
+    textController.clear();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -257,6 +268,8 @@ class _BuildModule extends StatelessWidget {
       children: [
         Text('Select modules of interest'),
         TypeAheadField(
+          textFieldConfiguration:
+              TextFieldConfiguration(controller: textController),
           direction: AxisDirection.up,
           suggestionsCallback: (value) async {
             context
@@ -292,6 +305,7 @@ class _BuildModule extends StatelessWidget {
                   .show(context);
             } else {
               print("adding to list");
+              clearText();
               context
                   .read<ProfileFormBloc>()
                   .add(ProfileFormEvent.addedModule(value));
@@ -371,7 +385,7 @@ class _BuildSaveButton extends StatelessWidget {
                       const ProfileFormEvent.saved(),
                     );
               },
-              child: const Text("Save & Update Info")),
+              child: const Text("Save & Update Profile")),
         );
       },
     );

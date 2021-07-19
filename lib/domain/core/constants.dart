@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-String anonUserId = 'hf9ATYu6F5MEFZIQa5OK';
+String anonUserId = 'FBpgDK41f6TvCv5moedz';
 
 ///generates random number from 0 to 3 inclusive
 int generateRandomNumber() {

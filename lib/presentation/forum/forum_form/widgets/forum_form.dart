@@ -32,6 +32,16 @@ class ForumForm extends StatelessWidget {
             (f) => FlushbarHelper.createError(
                 message: 'Error uploading photo to database, try again'),
             (r) => null);
+        state.createPollFailureOrSuccessOption.fold(
+            () {},
+            (either) => either.fold((failure) {
+                  FlushbarHelper.createError(
+                      message: failure.map(
+                          unexpected: (_) => 'Unexpected error',
+                          insufficientPermission: (_) =>
+                              'Insufficient permission',
+                          unableToUpdate: (_) => 'Unable to update'));
+                }, (_) {}));
       },
       builder: (context, state) {
         bool photoAdded =
@@ -336,9 +346,16 @@ class _BuildSaveButton extends StatelessWidget {
                   .read<ForumFormBloc>()
                   .add(const ForumFormEvent.photoAdded());
             } else {
-              context
-                  .read<ForumFormBloc>()
-                  .add(const ForumFormEvent.createdPost());
+              if (context.read<ForumFormBloc>().state.forumPost.pollAdded &&
+                  context.read<ForumFormBloc>().state.poll.numOptions == 0) {
+                FlushbarHelper.createError(
+                        message: 'Poll options cannot be empty')
+                    .show(context);
+              } else {
+                context
+                    .read<ForumFormBloc>()
+                    .add(const ForumFormEvent.createdPost());
+              }
             }
           },
           child: const Text(
@@ -415,8 +432,8 @@ class _BuildAddImageButton extends StatelessWidget {
                                 child: const Text('Cancel')),
                             TextButton(
                                 onPressed: () {
-                                  pickPhoto();
                                   Navigator.pop(context);
+                                  pickPhoto();
                                 },
                                 child: const Text('OK'))
                           ],

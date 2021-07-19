@@ -46,11 +46,22 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       },
       verifiedCheckRequested: (e) async* {
         yield const AuthState.verifying();
-        final userVerified = await _authFacade.isUserVerified();
-        if (userVerified) {
-          yield const AuthState.verified();
+        final userOption = await _authFacade.getSignedInUser();
+        bool isAuthenticated = false;
+
+        userOption.fold(
+            () => isAuthenticated = false, (_) => isAuthenticated = true);
+
+        if (isAuthenticated) {
+          print("is authenticated and checking verification");
+          final userVerified = await _authFacade.isUserVerified();
+          if (userVerified) {
+            yield const AuthState.verified();
+          } else {
+            yield const AuthState.unverified();
+          }
         } else {
-          yield const AuthState.unverified();
+          yield const AuthState.unauthenticated();
         }
       },
       registeredCheckRequested: (e) async* {

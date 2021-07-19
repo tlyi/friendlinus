@@ -159,7 +159,7 @@ class ForumFormBloc extends Bloc<ForumFormEvent, ForumFormState> {
           if (state.forumPost.pollAdded) {
             bool arePollOptionsValid = state.poll.optionList
                 .map((pollOption) => pollOption.isValid())
-                .reduce((a, b) => a || b);
+                .reduce((a, b) => a & b);
             if (arePollOptionsValid) {
               pollFailureOrSuccess = await _forumRepository.createPoll(
                   state.poll.copyWith(creatorUuid: userId),
