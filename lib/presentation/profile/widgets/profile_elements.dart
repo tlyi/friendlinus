@@ -147,7 +147,7 @@ class ProfileHeader extends StatelessWidget {
 
             return IntrinsicHeight(
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   GestureDetector(
                     onTap: () async {
@@ -166,13 +166,16 @@ class ProfileHeader extends StatelessWidget {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(numFollowers),
+                        Text(numFollowers,
+                            style:
+                                const TextStyle(fontWeight: FontWeight.bold)),
                         const Text('Followers'),
                       ],
                     ),
                   ),
                   const VerticalDivider(
-                    thickness: 0.5,
+                    width: 60,
+                    thickness: 0.7,
                     color: Colors.grey,
                   ),
                   GestureDetector(
@@ -192,7 +195,9 @@ class ProfileHeader extends StatelessWidget {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(numFollowing),
+                        Text(numFollowing,
+                            style:
+                                const TextStyle(fontWeight: FontWeight.bold)),
                         const Text('Following'),
                       ],
                     ),
