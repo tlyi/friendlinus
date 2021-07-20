@@ -5,6 +5,7 @@ import 'package:friendlinus/application/chats/location_chat_form/location_chat_f
 import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:friendlinus/domain/core/constants.dart' as constants;
+import 'package:geolocator/geolocator.dart';
 
 class LocationChatForm extends StatelessWidget {
   const LocationChatForm({Key? key}) : super(key: key);
@@ -28,13 +29,31 @@ class LocationChatForm extends StatelessWidget {
                 }));
         state.failureOrCurrentLocation.fold(
           (failure) {
+            showDialog(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                      title: const Text('Location Error'),
+                      content: const Text(
+                          'Turn on permissions/location in settings so that FriendliNUS can set the location of this chat.'),
+                      actions: <Widget>[
+                        TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text('Close')),
+                        TextButton(
+                            onPressed: () async {
+                              await Geolocator.openLocationSettings();
+                              Navigator.pop(context);
+                            },
+                            child: const Text('Settings'))
+                      ],
+                    ));
             return FlushbarHelper.createError(
                 message: failure.map(
                     insufficientPermission: (_) => '',
                     permissionDeniedForever: (_) => '',
-                    serviceNotEnabled: (_) => 'Location service not enabled',
+                    serviceNotEnabled: (_) => 'No location service detected.',
                     unexpected: (_) =>
-                        'Unexpected error in getting location')).show(context);
+                        'Unexpected error in getting location.')).show(context);
           },
           (_) {},
         );
@@ -140,21 +159,68 @@ class _BuildIntroMessage extends StatelessWidget {
 class _BuildLocationButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 40,
-      margin: const EdgeInsets.only(top: 20.0),
-      child: ElevatedButton(
-          style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(constants.THEME_BLUE)),
-          onPressed: () {
-            context
-                .read<LocationChatFormBloc>()
-                .add(const LocationChatFormEvent.locationSet());
-          },
-          child: const Text(
-            "Get Location",
-            style: TextStyle(fontSize: 16),
-          )),
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Container(
+        height: 50,
+        width: 200,
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey),
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(12),
+              child: Text(
+                "Set Chat Location",
+                style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey[600],
+                    ),
+              ),
+            ),
+            Stack(
+              children: [
+                if (context
+                    .read<LocationChatFormBloc>()
+                    .state
+                    .isGettingLocation)
+                  const Positioned(
+                      left: 8,
+                      top: 8,
+                      child: SizedBox(
+                          height: 18,
+                          width: 18,
+                          child: CircularProgressIndicator())),
+                if (context
+                            .read<LocationChatFormBloc>()
+                            .state
+                            .locationChat
+                            .latitude !=
+                        0 &&
+                    !context
+                        .read<LocationChatFormBloc>()
+                        .state
+                        .isGettingLocation)
+                  const Positioned(
+                      left: 5,
+                      top: 5,
+                      child: Icon(Icons.check, color: Colors.grey)),
+                GestureDetector(
+                    onTap: () {
+                      context
+                          .read<LocationChatFormBloc>()
+                          .add(const LocationChatFormEvent.locationSet());
+                    },
+                    child:
+                        Icon(Icons.crop_square, size: 35, color: Colors.grey)),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

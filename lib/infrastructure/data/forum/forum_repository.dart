@@ -562,17 +562,20 @@ class ForumPostRepository implements IForumRepository {
       } else {
         yield* forumRef
             .where('isAnon', isEqualTo: true)
-            // .where('timestamp', isGreaterThanOrEqualTo: oneWeekAgo)
             .orderBy('likes', descending: descending)
             .snapshots()
             .map(
-              (snapshot) => right<DataFailure, List<ForumPost>>(
-                snapshot.docs
-                    .map((doc) => ForumPostDto.fromFirestore(doc).toDomain())
-                    .toList(),
-              ),
-            )
-            .handleError((e) {
+          (snapshot) {
+            List<ForumPost> forums = [];
+            for (final doc in snapshot.docs) {
+              final forumPost = ForumPostDto.fromFirestore(doc).toDomain();
+              if (isOneWeekAgo(forumPost.timestamp)) {
+                forums.add(forumPost);
+              }
+            }
+            return right<DataFailure, List<ForumPost>>(forums);
+          },
+        ).handleError((e) {
           if (e is FirebaseException &&
               e.message!.contains('PERMISSION_DENIED')) {
             return left(const DataFailure.insufficientPermission());

@@ -90,19 +90,24 @@ class _BuildForumList extends StatelessWidget {
                 return const Center(child: Text('No posts yet :('));
               } else {
                 return ListView.builder(
-                    padding: EdgeInsets.all(10),
+                    padding:
+                        const EdgeInsets.only(top: 15.0, left: 0, right: 0),
                     physics: const ScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: state.forums.length,
                     itemBuilder: (context, index) {
                       final forum = state.forums[index];
                       return Card(
+                        margin: EdgeInsets.only(
+                            bottom: 5, top: 5, left: 8, right: 8),
                         shape: RoundedRectangleBorder(
                           side: const BorderSide(
                               color: constants.THEME_BLUE, width: 2.0),
                           borderRadius: BorderRadius.circular(15.0),
                         ),
                         child: ListTile(
+                          contentPadding: EdgeInsets.only(
+                              left: 15, right: 15, top: 10, bottom: 10),
                           //isThreeLine: true,
                           leading: Column(
                             //DO NOT ADJUST SPACING :')

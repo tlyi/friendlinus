@@ -57,7 +57,8 @@ class Feed extends StatelessWidget {
                     }
                   },
                   child: ListView.builder(
-                      padding: EdgeInsets.all(10),
+                      padding:
+                          const EdgeInsets.only(top: 15.0, left: 0, right: 0),
                       physics: const AlwaysScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: state.forums.length,
@@ -66,12 +67,16 @@ class Feed extends StatelessWidget {
                         bool isLiked = forum.likedUserIds.contains(userId);
                         int likes = forum.likes;
                         return Card(
+                          margin: EdgeInsets.only(
+                              bottom: 5, top: 5, left: 8, right: 8),
                           shape: RoundedRectangleBorder(
                             side: const BorderSide(
                                 color: constants.THEME_BLUE, width: 2.0),
                             borderRadius: BorderRadius.circular(15.0),
                           ),
                           child: ListTile(
+                            contentPadding: EdgeInsets.only(
+                                left: 15, right: 15, top: 10, bottom: 10),
                             leading: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
@@ -194,7 +199,7 @@ class Feed extends StatelessWidget {
             },
             loadLike: (state) {
               return ListView.builder(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.only(top: 15.0, left: 0, right: 0),
                   physics: const ScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: state.forums.length,
@@ -203,12 +208,16 @@ class Feed extends StatelessWidget {
                     bool isLiked = forum.likedUserIds.contains(userId);
                     int likes = forum.likes;
                     return Card(
+                      margin:
+                          EdgeInsets.only(bottom: 5, top: 5, left: 8, right: 8),
                       shape: RoundedRectangleBorder(
                         side: const BorderSide(
                             color: constants.THEME_BLUE, width: 2.0),
                         borderRadius: BorderRadius.circular(15.0),
                       ),
                       child: ListTile(
+                        contentPadding: EdgeInsets.only(
+                            left: 15, right: 15, top: 10, bottom: 10),
                         leading: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
