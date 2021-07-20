@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:friendlinus/application/auth/auth_bloc.dart';
-import 'package:friendlinus/application/feed/feed_bloc.dart';
+import 'package:friendlinus/application/feed/friend_feed/friend_feed_bloc.dart';
+import 'package:friendlinus/application/feed/module_feed/module_feed_bloc.dart';
 
 import 'package:friendlinus/application/forum/forum_actor/forum_actor_bloc.dart';
-import 'package:friendlinus/application/forum/module_watcher/module_watcher_bloc.dart';
 import 'package:friendlinus/injection.dart';
 import 'package:friendlinus/presentation/core/app_bar.dart';
 import 'package:friendlinus/presentation/core/nav_bar.dart';
-import 'package:friendlinus/presentation/home/widgets/feed.dart';
+import 'package:friendlinus/presentation/home/widgets/friend_feed.dart';
+import 'package:friendlinus/presentation/home/widgets/module_feed.dart';
 
 import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:friendlinus/domain/core/constants.dart' as constants;
@@ -28,7 +29,11 @@ class HomePage extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) =>
-              getIt<FeedBloc>()..add(const FeedEvent.refreshModuleFeed()),
+              getIt<ModuleFeedBloc>()..add(const ModuleFeedEvent.refreshFeed()),
+        ),
+        BlocProvider(
+          create: (context) =>
+              getIt<FriendFeedBloc>()..add(const FriendFeedEvent.refreshFeed()),
         )
       ],
       child: Scaffold(
@@ -63,10 +68,10 @@ class _HomeFeedViewState extends State<HomeFeedView>
       });
 
       if (_tabController.index == 0) {
-        context.read<FeedBloc>().add(const FeedEvent.refreshModuleFeed());
+        context.read<ModuleFeedBloc>().add(const ModuleFeedEvent.refreshFeed());
       }
       if (_tabController.index == 1) {
-        context.read<FeedBloc>().add(const FeedEvent.refreshFriendFeed());
+        context.read<FriendFeedBloc>().add(const FriendFeedEvent.refreshFeed());
       }
     });
   }
@@ -96,13 +101,9 @@ class _HomeFeedViewState extends State<HomeFeedView>
             controller: _tabController,
             children: const [
               ClipRRect(
-                  child: Feed(
-                feedType: "module",
-              )),
+                  child: ModuleFeed()),
               ClipRRect(
-                  child: Feed(
-                feedType: "friend",
-              )),
+                  child: FriendFeed()),
             ],
           ),
         ),

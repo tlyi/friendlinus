@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:friendlinus/application/feed/feed_bloc.dart';
+import 'package:friendlinus/application/feed/friend_feed/friend_feed_bloc.dart';
 
 import 'package:friendlinus/application/forum/forum_actor/forum_actor_bloc.dart';
 import 'package:friendlinus/domain/core/constants.dart' as constants;
@@ -12,12 +12,11 @@ import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:tap_debouncer/tap_debouncer.dart';
 import 'package:auto_route/auto_route.dart';
 
-class Feed extends StatelessWidget {
-  final String feedType; //module/friend
-  const Feed({Key? key, required this.feedType}) : super(key: key);
+class FriendFeed extends StatelessWidget {
+  const FriendFeed({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<FeedBloc, FeedState>(
+    return BlocConsumer<FriendFeedBloc, FriendFeedState>(
       listener: (context, state) {
         state.maybeMap(
             loadFailure: (state) => FlushbarHelper.createError(
@@ -40,21 +39,13 @@ class Feed extends StatelessWidget {
               if (state.forums.length == 0) {
                 return Center(
                     child:
-                        Text('No forums to view. Follow more ${feedType}s!'));
+                        Text('No forums to view. Follow more friends!'));
               } else {
                 return RefreshIndicator(
                   onRefresh: () async {
-                    if (feedType == "module") {
-                      context
-                          .read<FeedBloc>()
-                          .add(const FeedEvent.refreshModuleFeed());
-                    } else {
-                      if (feedType == "friend") {
-                        context
-                            .read<FeedBloc>()
-                            .add(const FeedEvent.refreshFriendFeed());
-                      }
-                    }
+                    context
+                        .read<FriendFeedBloc>()
+                        .add(const FriendFeedEvent.refreshFeed());
                   },
                   child: ListView.builder(
                       padding:
@@ -85,8 +76,8 @@ class Feed extends StatelessWidget {
                                     onTap: () async {
                                       if (isLiked) {
                                         likes--;
-                                        context.read<FeedBloc>().add(
-                                            FeedEvent.unliked(
+                                        context.read<FriendFeedBloc>().add(
+                                            FriendFeedEvent.unliked(
                                                 state.forums, index, userId));
                                         context.read<ForumActorBloc>().add(
                                             ForumActorEvent.forumUnliked(
@@ -95,8 +86,8 @@ class Feed extends StatelessWidget {
                                       } else {
                                         likes++;
                                         isLiked = true;
-                                        context.read<FeedBloc>().add(
-                                            FeedEvent.liked(
+                                        context.read<FriendFeedBloc>().add(
+                                            FriendFeedEvent.liked(
                                                 state.forums, index, userId));
                                         context.read<ForumActorBloc>().add(
                                             ForumActorEvent.forumLiked(forum));
@@ -176,17 +167,9 @@ class Feed extends StatelessWidget {
                               await context.pushRoute(ForumRoute(
                                   forumId: forum.forumId,
                                   pollAdded: forum.pollAdded));
-                              if (feedType == "module") {
-                                context
-                                    .read<FeedBloc>()
-                                    .add(const FeedEvent.refreshModuleFeed());
-                              } else {
-                                if (feedType == "friend") {
-                                  context
-                                      .read<FeedBloc>()
-                                      .add(const FeedEvent.refreshFriendFeed());
-                                }
-                              }
+                              context
+                                  .read<FriendFeedBloc>()
+                                  .add(const FriendFeedEvent.refreshFeed());
                             },
                           ),
                         );
@@ -226,8 +209,8 @@ class Feed extends StatelessWidget {
                                 onTap: () async {
                                   if (isLiked) {
                                     likes--;
-                                    context.read<FeedBloc>().add(
-                                        FeedEvent.unliked(
+                                    context.read<FriendFeedBloc>().add(
+                                        FriendFeedEvent.unliked(
                                             state.forums, index, userId));
                                     context.read<ForumActorBloc>().add(
                                         ForumActorEvent.forumUnliked(
@@ -236,8 +219,8 @@ class Feed extends StatelessWidget {
                                   } else {
                                     likes++;
                                     isLiked = true;
-                                    context.read<FeedBloc>().add(
-                                        FeedEvent.liked(
+                                    context.read<FriendFeedBloc>().add(
+                                        FriendFeedEvent.liked(
                                             state.forums, index, userId));
                                     context
                                         .read<ForumActorBloc>()
@@ -318,17 +301,11 @@ class Feed extends StatelessWidget {
                           await context.pushRoute(ForumRoute(
                               forumId: forum.forumId,
                               pollAdded: forum.pollAdded));
-                          if (feedType == "module") {
+                          
                             context
-                                .read<FeedBloc>()
-                                .add(const FeedEvent.refreshModuleFeed());
-                          } else {
-                            if (feedType == "friend") {
-                              context
-                                  .read<FeedBloc>()
-                                  .add(const FeedEvent.refreshFriendFeed());
-                            }
-                          }
+                                .read<FriendFeedBloc>()
+                                .add(const FriendFeedEvent.refreshFeed());
+                          
                         },
                       ),
                     );
