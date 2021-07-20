@@ -41,7 +41,8 @@ class UpdateProfileForm extends StatelessWidget {
           context
               .read<ProfileFormBloc>()
               .add(const ProfileFormEvent.getProfile());
-          return const Center(child: CircularProgressIndicator());
+          return const Center(
+              heightFactor: 18, child: CircularProgressIndicator());
         } else {
           Profile userProfile = context
               .read<ProfileFormBloc>()
@@ -194,6 +195,7 @@ class _BuildCourse extends StatelessWidget {
         labelText: 'Course',
       ),
       autocorrect: false,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       onChanged: (value) {
         context
             .read<ProfileFormBloc>()
@@ -232,6 +234,7 @@ class _BuildBio extends StatelessWidget {
       onChanged: (value) {
         context.read<ProfileFormBloc>().add(ProfileFormEvent.bioChanged(value));
       },
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: (_) =>
           context.read<ProfileFormBloc>().state.profile.bio.value.fold(
                 (f) => f.maybeMap(

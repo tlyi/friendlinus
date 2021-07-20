@@ -7,8 +7,8 @@
 import 'package:auto_route/auto_route.dart' as _i1;
 import 'package:flutter/material.dart' as _i2;
 import 'package:friendlinus/domain/data/forum/forum_post/forum_post.dart'
-    as _i27;
-import 'package:friendlinus/domain/data/profile/profile.dart' as _i26;
+    as _i28;
+import 'package:friendlinus/domain/data/profile/profile.dart' as _i27;
 import 'package:friendlinus/presentation/chats/chat_list/chat_list_page.dart'
     as _i15;
 import 'package:friendlinus/presentation/chats/convos/convo_page.dart' as _i16;
@@ -32,6 +32,8 @@ import 'package:friendlinus/presentation/location_chats/location_convos/location
     as _i24;
 import 'package:friendlinus/presentation/notifications/notification_page.dart'
     as _i19;
+import 'package:friendlinus/presentation/profile/followers_and_following_page.dart'
+    as _i26;
 import 'package:friendlinus/presentation/profile/other_profile_page.dart'
     as _i13;
 import 'package:friendlinus/presentation/profile/profile_page.dart' as _i10;
@@ -182,6 +184,16 @@ class AppRouter extends _i1.RootStackRouter {
           final args = data.argsAs<FullScreenPhotoRouteArgs>();
           return _i25.FullScreenPhotoPage(
               key: args.key, photoUrl: args.photoUrl, tag: args.tag);
+        }),
+    FollowersandFollowingRoute.name: (routeData) => _i1.AdaptivePage<dynamic>(
+        routeData: routeData,
+        builder: (data) {
+          final args = data.argsAs<FollowersandFollowingRouteArgs>();
+          return _i26.FollowersandFollowingPage(
+              key: args.key,
+              userProfile: args.userProfile,
+              isOwnProfile: args.isOwnProfile,
+              isFollowers: args.isFollowers);
         })
   };
 
@@ -212,7 +224,9 @@ class AppRouter extends _i1.RootStackRouter {
         _i1.RouteConfig(LocationChatRoute.name, path: '/location-chat-page'),
         _i1.RouteConfig(LocationConvoRoute.name, path: '/location-convo-page'),
         _i1.RouteConfig(FullScreenPhotoRoute.name,
-            path: '/full-screen-photo-page')
+            path: '/full-screen-photo-page'),
+        _i1.RouteConfig(FollowersandFollowingRoute.name,
+            path: '/followersand-following-page')
       ];
 }
 
@@ -299,7 +313,7 @@ class UpdateProfileRoute extends _i1.PageRouteInfo {
 }
 
 class OtherProfileRoute extends _i1.PageRouteInfo<OtherProfileRouteArgs> {
-  OtherProfileRoute({_i2.Key? key, required _i26.Profile userProfile})
+  OtherProfileRoute({_i2.Key? key, required _i27.Profile userProfile})
       : super(name,
             path: '/other-profile-page',
             args: OtherProfileRouteArgs(key: key, userProfile: userProfile));
@@ -312,7 +326,7 @@ class OtherProfileRouteArgs {
 
   final _i2.Key? key;
 
-  final _i26.Profile userProfile;
+  final _i27.Profile userProfile;
 }
 
 class ForumFormRoute extends _i1.PageRouteInfo {
@@ -328,7 +342,7 @@ class ChatListRoute extends _i1.PageRouteInfo {
 }
 
 class ConvoRoute extends _i1.PageRouteInfo<ConvoRouteArgs> {
-  ConvoRoute({_i2.Key? key, required _i26.Profile otherProfile})
+  ConvoRoute({_i2.Key? key, required _i27.Profile otherProfile})
       : super(name,
             path: '/convo-page',
             args: ConvoRouteArgs(key: key, otherProfile: otherProfile));
@@ -341,7 +355,7 @@ class ConvoRouteArgs {
 
   final _i2.Key? key;
 
-  final _i26.Profile otherProfile;
+  final _i27.Profile otherProfile;
 }
 
 class ForumRoute extends _i1.PageRouteInfo<ForumRouteArgs> {
@@ -366,7 +380,7 @@ class ForumRouteArgs {
 }
 
 class CommentRoute extends _i1.PageRouteInfo<CommentRouteArgs> {
-  CommentRoute({_i2.Key? key, required _i27.ForumPost forum})
+  CommentRoute({_i2.Key? key, required _i28.ForumPost forum})
       : super(name,
             path: '/comment-page',
             args: CommentRouteArgs(key: key, forum: forum));
@@ -379,7 +393,7 @@ class CommentRouteArgs {
 
   final _i2.Key? key;
 
-  final _i27.ForumPost forum;
+  final _i28.ForumPost forum;
 }
 
 class NotificationRoute extends _i1.PageRouteInfo {
@@ -465,4 +479,38 @@ class FullScreenPhotoRouteArgs {
   final String photoUrl;
 
   final String tag;
+}
+
+class FollowersandFollowingRoute
+    extends _i1.PageRouteInfo<FollowersandFollowingRouteArgs> {
+  FollowersandFollowingRoute(
+      {_i2.Key? key,
+      required _i27.Profile userProfile,
+      required bool isOwnProfile,
+      required bool isFollowers})
+      : super(name,
+            path: '/followersand-following-page',
+            args: FollowersandFollowingRouteArgs(
+                key: key,
+                userProfile: userProfile,
+                isOwnProfile: isOwnProfile,
+                isFollowers: isFollowers));
+
+  static const String name = 'FollowersandFollowingRoute';
+}
+
+class FollowersandFollowingRouteArgs {
+  const FollowersandFollowingRouteArgs(
+      {this.key,
+      required this.userProfile,
+      required this.isOwnProfile,
+      required this.isFollowers});
+
+  final _i2.Key? key;
+
+  final _i27.Profile userProfile;
+
+  final bool isOwnProfile;
+
+  final bool isFollowers;
 }

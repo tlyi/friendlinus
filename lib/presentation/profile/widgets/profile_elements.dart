@@ -41,14 +41,14 @@ class ProfileElements extends StatelessWidget {
           ),
           child: Column(
             children: <Widget>[
-              ProfileHeader(
-                  userProfile: userProfile, isOwnProfile: isOwnProfile),
+              Padding(
+                padding: const EdgeInsets.only(top: 30, bottom: 30),
+                child: ProfileHeader(
+                    userProfile: userProfile, isOwnProfile: isOwnProfile),
+              ),
               ModulesOfInterest(
                   userProfile: userProfile, isOwnProfile: isOwnProfile),
-              FollowersList(
-                  userProfile: userProfile, isOwnProfile: isOwnProfile),
-              FollowingList(
-                  userProfile: userProfile, isOwnProfile: isOwnProfile),
+              const SizedBox(height: 10),
               RecentPosts(userProfile: userProfile, isOwnProfile: isOwnProfile),
             ],
           ),
@@ -70,82 +70,139 @@ class ProfileHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * 0.3,
-      padding: EdgeInsets.only(top: 30),
-      alignment: Alignment.topLeft,
-      child: Row(
-        children: <Widget>[
-          Container(
-            width: MediaQuery.of(context).size.width * 0.45,
-            // color: Colors.red,
-            alignment: Alignment.topLeft,
-            child: Column(
-              // crossAxisAlignment: CrossAxisAlignment.start,
-              //  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                GestureDetector(
-                  onTap: () => context.pushRoute(FullScreenPhotoRoute(
-                      photoUrl: userProfile.photoUrl, tag: "profilePhoto")),
-                  child: Container(
-                    alignment: Alignment.center,
-                    width: MediaQuery.of(context).size.height * 0.15,
-                    height: MediaQuery.of(context).size.height * 0.15,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle, color: Colors.white),
-                    child: ClipOval(
-                      child: Hero(
-                        tag: "profilePhoto",
-                        child: CachedNetworkImage(
-                            fit: BoxFit.cover,
-                            height: MediaQuery.of(context).size.height * 0.15,
-                            width: MediaQuery.of(context).size.height * 0.15,
-                            imageUrl: userProfile.photoUrl,
-                            placeholder: (context, url) =>
-                                Center(child: CircularProgressIndicator())),
-                      ),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        GestureDetector(
+          onTap: () => context.pushRoute(FullScreenPhotoRoute(
+              photoUrl: userProfile.photoUrl, tag: "profilePhoto")),
+          child: Container(
+            alignment: Alignment.center,
+            width: 120,
+            height: 120,
+            decoration:
+                BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+            child: ClipOval(
+              child: Hero(
+                tag: "profilePhoto",
+                child: CachedNetworkImage(
+                    fit: BoxFit.cover,
+                    height: 120,
+                    width: 120,
+                    imageUrl: userProfile.photoUrl,
+                    placeholder: (context, url) =>
+                        Center(child: CircularProgressIndicator())),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 5),
+        Text(
+          userProfile.username.getOrCrash(),
+          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 5),
+        Text(
+          userProfile.course.getOrCrash().toLowerCase(),
+          style: const TextStyle(fontSize: 15, fontStyle: FontStyle.italic),
+        ),
+        const SizedBox(height: 10),
+        Flexible(
+            child: Text(
+          userProfile.bio.getOrCrash(),
+          style: const TextStyle(fontSize: 15),
+          textAlign: TextAlign.center,
+        )),
+        const SizedBox(height: 10),
+        if (isOwnProfile)
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            UpdateProfileButton(userProfile: userProfile),
+            const Padding(padding: EdgeInsets.only(left: 5)),
+            SearchUsersButton(userProfile: userProfile),
+          ])
+        else
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              MessageProfileButton(userProfile: userProfile),
+              const Padding(padding: EdgeInsets.only(left: 5)),
+              FollowProfileButton(userProfile: userProfile),
+            ],
+          ),
+        const SizedBox(height: 10),
+        BlocBuilder<ProfileActorBloc, ProfileActorState>(
+          builder: (context, state) {
+            String numFollowers = 'Error';
+            String numFollowing = 'Error';
+
+            context.read<ProfileActorBloc>().state.failureOrFollowers.fold(
+                  (f) => numFollowers = 'Error',
+                  (list) => numFollowers = list.length.toString(),
+                );
+
+            context.read<ProfileActorBloc>().state.failureOrFollowing.fold(
+                  (f) => numFollowing = 'Error',
+                  (list) => numFollowing = list.length.toString(),
+                );
+
+            return IntrinsicHeight(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  GestureDetector(
+                    onTap: () async {
+                      await context.pushRoute(FollowersandFollowingRoute(
+                          userProfile: userProfile,
+                          isOwnProfile: isOwnProfile,
+                          isFollowers: true));
+                      isOwnProfile
+                          ? context
+                              .read<ProfileActorBloc>()
+                              .add(const ProfileActorEvent.loadingOwnProfile())
+                          : context.read<ProfileActorBloc>().add(
+                              ProfileActorEvent.loadingOtherProfile(
+                                  userProfile.uuid));
+                    },
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(numFollowers),
+                        const Text('Followers'),
+                      ],
                     ),
                   ),
-                ),
-                if (isOwnProfile)
-                  UpdateProfileButton(userProfile: userProfile)
-                else
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      MessageProfileButton(userProfile: userProfile),
-                      const Padding(padding: EdgeInsets.only(left: 5)),
-                      FollowProfileButton(userProfile: userProfile),
-                    ],
-                  )
-              ],
-            ),
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  userProfile.username.getOrCrash(),
-                  style: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  userProfile.course.getOrCrash().toLowerCase(),
-                  style: const TextStyle(
-                      fontSize: 15, fontStyle: FontStyle.italic),
-                ),
-                const SizedBox(height: 10),
-                Flexible(
-                    child: Text(userProfile.bio.getOrCrash(),
-                        style: const TextStyle(fontSize: 15))),
-              ],
-            ),
-          ),
-        ],
-      ),
+                  const VerticalDivider(
+                    thickness: 0.5,
+                    color: Colors.grey,
+                  ),
+                  GestureDetector(
+                    onTap: () async {
+                      await context.pushRoute(FollowersandFollowingRoute(
+                          userProfile: userProfile,
+                          isOwnProfile: isOwnProfile,
+                          isFollowers: false));
+                      isOwnProfile
+                          ? context
+                              .read<ProfileActorBloc>()
+                              .add(const ProfileActorEvent.loadingOwnProfile())
+                          : context.read<ProfileActorBloc>().add(
+                              ProfileActorEvent.loadingOtherProfile(
+                                  userProfile.uuid));
+                    },
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(numFollowing),
+                        const Text('Following'),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      ],
     );
   }
 }
@@ -176,6 +233,41 @@ class UpdateProfileButton extends StatelessWidget {
         context.pushRoute(const UpdateProfileRoute());
       },
       child: const Text('Update Profile',
+          style: TextStyle(color: constants.THEME_BLUE)),
+    );
+  }
+}
+
+class SearchUsersButton extends StatelessWidget {
+  final Profile userProfile;
+
+  const SearchUsersButton({Key? key, required this.userProfile})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    String ownId = context.read<ProfileActorBloc>().state.ownId;
+    return TextButton(
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+        padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.only(
+          left: 15,
+          right: 15,
+        )),
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+            side: const BorderSide(color: constants.THEME_BLUE),
+          ),
+        ),
+      ),
+      onPressed: () async {
+        await context.pushRoute(SearchUsersRoute(ownId: ownId));
+        context
+            .read<ProfileActorBloc>()
+            .add(const ProfileActorEvent.loadingOwnProfile());
+      },
+      child: const Text('Find Friends',
           style: TextStyle(color: constants.THEME_BLUE)),
     );
   }
@@ -274,293 +366,37 @@ class ModulesOfInterest extends StatelessWidget {
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
           if (userProfile.modules.isEmpty)
             const Padding(
-                padding: EdgeInsets.only(top: 10.0, bottom: 15.0),
+                padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
                 child: Text('No modules indicated yet :('))
           else
             Align(
               alignment: Alignment.topLeft,
-              child: Wrap(
-                  alignment: WrapAlignment.start,
-                  spacing: 6.0,
-                  runSpacing: -5,
-                  children: List<Widget>.generate(userProfile.modules.length,
-                      (int index) {
-                    final module = userProfile.modules[index];
-                    return ActionChip(
-                        onPressed: () async {
-                          await context
-                              .pushRoute(ModuleForumRoute(moduleCode: module));
-                          isOwnProfile
-                              ? context.read<ProfileActorBloc>().add(
-                                  const ProfileActorEvent.loadingOwnProfile())
-                              : context.read<ProfileActorBloc>().add(
-                                  ProfileActorEvent.loadingOtherProfile(
-                                      userProfile.uuid));
-                        },
-                        label: Text(module));
-                  })),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 5.0),
+                child: Wrap(
+                    alignment: WrapAlignment.start,
+                    spacing: 6.0,
+                    runSpacing: -5,
+                    children: List<Widget>.generate(userProfile.modules.length,
+                        (int index) {
+                      final module = userProfile.modules[index];
+                      return ActionChip(
+                          onPressed: () async {
+                            await context.pushRoute(
+                                ModuleForumRoute(moduleCode: module));
+                            isOwnProfile
+                                ? context.read<ProfileActorBloc>().add(
+                                    const ProfileActorEvent.loadingOwnProfile())
+                                : context.read<ProfileActorBloc>().add(
+                                    ProfileActorEvent.loadingOtherProfile(
+                                        userProfile.uuid));
+                          },
+                          label: Text(module));
+                    })),
+              ),
             )
         ],
       ),
-    );
-  }
-}
-
-class FollowersList extends StatelessWidget {
-  final Profile userProfile;
-  final bool isOwnProfile;
-
-  const FollowersList(
-      {Key? key, required this.userProfile, required this.isOwnProfile})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<ProfileActorBloc, ProfileActorState>(
-      builder: (context, state) {
-        String ownId = context.read<ProfileActorBloc>().state.ownId;
-        List<Profile> followers = [];
-        DataFailure? failure;
-        context.read<ProfileActorBloc>().state.failureOrFollowers.fold(
-              (f) => failure = f,
-              (list) => followers = list,
-            );
-
-        return Align(
-          alignment: Alignment.topLeft,
-          child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text('Followers',
-                    style:
-                        TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-                if (failure != null)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10.0, bottom: 15.0),
-                    child: Text(failure!.maybeMap(
-                        unexpected: (_) => 'Unexpected Error',
-                        orElse: () => '')),
-                  )
-                else if (followers.isEmpty)
-                  const Padding(
-                    padding: EdgeInsets.only(top: 10.0, bottom: 15.0),
-                    child: Text('No followers yet :('),
-                  )
-                else
-                  SizedBox(
-                    height: 120,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                child: ListView.builder(
-                                    shrinkWrap: true,
-                                    physics: const ScrollPhysics(),
-                                    padding: const EdgeInsets.only(top: 15.0),
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: followers.length,
-                                    itemBuilder: (context, index) {
-                                      final Profile profile = followers[index];
-                                      return GestureDetector(
-                                        onTap: () async {
-                                          ownId == profile.uuid
-                                              ? await context.pushRoute(
-                                                  ProfileRoute(canGoBack: true))
-                                              : await context.pushRoute(
-                                                  OtherProfileRoute(
-                                                      userProfile: profile));
-                                          isOwnProfile
-                                              ? context
-                                                  .read<ProfileActorBloc>()
-                                                  .add(const ProfileActorEvent
-                                                      .loadingOwnProfile())
-                                              : context
-                                                  .read<ProfileActorBloc>()
-                                                  .add(ProfileActorEvent
-                                                      .loadingOtherProfile(
-                                                          userProfile.uuid));
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 5.0, right: 5.0),
-                                          child: Column(children: [
-                                            ClipOval(
-                                              child: CachedNetworkImage(
-                                                imageUrl: profile.photoUrl,
-                                                width: 60.0,
-                                                height: 60.0,
-                                                fit: BoxFit.cover,
-                                                placeholder: (context, url) =>
-                                                    const Center(
-                                                        child:
-                                                            CircularProgressIndicator()),
-                                              ),
-                                            ),
-                                            Text(profile.username.getOrCrash()),
-                                          ]),
-                                        ),
-                                      );
-                                    }),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-              ]),
-        );
-      },
-    );
-  }
-}
-
-class FollowingList extends StatelessWidget {
-  final Profile userProfile;
-  final bool isOwnProfile;
-
-  const FollowingList(
-      {Key? key, required this.userProfile, required this.isOwnProfile})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<ProfileActorBloc, ProfileActorState>(
-      builder: (context, state) {
-        String ownId = context.read<ProfileActorBloc>().state.ownId;
-        List<Profile> following = [];
-        DataFailure? failure;
-        context.read<ProfileActorBloc>().state.failureOrFollowing.fold(
-              (f) => failure = f,
-              (list) => following = list,
-            );
-        return Align(
-          alignment: Alignment.topLeft,
-          child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text('Following',
-                    style:
-                        TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-                if (failure != null)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10.0, bottom: 15.0),
-                    child: Text(failure!.maybeMap(
-                        unexpected: (_) => 'Unexpected Error',
-                        orElse: () => '')),
-                  )
-                else if (!isOwnProfile && following.isEmpty)
-                  const Padding(
-                    padding: EdgeInsets.only(top: 10.0, bottom: 15.0),
-                    child: Text('Not following anyone yet :('),
-                  )
-                else
-                  SizedBox(
-                    height: 120,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        if (isOwnProfile)
-                          Padding(
-                            padding: EdgeInsets.only(top: 25, right: 10),
-                            child: GestureDetector(
-                              onTap: () async {
-                                await context
-                                    .pushRoute(SearchUsersRoute(ownId: ownId));
-                                context.read<ProfileActorBloc>().add(
-                                    const ProfileActorEvent
-                                        .loadingOwnProfile());
-                              },
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: Container(
-                                  padding: EdgeInsets.only(),
-                                  height: 40,
-                                  width: 40,
-                                  child: Icon(Icons.person_add_rounded),
-                                  color: Colors.grey[400],
-                                ),
-                              ),
-                            ),
-                          ),
-                        if (following.isEmpty)
-                          const Padding(
-                            padding: EdgeInsets.only(top: 35.0),
-                            child: Text('Not following anyone yet :('),
-                          )
-                        else
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  child: ListView.builder(
-                                      shrinkWrap: true,
-                                      physics: const ScrollPhysics(),
-                                      padding: const EdgeInsets.only(top: 15.0),
-                                      scrollDirection: Axis.horizontal,
-                                      itemCount: following.length,
-                                      itemBuilder: (context, index) {
-                                        final Profile profile =
-                                            following[index];
-                                        return GestureDetector(
-                                          onTap: () async {
-                                            ownId == profile.uuid
-                                                ? await context.pushRoute(
-                                                    ProfileRoute(
-                                                        canGoBack: true))
-                                                : await context.pushRoute(
-                                                    OtherProfileRoute(
-                                                        userProfile: profile));
-                                            isOwnProfile
-                                                ? context
-                                                    .read<ProfileActorBloc>()
-                                                    .add(const ProfileActorEvent
-                                                        .loadingOwnProfile())
-                                                : context
-                                                    .read<ProfileActorBloc>()
-                                                    .add(ProfileActorEvent
-                                                        .loadingOtherProfile(
-                                                            userProfile.uuid));
-                                          },
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 5.0, right: 5.0),
-                                            child: Column(children: [
-                                              ClipOval(
-                                                child: CachedNetworkImage(
-                                                  imageUrl: profile.photoUrl,
-                                                  placeholder: (context, url) =>
-                                                      Center(
-                                                          child:
-                                                              CircularProgressIndicator()),
-                                                  width: 60.0,
-                                                  height: 60.0,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                              Text(profile.username
-                                                  .getOrCrash()),
-                                            ]),
-                                          ),
-                                        );
-                                      }),
-                                ),
-                              ],
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
-              ]),
-        );
-      },
     );
   }
 }
@@ -601,9 +437,9 @@ class RecentPosts extends StatelessWidget {
             )
           else
             ListView.builder(
-                physics: const AlwaysScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                padding: EdgeInsets.only(top: 15.0, left: 0, right: 0),
+                padding: EdgeInsets.only(top: 13.0, left: 0, right: 0),
                 itemCount: forums.length,
                 itemBuilder: (context, index) {
                   final forum = forums[index];
@@ -615,9 +451,10 @@ class RecentPosts extends StatelessWidget {
                               color: Color(0xFF7BA5BB), width: 2.0),
                           borderRadius: BorderRadius.circular(15.0),
                         ),
-                        margin: EdgeInsets.only(bottom: 5, top: 5),
+                        margin: EdgeInsets.only(bottom: 10),
                         child: ListTile(
-                          contentPadding: EdgeInsets.all(15),
+                          contentPadding: EdgeInsets.only(
+                              left: 15, right: 15, top: 10, bottom: 10),
                           title: Text(forum.title.getOrCrash()),
                           subtitle: Text(
                             forum.body.getOrCrash(),

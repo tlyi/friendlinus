@@ -39,6 +39,10 @@ class _$FriendFeedEventTearOff {
       userId,
     );
   }
+
+  _WipedOutFeed wipedOutFeed() {
+    return const _WipedOutFeed();
+  }
 }
 
 /// @nodoc
@@ -54,6 +58,7 @@ mixin _$FriendFeedEvent {
         liked,
     required TResult Function(List<ForumPost> forums, int index, String userId)
         unliked,
+    required TResult Function() wipedOutFeed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -62,6 +67,7 @@ mixin _$FriendFeedEvent {
     TResult Function()? refreshFeed,
     TResult Function(List<ForumPost> forums, int index, String userId)? liked,
     TResult Function(List<ForumPost> forums, int index, String userId)? unliked,
+    TResult Function()? wipedOutFeed,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -71,6 +77,7 @@ mixin _$FriendFeedEvent {
     required TResult Function(_RefreshFeed value) refreshFeed,
     required TResult Function(_Liked value) liked,
     required TResult Function(_Unliked value) unliked,
+    required TResult Function(_WipedOutFeed value) wipedOutFeed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -79,6 +86,7 @@ mixin _$FriendFeedEvent {
     TResult Function(_RefreshFeed value)? refreshFeed,
     TResult Function(_Liked value)? liked,
     TResult Function(_Unliked value)? unliked,
+    TResult Function(_WipedOutFeed value)? wipedOutFeed,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -144,6 +152,7 @@ class _$_Loaded implements _Loaded {
         liked,
     required TResult Function(List<ForumPost> forums, int index, String userId)
         unliked,
+    required TResult Function() wipedOutFeed,
   }) {
     return loaded();
   }
@@ -155,6 +164,7 @@ class _$_Loaded implements _Loaded {
     TResult Function()? refreshFeed,
     TResult Function(List<ForumPost> forums, int index, String userId)? liked,
     TResult Function(List<ForumPost> forums, int index, String userId)? unliked,
+    TResult Function()? wipedOutFeed,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -170,6 +180,7 @@ class _$_Loaded implements _Loaded {
     required TResult Function(_RefreshFeed value) refreshFeed,
     required TResult Function(_Liked value) liked,
     required TResult Function(_Unliked value) unliked,
+    required TResult Function(_WipedOutFeed value) wipedOutFeed,
   }) {
     return loaded(this);
   }
@@ -181,6 +192,7 @@ class _$_Loaded implements _Loaded {
     TResult Function(_RefreshFeed value)? refreshFeed,
     TResult Function(_Liked value)? liked,
     TResult Function(_Unliked value)? unliked,
+    TResult Function(_WipedOutFeed value)? wipedOutFeed,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -240,6 +252,7 @@ class _$_RefreshFeed implements _RefreshFeed {
         liked,
     required TResult Function(List<ForumPost> forums, int index, String userId)
         unliked,
+    required TResult Function() wipedOutFeed,
   }) {
     return refreshFeed();
   }
@@ -251,6 +264,7 @@ class _$_RefreshFeed implements _RefreshFeed {
     TResult Function()? refreshFeed,
     TResult Function(List<ForumPost> forums, int index, String userId)? liked,
     TResult Function(List<ForumPost> forums, int index, String userId)? unliked,
+    TResult Function()? wipedOutFeed,
     required TResult orElse(),
   }) {
     if (refreshFeed != null) {
@@ -266,6 +280,7 @@ class _$_RefreshFeed implements _RefreshFeed {
     required TResult Function(_RefreshFeed value) refreshFeed,
     required TResult Function(_Liked value) liked,
     required TResult Function(_Unliked value) unliked,
+    required TResult Function(_WipedOutFeed value) wipedOutFeed,
   }) {
     return refreshFeed(this);
   }
@@ -277,6 +292,7 @@ class _$_RefreshFeed implements _RefreshFeed {
     TResult Function(_RefreshFeed value)? refreshFeed,
     TResult Function(_Liked value)? liked,
     TResult Function(_Unliked value)? unliked,
+    TResult Function(_WipedOutFeed value)? wipedOutFeed,
     required TResult orElse(),
   }) {
     if (refreshFeed != null) {
@@ -379,6 +395,7 @@ class _$_Liked implements _Liked {
         liked,
     required TResult Function(List<ForumPost> forums, int index, String userId)
         unliked,
+    required TResult Function() wipedOutFeed,
   }) {
     return liked(forums, index, userId);
   }
@@ -390,6 +407,7 @@ class _$_Liked implements _Liked {
     TResult Function()? refreshFeed,
     TResult Function(List<ForumPost> forums, int index, String userId)? liked,
     TResult Function(List<ForumPost> forums, int index, String userId)? unliked,
+    TResult Function()? wipedOutFeed,
     required TResult orElse(),
   }) {
     if (liked != null) {
@@ -405,6 +423,7 @@ class _$_Liked implements _Liked {
     required TResult Function(_RefreshFeed value) refreshFeed,
     required TResult Function(_Liked value) liked,
     required TResult Function(_Unliked value) unliked,
+    required TResult Function(_WipedOutFeed value) wipedOutFeed,
   }) {
     return liked(this);
   }
@@ -416,6 +435,7 @@ class _$_Liked implements _Liked {
     TResult Function(_RefreshFeed value)? refreshFeed,
     TResult Function(_Liked value)? liked,
     TResult Function(_Unliked value)? unliked,
+    TResult Function(_WipedOutFeed value)? wipedOutFeed,
     required TResult orElse(),
   }) {
     if (liked != null) {
@@ -525,6 +545,7 @@ class _$_Unliked implements _Unliked {
         liked,
     required TResult Function(List<ForumPost> forums, int index, String userId)
         unliked,
+    required TResult Function() wipedOutFeed,
   }) {
     return unliked(forums, index, userId);
   }
@@ -536,6 +557,7 @@ class _$_Unliked implements _Unliked {
     TResult Function()? refreshFeed,
     TResult Function(List<ForumPost> forums, int index, String userId)? liked,
     TResult Function(List<ForumPost> forums, int index, String userId)? unliked,
+    TResult Function()? wipedOutFeed,
     required TResult orElse(),
   }) {
     if (unliked != null) {
@@ -551,6 +573,7 @@ class _$_Unliked implements _Unliked {
     required TResult Function(_RefreshFeed value) refreshFeed,
     required TResult Function(_Liked value) liked,
     required TResult Function(_Unliked value) unliked,
+    required TResult Function(_WipedOutFeed value) wipedOutFeed,
   }) {
     return unliked(this);
   }
@@ -562,6 +585,7 @@ class _$_Unliked implements _Unliked {
     TResult Function(_RefreshFeed value)? refreshFeed,
     TResult Function(_Liked value)? liked,
     TResult Function(_Unliked value)? unliked,
+    TResult Function(_WipedOutFeed value)? wipedOutFeed,
     required TResult orElse(),
   }) {
     if (unliked != null) {
@@ -581,6 +605,106 @@ abstract class _Unliked implements FriendFeedEvent {
   @JsonKey(ignore: true)
   _$UnlikedCopyWith<_Unliked> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$WipedOutFeedCopyWith<$Res> {
+  factory _$WipedOutFeedCopyWith(
+          _WipedOutFeed value, $Res Function(_WipedOutFeed) then) =
+      __$WipedOutFeedCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$WipedOutFeedCopyWithImpl<$Res>
+    extends _$FriendFeedEventCopyWithImpl<$Res>
+    implements _$WipedOutFeedCopyWith<$Res> {
+  __$WipedOutFeedCopyWithImpl(
+      _WipedOutFeed _value, $Res Function(_WipedOutFeed) _then)
+      : super(_value, (v) => _then(v as _WipedOutFeed));
+
+  @override
+  _WipedOutFeed get _value => super._value as _WipedOutFeed;
+}
+
+/// @nodoc
+
+class _$_WipedOutFeed implements _WipedOutFeed {
+  const _$_WipedOutFeed();
+
+  @override
+  String toString() {
+    return 'FriendFeedEvent.wipedOutFeed()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _WipedOutFeed);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() loaded,
+    required TResult Function() refreshFeed,
+    required TResult Function(List<ForumPost> forums, int index, String userId)
+        liked,
+    required TResult Function(List<ForumPost> forums, int index, String userId)
+        unliked,
+    required TResult Function() wipedOutFeed,
+  }) {
+    return wipedOutFeed();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loaded,
+    TResult Function()? refreshFeed,
+    TResult Function(List<ForumPost> forums, int index, String userId)? liked,
+    TResult Function(List<ForumPost> forums, int index, String userId)? unliked,
+    TResult Function()? wipedOutFeed,
+    required TResult orElse(),
+  }) {
+    if (wipedOutFeed != null) {
+      return wipedOutFeed();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_RefreshFeed value) refreshFeed,
+    required TResult Function(_Liked value) liked,
+    required TResult Function(_Unliked value) unliked,
+    required TResult Function(_WipedOutFeed value) wipedOutFeed,
+  }) {
+    return wipedOutFeed(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Loaded value)? loaded,
+    TResult Function(_RefreshFeed value)? refreshFeed,
+    TResult Function(_Liked value)? liked,
+    TResult Function(_Unliked value)? unliked,
+    TResult Function(_WipedOutFeed value)? wipedOutFeed,
+    required TResult orElse(),
+  }) {
+    if (wipedOutFeed != null) {
+      return wipedOutFeed(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _WipedOutFeed implements FriendFeedEvent {
+  const factory _WipedOutFeed() = _$_WipedOutFeed;
 }
 
 /// @nodoc
@@ -612,6 +736,10 @@ class _$FriendFeedStateTearOff {
       dataFailure,
     );
   }
+
+  _Clear clear() {
+    return const _Clear();
+  }
 }
 
 /// @nodoc
@@ -626,6 +754,7 @@ mixin _$FriendFeedState {
     required TResult Function(List<ForumPost> forums) loadSuccess,
     required TResult Function(List<ForumPost> forums) loadLike,
     required TResult Function(DataFailure dataFailure) loadFailure,
+    required TResult Function() clear,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -635,6 +764,7 @@ mixin _$FriendFeedState {
     TResult Function(List<ForumPost> forums)? loadSuccess,
     TResult Function(List<ForumPost> forums)? loadLike,
     TResult Function(DataFailure dataFailure)? loadFailure,
+    TResult Function()? clear,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -645,6 +775,7 @@ mixin _$FriendFeedState {
     required TResult Function(_LoadSuccess value) loadSuccess,
     required TResult Function(_LoadLike value) loadLike,
     required TResult Function(_LoadFailure value) loadFailure,
+    required TResult Function(_Clear value) clear,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -654,6 +785,7 @@ mixin _$FriendFeedState {
     TResult Function(_LoadSuccess value)? loadSuccess,
     TResult Function(_LoadLike value)? loadLike,
     TResult Function(_LoadFailure value)? loadFailure,
+    TResult Function(_Clear value)? clear,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -718,6 +850,7 @@ class _$_Initial implements _Initial {
     required TResult Function(List<ForumPost> forums) loadSuccess,
     required TResult Function(List<ForumPost> forums) loadLike,
     required TResult Function(DataFailure dataFailure) loadFailure,
+    required TResult Function() clear,
   }) {
     return initial();
   }
@@ -730,6 +863,7 @@ class _$_Initial implements _Initial {
     TResult Function(List<ForumPost> forums)? loadSuccess,
     TResult Function(List<ForumPost> forums)? loadLike,
     TResult Function(DataFailure dataFailure)? loadFailure,
+    TResult Function()? clear,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -746,6 +880,7 @@ class _$_Initial implements _Initial {
     required TResult Function(_LoadSuccess value) loadSuccess,
     required TResult Function(_LoadLike value) loadLike,
     required TResult Function(_LoadFailure value) loadFailure,
+    required TResult Function(_Clear value) clear,
   }) {
     return initial(this);
   }
@@ -758,6 +893,7 @@ class _$_Initial implements _Initial {
     TResult Function(_LoadSuccess value)? loadSuccess,
     TResult Function(_LoadLike value)? loadLike,
     TResult Function(_LoadFailure value)? loadFailure,
+    TResult Function(_Clear value)? clear,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -816,6 +952,7 @@ class _$_LoadInProgress implements _LoadInProgress {
     required TResult Function(List<ForumPost> forums) loadSuccess,
     required TResult Function(List<ForumPost> forums) loadLike,
     required TResult Function(DataFailure dataFailure) loadFailure,
+    required TResult Function() clear,
   }) {
     return loadInProgress();
   }
@@ -828,6 +965,7 @@ class _$_LoadInProgress implements _LoadInProgress {
     TResult Function(List<ForumPost> forums)? loadSuccess,
     TResult Function(List<ForumPost> forums)? loadLike,
     TResult Function(DataFailure dataFailure)? loadFailure,
+    TResult Function()? clear,
     required TResult orElse(),
   }) {
     if (loadInProgress != null) {
@@ -844,6 +982,7 @@ class _$_LoadInProgress implements _LoadInProgress {
     required TResult Function(_LoadSuccess value) loadSuccess,
     required TResult Function(_LoadLike value) loadLike,
     required TResult Function(_LoadFailure value) loadFailure,
+    required TResult Function(_Clear value) clear,
   }) {
     return loadInProgress(this);
   }
@@ -856,6 +995,7 @@ class _$_LoadInProgress implements _LoadInProgress {
     TResult Function(_LoadSuccess value)? loadSuccess,
     TResult Function(_LoadLike value)? loadLike,
     TResult Function(_LoadFailure value)? loadFailure,
+    TResult Function(_Clear value)? clear,
     required TResult orElse(),
   }) {
     if (loadInProgress != null) {
@@ -939,6 +1079,7 @@ class _$_LoadSuccess implements _LoadSuccess {
     required TResult Function(List<ForumPost> forums) loadSuccess,
     required TResult Function(List<ForumPost> forums) loadLike,
     required TResult Function(DataFailure dataFailure) loadFailure,
+    required TResult Function() clear,
   }) {
     return loadSuccess(forums);
   }
@@ -951,6 +1092,7 @@ class _$_LoadSuccess implements _LoadSuccess {
     TResult Function(List<ForumPost> forums)? loadSuccess,
     TResult Function(List<ForumPost> forums)? loadLike,
     TResult Function(DataFailure dataFailure)? loadFailure,
+    TResult Function()? clear,
     required TResult orElse(),
   }) {
     if (loadSuccess != null) {
@@ -967,6 +1109,7 @@ class _$_LoadSuccess implements _LoadSuccess {
     required TResult Function(_LoadSuccess value) loadSuccess,
     required TResult Function(_LoadLike value) loadLike,
     required TResult Function(_LoadFailure value) loadFailure,
+    required TResult Function(_Clear value) clear,
   }) {
     return loadSuccess(this);
   }
@@ -979,6 +1122,7 @@ class _$_LoadSuccess implements _LoadSuccess {
     TResult Function(_LoadSuccess value)? loadSuccess,
     TResult Function(_LoadLike value)? loadLike,
     TResult Function(_LoadFailure value)? loadFailure,
+    TResult Function(_Clear value)? clear,
     required TResult orElse(),
   }) {
     if (loadSuccess != null) {
@@ -1064,6 +1208,7 @@ class _$_LoadLike implements _LoadLike {
     required TResult Function(List<ForumPost> forums) loadSuccess,
     required TResult Function(List<ForumPost> forums) loadLike,
     required TResult Function(DataFailure dataFailure) loadFailure,
+    required TResult Function() clear,
   }) {
     return loadLike(forums);
   }
@@ -1076,6 +1221,7 @@ class _$_LoadLike implements _LoadLike {
     TResult Function(List<ForumPost> forums)? loadSuccess,
     TResult Function(List<ForumPost> forums)? loadLike,
     TResult Function(DataFailure dataFailure)? loadFailure,
+    TResult Function()? clear,
     required TResult orElse(),
   }) {
     if (loadLike != null) {
@@ -1092,6 +1238,7 @@ class _$_LoadLike implements _LoadLike {
     required TResult Function(_LoadSuccess value) loadSuccess,
     required TResult Function(_LoadLike value) loadLike,
     required TResult Function(_LoadFailure value) loadFailure,
+    required TResult Function(_Clear value) clear,
   }) {
     return loadLike(this);
   }
@@ -1104,6 +1251,7 @@ class _$_LoadLike implements _LoadLike {
     TResult Function(_LoadSuccess value)? loadSuccess,
     TResult Function(_LoadLike value)? loadLike,
     TResult Function(_LoadFailure value)? loadFailure,
+    TResult Function(_Clear value)? clear,
     required TResult orElse(),
   }) {
     if (loadLike != null) {
@@ -1202,6 +1350,7 @@ class _$_LoadFailure implements _LoadFailure {
     required TResult Function(List<ForumPost> forums) loadSuccess,
     required TResult Function(List<ForumPost> forums) loadLike,
     required TResult Function(DataFailure dataFailure) loadFailure,
+    required TResult Function() clear,
   }) {
     return loadFailure(dataFailure);
   }
@@ -1214,6 +1363,7 @@ class _$_LoadFailure implements _LoadFailure {
     TResult Function(List<ForumPost> forums)? loadSuccess,
     TResult Function(List<ForumPost> forums)? loadLike,
     TResult Function(DataFailure dataFailure)? loadFailure,
+    TResult Function()? clear,
     required TResult orElse(),
   }) {
     if (loadFailure != null) {
@@ -1230,6 +1380,7 @@ class _$_LoadFailure implements _LoadFailure {
     required TResult Function(_LoadSuccess value) loadSuccess,
     required TResult Function(_LoadLike value) loadLike,
     required TResult Function(_LoadFailure value) loadFailure,
+    required TResult Function(_Clear value) clear,
   }) {
     return loadFailure(this);
   }
@@ -1242,6 +1393,7 @@ class _$_LoadFailure implements _LoadFailure {
     TResult Function(_LoadSuccess value)? loadSuccess,
     TResult Function(_LoadLike value)? loadLike,
     TResult Function(_LoadFailure value)? loadFailure,
+    TResult Function(_Clear value)? clear,
     required TResult orElse(),
   }) {
     if (loadFailure != null) {
@@ -1258,4 +1410,103 @@ abstract class _LoadFailure implements FriendFeedState {
   @JsonKey(ignore: true)
   _$LoadFailureCopyWith<_LoadFailure> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$ClearCopyWith<$Res> {
+  factory _$ClearCopyWith(_Clear value, $Res Function(_Clear) then) =
+      __$ClearCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$ClearCopyWithImpl<$Res> extends _$FriendFeedStateCopyWithImpl<$Res>
+    implements _$ClearCopyWith<$Res> {
+  __$ClearCopyWithImpl(_Clear _value, $Res Function(_Clear) _then)
+      : super(_value, (v) => _then(v as _Clear));
+
+  @override
+  _Clear get _value => super._value as _Clear;
+}
+
+/// @nodoc
+
+class _$_Clear implements _Clear {
+  const _$_Clear();
+
+  @override
+  String toString() {
+    return 'FriendFeedState.clear()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _Clear);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loadInProgress,
+    required TResult Function(List<ForumPost> forums) loadSuccess,
+    required TResult Function(List<ForumPost> forums) loadLike,
+    required TResult Function(DataFailure dataFailure) loadFailure,
+    required TResult Function() clear,
+  }) {
+    return clear();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loadInProgress,
+    TResult Function(List<ForumPost> forums)? loadSuccess,
+    TResult Function(List<ForumPost> forums)? loadLike,
+    TResult Function(DataFailure dataFailure)? loadFailure,
+    TResult Function()? clear,
+    required TResult orElse(),
+  }) {
+    if (clear != null) {
+      return clear();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_LoadInProgress value) loadInProgress,
+    required TResult Function(_LoadSuccess value) loadSuccess,
+    required TResult Function(_LoadLike value) loadLike,
+    required TResult Function(_LoadFailure value) loadFailure,
+    required TResult Function(_Clear value) clear,
+  }) {
+    return clear(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_LoadInProgress value)? loadInProgress,
+    TResult Function(_LoadSuccess value)? loadSuccess,
+    TResult Function(_LoadLike value)? loadLike,
+    TResult Function(_LoadFailure value)? loadFailure,
+    TResult Function(_Clear value)? clear,
+    required TResult orElse(),
+  }) {
+    if (clear != null) {
+      return clear(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Clear implements FriendFeedState {
+  const factory _Clear() = _$_Clear;
 }

@@ -13,6 +13,7 @@ import 'package:friendlinus/presentation/location_chats/location_chat_list/locat
 import 'package:friendlinus/presentation/location_chats/location_chat_list/location_chat_page.dart';
 import 'package:friendlinus/presentation/location_chats/location_convos/location_convo_page.dart';
 import 'package:friendlinus/presentation/notifications/notification_page.dart';
+import 'package:friendlinus/presentation/profile/followers_and_following_page.dart';
 import 'package:friendlinus/presentation/profile/other_profile_page.dart';
 import 'package:friendlinus/presentation/profile/profile_page.dart';
 import 'package:friendlinus/presentation/profile/update_profile_page.dart';
@@ -34,9 +35,7 @@ import 'package:friendlinus/presentation/splash/splash_page.dart';
     AutoRoute(page: VerifyEmailPage),
     AutoRoute(page: RegisterProfilePage),
     AutoRoute(page: ResetPasswordPage),
-    AutoRoute(
-      page: ProfilePage
-    ),
+    AutoRoute(page: ProfilePage),
     AutoRoute(page: SearchUsersPage),
     AutoRoute(page: UpdateProfilePage),
     AutoRoute(page: OtherProfilePage),
@@ -52,7 +51,7 @@ import 'package:friendlinus/presentation/splash/splash_page.dart';
     AutoRoute(page: LocationChatPage),
     AutoRoute(page: LocationConvoPage),
     AutoRoute(page: FullScreenPhotoPage),
-
+    AutoRoute(page: FollowersandFollowingPage),
   ],
 )
 class $AppRouter {}

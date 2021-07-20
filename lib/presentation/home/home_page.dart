@@ -68,10 +68,16 @@ class _HomeFeedViewState extends State<HomeFeedView>
       });
 
       if (_tabController.index == 0) {
-        context.read<ModuleFeedBloc>().add(const ModuleFeedEvent.refreshFeed());
+        // context
+        //     .read<FriendFeedBloc>()
+        //     .add(const FriendFeedEvent.wipedOutFeed());
+        // context.read<ModuleFeedBloc>().add(const ModuleFeedEvent.refreshFeed());
       }
       if (_tabController.index == 1) {
-        context.read<FriendFeedBloc>().add(const FriendFeedEvent.refreshFeed());
+        // context
+        //     .read<ModuleFeedBloc>()
+        //     .add(const ModuleFeedEvent.wipedOutFeed());
+        //  context.read<FriendFeedBloc>().add(const FriendFeedEvent.refreshFeed());
       }
     });
   }
@@ -100,10 +106,8 @@ class _HomeFeedViewState extends State<HomeFeedView>
           child: TabBarView(
             controller: _tabController,
             children: const [
-              ClipRRect(
-                  child: ModuleFeed()),
-              ClipRRect(
-                  child: FriendFeed()),
+              ClipRRect(child: ModuleFeed()),
+              ClipRRect(child: FriendFeed()),
             ],
           ),
         ),

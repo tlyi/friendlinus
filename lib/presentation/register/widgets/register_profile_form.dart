@@ -213,6 +213,7 @@ class _BuildBio extends StatelessWidget {
                 .read<ProfileFormBloc>()
                 .add(ProfileFormEvent.bioChanged(value));
           },
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           validator: (_) =>
               context.read<ProfileFormBloc>().state.profile.course.value.fold(
                     (f) => f.maybeMap(

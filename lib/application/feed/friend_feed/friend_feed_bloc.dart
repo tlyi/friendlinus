@@ -8,15 +8,15 @@ import 'package:friendlinus/domain/data/forum/forum_post/forum_post.dart';
 import 'package:injectable/injectable.dart';
 import 'package:friendlinus/domain/data/forum/i_forum_repository.dart';
 
-
 part 'friend_feed_event.dart';
 part 'friend_feed_state.dart';
 part 'friend_feed_bloc.freezed.dart';
 
 @injectable
 class FriendFeedBloc extends Bloc<FriendFeedEvent, FriendFeedState> {
-    final IForumRepository _forumRepository;
-  FriendFeedBloc(this._forumRepository) : super(const FriendFeedState.initial());
+  final IForumRepository _forumRepository;
+  FriendFeedBloc(this._forumRepository)
+      : super(const FriendFeedState.initial());
 
   @override
   Stream<FriendFeedState> mapEventToState(
@@ -52,6 +52,9 @@ class FriendFeedBloc extends Bloc<FriendFeedEvent, FriendFeedState> {
         forums[e.index] = forumLiked.copyWith(
             likes: forumLiked.likes - 1, likedUserIds: likedUserIds);
         yield FriendFeedState.loadLike(forums);
+      },
+      wipedOutFeed: (e) async* {
+        yield FriendFeedState.clear();
       },
     );
   }

@@ -38,8 +38,7 @@ class FriendFeed extends StatelessWidget {
             loadSuccess: (state) {
               if (state.forums.length == 0) {
                 return Center(
-                    child:
-                        Text('No forums to view. Follow more friends!'));
+                    child: Text('No forums to view. Follow more friends!'));
               } else {
                 return RefreshIndicator(
                   onRefresh: () async {
@@ -301,15 +300,17 @@ class FriendFeed extends StatelessWidget {
                           await context.pushRoute(ForumRoute(
                               forumId: forum.forumId,
                               pollAdded: forum.pollAdded));
-                          
-                            context
-                                .read<FriendFeedBloc>()
-                                .add(const FriendFeedEvent.refreshFeed());
-                          
+
+                          context
+                              .read<FriendFeedBloc>()
+                              .add(const FriendFeedEvent.refreshFeed());
                         },
                       ),
                     );
                   });
+            },
+            clear: (_) {
+              return Container();
             });
       },
     );

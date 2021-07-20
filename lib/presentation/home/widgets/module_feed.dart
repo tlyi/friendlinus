@@ -38,16 +38,13 @@ class ModuleFeed extends StatelessWidget {
             loadSuccess: (state) {
               if (state.forums.length == 0) {
                 return Center(
-                    child:
-                        Text('No forums to view. Follow more modules!'));
+                    child: Text('No forums to view. Follow more modules!'));
               } else {
                 return RefreshIndicator(
                   onRefresh: () async {
-                    
-                      context
-                          .read<ModuleFeedBloc>()
-                          .add(const ModuleFeedEvent.refreshFeed());
-                    
+                    context
+                        .read<ModuleFeedBloc>()
+                        .add(const ModuleFeedEvent.refreshFeed());
                   },
                   child: ListView.builder(
                       padding:
@@ -304,13 +301,15 @@ class ModuleFeed extends StatelessWidget {
                               forumId: forum.forumId,
                               pollAdded: forum.pollAdded));
                           context
-                          .read<ModuleFeedBloc>()
-                          .add(const ModuleFeedEvent.refreshFeed());
-                          
+                              .read<ModuleFeedBloc>()
+                              .add(const ModuleFeedEvent.refreshFeed());
                         },
                       ),
                     );
                   });
+            },
+            clear: (_) {
+              return Container();
             });
       },
     );

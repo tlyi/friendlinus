@@ -8,4 +8,5 @@ class ModuleFeedEvent with _$ModuleFeedEvent {
       List<ForumPost> forums, int index, String userId) = _Liked;
   const factory ModuleFeedEvent.unliked(
       List<ForumPost> forums, int index, String userId) = _Unliked;
+  const factory ModuleFeedEvent.wipedOutFeed() = _WipedOutFeed;
 }
