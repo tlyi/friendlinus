@@ -77,13 +77,17 @@ String getTimeOrDate(String timestamp) {
   final DateTime dateTime =
       DateTime.fromMillisecondsSinceEpoch(int.parse(timestamp));
 
+  Duration diff = DateTime.now().difference(dateTime);
+
   if (DateTime.now().year == dateTime.year &&
       DateTime.now().month == dateTime.month &&
       DateTime.now().day == dateTime.day) {
     return DateFormat('jm').format(dateTime);
   } //E.g 3.30pm (if same day)
 
-  else if (DateTime.now().year == dateTime.year) {
+  else if (diff.inDays < 7) {
+    return DateFormat('EEE').format(dateTime); //E.g Tues (if within one week)
+  } else if (DateTime.now().year == dateTime.year) {
     return DateFormat('d' '/' 'M').format(dateTime);
   } //E.g 9/7 (if same year as current)
 
