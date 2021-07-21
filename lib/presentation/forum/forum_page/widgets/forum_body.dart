@@ -96,8 +96,9 @@ class ForumBody extends StatelessWidget {
                             }
                           },
                           child: Container(
-                            height: 46,
+                            alignment: Alignment.center,
                             width: 46,
+                            height: 46,
                             decoration: BoxDecoration(
                                 shape: BoxShape.circle, color: Colors.white),
                             child: ClipOval(

@@ -25,14 +25,13 @@ import 'application/chats/location_convo_watcher/location_convo_watcher_bloc.dar
     as _i21;
 import 'application/chats/search_location_chats/search_location_chats_bloc.dart'
     as _i32;
-import 'application/feed/feed_bloc.dart' as _i41;
-import 'application/feed/friend_feed/friend_feed_bloc.dart' as _i45;
+import 'application/feed/friend_feed/friend_feed_bloc.dart' as _i44;
 import 'application/feed/module_feed/module_feed_bloc.dart' as _i23;
 import 'application/forum/comment_watcher/comment_watcher_bloc.dart' as _i38;
-import 'application/forum/forum_actor/forum_actor_bloc.dart' as _i42;
-import 'application/forum/forum_form/forum_form_bloc.dart' as _i43;
+import 'application/forum/forum_actor/forum_actor_bloc.dart' as _i41;
+import 'application/forum/forum_form/forum_form_bloc.dart' as _i42;
 import 'application/forum/forum_post_watcher/forum_post_watcher_bloc.dart'
-    as _i44;
+    as _i43;
 import 'application/forum/forum_post_watcher/poll_watcher/poll_watcher_bloc.dart'
     as _i28;
 import 'application/forum/module_actor/module_actor_bloc.dart' as _i22;
@@ -56,7 +55,7 @@ import 'domain/data/notifications/i_notification_repository.dart' as _i14;
 import 'domain/data/profile/i_profile_repository.dart' as _i16;
 import 'domain/mods/i_mod_repository.dart' as _i12;
 import 'infrastructure/auth/firebase_auth_facade.dart' as _i7;
-import 'infrastructure/core/firebase_injectable_module.dart' as _i46;
+import 'infrastructure/core/firebase_injectable_module.dart' as _i45;
 import 'infrastructure/data/chats/chat_repository.dart' as _i9;
 import 'infrastructure/data/forum/forum_repository.dart' as _i11;
 import 'infrastructure/data/notifications/notification_repository.dart' as _i15;
@@ -135,16 +134,15 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       () => _i39.ConvoActorBloc(get<_i8.IChatRepository>()));
   gh.factory<_i40.ConvoWatcherBloc>(
       () => _i40.ConvoWatcherBloc(get<_i8.IChatRepository>()));
-  gh.factory<_i41.FeedBloc>(() => _i41.FeedBloc(get<_i10.IForumRepository>()));
-  gh.factory<_i42.ForumActorBloc>(
-      () => _i42.ForumActorBloc(get<_i10.IForumRepository>()));
-  gh.factory<_i43.ForumFormBloc>(() => _i43.ForumFormBloc(
+  gh.factory<_i41.ForumActorBloc>(
+      () => _i41.ForumActorBloc(get<_i10.IForumRepository>()));
+  gh.factory<_i42.ForumFormBloc>(() => _i42.ForumFormBloc(
       get<_i10.IForumRepository>(), get<_i16.IProfileRepository>()));
-  gh.factory<_i44.ForumPostWatcherBloc>(() => _i44.ForumPostWatcherBloc(
+  gh.factory<_i43.ForumPostWatcherBloc>(() => _i43.ForumPostWatcherBloc(
       get<_i10.IForumRepository>(), get<_i16.IProfileRepository>()));
-  gh.factory<_i45.FriendFeedBloc>(
-      () => _i45.FriendFeedBloc(get<_i10.IForumRepository>()));
+  gh.factory<_i44.FriendFeedBloc>(
+      () => _i44.FriendFeedBloc(get<_i10.IForumRepository>()));
   return get;
 }
 
-class _$FirebaseInjectableModule extends _i46.FirebaseInjectableModule {}
+class _$FirebaseInjectableModule extends _i45.FirebaseInjectableModule {}
