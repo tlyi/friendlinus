@@ -321,6 +321,7 @@ class ChatRepository implements IChatRepository {
       print(e);
       return left(const DataFailure.unexpected());
     }
+
     MapEntry<String, double> distanceCalculator(LocationChat locationChat) {
       double distance = Geolocator.distanceBetween(position.latitude,
           position.longitude, locationChat.latitude, locationChat.longitude);
@@ -340,18 +341,23 @@ class ChatRepository implements IChatRepository {
   Stream<Either<DataFailure, List<LocationChat>>> retrieveLocationChats(
       List<String> nearestChatIds) async* {
     final locationChatRef = await _firestore.locationChatsRef();
+    List<LocationChat> locationChats = List.filled(10, LocationChat.empty());
     if (nearestChatIds.isNotEmpty) {
       yield* locationChatRef
           .where('chatId', whereIn: nearestChatIds)
           .snapshots()
           .map(
-            (snapshot) => right<DataFailure, List<LocationChat>>(
-              snapshot.docs
-                  .map((doc) => LocationChatDto.fromFirestore(doc).toDomain())
-                  .toList(),
-            ),
-          )
-          .handleError((e) {
+        (snapshot) {
+          for (final doc in snapshot.docs) {
+            LocationChat locationChat =
+                LocationChatDto.fromFirestore(doc).toDomain();
+
+            locationChats[nearestChatIds.indexOf(locationChat.chatId)] =
+                locationChat;
+          }
+          return right<DataFailure, List<LocationChat>>(locationChats);
+        },
+      ).handleError((e) {
         if (e is FirebaseException &&
             e.message!.contains('PERMISSION_DENIED')) {
           return left(const DataFailure.insufficientPermission());
@@ -440,9 +446,11 @@ class ChatRepository implements IChatRepository {
       {
         if (query.docs.isNotEmpty) {
           for (final doc in query.docs) {
+            print('here');
             searchResults.add(LocationChatDto.fromFirestore(doc).toDomain());
           }
         }
+        print(searchResults);
         return right(searchResults);
       }
     } on FirebaseException catch (e) {

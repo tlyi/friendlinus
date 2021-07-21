@@ -51,9 +51,11 @@ class LocationChatWatcherBloc
             chatIds = pairs.keys.toList();
             distances = pairs.values.toList();
           });
+          
           if (dataFailure != null) {
             yield LocationChatWatcherState.loadDataFailure(dataFailure!);
           } else {
+            
             await _chatStreamSubscription?.cancel();
             _chatStreamSubscription = _chatRepository
                 .retrieveLocationChats(chatIds!.take(10).toList())

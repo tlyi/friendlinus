@@ -33,7 +33,8 @@ abstract class LocationChatDto implements _$LocationChatDto {
         timestamp: locationChat.timestamp,
         longitude: locationChat.longitude,
         latitude: locationChat.latitude,
-        keywords: generateKeywords(locationChat.chatTitle.getOrCrash()));
+        keywords: generateKeywords(
+            locationChat.chatTitle.getOrCrash().toLowerCase()));
   }
 
   LocationChat toDomain() {
