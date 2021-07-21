@@ -24,8 +24,6 @@ class ForumBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ownId = context.read<ForumActorBloc>().state.userId;
-
     return BlocConsumer<ForumPostWatcherBloc, ForumPostWatcherState>(
         listener: (context, state) {
       state.maybeMap(
@@ -54,69 +52,85 @@ class ForumBody extends StatelessWidget {
             header =
                 'Posted by ${posterProfile.username.getOrCrash()} ${getTimeForum(forum.timestamp)}';
           }
-          return Scaffold(
-              appBar: AppBar(
-                  centerTitle: true,
-                  backgroundColor: Colors.white,
-                  leading: IconButton(
-                    icon: const Icon(Icons.arrow_back, color: Colors.grey),
-                    onPressed: () {
-                      context.popRoute();
-                    },
-                  ),
-                  title: GestureDetector(
-                    onTap: () {
-                      if (!forum.isAnon) {
-                        ownId == forum.posterUserId
-                            ? context.pushRoute(ProfileRoute(canGoBack: true))
-                            : context.pushRoute(
-                                OtherProfileRoute(userProfile: posterProfile));
-                      }
-                    },
-                    child: Text(
-                      header,
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.0,
+          return BlocBuilder<ForumActorBloc, ForumActorState>(
+            builder: (context, state) {
+              final ownId = context.read<ForumActorBloc>().state.userId;
+              print(ownId);
+              return Scaffold(
+                  appBar: AppBar(
+                      centerTitle: true,
+                      backgroundColor: Colors.white,
+                      leading: IconButton(
+                        icon: const Icon(Icons.arrow_back, color: Colors.grey),
+                        onPressed: () {
+                          context.popRoute();
+                        },
                       ),
-                    ),
-                  ),
-                  actions: [
-                    GestureDetector(
-                      onTap: () async {
-                        if (!forum.isAnon) {
-                          ownId == forum.posterUserId
-                              ? context.pushRoute(ProfileRoute(canGoBack: true))
-                              : context.pushRoute(OtherProfileRoute(
-                                  userProfile: posterProfile));
-                        }
-                      },
-                      child: CircleAvatar(
-                        backgroundImage: NetworkImage(
-                          posterProfile.photoUrl,
+                      title: GestureDetector(
+                        onTap: () {
+                          if (!forum.isAnon) {
+                            ownId == forum.posterUserId
+                                ? context
+                                    .pushRoute(ProfileRoute(canGoBack: true))
+                                : context.pushRoute(OtherProfileRoute(
+                                    userProfile: posterProfile));
+                          }
+                        },
+                        child: Text(
+                          header,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 16.0,
+                          ),
                         ),
-                        backgroundColor: Colors.white,
-                        radius: 23.0,
                       ),
+                      actions: [
+                        GestureDetector(
+                          onTap: () async {
+                            if (!forum.isAnon) {
+                              ownId == forum.posterUserId
+                                  ? context
+                                      .pushRoute(ProfileRoute(canGoBack: true))
+                                  : context.pushRoute(OtherProfileRoute(
+                                      userProfile: posterProfile));
+                            }
+                          },
+                          child: Container(
+                            height: 46,
+                            width: 46,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle, color: Colors.white),
+                            child: ClipOval(
+                              child: CachedNetworkImage(
+                                  fit: BoxFit.cover,
+                                  height: 46,
+                                  width: 46,
+                                  imageUrl: posterProfile.photoUrl,
+                                  placeholder: (context, url) => Center(
+                                      child: CircularProgressIndicator())),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                      ]),
+                  bottomNavigationBar: const NavigationBar(),
+                  body: SingleChildScrollView(
+                    physics: const ScrollPhysics(),
+                    child: Column(
+                      children: <Widget>[
+                        _BuildPost(forum: forum, userId: ownId),
+                        Row(children: <Widget>[
+                          Expanded(
+                            child: _BuildCommentButton(forum: forum),
+                          ),
+                          _BuildSortCommentsOption(forumId: forum.forumId),
+                        ]),
+                        _BuildComments(forum: forum),
+                      ],
                     ),
-                    const SizedBox(width: 10),
-                  ]),
-              bottomNavigationBar: const NavigationBar(),
-              body: SingleChildScrollView(
-                physics: const ScrollPhysics(),
-                child: Column(
-                  children: <Widget>[
-                    _BuildPost(forum: forum),
-                    Row(children: <Widget>[
-                      Expanded(
-                        child: _BuildCommentButton(forum: forum),
-                      ),
-                      _BuildSortCommentsOption(forumId: forum.forumId),
-                    ]),
-                    _BuildComments(forum: forum),
-                  ],
-                ),
-              ));
+                  ));
+            },
+          );
         },
         loadFailure: (state) {
           return Container();
@@ -128,104 +142,101 @@ class ForumBody extends StatelessWidget {
 
 class _BuildPost extends StatelessWidget {
   final ForumPost forum;
-  const _BuildPost({Key? key, required this.forum}) : super(key: key);
+  final String userId;
+  const _BuildPost({Key? key, required this.forum, required this.userId})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ForumActorBloc, ForumActorState>(
-      builder: (context, state) {
-        final String userId = context.read<ForumActorBloc>().state.userId;
-        return Padding(
-            padding: const EdgeInsets.only(top: 20.0, left: 8.0, right: 8),
-            child: Container(
-              padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                border: Border.all(color: const Color(0xFF7BA5BB)),
-                borderRadius: BorderRadius.circular(15.0),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Row(children: <Widget>[
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          const SizedBox(height: 15),
-                          Text(forum.title.getOrCrash(),
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 17)),
-                          const SizedBox(height: 15),
-                          Text(forum.body.getOrCrash(),
-                              style: const TextStyle(fontSize: 15)),
-                        ],
-                      ),
-                    ),
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Stack(
-                          children: [
-                            TapDebouncer(
-                                cooldown: const Duration(milliseconds: 800),
-                                onTap: () async {
-                                  if (forum.likedUserIds.contains(userId)) {
-                                    context.read<ForumActorBloc>().add(
-                                        ForumActorEvent.forumUnliked(
-                                            forum.forumId));
-                                  } else {
-                                    context
-                                        .read<ForumActorBloc>()
-                                        .add(ForumActorEvent.forumLiked(forum));
-                                  }
-                                },
-                                builder: (BuildContext context,
-                                    TapDebouncerFunc? onTap) {
-                                  return IconButton(
-                                    padding: const EdgeInsets.all(0),
-                                    onPressed: onTap,
-                                    icon: Icon(
-                                      Icons.arrow_drop_up,
-                                      color: forum.likedUserIds.contains(userId)
-                                          ? Colors.grey[800]
-                                          : Colors.grey[400],
-                                      size: 35,
-                                    ),
-                                  );
-                                }),
-                            if (forum.likes < 10)
-                              Positioned(
-                                  left: 20,
-                                  bottom: -1,
-                                  child: Text(forum.likes.toString()))
-                            else
-                              Positioned(
-                                  left: 16,
-                                  bottom: -1,
-                                  child: Text(forum.likes.toString())),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ]),
-                  if (forum.photoAdded || forum.pollAdded)
-                    const SizedBox(height: 30),
-                  if (forum.photoAdded) _BuildPhoto(photoUrl: forum.photoUrl),
-                  if (forum.pollAdded) _BuildPoll(forumId: forum.forumId),
-                  Row(
-                    children: [
-                      _BuildTag(forumTag: forum.tag),
-                      _BuildDeleteButton(forum: forum),
+    return Padding(
+        padding: const EdgeInsets.only(top: 20.0, left: 8.0, right: 8),
+        child: Container(
+          padding: EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            border: Border.all(color: const Color(0xFF7BA5BB)),
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Row(children: <Widget>[
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      const SizedBox(height: 15),
+                      Text(forum.title.getOrCrash(),
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 17)),
+                      const SizedBox(height: 15),
+                      Text(forum.body.getOrCrash(),
+                          style: const TextStyle(fontSize: 15)),
                     ],
                   ),
+                ),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Stack(
+                      children: [
+                        TapDebouncer(
+                            cooldown: const Duration(milliseconds: 800),
+                            onTap: () async {
+                              if (forum.likedUserIds.contains(userId)) {
+                                context.read<ForumActorBloc>().add(
+                                    ForumActorEvent.forumUnliked(
+                                        forum.forumId));
+                              } else {
+                                context
+                                    .read<ForumActorBloc>()
+                                    .add(ForumActorEvent.forumLiked(forum));
+                              }
+                            },
+                            builder: (BuildContext context,
+                                TapDebouncerFunc? onTap) {
+                              return IconButton(
+                                padding: const EdgeInsets.all(0),
+                                onPressed: onTap,
+                                icon: Icon(
+                                  Icons.arrow_drop_up,
+                                  color: forum.likedUserIds.contains(userId)
+                                      ? Colors.grey[800]
+                                      : Colors.grey[400],
+                                  size: 35,
+                                ),
+                              );
+                            }),
+                        if (forum.likes < 10)
+                          Positioned(
+                              left: 20,
+                              bottom: -1,
+                              child: Text(forum.likes.toString()))
+                        else
+                          Positioned(
+                              left: 16,
+                              bottom: -1,
+                              child: Text(forum.likes.toString())),
+                      ],
+                    ),
+                  ],
+                ),
+              ]),
+              if (forum.photoAdded || forum.pollAdded)
+                const SizedBox(height: 30),
+              if (forum.photoAdded) _BuildPhoto(photoUrl: forum.photoUrl),
+              if (forum.pollAdded) _BuildPoll(forumId: forum.forumId),
+              Row(
+                children: [
+                  _BuildTag(forumTag: forum.tag),
+                  _BuildDeleteButton(forum: forum),
                 ],
               ),
-            ));
-      },
-    );
+            ],
+          ),
+        ));
   }
 }
 

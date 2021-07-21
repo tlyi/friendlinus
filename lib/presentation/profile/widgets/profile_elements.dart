@@ -113,7 +113,7 @@ class ProfileHeader extends StatelessWidget {
           style: const TextStyle(fontSize: 15),
           textAlign: TextAlign.center,
         )),
-        const SizedBox(height: 10),
+        if (userProfile.bio.getOrCrash() != '') const SizedBox(height: 10),
         if (isOwnProfile)
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             UpdateProfileButton(userProfile: userProfile),
