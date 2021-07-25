@@ -55,7 +55,7 @@ class LocationChatForm extends StatelessWidget {
                     unexpected: (_) =>
                         'Unexpected error in getting location.')).show(context);
           },
-          (_) {},
+          (position) {},
         );
       },
       builder: (context, state) {
@@ -147,6 +147,7 @@ class _BuildIntroMessage extends StatelessWidget {
             .value
             .fold(
                 (f) => f.maybeMap(
+                  emptyString: (_) => 'Please type an intro message',
                     exceedingLength: (_) =>
                         'Message too long, maximum of 1000 characters only',
                     orElse: () => null),
@@ -176,9 +177,9 @@ class _BuildLocationButton extends StatelessWidget {
               child: Text(
                 "Set Chat Location",
                 style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey[600],
-                    ),
+                  fontSize: 16,
+                  color: Colors.grey[600],
+                ),
               ),
             ),
             Stack(
@@ -235,6 +236,32 @@ class _BuildSaveButton extends StatelessWidget {
           style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(constants.THEME_BLUE)),
           onPressed: () {
+            if (context
+                        .read<LocationChatFormBloc>()
+                        .state
+                        .locationChat
+                        .longitude ==
+                    0 ||
+                context
+                        .read<LocationChatFormBloc>()
+                        .state
+                        .locationChat
+                        .latitude ==
+                    0) {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) => AlertDialog(
+                        title: const Text('No Location Input'),
+                        content: const Text(
+                            'Please turn on permissions/location in settings and set a location for the chat by clicking the checkbox.'),
+                        actions: <Widget>[
+                          TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: const Text('OK')),
+                        ],
+                      ));
+            }
+
             print('click');
             context
                 .read<LocationChatFormBloc>()

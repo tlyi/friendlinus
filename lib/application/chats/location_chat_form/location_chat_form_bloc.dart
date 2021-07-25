@@ -55,10 +55,7 @@ class LocationChatFormBloc
               failureOrCurrentLocation: failureOrCurrentLocation,
               locationChat: state.locationChat.copyWith(
                   latitude: position.latitude, longitude: position.longitude)));
-      // yield state.copyWith(
-      //     failureOrCurrentLocation: failureOrCurrentLocation,
-      //     isGettingLocation: false,
-      //     locationSet: true);
+      
       print('after setting: ${state.locationSet}');
     }, createdChat: (e) async* {
       Either<DataFailure, Unit>? failureOrSuccess;
@@ -75,8 +72,7 @@ class LocationChatFormBloc
             locationChat: state.locationChat.copyWith(
               lastMessage: state.introMessage.getOrCrash(),
               creatorUserId: userId,
-              // longitude: currentPosition.longitude,
-              // latitude: currentPosition.latitude,
+              
             ),
             createFailureOrSuccessOption: none());
         print('uploading');
@@ -85,8 +81,6 @@ class LocationChatFormBloc
           lastSenderId: userId,
           lastMessage: state.introMessage.getOrCrash(),
           creatorUserId: userId,
-          // longitude: currentPosition.longitude,
-          // latitude: currentPosition.latitude,
         ));
       }
 

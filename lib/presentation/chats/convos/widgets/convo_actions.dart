@@ -63,71 +63,79 @@ class _ConvoActionsState extends State<ConvoActions> {
                             context: context,
                             builder: (BuildContext innerContext) {
                               return AlertDialog(
-                                  content: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Align(
-                                    alignment: Alignment.topRight,
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        Navigator.pop(innerContext);
-                                      },
-                                      child: const Icon(
-                                        Icons.close,
-                                        color: Colors.grey,
-                                        size: 30,
+                                  content: SingleChildScrollView(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.topRight,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.pop(innerContext);
+                                        },
+                                        child: const Icon(
+                                          Icons.close,
+                                          color: Colors.grey,
+                                          size: 30,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  Image.file(pickedImage!, fit: BoxFit.contain),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: TextField(
-                                          decoration: const InputDecoration(
-                                            hintText: "Add a caption",
-                                            hintStyle: TextStyle(
-                                                color: Colors.black54),
-                                            border: InputBorder.none,
+                                    Image.file(pickedImage!,
+                                        fit: BoxFit.contain),
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: TextField(
+                                            decoration: const InputDecoration(
+                                              hintText: "Add a caption",
+                                              hintStyle: TextStyle(
+                                                  color: Colors.black54),
+                                              border: InputBorder.none,
+                                            ),
+                                            onChanged: (message) {
+                                              context
+                                                  .read<ConvoActorBloc>()
+                                                  .add(ConvoActorEvent
+                                                      .messageChanged(message));
+                                            },
+                                            onSubmitted: (_) {
+                                              context
+                                                  .read<ConvoActorBloc>()
+                                                  .add(
+                                                      ConvoActorEvent.photoSent(
+                                                          pickedImage!));
+                                              Navigator.pop(innerContext);
+                                            },
                                           ),
-                                          onChanged: (message) {
-                                            context.read<ConvoActorBloc>().add(
-                                                ConvoActorEvent.messageChanged(
-                                                    message));
-                                          },
-                                          onSubmitted: (_) {
-                                            context.read<ConvoActorBloc>().add(
-                                                ConvoActorEvent.photoSent(
-                                                    pickedImage!));
-                                            Navigator.pop(innerContext);
-                                          },
                                         ),
-                                      ),
-                                      Container(
-                                        height: 35,
-                                        width: 35,
-                                        decoration: BoxDecoration(
-                                          color: Colors.blueGrey,
-                                          borderRadius:
-                                              BorderRadius.circular(30),
-                                        ),
-                                        child: IconButton(
-                                          icon: const Icon(
-                                            Icons.send,
-                                            color: Colors.white,
-                                            size: 18,
+                                        Container(
+                                          height: 35,
+                                          width: 35,
+                                          decoration: BoxDecoration(
+                                            color: Colors.blueGrey,
+                                            borderRadius:
+                                                BorderRadius.circular(30),
                                           ),
-                                          onPressed: () {
-                                            context.read<ConvoActorBloc>().add(
-                                                ConvoActorEvent.photoSent(
-                                                    pickedImage!));
-                                            Navigator.pop(innerContext);
-                                          },
+                                          child: IconButton(
+                                            icon: const Icon(
+                                              Icons.send,
+                                              color: Colors.white,
+                                              size: 18,
+                                            ),
+                                            onPressed: () {
+                                              context
+                                                  .read<ConvoActorBloc>()
+                                                  .add(
+                                                      ConvoActorEvent.photoSent(
+                                                          pickedImage!));
+                                              Navigator.pop(innerContext);
+                                            },
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ));
                             });
                       }

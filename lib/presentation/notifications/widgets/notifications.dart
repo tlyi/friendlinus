@@ -87,7 +87,7 @@ class Notifications extends StatelessWidget {
                           if (notificationType == 'newFollower') {
                             context.pushRoute(
                                 OtherProfileRoute(userProfile: profile));
-                          } else if (profile.uuid != constants.anonUserId) {
+                          } else  {
                             context.pushRoute(ForumRoute(
                                 forumId: notification.postId,
                                 pollAdded: notification.pollAdded));
