@@ -274,7 +274,7 @@ class _BuildPoll extends StatelessWidget {
                   (f) => f.maybeMap(
                       emptyString: (_) => 'Poll title cannot be empty',
                       exceedingLength: (_) =>
-                          'Title too long, maximum of 25 characters only',
+                          'Title too long, maximum of 50 characters only',
                       orElse: () => null),
                   (_) => null);
             },
@@ -306,7 +306,7 @@ class _BuildPoll extends StatelessWidget {
                         (f) => f.maybeMap(
                             emptyString: (_) => 'Poll option cannot be empty',
                             exceedingLength: (_) =>
-                                'Option too long, maximum of 30 characters only',
+                                'Option too long, maximum of 40 characters only',
                             orElse: () => null),
                         (_) => null);
               },

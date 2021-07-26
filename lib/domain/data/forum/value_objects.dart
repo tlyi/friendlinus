@@ -34,7 +34,7 @@ class PollOption extends ValueObject<String> {
   @override
   final Either<ValueFailure<String>, String> value;
 
-  static const maxLength = 30;
+  static const maxLength = 40;
 
   factory PollOption(String input) {
     return PollOption._(validateMaxStringLength(input, maxLength)

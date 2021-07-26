@@ -172,7 +172,7 @@ class _BuildPost extends StatelessWidget {
                       Text(forum.title.getOrCrash(),
                           style: const TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 17)),
-                      const SizedBox(height: 15),
+                      if (forum.body.getOrCrash() != '') const SizedBox(height: 15),
                       Text(forum.body.getOrCrash(),
                           style: const TextStyle(fontSize: 15)),
                     ],
@@ -226,7 +226,7 @@ class _BuildPost extends StatelessWidget {
                 ),
               ]),
               if (forum.photoAdded || forum.pollAdded)
-                const SizedBox(height: 30),
+                const SizedBox(height: 20),
               if (forum.photoAdded) _BuildPhoto(photoUrl: forum.photoUrl),
               if (forum.pollAdded) _BuildPoll(forumId: forum.forumId),
               Row(
