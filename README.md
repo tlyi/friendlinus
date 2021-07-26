@@ -15,3 +15,6 @@ https://drive.google.com/file/d/1r8ei9zz5-sSc2X7RXYsh3F2GKe7XGm0K/view?usp=shari
 3. Verify your NUS email address.
 4. Create your profile.
 5. Start exploring FriendliNUS!
+
+
+![Milestone 3 Poster](https://user-images.githubusercontent.com/69505852/127009816-3435e7a5-3dda-463b-930c-7e9e3a7196dd.png)
