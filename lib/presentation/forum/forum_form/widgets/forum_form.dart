@@ -130,7 +130,7 @@ class _BuildTag extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Tag your post:'),
+              Text('Tag your post to a module:'),
               TypeAheadField(suggestionsCallback: (value) async {
                 context
                     .read<ForumFormBloc>()
@@ -274,7 +274,7 @@ class _BuildPoll extends StatelessWidget {
                   (f) => f.maybeMap(
                       emptyString: (_) => 'Poll title cannot be empty',
                       exceedingLength: (_) =>
-                          'Option too long, maximum of 25 characters only',
+                          'Title too long, maximum of 25 characters only',
                       orElse: () => null),
                   (_) => null);
             },
@@ -306,7 +306,7 @@ class _BuildPoll extends StatelessWidget {
                         (f) => f.maybeMap(
                             emptyString: (_) => 'Poll option cannot be empty',
                             exceedingLength: (_) =>
-                                'Option too long, maximum of 15 characters only',
+                                'Option too long, maximum of 30 characters only',
                             orElse: () => null),
                         (_) => null);
               },

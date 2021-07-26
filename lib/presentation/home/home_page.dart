@@ -66,19 +66,6 @@ class _HomeFeedViewState extends State<HomeFeedView>
       setState(() {
         _selectedIndex = _tabController.index;
       });
-
-      if (_tabController.index == 0) {
-        // context
-        //     .read<FriendFeedBloc>()
-        //     .add(const FriendFeedEvent.wipedOutFeed());
-        // context.read<ModuleFeedBloc>().add(const ModuleFeedEvent.refreshFeed());
-      }
-      if (_tabController.index == 1) {
-        // context
-        //     .read<ModuleFeedBloc>()
-        //     .add(const ModuleFeedEvent.wipedOutFeed());
-        //  context.read<FriendFeedBloc>().add(const FriendFeedEvent.refreshFeed());
-      }
     });
   }
 
@@ -99,8 +86,12 @@ class _HomeFeedViewState extends State<HomeFeedView>
             labelColor: Colors.black87,
             unselectedLabelColor: Colors.grey,
             tabs: const [
-              Tab(icon: Icon(Icons.library_books)),
-              Tab(icon: Icon(Icons.people_rounded)),
+              Tooltip(
+                  message: "See posts from modules you follow",
+                  child: Tab(icon: Icon(Icons.library_books))),
+              Tooltip(
+                  message: "See posts from people you follow",
+                  child: Tab(icon: Icon(Icons.people_rounded))),
             ]),
         Expanded(
           child: TabBarView(

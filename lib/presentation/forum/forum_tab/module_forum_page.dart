@@ -25,7 +25,8 @@ class ModuleForumPage extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => getIt<ModuleForumWatcherBloc>()
-            ..add(ModuleForumWatcherEvent.retrieveForumsStarted(moduleCode, 'Recent')),
+            ..add(ModuleForumWatcherEvent.retrieveForumsStarted(
+                moduleCode, 'Recent')),
         ),
         BlocProvider(
             create: (context) =>
@@ -65,6 +66,15 @@ class ModuleForumPage extends StatelessWidget {
                     return IconButton(
                         onPressed: () {
                           if (context
+                              .read<ModuleActorBloc>()
+                              .state
+                              .profile
+                              .modules
+                              .contains(moduleCode)) {
+                            print("unfollowing module");
+                            context.read<ModuleActorBloc>().add(
+                                ModuleActorEvent.moduleRemoved(moduleCode));
+                          } else if (context
                                   .read<ModuleActorBloc>()
                                   .state
                                   .profile
@@ -75,15 +85,6 @@ class ModuleForumPage extends StatelessWidget {
                                     message:
                                         'Maximum number of modules that you can follow is 8')
                                 .show(context);
-                          } else if (context
-                              .read<ModuleActorBloc>()
-                              .state
-                              .profile
-                              .modules
-                              .contains(moduleCode)) {
-                            print("unfollowing module");
-                            context.read<ModuleActorBloc>().add(
-                                ModuleActorEvent.moduleRemoved(moduleCode));
                           } else {
                             print("adding to list");
                             context

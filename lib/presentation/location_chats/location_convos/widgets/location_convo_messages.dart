@@ -271,7 +271,7 @@ class _MessageBody extends StatelessWidget {
             ),
             Row(mainAxisSize: MainAxisSize.min, children: [
               Padding(
-                padding: const EdgeInsets.only(left: 10, top: 10),
+                padding: const EdgeInsets.only(left: 10, top: 13),
                 child: Text(
                   getTimeExact(message.timeSent),
                   style: const TextStyle(fontSize: 10),

@@ -168,7 +168,7 @@ class _MessageBody extends StatelessWidget {
         ),
         Row(mainAxisSize: MainAxisSize.min, children: [
           Padding(
-            padding: const EdgeInsets.only(left: 10, top: 10),
+            padding: const EdgeInsets.only(left: 10, top: 13),
             child: Text(
               getTimeExact(message.timeSent),
               style: const TextStyle(fontSize: 10),
@@ -176,7 +176,7 @@ class _MessageBody extends StatelessWidget {
           ),
           if (!isOtherSender)
             Padding(
-              padding: const EdgeInsets.only(left: 5, top: 10),
+              padding: const EdgeInsets.only(left: 5, top: 13),
               child: message.read
                   ? const Icon(MdiIcons.checkAll, color: Colors.white, size: 15)
                   : const Icon(MdiIcons.check, color: Colors.white, size: 15),
@@ -212,7 +212,7 @@ class _CaptionBody extends StatelessWidget {
         ),
         Row(mainAxisSize: MainAxisSize.min, children: [
           Padding(
-            padding: const EdgeInsets.only(left: 10, top: 10),
+            padding: const EdgeInsets.only(left: 10, top: 13),
             child: Text(
               getTimeExact(message.timeSent),
               style: const TextStyle(fontSize: 10),
@@ -220,7 +220,7 @@ class _CaptionBody extends StatelessWidget {
           ),
           if (!isOtherSender)
             Padding(
-              padding: const EdgeInsets.only(left: 5, top: 10),
+              padding: const EdgeInsets.only(left: 5, top: 13),
               child: message.read
                   ? const Icon(MdiIcons.checkAll, color: Colors.white, size: 15)
                   : const Icon(MdiIcons.check, color: Colors.white, size: 15),
