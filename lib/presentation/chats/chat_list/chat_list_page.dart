@@ -15,18 +15,10 @@ class ChatListPage extends StatelessWidget {
         bottomNavigationBar: const NavigationBar(),
         body: Container(
           alignment: Alignment.topCenter,
-          child: SingleChildScrollView(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                maxHeight: MediaQuery.of(context).size.height -
-                    (MediaQuery.of(context).padding.top + kToolbarHeight),
-              ),
-              child: BlocProvider(
-                create: (context) => getIt<ChatWatcherBloc>()
-                  ..add(const ChatWatcherEvent.retrieveChatsStarted()),
-                child: ChatList(),
-              ),
-            ),
+          child: BlocProvider(
+            create: (context) => getIt<ChatWatcherBloc>()
+              ..add(const ChatWatcherEvent.retrieveChatsStarted()),
+            child: ChatList(),
           ),
         ));
   }

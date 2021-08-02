@@ -108,9 +108,7 @@ class _BuildForumList extends StatelessWidget {
                         child: ListTile(
                           contentPadding: EdgeInsets.only(
                               left: 15, right: 15, top: 10, bottom: 10),
-                          //isThreeLine: true,
                           leading: Column(
-                            //DO NOT ADJUST SPACING :')
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Stack(
@@ -199,7 +197,6 @@ class _BuildForumList extends StatelessWidget {
                             ],
                           ),
                           isThreeLine: true,
-
                           onTap: () {
                             context.pushRoute(ForumRoute(
                                 forumId: forum.forumId,
