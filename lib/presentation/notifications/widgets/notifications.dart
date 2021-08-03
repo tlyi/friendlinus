@@ -14,7 +14,7 @@ class Notifications extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<NotificationWatcherBloc, NotificationWatcherState>(
-         listener: (context, state) {
+        listener: (context, state) {
       state.maybeMap(
           loadFailure: (state) => FlushbarHelper.createError(
                 message: state.dataFailure.map(
@@ -23,17 +23,39 @@ class Notifications extends StatelessWidget {
                     unableToUpdate: (_) => 'Unable to update'),
               ).show(context),
           orElse: () {});
-    },
-        builder: (context, state) {
-          return state.map(
-              initial: (_) => Container(),
-              loadInProgress: (_) => const Center(
-                    child: CircularProgressIndicator(),
-                  ),
-              loadSuccess: (state) {
-                return ListView.builder(
-                  itemCount: state.notifications.length,
-                  itemBuilder: (context, index) {
+    }, builder: (context, state) {
+      return state.map(
+          initial: (_) => Container(),
+          loadInProgress: (_) => const Center(
+                child: CircularProgressIndicator(),
+              ),
+          loadSuccess: (state) {
+            int length = state.notifications.length;
+            print("Notifications: $length");
+            return RefreshIndicator(
+              onRefresh: () async {
+                context.read<NotificationWatcherBloc>().add(
+                    const NotificationWatcherEvent
+                        .retrieveNotificationsStarted());
+              },
+              child: ListView.builder(
+                itemCount: state.hasMore ? length + 1 : length,
+                itemBuilder: (context, index) {
+                  if (index == length) {
+                    if (!state.isRetrieving) {
+                      context.read<NotificationWatcherBloc>().add(
+                          NotificationWatcherEvent.retrieveMoreNotifications(
+                              state.notifications, state.profiles));
+
+                      print("ADD MORE");
+                    }
+                    return Container(
+                      margin: EdgeInsets.only(top: 15, bottom: 15),
+                      height: 30,
+                      width: 30,
+                      child: Center(child: CircularProgressIndicator()),
+                    );
+                  } else {
                     final notification = state.notifications[index];
                     final notificationType = notification.notificationType;
                     final profile = state.profiles[index];
@@ -87,7 +109,7 @@ class Notifications extends StatelessWidget {
                           if (notificationType == 'newFollower') {
                             context.pushRoute(
                                 OtherProfileRoute(userProfile: profile));
-                          } else  {
+                          } else {
                             context.pushRoute(ForumRoute(
                                 forumId: notification.postId,
                                 pollAdded: notification.pollAdded));
@@ -95,13 +117,14 @@ class Notifications extends StatelessWidget {
                         },
                       ),
                     );
-                  },
-                );
-              },
-              loadFailure: (state) {
-               
-                return Container();
-              });
-        });
+                  }
+                },
+              ),
+            );
+          },
+          loadFailure: (state) {
+            return Container();
+          });
+    });
   }
 }

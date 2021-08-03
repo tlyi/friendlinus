@@ -9,4 +9,15 @@ class NotificationWatcherEvent with _$NotificationWatcherEvent {
   const factory NotificationWatcherEvent.notificationsReceived(
           Either<DataFailure, List<Notification>> failureOrNotifications) =
       _NotificationsReceived;
+  const factory NotificationWatcherEvent.retrieveMoreNotifications(
+          List<Notification> oldNotifs, List<Profile> oldProfiles) =
+      _RetrieveMoreNotifications;
+  const factory NotificationWatcherEvent.retrieveMoreProfiles(
+      List<Notification> newNotifs,
+      List<Notification> updatedNotifs,
+      List<Profile> oldProfiles) = _RetrieveMoreProfiles;
+  const factory NotificationWatcherEvent.moreNotificationsReceived(
+      Either<DataFailure, List<Notification>> failureOrNotifications,
+      List<Notification> oldNotifs,
+      List<Profile> oldProfiles) = _MoreNotificationsReceived;
 }

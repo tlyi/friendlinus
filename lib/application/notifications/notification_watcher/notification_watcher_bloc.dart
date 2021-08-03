@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:friendlinus/domain/data/data_failure.dart';
@@ -33,7 +34,7 @@ class NotificationWatcherBloc
         String userId = await _notificationRepository.getOwnId();
         await _notificationStreamSubscription?.cancel();
         _notificationStreamSubscription = _notificationRepository
-            .retrieveNotifications(userId)
+            .retrieveNotificationsInitial(userId)
             .listen((failureOrNotifications) => add(
                 NotificationWatcherEvent.notificationsReceived(
                     failureOrNotifications)));
@@ -67,7 +68,56 @@ class NotificationWatcherBloc
             profileList.add(profile!);
           }
         }
-        yield NotificationWatcherState.loadSuccess(e.notifs, profileList);
+        yield NotificationWatcherState.loadSuccess(
+            e.notifs, profileList, e.notifs.length == 10, false);
+      },
+      retrieveMoreNotifications: (e) async* {
+        yield NotificationWatcherState.loadSuccess(
+            e.oldNotifs, e.oldProfiles, true, true);
+        String userId = await _notificationRepository.getOwnId();
+        String lastTimestamp = e.oldNotifs.last.timestamp;
+        await _notificationStreamSubscription?.cancel();
+        _notificationStreamSubscription = _notificationRepository
+            .retrieveNotificationsInBatches(userId, lastTimestamp)
+            .listen((failureOrNotifications) => add(
+                NotificationWatcherEvent.moreNotificationsReceived(
+                    failureOrNotifications, e.oldNotifs, e.oldProfiles)));
+      },
+      moreNotificationsReceived: (e) async* {
+        DataFailure? failure;
+        List<Notification>? newNotifs;
+
+        e.failureOrNotifications.fold((f) => failure = f, (n) => newNotifs = n);
+        if (failure != null) {
+          yield NotificationWatcherState.loadFailure(failure!);
+        } else {
+          List<Notification> notifs = [];
+          notifs.addAll(e.oldNotifs);
+          notifs.addAll(newNotifs!);
+          add(NotificationWatcherEvent.retrieveMoreProfiles(
+              newNotifs!, notifs, e.oldProfiles));
+        }
+      },
+      retrieveMoreProfiles: (e) async* {
+        List<Profile> profiles = e.oldProfiles;
+
+        for (final notif in e.newNotifs) {
+          final Either<DataFailure, Profile> failureOrProfile =
+              await _notificationRepository.searchProfileByUuid(notif.senderId);
+          DataFailure? failure;
+          Profile? profile;
+
+          failureOrProfile.fold((f) => failure = f, (p) => profile = p);
+
+          if (failure != null) {
+            yield NotificationWatcherState.loadFailure(failure!);
+          } else {
+            profiles.add(profile!);
+          }
+        }
+        print('${e.updatedNotifs.length} +  ${profiles.length}');
+        yield NotificationWatcherState.loadSuccess(
+            e.updatedNotifs, profiles, e.newNotifs.length == 10, false);
       },
     );
   }

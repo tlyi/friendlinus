@@ -32,6 +32,34 @@ class _$NotificationWatcherEventTearOff {
       failureOrNotifications,
     );
   }
+
+  _RetrieveMoreNotifications retrieveMoreNotifications(
+      List<Notification> oldNotifs, List<Profile> oldProfiles) {
+    return _RetrieveMoreNotifications(
+      oldNotifs,
+      oldProfiles,
+    );
+  }
+
+  _RetrieveMoreProfiles retrieveMoreProfiles(List<Notification> newNotifs,
+      List<Notification> updatedNotifs, List<Profile> oldProfiles) {
+    return _RetrieveMoreProfiles(
+      newNotifs,
+      updatedNotifs,
+      oldProfiles,
+    );
+  }
+
+  _MoreNotificationsReceived moreNotificationsReceived(
+      Either<DataFailure, List<Notification>> failureOrNotifications,
+      List<Notification> oldNotifs,
+      List<Profile> oldProfiles) {
+    return _MoreNotificationsReceived(
+      failureOrNotifications,
+      oldNotifs,
+      oldProfiles,
+    );
+  }
 }
 
 /// @nodoc
@@ -47,6 +75,17 @@ mixin _$NotificationWatcherEvent {
     required TResult Function(
             Either<DataFailure, List<Notification>> failureOrNotifications)
         notificationsReceived,
+    required TResult Function(
+            List<Notification> oldNotifs, List<Profile> oldProfiles)
+        retrieveMoreNotifications,
+    required TResult Function(List<Notification> newNotifs,
+            List<Notification> updatedNotifs, List<Profile> oldProfiles)
+        retrieveMoreProfiles,
+    required TResult Function(
+            Either<DataFailure, List<Notification>> failureOrNotifications,
+            List<Notification> oldNotifs,
+            List<Profile> oldProfiles)
+        moreNotificationsReceived,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -56,6 +95,16 @@ mixin _$NotificationWatcherEvent {
     TResult Function(
             Either<DataFailure, List<Notification>> failureOrNotifications)?
         notificationsReceived,
+    TResult Function(List<Notification> oldNotifs, List<Profile> oldProfiles)?
+        retrieveMoreNotifications,
+    TResult Function(List<Notification> newNotifs,
+            List<Notification> updatedNotifs, List<Profile> oldProfiles)?
+        retrieveMoreProfiles,
+    TResult Function(
+            Either<DataFailure, List<Notification>> failureOrNotifications,
+            List<Notification> oldNotifs,
+            List<Profile> oldProfiles)?
+        moreNotificationsReceived,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -67,6 +116,11 @@ mixin _$NotificationWatcherEvent {
         retrieveProfilesStarted,
     required TResult Function(_NotificationsReceived value)
         notificationsReceived,
+    required TResult Function(_RetrieveMoreNotifications value)
+        retrieveMoreNotifications,
+    required TResult Function(_RetrieveMoreProfiles value) retrieveMoreProfiles,
+    required TResult Function(_MoreNotificationsReceived value)
+        moreNotificationsReceived,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -75,6 +129,11 @@ mixin _$NotificationWatcherEvent {
         retrieveNotificationsStarted,
     TResult Function(_RetrieveProfilesStarted value)? retrieveProfilesStarted,
     TResult Function(_NotificationsReceived value)? notificationsReceived,
+    TResult Function(_RetrieveMoreNotifications value)?
+        retrieveMoreNotifications,
+    TResult Function(_RetrieveMoreProfiles value)? retrieveMoreProfiles,
+    TResult Function(_MoreNotificationsReceived value)?
+        moreNotificationsReceived,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -146,6 +205,17 @@ class _$_RetrieveNotificationsStarted implements _RetrieveNotificationsStarted {
     required TResult Function(
             Either<DataFailure, List<Notification>> failureOrNotifications)
         notificationsReceived,
+    required TResult Function(
+            List<Notification> oldNotifs, List<Profile> oldProfiles)
+        retrieveMoreNotifications,
+    required TResult Function(List<Notification> newNotifs,
+            List<Notification> updatedNotifs, List<Profile> oldProfiles)
+        retrieveMoreProfiles,
+    required TResult Function(
+            Either<DataFailure, List<Notification>> failureOrNotifications,
+            List<Notification> oldNotifs,
+            List<Profile> oldProfiles)
+        moreNotificationsReceived,
   }) {
     return retrieveNotificationsStarted();
   }
@@ -158,6 +228,16 @@ class _$_RetrieveNotificationsStarted implements _RetrieveNotificationsStarted {
     TResult Function(
             Either<DataFailure, List<Notification>> failureOrNotifications)?
         notificationsReceived,
+    TResult Function(List<Notification> oldNotifs, List<Profile> oldProfiles)?
+        retrieveMoreNotifications,
+    TResult Function(List<Notification> newNotifs,
+            List<Notification> updatedNotifs, List<Profile> oldProfiles)?
+        retrieveMoreProfiles,
+    TResult Function(
+            Either<DataFailure, List<Notification>> failureOrNotifications,
+            List<Notification> oldNotifs,
+            List<Profile> oldProfiles)?
+        moreNotificationsReceived,
     required TResult orElse(),
   }) {
     if (retrieveNotificationsStarted != null) {
@@ -175,6 +255,11 @@ class _$_RetrieveNotificationsStarted implements _RetrieveNotificationsStarted {
         retrieveProfilesStarted,
     required TResult Function(_NotificationsReceived value)
         notificationsReceived,
+    required TResult Function(_RetrieveMoreNotifications value)
+        retrieveMoreNotifications,
+    required TResult Function(_RetrieveMoreProfiles value) retrieveMoreProfiles,
+    required TResult Function(_MoreNotificationsReceived value)
+        moreNotificationsReceived,
   }) {
     return retrieveNotificationsStarted(this);
   }
@@ -186,6 +271,11 @@ class _$_RetrieveNotificationsStarted implements _RetrieveNotificationsStarted {
         retrieveNotificationsStarted,
     TResult Function(_RetrieveProfilesStarted value)? retrieveProfilesStarted,
     TResult Function(_NotificationsReceived value)? notificationsReceived,
+    TResult Function(_RetrieveMoreNotifications value)?
+        retrieveMoreNotifications,
+    TResult Function(_RetrieveMoreProfiles value)? retrieveMoreProfiles,
+    TResult Function(_MoreNotificationsReceived value)?
+        moreNotificationsReceived,
     required TResult orElse(),
   }) {
     if (retrieveNotificationsStarted != null) {
@@ -274,6 +364,17 @@ class _$_RetrieveProfilesStarted implements _RetrieveProfilesStarted {
     required TResult Function(
             Either<DataFailure, List<Notification>> failureOrNotifications)
         notificationsReceived,
+    required TResult Function(
+            List<Notification> oldNotifs, List<Profile> oldProfiles)
+        retrieveMoreNotifications,
+    required TResult Function(List<Notification> newNotifs,
+            List<Notification> updatedNotifs, List<Profile> oldProfiles)
+        retrieveMoreProfiles,
+    required TResult Function(
+            Either<DataFailure, List<Notification>> failureOrNotifications,
+            List<Notification> oldNotifs,
+            List<Profile> oldProfiles)
+        moreNotificationsReceived,
   }) {
     return retrieveProfilesStarted(notifs);
   }
@@ -286,6 +387,16 @@ class _$_RetrieveProfilesStarted implements _RetrieveProfilesStarted {
     TResult Function(
             Either<DataFailure, List<Notification>> failureOrNotifications)?
         notificationsReceived,
+    TResult Function(List<Notification> oldNotifs, List<Profile> oldProfiles)?
+        retrieveMoreNotifications,
+    TResult Function(List<Notification> newNotifs,
+            List<Notification> updatedNotifs, List<Profile> oldProfiles)?
+        retrieveMoreProfiles,
+    TResult Function(
+            Either<DataFailure, List<Notification>> failureOrNotifications,
+            List<Notification> oldNotifs,
+            List<Profile> oldProfiles)?
+        moreNotificationsReceived,
     required TResult orElse(),
   }) {
     if (retrieveProfilesStarted != null) {
@@ -303,6 +414,11 @@ class _$_RetrieveProfilesStarted implements _RetrieveProfilesStarted {
         retrieveProfilesStarted,
     required TResult Function(_NotificationsReceived value)
         notificationsReceived,
+    required TResult Function(_RetrieveMoreNotifications value)
+        retrieveMoreNotifications,
+    required TResult Function(_RetrieveMoreProfiles value) retrieveMoreProfiles,
+    required TResult Function(_MoreNotificationsReceived value)
+        moreNotificationsReceived,
   }) {
     return retrieveProfilesStarted(this);
   }
@@ -314,6 +430,11 @@ class _$_RetrieveProfilesStarted implements _RetrieveProfilesStarted {
         retrieveNotificationsStarted,
     TResult Function(_RetrieveProfilesStarted value)? retrieveProfilesStarted,
     TResult Function(_NotificationsReceived value)? notificationsReceived,
+    TResult Function(_RetrieveMoreNotifications value)?
+        retrieveMoreNotifications,
+    TResult Function(_RetrieveMoreProfiles value)? retrieveMoreProfiles,
+    TResult Function(_MoreNotificationsReceived value)?
+        moreNotificationsReceived,
     required TResult orElse(),
   }) {
     if (retrieveProfilesStarted != null) {
@@ -407,6 +528,17 @@ class _$_NotificationsReceived implements _NotificationsReceived {
     required TResult Function(
             Either<DataFailure, List<Notification>> failureOrNotifications)
         notificationsReceived,
+    required TResult Function(
+            List<Notification> oldNotifs, List<Profile> oldProfiles)
+        retrieveMoreNotifications,
+    required TResult Function(List<Notification> newNotifs,
+            List<Notification> updatedNotifs, List<Profile> oldProfiles)
+        retrieveMoreProfiles,
+    required TResult Function(
+            Either<DataFailure, List<Notification>> failureOrNotifications,
+            List<Notification> oldNotifs,
+            List<Profile> oldProfiles)
+        moreNotificationsReceived,
   }) {
     return notificationsReceived(failureOrNotifications);
   }
@@ -419,6 +551,16 @@ class _$_NotificationsReceived implements _NotificationsReceived {
     TResult Function(
             Either<DataFailure, List<Notification>> failureOrNotifications)?
         notificationsReceived,
+    TResult Function(List<Notification> oldNotifs, List<Profile> oldProfiles)?
+        retrieveMoreNotifications,
+    TResult Function(List<Notification> newNotifs,
+            List<Notification> updatedNotifs, List<Profile> oldProfiles)?
+        retrieveMoreProfiles,
+    TResult Function(
+            Either<DataFailure, List<Notification>> failureOrNotifications,
+            List<Notification> oldNotifs,
+            List<Profile> oldProfiles)?
+        moreNotificationsReceived,
     required TResult orElse(),
   }) {
     if (notificationsReceived != null) {
@@ -436,6 +578,11 @@ class _$_NotificationsReceived implements _NotificationsReceived {
         retrieveProfilesStarted,
     required TResult Function(_NotificationsReceived value)
         notificationsReceived,
+    required TResult Function(_RetrieveMoreNotifications value)
+        retrieveMoreNotifications,
+    required TResult Function(_RetrieveMoreProfiles value) retrieveMoreProfiles,
+    required TResult Function(_MoreNotificationsReceived value)
+        moreNotificationsReceived,
   }) {
     return notificationsReceived(this);
   }
@@ -447,6 +594,11 @@ class _$_NotificationsReceived implements _NotificationsReceived {
         retrieveNotificationsStarted,
     TResult Function(_RetrieveProfilesStarted value)? retrieveProfilesStarted,
     TResult Function(_NotificationsReceived value)? notificationsReceived,
+    TResult Function(_RetrieveMoreNotifications value)?
+        retrieveMoreNotifications,
+    TResult Function(_RetrieveMoreProfiles value)? retrieveMoreProfiles,
+    TResult Function(_MoreNotificationsReceived value)?
+        moreNotificationsReceived,
     required TResult orElse(),
   }) {
     if (notificationsReceived != null) {
@@ -469,6 +621,578 @@ abstract class _NotificationsReceived implements NotificationWatcherEvent {
 }
 
 /// @nodoc
+abstract class _$RetrieveMoreNotificationsCopyWith<$Res> {
+  factory _$RetrieveMoreNotificationsCopyWith(_RetrieveMoreNotifications value,
+          $Res Function(_RetrieveMoreNotifications) then) =
+      __$RetrieveMoreNotificationsCopyWithImpl<$Res>;
+  $Res call({List<Notification> oldNotifs, List<Profile> oldProfiles});
+}
+
+/// @nodoc
+class __$RetrieveMoreNotificationsCopyWithImpl<$Res>
+    extends _$NotificationWatcherEventCopyWithImpl<$Res>
+    implements _$RetrieveMoreNotificationsCopyWith<$Res> {
+  __$RetrieveMoreNotificationsCopyWithImpl(_RetrieveMoreNotifications _value,
+      $Res Function(_RetrieveMoreNotifications) _then)
+      : super(_value, (v) => _then(v as _RetrieveMoreNotifications));
+
+  @override
+  _RetrieveMoreNotifications get _value =>
+      super._value as _RetrieveMoreNotifications;
+
+  @override
+  $Res call({
+    Object? oldNotifs = freezed,
+    Object? oldProfiles = freezed,
+  }) {
+    return _then(_RetrieveMoreNotifications(
+      oldNotifs == freezed
+          ? _value.oldNotifs
+          : oldNotifs // ignore: cast_nullable_to_non_nullable
+              as List<Notification>,
+      oldProfiles == freezed
+          ? _value.oldProfiles
+          : oldProfiles // ignore: cast_nullable_to_non_nullable
+              as List<Profile>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_RetrieveMoreNotifications implements _RetrieveMoreNotifications {
+  const _$_RetrieveMoreNotifications(this.oldNotifs, this.oldProfiles);
+
+  @override
+  final List<Notification> oldNotifs;
+  @override
+  final List<Profile> oldProfiles;
+
+  @override
+  String toString() {
+    return 'NotificationWatcherEvent.retrieveMoreNotifications(oldNotifs: $oldNotifs, oldProfiles: $oldProfiles)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _RetrieveMoreNotifications &&
+            (identical(other.oldNotifs, oldNotifs) ||
+                const DeepCollectionEquality()
+                    .equals(other.oldNotifs, oldNotifs)) &&
+            (identical(other.oldProfiles, oldProfiles) ||
+                const DeepCollectionEquality()
+                    .equals(other.oldProfiles, oldProfiles)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(oldNotifs) ^
+      const DeepCollectionEquality().hash(oldProfiles);
+
+  @JsonKey(ignore: true)
+  @override
+  _$RetrieveMoreNotificationsCopyWith<_RetrieveMoreNotifications>
+      get copyWith =>
+          __$RetrieveMoreNotificationsCopyWithImpl<_RetrieveMoreNotifications>(
+              this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() retrieveNotificationsStarted,
+    required TResult Function(List<Notification> notifs)
+        retrieveProfilesStarted,
+    required TResult Function(
+            Either<DataFailure, List<Notification>> failureOrNotifications)
+        notificationsReceived,
+    required TResult Function(
+            List<Notification> oldNotifs, List<Profile> oldProfiles)
+        retrieveMoreNotifications,
+    required TResult Function(List<Notification> newNotifs,
+            List<Notification> updatedNotifs, List<Profile> oldProfiles)
+        retrieveMoreProfiles,
+    required TResult Function(
+            Either<DataFailure, List<Notification>> failureOrNotifications,
+            List<Notification> oldNotifs,
+            List<Profile> oldProfiles)
+        moreNotificationsReceived,
+  }) {
+    return retrieveMoreNotifications(oldNotifs, oldProfiles);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? retrieveNotificationsStarted,
+    TResult Function(List<Notification> notifs)? retrieveProfilesStarted,
+    TResult Function(
+            Either<DataFailure, List<Notification>> failureOrNotifications)?
+        notificationsReceived,
+    TResult Function(List<Notification> oldNotifs, List<Profile> oldProfiles)?
+        retrieveMoreNotifications,
+    TResult Function(List<Notification> newNotifs,
+            List<Notification> updatedNotifs, List<Profile> oldProfiles)?
+        retrieveMoreProfiles,
+    TResult Function(
+            Either<DataFailure, List<Notification>> failureOrNotifications,
+            List<Notification> oldNotifs,
+            List<Profile> oldProfiles)?
+        moreNotificationsReceived,
+    required TResult orElse(),
+  }) {
+    if (retrieveMoreNotifications != null) {
+      return retrieveMoreNotifications(oldNotifs, oldProfiles);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_RetrieveNotificationsStarted value)
+        retrieveNotificationsStarted,
+    required TResult Function(_RetrieveProfilesStarted value)
+        retrieveProfilesStarted,
+    required TResult Function(_NotificationsReceived value)
+        notificationsReceived,
+    required TResult Function(_RetrieveMoreNotifications value)
+        retrieveMoreNotifications,
+    required TResult Function(_RetrieveMoreProfiles value) retrieveMoreProfiles,
+    required TResult Function(_MoreNotificationsReceived value)
+        moreNotificationsReceived,
+  }) {
+    return retrieveMoreNotifications(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_RetrieveNotificationsStarted value)?
+        retrieveNotificationsStarted,
+    TResult Function(_RetrieveProfilesStarted value)? retrieveProfilesStarted,
+    TResult Function(_NotificationsReceived value)? notificationsReceived,
+    TResult Function(_RetrieveMoreNotifications value)?
+        retrieveMoreNotifications,
+    TResult Function(_RetrieveMoreProfiles value)? retrieveMoreProfiles,
+    TResult Function(_MoreNotificationsReceived value)?
+        moreNotificationsReceived,
+    required TResult orElse(),
+  }) {
+    if (retrieveMoreNotifications != null) {
+      return retrieveMoreNotifications(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _RetrieveMoreNotifications implements NotificationWatcherEvent {
+  const factory _RetrieveMoreNotifications(
+          List<Notification> oldNotifs, List<Profile> oldProfiles) =
+      _$_RetrieveMoreNotifications;
+
+  List<Notification> get oldNotifs => throw _privateConstructorUsedError;
+  List<Profile> get oldProfiles => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$RetrieveMoreNotificationsCopyWith<_RetrieveMoreNotifications>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$RetrieveMoreProfilesCopyWith<$Res> {
+  factory _$RetrieveMoreProfilesCopyWith(_RetrieveMoreProfiles value,
+          $Res Function(_RetrieveMoreProfiles) then) =
+      __$RetrieveMoreProfilesCopyWithImpl<$Res>;
+  $Res call(
+      {List<Notification> newNotifs,
+      List<Notification> updatedNotifs,
+      List<Profile> oldProfiles});
+}
+
+/// @nodoc
+class __$RetrieveMoreProfilesCopyWithImpl<$Res>
+    extends _$NotificationWatcherEventCopyWithImpl<$Res>
+    implements _$RetrieveMoreProfilesCopyWith<$Res> {
+  __$RetrieveMoreProfilesCopyWithImpl(
+      _RetrieveMoreProfiles _value, $Res Function(_RetrieveMoreProfiles) _then)
+      : super(_value, (v) => _then(v as _RetrieveMoreProfiles));
+
+  @override
+  _RetrieveMoreProfiles get _value => super._value as _RetrieveMoreProfiles;
+
+  @override
+  $Res call({
+    Object? newNotifs = freezed,
+    Object? updatedNotifs = freezed,
+    Object? oldProfiles = freezed,
+  }) {
+    return _then(_RetrieveMoreProfiles(
+      newNotifs == freezed
+          ? _value.newNotifs
+          : newNotifs // ignore: cast_nullable_to_non_nullable
+              as List<Notification>,
+      updatedNotifs == freezed
+          ? _value.updatedNotifs
+          : updatedNotifs // ignore: cast_nullable_to_non_nullable
+              as List<Notification>,
+      oldProfiles == freezed
+          ? _value.oldProfiles
+          : oldProfiles // ignore: cast_nullable_to_non_nullable
+              as List<Profile>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_RetrieveMoreProfiles implements _RetrieveMoreProfiles {
+  const _$_RetrieveMoreProfiles(
+      this.newNotifs, this.updatedNotifs, this.oldProfiles);
+
+  @override
+  final List<Notification> newNotifs;
+  @override
+  final List<Notification> updatedNotifs;
+  @override
+  final List<Profile> oldProfiles;
+
+  @override
+  String toString() {
+    return 'NotificationWatcherEvent.retrieveMoreProfiles(newNotifs: $newNotifs, updatedNotifs: $updatedNotifs, oldProfiles: $oldProfiles)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _RetrieveMoreProfiles &&
+            (identical(other.newNotifs, newNotifs) ||
+                const DeepCollectionEquality()
+                    .equals(other.newNotifs, newNotifs)) &&
+            (identical(other.updatedNotifs, updatedNotifs) ||
+                const DeepCollectionEquality()
+                    .equals(other.updatedNotifs, updatedNotifs)) &&
+            (identical(other.oldProfiles, oldProfiles) ||
+                const DeepCollectionEquality()
+                    .equals(other.oldProfiles, oldProfiles)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(newNotifs) ^
+      const DeepCollectionEquality().hash(updatedNotifs) ^
+      const DeepCollectionEquality().hash(oldProfiles);
+
+  @JsonKey(ignore: true)
+  @override
+  _$RetrieveMoreProfilesCopyWith<_RetrieveMoreProfiles> get copyWith =>
+      __$RetrieveMoreProfilesCopyWithImpl<_RetrieveMoreProfiles>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() retrieveNotificationsStarted,
+    required TResult Function(List<Notification> notifs)
+        retrieveProfilesStarted,
+    required TResult Function(
+            Either<DataFailure, List<Notification>> failureOrNotifications)
+        notificationsReceived,
+    required TResult Function(
+            List<Notification> oldNotifs, List<Profile> oldProfiles)
+        retrieveMoreNotifications,
+    required TResult Function(List<Notification> newNotifs,
+            List<Notification> updatedNotifs, List<Profile> oldProfiles)
+        retrieveMoreProfiles,
+    required TResult Function(
+            Either<DataFailure, List<Notification>> failureOrNotifications,
+            List<Notification> oldNotifs,
+            List<Profile> oldProfiles)
+        moreNotificationsReceived,
+  }) {
+    return retrieveMoreProfiles(newNotifs, updatedNotifs, oldProfiles);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? retrieveNotificationsStarted,
+    TResult Function(List<Notification> notifs)? retrieveProfilesStarted,
+    TResult Function(
+            Either<DataFailure, List<Notification>> failureOrNotifications)?
+        notificationsReceived,
+    TResult Function(List<Notification> oldNotifs, List<Profile> oldProfiles)?
+        retrieveMoreNotifications,
+    TResult Function(List<Notification> newNotifs,
+            List<Notification> updatedNotifs, List<Profile> oldProfiles)?
+        retrieveMoreProfiles,
+    TResult Function(
+            Either<DataFailure, List<Notification>> failureOrNotifications,
+            List<Notification> oldNotifs,
+            List<Profile> oldProfiles)?
+        moreNotificationsReceived,
+    required TResult orElse(),
+  }) {
+    if (retrieveMoreProfiles != null) {
+      return retrieveMoreProfiles(newNotifs, updatedNotifs, oldProfiles);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_RetrieveNotificationsStarted value)
+        retrieveNotificationsStarted,
+    required TResult Function(_RetrieveProfilesStarted value)
+        retrieveProfilesStarted,
+    required TResult Function(_NotificationsReceived value)
+        notificationsReceived,
+    required TResult Function(_RetrieveMoreNotifications value)
+        retrieveMoreNotifications,
+    required TResult Function(_RetrieveMoreProfiles value) retrieveMoreProfiles,
+    required TResult Function(_MoreNotificationsReceived value)
+        moreNotificationsReceived,
+  }) {
+    return retrieveMoreProfiles(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_RetrieveNotificationsStarted value)?
+        retrieveNotificationsStarted,
+    TResult Function(_RetrieveProfilesStarted value)? retrieveProfilesStarted,
+    TResult Function(_NotificationsReceived value)? notificationsReceived,
+    TResult Function(_RetrieveMoreNotifications value)?
+        retrieveMoreNotifications,
+    TResult Function(_RetrieveMoreProfiles value)? retrieveMoreProfiles,
+    TResult Function(_MoreNotificationsReceived value)?
+        moreNotificationsReceived,
+    required TResult orElse(),
+  }) {
+    if (retrieveMoreProfiles != null) {
+      return retrieveMoreProfiles(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _RetrieveMoreProfiles implements NotificationWatcherEvent {
+  const factory _RetrieveMoreProfiles(
+      List<Notification> newNotifs,
+      List<Notification> updatedNotifs,
+      List<Profile> oldProfiles) = _$_RetrieveMoreProfiles;
+
+  List<Notification> get newNotifs => throw _privateConstructorUsedError;
+  List<Notification> get updatedNotifs => throw _privateConstructorUsedError;
+  List<Profile> get oldProfiles => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$RetrieveMoreProfilesCopyWith<_RetrieveMoreProfiles> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$MoreNotificationsReceivedCopyWith<$Res> {
+  factory _$MoreNotificationsReceivedCopyWith(_MoreNotificationsReceived value,
+          $Res Function(_MoreNotificationsReceived) then) =
+      __$MoreNotificationsReceivedCopyWithImpl<$Res>;
+  $Res call(
+      {Either<DataFailure, List<Notification>> failureOrNotifications,
+      List<Notification> oldNotifs,
+      List<Profile> oldProfiles});
+}
+
+/// @nodoc
+class __$MoreNotificationsReceivedCopyWithImpl<$Res>
+    extends _$NotificationWatcherEventCopyWithImpl<$Res>
+    implements _$MoreNotificationsReceivedCopyWith<$Res> {
+  __$MoreNotificationsReceivedCopyWithImpl(_MoreNotificationsReceived _value,
+      $Res Function(_MoreNotificationsReceived) _then)
+      : super(_value, (v) => _then(v as _MoreNotificationsReceived));
+
+  @override
+  _MoreNotificationsReceived get _value =>
+      super._value as _MoreNotificationsReceived;
+
+  @override
+  $Res call({
+    Object? failureOrNotifications = freezed,
+    Object? oldNotifs = freezed,
+    Object? oldProfiles = freezed,
+  }) {
+    return _then(_MoreNotificationsReceived(
+      failureOrNotifications == freezed
+          ? _value.failureOrNotifications
+          : failureOrNotifications // ignore: cast_nullable_to_non_nullable
+              as Either<DataFailure, List<Notification>>,
+      oldNotifs == freezed
+          ? _value.oldNotifs
+          : oldNotifs // ignore: cast_nullable_to_non_nullable
+              as List<Notification>,
+      oldProfiles == freezed
+          ? _value.oldProfiles
+          : oldProfiles // ignore: cast_nullable_to_non_nullable
+              as List<Profile>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_MoreNotificationsReceived implements _MoreNotificationsReceived {
+  const _$_MoreNotificationsReceived(
+      this.failureOrNotifications, this.oldNotifs, this.oldProfiles);
+
+  @override
+  final Either<DataFailure, List<Notification>> failureOrNotifications;
+  @override
+  final List<Notification> oldNotifs;
+  @override
+  final List<Profile> oldProfiles;
+
+  @override
+  String toString() {
+    return 'NotificationWatcherEvent.moreNotificationsReceived(failureOrNotifications: $failureOrNotifications, oldNotifs: $oldNotifs, oldProfiles: $oldProfiles)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _MoreNotificationsReceived &&
+            (identical(other.failureOrNotifications, failureOrNotifications) ||
+                const DeepCollectionEquality().equals(
+                    other.failureOrNotifications, failureOrNotifications)) &&
+            (identical(other.oldNotifs, oldNotifs) ||
+                const DeepCollectionEquality()
+                    .equals(other.oldNotifs, oldNotifs)) &&
+            (identical(other.oldProfiles, oldProfiles) ||
+                const DeepCollectionEquality()
+                    .equals(other.oldProfiles, oldProfiles)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(failureOrNotifications) ^
+      const DeepCollectionEquality().hash(oldNotifs) ^
+      const DeepCollectionEquality().hash(oldProfiles);
+
+  @JsonKey(ignore: true)
+  @override
+  _$MoreNotificationsReceivedCopyWith<_MoreNotificationsReceived>
+      get copyWith =>
+          __$MoreNotificationsReceivedCopyWithImpl<_MoreNotificationsReceived>(
+              this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() retrieveNotificationsStarted,
+    required TResult Function(List<Notification> notifs)
+        retrieveProfilesStarted,
+    required TResult Function(
+            Either<DataFailure, List<Notification>> failureOrNotifications)
+        notificationsReceived,
+    required TResult Function(
+            List<Notification> oldNotifs, List<Profile> oldProfiles)
+        retrieveMoreNotifications,
+    required TResult Function(List<Notification> newNotifs,
+            List<Notification> updatedNotifs, List<Profile> oldProfiles)
+        retrieveMoreProfiles,
+    required TResult Function(
+            Either<DataFailure, List<Notification>> failureOrNotifications,
+            List<Notification> oldNotifs,
+            List<Profile> oldProfiles)
+        moreNotificationsReceived,
+  }) {
+    return moreNotificationsReceived(
+        failureOrNotifications, oldNotifs, oldProfiles);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? retrieveNotificationsStarted,
+    TResult Function(List<Notification> notifs)? retrieveProfilesStarted,
+    TResult Function(
+            Either<DataFailure, List<Notification>> failureOrNotifications)?
+        notificationsReceived,
+    TResult Function(List<Notification> oldNotifs, List<Profile> oldProfiles)?
+        retrieveMoreNotifications,
+    TResult Function(List<Notification> newNotifs,
+            List<Notification> updatedNotifs, List<Profile> oldProfiles)?
+        retrieveMoreProfiles,
+    TResult Function(
+            Either<DataFailure, List<Notification>> failureOrNotifications,
+            List<Notification> oldNotifs,
+            List<Profile> oldProfiles)?
+        moreNotificationsReceived,
+    required TResult orElse(),
+  }) {
+    if (moreNotificationsReceived != null) {
+      return moreNotificationsReceived(
+          failureOrNotifications, oldNotifs, oldProfiles);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_RetrieveNotificationsStarted value)
+        retrieveNotificationsStarted,
+    required TResult Function(_RetrieveProfilesStarted value)
+        retrieveProfilesStarted,
+    required TResult Function(_NotificationsReceived value)
+        notificationsReceived,
+    required TResult Function(_RetrieveMoreNotifications value)
+        retrieveMoreNotifications,
+    required TResult Function(_RetrieveMoreProfiles value) retrieveMoreProfiles,
+    required TResult Function(_MoreNotificationsReceived value)
+        moreNotificationsReceived,
+  }) {
+    return moreNotificationsReceived(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_RetrieveNotificationsStarted value)?
+        retrieveNotificationsStarted,
+    TResult Function(_RetrieveProfilesStarted value)? retrieveProfilesStarted,
+    TResult Function(_NotificationsReceived value)? notificationsReceived,
+    TResult Function(_RetrieveMoreNotifications value)?
+        retrieveMoreNotifications,
+    TResult Function(_RetrieveMoreProfiles value)? retrieveMoreProfiles,
+    TResult Function(_MoreNotificationsReceived value)?
+        moreNotificationsReceived,
+    required TResult orElse(),
+  }) {
+    if (moreNotificationsReceived != null) {
+      return moreNotificationsReceived(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _MoreNotificationsReceived implements NotificationWatcherEvent {
+  const factory _MoreNotificationsReceived(
+      Either<DataFailure, List<Notification>> failureOrNotifications,
+      List<Notification> oldNotifs,
+      List<Profile> oldProfiles) = _$_MoreNotificationsReceived;
+
+  Either<DataFailure, List<Notification>> get failureOrNotifications =>
+      throw _privateConstructorUsedError;
+  List<Notification> get oldNotifs => throw _privateConstructorUsedError;
+  List<Profile> get oldProfiles => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$MoreNotificationsReceivedCopyWith<_MoreNotificationsReceived>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 class _$NotificationWatcherStateTearOff {
   const _$NotificationWatcherStateTearOff();
 
@@ -480,11 +1204,13 @@ class _$NotificationWatcherStateTearOff {
     return const LoadInProgress();
   }
 
-  LoadSuccess loadSuccess(
-      List<Notification> notifications, List<Profile> profiles) {
+  LoadSuccess loadSuccess(List<Notification> notifications,
+      List<Profile> profiles, bool hasMore, bool isRetrieving) {
     return LoadSuccess(
       notifications,
       profiles,
+      hasMore,
+      isRetrieving,
     );
   }
 
@@ -504,8 +1230,8 @@ mixin _$NotificationWatcherState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(
-            List<Notification> notifications, List<Profile> profiles)
+    required TResult Function(List<Notification> notifications,
+            List<Profile> profiles, bool hasMore, bool isRetrieving)
         loadSuccess,
     required TResult Function(DataFailure dataFailure) loadFailure,
   }) =>
@@ -514,7 +1240,8 @@ mixin _$NotificationWatcherState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<Notification> notifications, List<Profile> profiles)?
+    TResult Function(List<Notification> notifications, List<Profile> profiles,
+            bool hasMore, bool isRetrieving)?
         loadSuccess,
     TResult Function(DataFailure dataFailure)? loadFailure,
     required TResult orElse(),
@@ -596,8 +1323,8 @@ class _$_Initial implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(
-            List<Notification> notifications, List<Profile> profiles)
+    required TResult Function(List<Notification> notifications,
+            List<Profile> profiles, bool hasMore, bool isRetrieving)
         loadSuccess,
     required TResult Function(DataFailure dataFailure) loadFailure,
   }) {
@@ -609,7 +1336,8 @@ class _$_Initial implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<Notification> notifications, List<Profile> profiles)?
+    TResult Function(List<Notification> notifications, List<Profile> profiles,
+            bool hasMore, bool isRetrieving)?
         loadSuccess,
     TResult Function(DataFailure dataFailure)? loadFailure,
     required TResult orElse(),
@@ -693,8 +1421,8 @@ class _$LoadInProgress implements LoadInProgress {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(
-            List<Notification> notifications, List<Profile> profiles)
+    required TResult Function(List<Notification> notifications,
+            List<Profile> profiles, bool hasMore, bool isRetrieving)
         loadSuccess,
     required TResult Function(DataFailure dataFailure) loadFailure,
   }) {
@@ -706,7 +1434,8 @@ class _$LoadInProgress implements LoadInProgress {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<Notification> notifications, List<Profile> profiles)?
+    TResult Function(List<Notification> notifications, List<Profile> profiles,
+            bool hasMore, bool isRetrieving)?
         loadSuccess,
     TResult Function(DataFailure dataFailure)? loadFailure,
     required TResult orElse(),
@@ -753,7 +1482,11 @@ abstract class $LoadSuccessCopyWith<$Res> {
   factory $LoadSuccessCopyWith(
           LoadSuccess value, $Res Function(LoadSuccess) then) =
       _$LoadSuccessCopyWithImpl<$Res>;
-  $Res call({List<Notification> notifications, List<Profile> profiles});
+  $Res call(
+      {List<Notification> notifications,
+      List<Profile> profiles,
+      bool hasMore,
+      bool isRetrieving});
 }
 
 /// @nodoc
@@ -771,6 +1504,8 @@ class _$LoadSuccessCopyWithImpl<$Res>
   $Res call({
     Object? notifications = freezed,
     Object? profiles = freezed,
+    Object? hasMore = freezed,
+    Object? isRetrieving = freezed,
   }) {
     return _then(LoadSuccess(
       notifications == freezed
@@ -781,6 +1516,14 @@ class _$LoadSuccessCopyWithImpl<$Res>
           ? _value.profiles
           : profiles // ignore: cast_nullable_to_non_nullable
               as List<Profile>,
+      hasMore == freezed
+          ? _value.hasMore
+          : hasMore // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isRetrieving == freezed
+          ? _value.isRetrieving
+          : isRetrieving // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -788,16 +1531,21 @@ class _$LoadSuccessCopyWithImpl<$Res>
 /// @nodoc
 
 class _$LoadSuccess implements LoadSuccess {
-  const _$LoadSuccess(this.notifications, this.profiles);
+  const _$LoadSuccess(
+      this.notifications, this.profiles, this.hasMore, this.isRetrieving);
 
   @override
   final List<Notification> notifications;
   @override
   final List<Profile> profiles;
+  @override
+  final bool hasMore;
+  @override
+  final bool isRetrieving;
 
   @override
   String toString() {
-    return 'NotificationWatcherState.loadSuccess(notifications: $notifications, profiles: $profiles)';
+    return 'NotificationWatcherState.loadSuccess(notifications: $notifications, profiles: $profiles, hasMore: $hasMore, isRetrieving: $isRetrieving)';
   }
 
   @override
@@ -809,14 +1557,22 @@ class _$LoadSuccess implements LoadSuccess {
                     .equals(other.notifications, notifications)) &&
             (identical(other.profiles, profiles) ||
                 const DeepCollectionEquality()
-                    .equals(other.profiles, profiles)));
+                    .equals(other.profiles, profiles)) &&
+            (identical(other.hasMore, hasMore) ||
+                const DeepCollectionEquality()
+                    .equals(other.hasMore, hasMore)) &&
+            (identical(other.isRetrieving, isRetrieving) ||
+                const DeepCollectionEquality()
+                    .equals(other.isRetrieving, isRetrieving)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(notifications) ^
-      const DeepCollectionEquality().hash(profiles);
+      const DeepCollectionEquality().hash(profiles) ^
+      const DeepCollectionEquality().hash(hasMore) ^
+      const DeepCollectionEquality().hash(isRetrieving);
 
   @JsonKey(ignore: true)
   @override
@@ -828,12 +1584,12 @@ class _$LoadSuccess implements LoadSuccess {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(
-            List<Notification> notifications, List<Profile> profiles)
+    required TResult Function(List<Notification> notifications,
+            List<Profile> profiles, bool hasMore, bool isRetrieving)
         loadSuccess,
     required TResult Function(DataFailure dataFailure) loadFailure,
   }) {
-    return loadSuccess(notifications, profiles);
+    return loadSuccess(notifications, profiles, hasMore, isRetrieving);
   }
 
   @override
@@ -841,13 +1597,14 @@ class _$LoadSuccess implements LoadSuccess {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<Notification> notifications, List<Profile> profiles)?
+    TResult Function(List<Notification> notifications, List<Profile> profiles,
+            bool hasMore, bool isRetrieving)?
         loadSuccess,
     TResult Function(DataFailure dataFailure)? loadFailure,
     required TResult orElse(),
   }) {
     if (loadSuccess != null) {
-      return loadSuccess(notifications, profiles);
+      return loadSuccess(notifications, profiles, hasMore, isRetrieving);
     }
     return orElse();
   }
@@ -880,11 +1637,13 @@ class _$LoadSuccess implements LoadSuccess {
 }
 
 abstract class LoadSuccess implements NotificationWatcherState {
-  const factory LoadSuccess(
-      List<Notification> notifications, List<Profile> profiles) = _$LoadSuccess;
+  const factory LoadSuccess(List<Notification> notifications,
+      List<Profile> profiles, bool hasMore, bool isRetrieving) = _$LoadSuccess;
 
   List<Notification> get notifications => throw _privateConstructorUsedError;
   List<Profile> get profiles => throw _privateConstructorUsedError;
+  bool get hasMore => throw _privateConstructorUsedError;
+  bool get isRetrieving => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $LoadSuccessCopyWith<LoadSuccess> get copyWith =>
       throw _privateConstructorUsedError;
@@ -967,8 +1726,8 @@ class _$_LoadFailure implements _LoadFailure {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(
-            List<Notification> notifications, List<Profile> profiles)
+    required TResult Function(List<Notification> notifications,
+            List<Profile> profiles, bool hasMore, bool isRetrieving)
         loadSuccess,
     required TResult Function(DataFailure dataFailure) loadFailure,
   }) {
@@ -980,7 +1739,8 @@ class _$_LoadFailure implements _LoadFailure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<Notification> notifications, List<Profile> profiles)?
+    TResult Function(List<Notification> notifications, List<Profile> profiles,
+            bool hasMore, bool isRetrieving)?
         loadSuccess,
     TResult Function(DataFailure dataFailure)? loadFailure,
     required TResult orElse(),

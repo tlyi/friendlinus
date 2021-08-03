@@ -76,12 +76,7 @@ class _FollowersAndFollowingViewState extends State<FollowersAndFollowingView>
         _selectedIndex = _tabController.index;
       });
 
-      if (_tabController.index == 0) {
-        // context.read<FeedBloc>().add(const FeedEvent.refreshModuleFeed());
-      }
-      if (_tabController.index == 1) {
-        // context.read<FeedBloc>().add(const FeedEvent.refreshFriendFeed());
-      }
+      context.read<ProfileActorBloc>().add(const ProfileActorEvent.openStats());
     });
   }
 
@@ -168,42 +163,58 @@ class FollowersList extends StatelessWidget {
                   shrinkWrap: true,
                   physics: const ScrollPhysics(),
                   padding: const EdgeInsets.only(top: 15.0),
-                  itemCount: followers.length,
+                  itemCount: followers.length > state.statsDisplay
+                      ? state.statsDisplay + 1
+                      : followers.length,
                   itemBuilder: (context, index) {
-                    final Profile profile = followers[index];
-                    return Card(
-                      child: ListTile(
-                          leading: Container(
-                            alignment: Alignment.center,
-                            width: 40,
-                            height: 40,
-                            decoration: const BoxDecoration(
-                                shape: BoxShape.circle, color: Colors.white),
-                            child: ClipOval(
-                              child: CachedNetworkImage(
-                                  fit: BoxFit.cover,
-                                  height: 40,
-                                  width: 40,
-                                  imageUrl: profile.photoUrl,
-                                  placeholder: (context, url) => const Center(
-                                      child: CircularProgressIndicator())),
+                    if (index == state.statsDisplay) {
+                      context
+                          .read<ProfileActorBloc>()
+                          .add(const ProfileActorEvent.moreStats());
+                      print("LOAD MORE");
+                      return Container(
+                        margin: const EdgeInsets.only(top: 15, bottom: 15),
+                        height: 30,
+                        width: 30,
+                        child: const Center(child: CircularProgressIndicator()),
+                      );
+                    } else {
+                      final Profile profile = followers[index];
+                      return Card(
+                        child: ListTile(
+                            leading: Container(
+                              alignment: Alignment.center,
+                              width: 40,
+                              height: 40,
+                              decoration: const BoxDecoration(
+                                  shape: BoxShape.circle, color: Colors.white),
+                              child: ClipOval(
+                                child: CachedNetworkImage(
+                                    fit: BoxFit.cover,
+                                    height: 40,
+                                    width: 40,
+                                    imageUrl: profile.photoUrl,
+                                    placeholder: (context, url) => const Center(
+                                        child: CircularProgressIndicator())),
+                              ),
                             ),
-                          ),
-                          title: Text(profile.username.getOrCrash()),
-                          onTap: () async {
-                            ownId == profile.uuid
-                                ? await context
-                                    .pushRoute(ProfileRoute(canGoBack: true))
-                                : await context.pushRoute(
-                                    OtherProfileRoute(userProfile: profile));
-                            isOwnProfile
-                                ? context.read<ProfileActorBloc>().add(
-                                    const ProfileActorEvent.loadingOwnProfile())
-                                : context.read<ProfileActorBloc>().add(
-                                    ProfileActorEvent.loadingOtherProfile(
-                                        userProfile.uuid));
-                          }),
-                    );
+                            title: Text(profile.username.getOrCrash()),
+                            onTap: () async {
+                              ownId == profile.uuid
+                                  ? await context
+                                      .pushRoute(ProfileRoute(canGoBack: true))
+                                  : await context.pushRoute(
+                                      OtherProfileRoute(userProfile: profile));
+                              isOwnProfile
+                                  ? context.read<ProfileActorBloc>().add(
+                                      const ProfileActorEvent
+                                          .loadingOwnProfile())
+                                  : context.read<ProfileActorBloc>().add(
+                                      ProfileActorEvent.loadingOtherProfile(
+                                          userProfile.uuid));
+                            }),
+                      );
+                    }
                   }),
           ]);
     });
@@ -252,7 +263,7 @@ class FollowingList extends StatelessWidget {
                   ),
                   if (isOwnProfile)
                     Padding(
-                      padding: EdgeInsets.only(top: 20),
+                      padding: const EdgeInsets.only(top: 20),
                       child: GestureDetector(
                         onTap: () async {
                           await context
@@ -280,42 +291,58 @@ class FollowingList extends StatelessWidget {
                   shrinkWrap: true,
                   physics: const ScrollPhysics(),
                   padding: const EdgeInsets.only(top: 15.0),
-                  itemCount: following.length,
+                  itemCount: following.length > state.statsDisplay
+                      ? state.statsDisplay + 1
+                      : following.length,
                   itemBuilder: (context, index) {
-                    final Profile profile = following[index];
-                    return Card(
-                      child: ListTile(
-                          leading: Container(
-                            alignment: Alignment.center,
-                            width: 40,
-                            height: 40,
-                            decoration: const BoxDecoration(
-                                shape: BoxShape.circle, color: Colors.white),
-                            child: ClipOval(
-                              child: CachedNetworkImage(
-                                  fit: BoxFit.cover,
-                                  height: 40,
-                                  width: 40,
-                                  imageUrl: profile.photoUrl,
-                                  placeholder: (context, url) => const Center(
-                                      child: CircularProgressIndicator())),
+                    if (index == state.statsDisplay) {
+                      context
+                          .read<ProfileActorBloc>()
+                          .add(const ProfileActorEvent.moreStats());
+                      print("LOAD MORE");
+                      return Container(
+                        margin: const EdgeInsets.only(top: 15, bottom: 15),
+                        height: 30,
+                        width: 30,
+                        child: const Center(child: CircularProgressIndicator()),
+                      );
+                    } else {
+                      final Profile profile = following[index];
+                      return Card(
+                        child: ListTile(
+                            leading: Container(
+                              alignment: Alignment.center,
+                              width: 40,
+                              height: 40,
+                              decoration: const BoxDecoration(
+                                  shape: BoxShape.circle, color: Colors.white),
+                              child: ClipOval(
+                                child: CachedNetworkImage(
+                                    fit: BoxFit.cover,
+                                    height: 40,
+                                    width: 40,
+                                    imageUrl: profile.photoUrl,
+                                    placeholder: (context, url) => const Center(
+                                        child: CircularProgressIndicator())),
+                              ),
                             ),
-                          ),
-                          title: Text(profile.username.getOrCrash()),
-                          onTap: () async {
-                            ownId == profile.uuid
-                                ? await context
-                                    .pushRoute(ProfileRoute(canGoBack: true))
-                                : await context.pushRoute(
-                                    OtherProfileRoute(userProfile: profile));
-                            isOwnProfile
-                                ? context.read<ProfileActorBloc>().add(
-                                    const ProfileActorEvent.loadingOwnProfile())
-                                : context.read<ProfileActorBloc>().add(
-                                    ProfileActorEvent.loadingOtherProfile(
-                                        userProfile.uuid));
-                          }),
-                    );
+                            title: Text(profile.username.getOrCrash()),
+                            onTap: () async {
+                              ownId == profile.uuid
+                                  ? await context
+                                      .pushRoute(ProfileRoute(canGoBack: true))
+                                  : await context.pushRoute(
+                                      OtherProfileRoute(userProfile: profile));
+                              isOwnProfile
+                                  ? context.read<ProfileActorBloc>().add(
+                                      const ProfileActorEvent
+                                          .loadingOwnProfile())
+                                  : context.read<ProfileActorBloc>().add(
+                                      ProfileActorEvent.loadingOtherProfile(
+                                          userProfile.uuid));
+                            }),
+                      );
+                    }
                   }),
           ]);
     });

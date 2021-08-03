@@ -32,7 +32,6 @@ class ModuleOverviewPage extends StatelessWidget {
                   child: CircularProgressIndicator(),
                 ),
             loadSuccess: (state) {
-              //  print(state.modules.map((e) => e.moduleCode));
               return Column(
                 children: [
                   const SizedBox(height: 60),

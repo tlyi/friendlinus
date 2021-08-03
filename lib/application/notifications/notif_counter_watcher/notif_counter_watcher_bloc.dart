@@ -25,20 +25,23 @@ class NotifCounterWatcherBloc
   Stream<NotifCounterWatcherState> mapEventToState(
     NotifCounterWatcherEvent event,
   ) async* {
-    yield* event.map(retrieveUnreadNotifsStarted: (e) async* {
-      yield const NotifCounterWatcherState.loadInProgress();
-      await _unreadNotifStreamSubscription?.cancel();
-      _unreadNotifStreamSubscription = _notificationRepository
-          .retrieveNumberUnreadNotifications(userId: e.userId)
-          .listen((failureOrUnreadNotifCount) => add(
-              NotifCounterWatcherEvent.unreadNotifsReceived(
-                  failureOrUnreadNotifCount, e.userId)));
-    }, unreadNotifsReceived: (e) async* {
-      yield e.failureOrUnreadNotifCount.fold(
-          (f) => NotifCounterWatcherState.loadFailure(f),
-          (unreadNotifCounter) => NotifCounterWatcherState.loadSuccess(
-              unreadNotifCounter, e.userId));
-    });
+    yield* event.map(
+      retrieveUnreadNotifsStarted: (e) async* {
+        yield const NotifCounterWatcherState.loadInProgress();
+        await _unreadNotifStreamSubscription?.cancel();
+        _unreadNotifStreamSubscription = _notificationRepository
+            .retrieveNumberUnreadNotifications(userId: e.userId)
+            .listen((failureOrUnreadNotifCount) => add(
+                NotifCounterWatcherEvent.unreadNotifsReceived(
+                    failureOrUnreadNotifCount, e.userId)));
+      },
+      unreadNotifsReceived: (e) async* {
+        yield e.failureOrUnreadNotifCount.fold(
+            (f) => NotifCounterWatcherState.loadFailure(f),
+            (unreadNotifCounter) => NotifCounterWatcherState.loadSuccess(
+                unreadNotifCounter, e.userId));
+      },
+    );
   }
 
   @override

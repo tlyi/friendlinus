@@ -16,18 +16,41 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$ModuleForumWatcherEventTearOff {
   const _$ModuleForumWatcherEventTearOff();
 
-  _RetrieveForumsStarted retrieveForumsStarted(
-      String moduleCode, String sortedBy) {
-    return _RetrieveForumsStarted(
+  _RefreshFeed refreshFeed(String moduleCode, String sortedBy) {
+    return _RefreshFeed(
       moduleCode,
       sortedBy,
     );
   }
 
-  _ForumsReceived forumsReceived(
-      Either<DataFailure, List<ForumPost>> failureOrForums) {
-    return _ForumsReceived(
-      failureOrForums,
+  _RetrieveMorePosts retrieveMorePosts(
+      String moduleCode, String sortedBy, List<ForumPost> oldPosts) {
+    return _RetrieveMorePosts(
+      moduleCode,
+      sortedBy,
+      oldPosts,
+    );
+  }
+
+  _Liked liked(List<ForumPost> forums, int index, String userId,
+      String moduleCode, String sortedBy) {
+    return _Liked(
+      forums,
+      index,
+      userId,
+      moduleCode,
+      sortedBy,
+    );
+  }
+
+  _Unliked unliked(List<ForumPost> forums, int index, String userId,
+      String moduleCode, String sortedBy) {
+    return _Unliked(
+      forums,
+      index,
+      userId,
+      moduleCode,
+      sortedBy,
     );
   }
 }
@@ -37,36 +60,58 @@ const $ModuleForumWatcherEvent = _$ModuleForumWatcherEventTearOff();
 
 /// @nodoc
 mixin _$ModuleForumWatcherEvent {
+  String get moduleCode => throw _privateConstructorUsedError;
+  String get sortedBy => throw _privateConstructorUsedError;
+
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String moduleCode, String sortedBy)
-        retrieveForumsStarted,
+    required TResult Function(String moduleCode, String sortedBy) refreshFeed,
     required TResult Function(
-            Either<DataFailure, List<ForumPost>> failureOrForums)
-        forumsReceived,
+            String moduleCode, String sortedBy, List<ForumPost> oldPosts)
+        retrieveMorePosts,
+    required TResult Function(List<ForumPost> forums, int index, String userId,
+            String moduleCode, String sortedBy)
+        liked,
+    required TResult Function(List<ForumPost> forums, int index, String userId,
+            String moduleCode, String sortedBy)
+        unliked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String moduleCode, String sortedBy)? retrieveForumsStarted,
-    TResult Function(Either<DataFailure, List<ForumPost>> failureOrForums)?
-        forumsReceived,
+    TResult Function(String moduleCode, String sortedBy)? refreshFeed,
+    TResult Function(
+            String moduleCode, String sortedBy, List<ForumPost> oldPosts)?
+        retrieveMorePosts,
+    TResult Function(List<ForumPost> forums, int index, String userId,
+            String moduleCode, String sortedBy)?
+        liked,
+    TResult Function(List<ForumPost> forums, int index, String userId,
+            String moduleCode, String sortedBy)?
+        unliked,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_RetrieveForumsStarted value)
-        retrieveForumsStarted,
-    required TResult Function(_ForumsReceived value) forumsReceived,
+    required TResult Function(_RefreshFeed value) refreshFeed,
+    required TResult Function(_RetrieveMorePosts value) retrieveMorePosts,
+    required TResult Function(_Liked value) liked,
+    required TResult Function(_Unliked value) unliked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_RetrieveForumsStarted value)? retrieveForumsStarted,
-    TResult Function(_ForumsReceived value)? forumsReceived,
+    TResult Function(_RefreshFeed value)? refreshFeed,
+    TResult Function(_RetrieveMorePosts value)? retrieveMorePosts,
+    TResult Function(_Liked value)? liked,
+    TResult Function(_Unliked value)? unliked,
     required TResult orElse(),
   }) =>
+      throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $ModuleForumWatcherEventCopyWith<ModuleForumWatcherEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -75,6 +120,7 @@ abstract class $ModuleForumWatcherEventCopyWith<$Res> {
   factory $ModuleForumWatcherEventCopyWith(ModuleForumWatcherEvent value,
           $Res Function(ModuleForumWatcherEvent) then) =
       _$ModuleForumWatcherEventCopyWithImpl<$Res>;
+  $Res call({String moduleCode, String sortedBy});
 }
 
 /// @nodoc
@@ -85,33 +131,52 @@ class _$ModuleForumWatcherEventCopyWithImpl<$Res>
   final ModuleForumWatcherEvent _value;
   // ignore: unused_field
   final $Res Function(ModuleForumWatcherEvent) _then;
-}
-
-/// @nodoc
-abstract class _$RetrieveForumsStartedCopyWith<$Res> {
-  factory _$RetrieveForumsStartedCopyWith(_RetrieveForumsStarted value,
-          $Res Function(_RetrieveForumsStarted) then) =
-      __$RetrieveForumsStartedCopyWithImpl<$Res>;
-  $Res call({String moduleCode, String sortedBy});
-}
-
-/// @nodoc
-class __$RetrieveForumsStartedCopyWithImpl<$Res>
-    extends _$ModuleForumWatcherEventCopyWithImpl<$Res>
-    implements _$RetrieveForumsStartedCopyWith<$Res> {
-  __$RetrieveForumsStartedCopyWithImpl(_RetrieveForumsStarted _value,
-      $Res Function(_RetrieveForumsStarted) _then)
-      : super(_value, (v) => _then(v as _RetrieveForumsStarted));
-
-  @override
-  _RetrieveForumsStarted get _value => super._value as _RetrieveForumsStarted;
 
   @override
   $Res call({
     Object? moduleCode = freezed,
     Object? sortedBy = freezed,
   }) {
-    return _then(_RetrieveForumsStarted(
+    return _then(_value.copyWith(
+      moduleCode: moduleCode == freezed
+          ? _value.moduleCode
+          : moduleCode // ignore: cast_nullable_to_non_nullable
+              as String,
+      sortedBy: sortedBy == freezed
+          ? _value.sortedBy
+          : sortedBy // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$RefreshFeedCopyWith<$Res>
+    implements $ModuleForumWatcherEventCopyWith<$Res> {
+  factory _$RefreshFeedCopyWith(
+          _RefreshFeed value, $Res Function(_RefreshFeed) then) =
+      __$RefreshFeedCopyWithImpl<$Res>;
+  @override
+  $Res call({String moduleCode, String sortedBy});
+}
+
+/// @nodoc
+class __$RefreshFeedCopyWithImpl<$Res>
+    extends _$ModuleForumWatcherEventCopyWithImpl<$Res>
+    implements _$RefreshFeedCopyWith<$Res> {
+  __$RefreshFeedCopyWithImpl(
+      _RefreshFeed _value, $Res Function(_RefreshFeed) _then)
+      : super(_value, (v) => _then(v as _RefreshFeed));
+
+  @override
+  _RefreshFeed get _value => super._value as _RefreshFeed;
+
+  @override
+  $Res call({
+    Object? moduleCode = freezed,
+    Object? sortedBy = freezed,
+  }) {
+    return _then(_RefreshFeed(
       moduleCode == freezed
           ? _value.moduleCode
           : moduleCode // ignore: cast_nullable_to_non_nullable
@@ -126,8 +191,8 @@ class __$RetrieveForumsStartedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_RetrieveForumsStarted implements _RetrieveForumsStarted {
-  const _$_RetrieveForumsStarted(this.moduleCode, this.sortedBy);
+class _$_RefreshFeed implements _RefreshFeed {
+  const _$_RefreshFeed(this.moduleCode, this.sortedBy);
 
   @override
   final String moduleCode;
@@ -136,13 +201,13 @@ class _$_RetrieveForumsStarted implements _RetrieveForumsStarted {
 
   @override
   String toString() {
-    return 'ModuleForumWatcherEvent.retrieveForumsStarted(moduleCode: $moduleCode, sortedBy: $sortedBy)';
+    return 'ModuleForumWatcherEvent.refreshFeed(moduleCode: $moduleCode, sortedBy: $sortedBy)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _RetrieveForumsStarted &&
+        (other is _RefreshFeed &&
             (identical(other.moduleCode, moduleCode) ||
                 const DeepCollectionEquality()
                     .equals(other.moduleCode, moduleCode)) &&
@@ -159,32 +224,43 @@ class _$_RetrieveForumsStarted implements _RetrieveForumsStarted {
 
   @JsonKey(ignore: true)
   @override
-  _$RetrieveForumsStartedCopyWith<_RetrieveForumsStarted> get copyWith =>
-      __$RetrieveForumsStartedCopyWithImpl<_RetrieveForumsStarted>(
-          this, _$identity);
+  _$RefreshFeedCopyWith<_RefreshFeed> get copyWith =>
+      __$RefreshFeedCopyWithImpl<_RefreshFeed>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String moduleCode, String sortedBy)
-        retrieveForumsStarted,
+    required TResult Function(String moduleCode, String sortedBy) refreshFeed,
     required TResult Function(
-            Either<DataFailure, List<ForumPost>> failureOrForums)
-        forumsReceived,
+            String moduleCode, String sortedBy, List<ForumPost> oldPosts)
+        retrieveMorePosts,
+    required TResult Function(List<ForumPost> forums, int index, String userId,
+            String moduleCode, String sortedBy)
+        liked,
+    required TResult Function(List<ForumPost> forums, int index, String userId,
+            String moduleCode, String sortedBy)
+        unliked,
   }) {
-    return retrieveForumsStarted(moduleCode, sortedBy);
+    return refreshFeed(moduleCode, sortedBy);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String moduleCode, String sortedBy)? retrieveForumsStarted,
-    TResult Function(Either<DataFailure, List<ForumPost>> failureOrForums)?
-        forumsReceived,
+    TResult Function(String moduleCode, String sortedBy)? refreshFeed,
+    TResult Function(
+            String moduleCode, String sortedBy, List<ForumPost> oldPosts)?
+        retrieveMorePosts,
+    TResult Function(List<ForumPost> forums, int index, String userId,
+            String moduleCode, String sortedBy)?
+        liked,
+    TResult Function(List<ForumPost> forums, int index, String userId,
+            String moduleCode, String sortedBy)?
+        unliked,
     required TResult orElse(),
   }) {
-    if (retrieveForumsStarted != null) {
-      return retrieveForumsStarted(moduleCode, sortedBy);
+    if (refreshFeed != null) {
+      return refreshFeed(moduleCode, sortedBy);
     }
     return orElse();
   }
@@ -192,124 +268,166 @@ class _$_RetrieveForumsStarted implements _RetrieveForumsStarted {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_RetrieveForumsStarted value)
-        retrieveForumsStarted,
-    required TResult Function(_ForumsReceived value) forumsReceived,
+    required TResult Function(_RefreshFeed value) refreshFeed,
+    required TResult Function(_RetrieveMorePosts value) retrieveMorePosts,
+    required TResult Function(_Liked value) liked,
+    required TResult Function(_Unliked value) unliked,
   }) {
-    return retrieveForumsStarted(this);
+    return refreshFeed(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_RetrieveForumsStarted value)? retrieveForumsStarted,
-    TResult Function(_ForumsReceived value)? forumsReceived,
+    TResult Function(_RefreshFeed value)? refreshFeed,
+    TResult Function(_RetrieveMorePosts value)? retrieveMorePosts,
+    TResult Function(_Liked value)? liked,
+    TResult Function(_Unliked value)? unliked,
     required TResult orElse(),
   }) {
-    if (retrieveForumsStarted != null) {
-      return retrieveForumsStarted(this);
+    if (refreshFeed != null) {
+      return refreshFeed(this);
     }
     return orElse();
   }
 }
 
-abstract class _RetrieveForumsStarted implements ModuleForumWatcherEvent {
-  const factory _RetrieveForumsStarted(String moduleCode, String sortedBy) =
-      _$_RetrieveForumsStarted;
+abstract class _RefreshFeed implements ModuleForumWatcherEvent {
+  const factory _RefreshFeed(String moduleCode, String sortedBy) =
+      _$_RefreshFeed;
 
+  @override
   String get moduleCode => throw _privateConstructorUsedError;
+  @override
   String get sortedBy => throw _privateConstructorUsedError;
+  @override
   @JsonKey(ignore: true)
-  _$RetrieveForumsStartedCopyWith<_RetrieveForumsStarted> get copyWith =>
+  _$RefreshFeedCopyWith<_RefreshFeed> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$ForumsReceivedCopyWith<$Res> {
-  factory _$ForumsReceivedCopyWith(
-          _ForumsReceived value, $Res Function(_ForumsReceived) then) =
-      __$ForumsReceivedCopyWithImpl<$Res>;
-  $Res call({Either<DataFailure, List<ForumPost>> failureOrForums});
+abstract class _$RetrieveMorePostsCopyWith<$Res>
+    implements $ModuleForumWatcherEventCopyWith<$Res> {
+  factory _$RetrieveMorePostsCopyWith(
+          _RetrieveMorePosts value, $Res Function(_RetrieveMorePosts) then) =
+      __$RetrieveMorePostsCopyWithImpl<$Res>;
+  @override
+  $Res call({String moduleCode, String sortedBy, List<ForumPost> oldPosts});
 }
 
 /// @nodoc
-class __$ForumsReceivedCopyWithImpl<$Res>
+class __$RetrieveMorePostsCopyWithImpl<$Res>
     extends _$ModuleForumWatcherEventCopyWithImpl<$Res>
-    implements _$ForumsReceivedCopyWith<$Res> {
-  __$ForumsReceivedCopyWithImpl(
-      _ForumsReceived _value, $Res Function(_ForumsReceived) _then)
-      : super(_value, (v) => _then(v as _ForumsReceived));
+    implements _$RetrieveMorePostsCopyWith<$Res> {
+  __$RetrieveMorePostsCopyWithImpl(
+      _RetrieveMorePosts _value, $Res Function(_RetrieveMorePosts) _then)
+      : super(_value, (v) => _then(v as _RetrieveMorePosts));
 
   @override
-  _ForumsReceived get _value => super._value as _ForumsReceived;
+  _RetrieveMorePosts get _value => super._value as _RetrieveMorePosts;
 
   @override
   $Res call({
-    Object? failureOrForums = freezed,
+    Object? moduleCode = freezed,
+    Object? sortedBy = freezed,
+    Object? oldPosts = freezed,
   }) {
-    return _then(_ForumsReceived(
-      failureOrForums == freezed
-          ? _value.failureOrForums
-          : failureOrForums // ignore: cast_nullable_to_non_nullable
-              as Either<DataFailure, List<ForumPost>>,
+    return _then(_RetrieveMorePosts(
+      moduleCode == freezed
+          ? _value.moduleCode
+          : moduleCode // ignore: cast_nullable_to_non_nullable
+              as String,
+      sortedBy == freezed
+          ? _value.sortedBy
+          : sortedBy // ignore: cast_nullable_to_non_nullable
+              as String,
+      oldPosts == freezed
+          ? _value.oldPosts
+          : oldPosts // ignore: cast_nullable_to_non_nullable
+              as List<ForumPost>,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_ForumsReceived implements _ForumsReceived {
-  const _$_ForumsReceived(this.failureOrForums);
+class _$_RetrieveMorePosts implements _RetrieveMorePosts {
+  const _$_RetrieveMorePosts(this.moduleCode, this.sortedBy, this.oldPosts);
 
   @override
-  final Either<DataFailure, List<ForumPost>> failureOrForums;
+  final String moduleCode;
+  @override
+  final String sortedBy;
+  @override
+  final List<ForumPost> oldPosts;
 
   @override
   String toString() {
-    return 'ModuleForumWatcherEvent.forumsReceived(failureOrForums: $failureOrForums)';
+    return 'ModuleForumWatcherEvent.retrieveMorePosts(moduleCode: $moduleCode, sortedBy: $sortedBy, oldPosts: $oldPosts)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _ForumsReceived &&
-            (identical(other.failureOrForums, failureOrForums) ||
+        (other is _RetrieveMorePosts &&
+            (identical(other.moduleCode, moduleCode) ||
                 const DeepCollectionEquality()
-                    .equals(other.failureOrForums, failureOrForums)));
+                    .equals(other.moduleCode, moduleCode)) &&
+            (identical(other.sortedBy, sortedBy) ||
+                const DeepCollectionEquality()
+                    .equals(other.sortedBy, sortedBy)) &&
+            (identical(other.oldPosts, oldPosts) ||
+                const DeepCollectionEquality()
+                    .equals(other.oldPosts, oldPosts)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(failureOrForums);
+      const DeepCollectionEquality().hash(moduleCode) ^
+      const DeepCollectionEquality().hash(sortedBy) ^
+      const DeepCollectionEquality().hash(oldPosts);
 
   @JsonKey(ignore: true)
   @override
-  _$ForumsReceivedCopyWith<_ForumsReceived> get copyWith =>
-      __$ForumsReceivedCopyWithImpl<_ForumsReceived>(this, _$identity);
+  _$RetrieveMorePostsCopyWith<_RetrieveMorePosts> get copyWith =>
+      __$RetrieveMorePostsCopyWithImpl<_RetrieveMorePosts>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String moduleCode, String sortedBy)
-        retrieveForumsStarted,
+    required TResult Function(String moduleCode, String sortedBy) refreshFeed,
     required TResult Function(
-            Either<DataFailure, List<ForumPost>> failureOrForums)
-        forumsReceived,
+            String moduleCode, String sortedBy, List<ForumPost> oldPosts)
+        retrieveMorePosts,
+    required TResult Function(List<ForumPost> forums, int index, String userId,
+            String moduleCode, String sortedBy)
+        liked,
+    required TResult Function(List<ForumPost> forums, int index, String userId,
+            String moduleCode, String sortedBy)
+        unliked,
   }) {
-    return forumsReceived(failureOrForums);
+    return retrieveMorePosts(moduleCode, sortedBy, oldPosts);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String moduleCode, String sortedBy)? retrieveForumsStarted,
-    TResult Function(Either<DataFailure, List<ForumPost>> failureOrForums)?
-        forumsReceived,
+    TResult Function(String moduleCode, String sortedBy)? refreshFeed,
+    TResult Function(
+            String moduleCode, String sortedBy, List<ForumPost> oldPosts)?
+        retrieveMorePosts,
+    TResult Function(List<ForumPost> forums, int index, String userId,
+            String moduleCode, String sortedBy)?
+        liked,
+    TResult Function(List<ForumPost> forums, int index, String userId,
+            String moduleCode, String sortedBy)?
+        unliked,
     required TResult orElse(),
   }) {
-    if (forumsReceived != null) {
-      return forumsReceived(failureOrForums);
+    if (retrieveMorePosts != null) {
+      return retrieveMorePosts(moduleCode, sortedBy, oldPosts);
     }
     return orElse();
   }
@@ -317,35 +435,428 @@ class _$_ForumsReceived implements _ForumsReceived {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_RetrieveForumsStarted value)
-        retrieveForumsStarted,
-    required TResult Function(_ForumsReceived value) forumsReceived,
+    required TResult Function(_RefreshFeed value) refreshFeed,
+    required TResult Function(_RetrieveMorePosts value) retrieveMorePosts,
+    required TResult Function(_Liked value) liked,
+    required TResult Function(_Unliked value) unliked,
   }) {
-    return forumsReceived(this);
+    return retrieveMorePosts(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_RetrieveForumsStarted value)? retrieveForumsStarted,
-    TResult Function(_ForumsReceived value)? forumsReceived,
+    TResult Function(_RefreshFeed value)? refreshFeed,
+    TResult Function(_RetrieveMorePosts value)? retrieveMorePosts,
+    TResult Function(_Liked value)? liked,
+    TResult Function(_Unliked value)? unliked,
     required TResult orElse(),
   }) {
-    if (forumsReceived != null) {
-      return forumsReceived(this);
+    if (retrieveMorePosts != null) {
+      return retrieveMorePosts(this);
     }
     return orElse();
   }
 }
 
-abstract class _ForumsReceived implements ModuleForumWatcherEvent {
-  const factory _ForumsReceived(
-      Either<DataFailure, List<ForumPost>> failureOrForums) = _$_ForumsReceived;
+abstract class _RetrieveMorePosts implements ModuleForumWatcherEvent {
+  const factory _RetrieveMorePosts(
+          String moduleCode, String sortedBy, List<ForumPost> oldPosts) =
+      _$_RetrieveMorePosts;
 
-  Either<DataFailure, List<ForumPost>> get failureOrForums =>
-      throw _privateConstructorUsedError;
+  @override
+  String get moduleCode => throw _privateConstructorUsedError;
+  @override
+  String get sortedBy => throw _privateConstructorUsedError;
+  List<ForumPost> get oldPosts => throw _privateConstructorUsedError;
+  @override
   @JsonKey(ignore: true)
-  _$ForumsReceivedCopyWith<_ForumsReceived> get copyWith =>
+  _$RetrieveMorePostsCopyWith<_RetrieveMorePosts> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$LikedCopyWith<$Res>
+    implements $ModuleForumWatcherEventCopyWith<$Res> {
+  factory _$LikedCopyWith(_Liked value, $Res Function(_Liked) then) =
+      __$LikedCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {List<ForumPost> forums,
+      int index,
+      String userId,
+      String moduleCode,
+      String sortedBy});
+}
+
+/// @nodoc
+class __$LikedCopyWithImpl<$Res>
+    extends _$ModuleForumWatcherEventCopyWithImpl<$Res>
+    implements _$LikedCopyWith<$Res> {
+  __$LikedCopyWithImpl(_Liked _value, $Res Function(_Liked) _then)
+      : super(_value, (v) => _then(v as _Liked));
+
+  @override
+  _Liked get _value => super._value as _Liked;
+
+  @override
+  $Res call({
+    Object? forums = freezed,
+    Object? index = freezed,
+    Object? userId = freezed,
+    Object? moduleCode = freezed,
+    Object? sortedBy = freezed,
+  }) {
+    return _then(_Liked(
+      forums == freezed
+          ? _value.forums
+          : forums // ignore: cast_nullable_to_non_nullable
+              as List<ForumPost>,
+      index == freezed
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int,
+      userId == freezed
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+      moduleCode == freezed
+          ? _value.moduleCode
+          : moduleCode // ignore: cast_nullable_to_non_nullable
+              as String,
+      sortedBy == freezed
+          ? _value.sortedBy
+          : sortedBy // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_Liked implements _Liked {
+  const _$_Liked(
+      this.forums, this.index, this.userId, this.moduleCode, this.sortedBy);
+
+  @override
+  final List<ForumPost> forums;
+  @override
+  final int index;
+  @override
+  final String userId;
+  @override
+  final String moduleCode;
+  @override
+  final String sortedBy;
+
+  @override
+  String toString() {
+    return 'ModuleForumWatcherEvent.liked(forums: $forums, index: $index, userId: $userId, moduleCode: $moduleCode, sortedBy: $sortedBy)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _Liked &&
+            (identical(other.forums, forums) ||
+                const DeepCollectionEquality().equals(other.forums, forums)) &&
+            (identical(other.index, index) ||
+                const DeepCollectionEquality().equals(other.index, index)) &&
+            (identical(other.userId, userId) ||
+                const DeepCollectionEquality().equals(other.userId, userId)) &&
+            (identical(other.moduleCode, moduleCode) ||
+                const DeepCollectionEquality()
+                    .equals(other.moduleCode, moduleCode)) &&
+            (identical(other.sortedBy, sortedBy) ||
+                const DeepCollectionEquality()
+                    .equals(other.sortedBy, sortedBy)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(forums) ^
+      const DeepCollectionEquality().hash(index) ^
+      const DeepCollectionEquality().hash(userId) ^
+      const DeepCollectionEquality().hash(moduleCode) ^
+      const DeepCollectionEquality().hash(sortedBy);
+
+  @JsonKey(ignore: true)
+  @override
+  _$LikedCopyWith<_Liked> get copyWith =>
+      __$LikedCopyWithImpl<_Liked>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String moduleCode, String sortedBy) refreshFeed,
+    required TResult Function(
+            String moduleCode, String sortedBy, List<ForumPost> oldPosts)
+        retrieveMorePosts,
+    required TResult Function(List<ForumPost> forums, int index, String userId,
+            String moduleCode, String sortedBy)
+        liked,
+    required TResult Function(List<ForumPost> forums, int index, String userId,
+            String moduleCode, String sortedBy)
+        unliked,
+  }) {
+    return liked(forums, index, userId, moduleCode, sortedBy);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String moduleCode, String sortedBy)? refreshFeed,
+    TResult Function(
+            String moduleCode, String sortedBy, List<ForumPost> oldPosts)?
+        retrieveMorePosts,
+    TResult Function(List<ForumPost> forums, int index, String userId,
+            String moduleCode, String sortedBy)?
+        liked,
+    TResult Function(List<ForumPost> forums, int index, String userId,
+            String moduleCode, String sortedBy)?
+        unliked,
+    required TResult orElse(),
+  }) {
+    if (liked != null) {
+      return liked(forums, index, userId, moduleCode, sortedBy);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_RefreshFeed value) refreshFeed,
+    required TResult Function(_RetrieveMorePosts value) retrieveMorePosts,
+    required TResult Function(_Liked value) liked,
+    required TResult Function(_Unliked value) unliked,
+  }) {
+    return liked(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_RefreshFeed value)? refreshFeed,
+    TResult Function(_RetrieveMorePosts value)? retrieveMorePosts,
+    TResult Function(_Liked value)? liked,
+    TResult Function(_Unliked value)? unliked,
+    required TResult orElse(),
+  }) {
+    if (liked != null) {
+      return liked(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Liked implements ModuleForumWatcherEvent {
+  const factory _Liked(List<ForumPost> forums, int index, String userId,
+      String moduleCode, String sortedBy) = _$_Liked;
+
+  List<ForumPost> get forums => throw _privateConstructorUsedError;
+  int get index => throw _privateConstructorUsedError;
+  String get userId => throw _privateConstructorUsedError;
+  @override
+  String get moduleCode => throw _privateConstructorUsedError;
+  @override
+  String get sortedBy => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$LikedCopyWith<_Liked> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$UnlikedCopyWith<$Res>
+    implements $ModuleForumWatcherEventCopyWith<$Res> {
+  factory _$UnlikedCopyWith(_Unliked value, $Res Function(_Unliked) then) =
+      __$UnlikedCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {List<ForumPost> forums,
+      int index,
+      String userId,
+      String moduleCode,
+      String sortedBy});
+}
+
+/// @nodoc
+class __$UnlikedCopyWithImpl<$Res>
+    extends _$ModuleForumWatcherEventCopyWithImpl<$Res>
+    implements _$UnlikedCopyWith<$Res> {
+  __$UnlikedCopyWithImpl(_Unliked _value, $Res Function(_Unliked) _then)
+      : super(_value, (v) => _then(v as _Unliked));
+
+  @override
+  _Unliked get _value => super._value as _Unliked;
+
+  @override
+  $Res call({
+    Object? forums = freezed,
+    Object? index = freezed,
+    Object? userId = freezed,
+    Object? moduleCode = freezed,
+    Object? sortedBy = freezed,
+  }) {
+    return _then(_Unliked(
+      forums == freezed
+          ? _value.forums
+          : forums // ignore: cast_nullable_to_non_nullable
+              as List<ForumPost>,
+      index == freezed
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int,
+      userId == freezed
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+      moduleCode == freezed
+          ? _value.moduleCode
+          : moduleCode // ignore: cast_nullable_to_non_nullable
+              as String,
+      sortedBy == freezed
+          ? _value.sortedBy
+          : sortedBy // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_Unliked implements _Unliked {
+  const _$_Unliked(
+      this.forums, this.index, this.userId, this.moduleCode, this.sortedBy);
+
+  @override
+  final List<ForumPost> forums;
+  @override
+  final int index;
+  @override
+  final String userId;
+  @override
+  final String moduleCode;
+  @override
+  final String sortedBy;
+
+  @override
+  String toString() {
+    return 'ModuleForumWatcherEvent.unliked(forums: $forums, index: $index, userId: $userId, moduleCode: $moduleCode, sortedBy: $sortedBy)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _Unliked &&
+            (identical(other.forums, forums) ||
+                const DeepCollectionEquality().equals(other.forums, forums)) &&
+            (identical(other.index, index) ||
+                const DeepCollectionEquality().equals(other.index, index)) &&
+            (identical(other.userId, userId) ||
+                const DeepCollectionEquality().equals(other.userId, userId)) &&
+            (identical(other.moduleCode, moduleCode) ||
+                const DeepCollectionEquality()
+                    .equals(other.moduleCode, moduleCode)) &&
+            (identical(other.sortedBy, sortedBy) ||
+                const DeepCollectionEquality()
+                    .equals(other.sortedBy, sortedBy)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(forums) ^
+      const DeepCollectionEquality().hash(index) ^
+      const DeepCollectionEquality().hash(userId) ^
+      const DeepCollectionEquality().hash(moduleCode) ^
+      const DeepCollectionEquality().hash(sortedBy);
+
+  @JsonKey(ignore: true)
+  @override
+  _$UnlikedCopyWith<_Unliked> get copyWith =>
+      __$UnlikedCopyWithImpl<_Unliked>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String moduleCode, String sortedBy) refreshFeed,
+    required TResult Function(
+            String moduleCode, String sortedBy, List<ForumPost> oldPosts)
+        retrieveMorePosts,
+    required TResult Function(List<ForumPost> forums, int index, String userId,
+            String moduleCode, String sortedBy)
+        liked,
+    required TResult Function(List<ForumPost> forums, int index, String userId,
+            String moduleCode, String sortedBy)
+        unliked,
+  }) {
+    return unliked(forums, index, userId, moduleCode, sortedBy);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String moduleCode, String sortedBy)? refreshFeed,
+    TResult Function(
+            String moduleCode, String sortedBy, List<ForumPost> oldPosts)?
+        retrieveMorePosts,
+    TResult Function(List<ForumPost> forums, int index, String userId,
+            String moduleCode, String sortedBy)?
+        liked,
+    TResult Function(List<ForumPost> forums, int index, String userId,
+            String moduleCode, String sortedBy)?
+        unliked,
+    required TResult orElse(),
+  }) {
+    if (unliked != null) {
+      return unliked(forums, index, userId, moduleCode, sortedBy);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_RefreshFeed value) refreshFeed,
+    required TResult Function(_RetrieveMorePosts value) retrieveMorePosts,
+    required TResult Function(_Liked value) liked,
+    required TResult Function(_Unliked value) unliked,
+  }) {
+    return unliked(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_RefreshFeed value)? refreshFeed,
+    TResult Function(_RetrieveMorePosts value)? retrieveMorePosts,
+    TResult Function(_Liked value)? liked,
+    TResult Function(_Unliked value)? unliked,
+    required TResult orElse(),
+  }) {
+    if (unliked != null) {
+      return unliked(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Unliked implements ModuleForumWatcherEvent {
+  const factory _Unliked(List<ForumPost> forums, int index, String userId,
+      String moduleCode, String sortedBy) = _$_Unliked;
+
+  List<ForumPost> get forums => throw _privateConstructorUsedError;
+  int get index => throw _privateConstructorUsedError;
+  String get userId => throw _privateConstructorUsedError;
+  @override
+  String get moduleCode => throw _privateConstructorUsedError;
+  @override
+  String get sortedBy => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$UnlikedCopyWith<_Unliked> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -361,9 +872,14 @@ class _$ModuleForumWatcherStateTearOff {
     return const _LoadInProgress();
   }
 
-  _LoadSuccess loadSuccess(List<ForumPost> forums) {
+  _LoadSuccess loadSuccess(List<ForumPost> forums, bool hasMore,
+      bool isRetrieving, String moduleCode, String sortedBy) {
     return _LoadSuccess(
       forums,
+      hasMore,
+      isRetrieving,
+      moduleCode,
+      sortedBy,
     );
   }
 
@@ -383,7 +899,9 @@ mixin _$ModuleForumWatcherState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<ForumPost> forums) loadSuccess,
+    required TResult Function(List<ForumPost> forums, bool hasMore,
+            bool isRetrieving, String moduleCode, String sortedBy)
+        loadSuccess,
     required TResult Function(DataFailure dataFailure) loadFailure,
   }) =>
       throw _privateConstructorUsedError;
@@ -391,7 +909,9 @@ mixin _$ModuleForumWatcherState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<ForumPost> forums)? loadSuccess,
+    TResult Function(List<ForumPost> forums, bool hasMore, bool isRetrieving,
+            String moduleCode, String sortedBy)?
+        loadSuccess,
     TResult Function(DataFailure dataFailure)? loadFailure,
     required TResult orElse(),
   }) =>
@@ -472,7 +992,9 @@ class _$_Initial implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<ForumPost> forums) loadSuccess,
+    required TResult Function(List<ForumPost> forums, bool hasMore,
+            bool isRetrieving, String moduleCode, String sortedBy)
+        loadSuccess,
     required TResult Function(DataFailure dataFailure) loadFailure,
   }) {
     return initial();
@@ -483,7 +1005,9 @@ class _$_Initial implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<ForumPost> forums)? loadSuccess,
+    TResult Function(List<ForumPost> forums, bool hasMore, bool isRetrieving,
+            String moduleCode, String sortedBy)?
+        loadSuccess,
     TResult Function(DataFailure dataFailure)? loadFailure,
     required TResult orElse(),
   }) {
@@ -566,7 +1090,9 @@ class _$_LoadInProgress implements _LoadInProgress {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<ForumPost> forums) loadSuccess,
+    required TResult Function(List<ForumPost> forums, bool hasMore,
+            bool isRetrieving, String moduleCode, String sortedBy)
+        loadSuccess,
     required TResult Function(DataFailure dataFailure) loadFailure,
   }) {
     return loadInProgress();
@@ -577,7 +1103,9 @@ class _$_LoadInProgress implements _LoadInProgress {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<ForumPost> forums)? loadSuccess,
+    TResult Function(List<ForumPost> forums, bool hasMore, bool isRetrieving,
+            String moduleCode, String sortedBy)?
+        loadSuccess,
     TResult Function(DataFailure dataFailure)? loadFailure,
     required TResult orElse(),
   }) {
@@ -623,7 +1151,12 @@ abstract class _$LoadSuccessCopyWith<$Res> {
   factory _$LoadSuccessCopyWith(
           _LoadSuccess value, $Res Function(_LoadSuccess) then) =
       __$LoadSuccessCopyWithImpl<$Res>;
-  $Res call({List<ForumPost> forums});
+  $Res call(
+      {List<ForumPost> forums,
+      bool hasMore,
+      bool isRetrieving,
+      String moduleCode,
+      String sortedBy});
 }
 
 /// @nodoc
@@ -640,12 +1173,32 @@ class __$LoadSuccessCopyWithImpl<$Res>
   @override
   $Res call({
     Object? forums = freezed,
+    Object? hasMore = freezed,
+    Object? isRetrieving = freezed,
+    Object? moduleCode = freezed,
+    Object? sortedBy = freezed,
   }) {
     return _then(_LoadSuccess(
       forums == freezed
           ? _value.forums
           : forums // ignore: cast_nullable_to_non_nullable
               as List<ForumPost>,
+      hasMore == freezed
+          ? _value.hasMore
+          : hasMore // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isRetrieving == freezed
+          ? _value.isRetrieving
+          : isRetrieving // ignore: cast_nullable_to_non_nullable
+              as bool,
+      moduleCode == freezed
+          ? _value.moduleCode
+          : moduleCode // ignore: cast_nullable_to_non_nullable
+              as String,
+      sortedBy == freezed
+          ? _value.sortedBy
+          : sortedBy // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -653,14 +1206,23 @@ class __$LoadSuccessCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_LoadSuccess implements _LoadSuccess {
-  const _$_LoadSuccess(this.forums);
+  const _$_LoadSuccess(this.forums, this.hasMore, this.isRetrieving,
+      this.moduleCode, this.sortedBy);
 
   @override
   final List<ForumPost> forums;
+  @override
+  final bool hasMore;
+  @override
+  final bool isRetrieving;
+  @override
+  final String moduleCode;
+  @override
+  final String sortedBy;
 
   @override
   String toString() {
-    return 'ModuleForumWatcherState.loadSuccess(forums: $forums)';
+    return 'ModuleForumWatcherState.loadSuccess(forums: $forums, hasMore: $hasMore, isRetrieving: $isRetrieving, moduleCode: $moduleCode, sortedBy: $sortedBy)';
   }
 
   @override
@@ -668,12 +1230,29 @@ class _$_LoadSuccess implements _LoadSuccess {
     return identical(this, other) ||
         (other is _LoadSuccess &&
             (identical(other.forums, forums) ||
-                const DeepCollectionEquality().equals(other.forums, forums)));
+                const DeepCollectionEquality().equals(other.forums, forums)) &&
+            (identical(other.hasMore, hasMore) ||
+                const DeepCollectionEquality()
+                    .equals(other.hasMore, hasMore)) &&
+            (identical(other.isRetrieving, isRetrieving) ||
+                const DeepCollectionEquality()
+                    .equals(other.isRetrieving, isRetrieving)) &&
+            (identical(other.moduleCode, moduleCode) ||
+                const DeepCollectionEquality()
+                    .equals(other.moduleCode, moduleCode)) &&
+            (identical(other.sortedBy, sortedBy) ||
+                const DeepCollectionEquality()
+                    .equals(other.sortedBy, sortedBy)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(forums);
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(forums) ^
+      const DeepCollectionEquality().hash(hasMore) ^
+      const DeepCollectionEquality().hash(isRetrieving) ^
+      const DeepCollectionEquality().hash(moduleCode) ^
+      const DeepCollectionEquality().hash(sortedBy);
 
   @JsonKey(ignore: true)
   @override
@@ -685,10 +1264,12 @@ class _$_LoadSuccess implements _LoadSuccess {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<ForumPost> forums) loadSuccess,
+    required TResult Function(List<ForumPost> forums, bool hasMore,
+            bool isRetrieving, String moduleCode, String sortedBy)
+        loadSuccess,
     required TResult Function(DataFailure dataFailure) loadFailure,
   }) {
-    return loadSuccess(forums);
+    return loadSuccess(forums, hasMore, isRetrieving, moduleCode, sortedBy);
   }
 
   @override
@@ -696,12 +1277,14 @@ class _$_LoadSuccess implements _LoadSuccess {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<ForumPost> forums)? loadSuccess,
+    TResult Function(List<ForumPost> forums, bool hasMore, bool isRetrieving,
+            String moduleCode, String sortedBy)?
+        loadSuccess,
     TResult Function(DataFailure dataFailure)? loadFailure,
     required TResult orElse(),
   }) {
     if (loadSuccess != null) {
-      return loadSuccess(forums);
+      return loadSuccess(forums, hasMore, isRetrieving, moduleCode, sortedBy);
     }
     return orElse();
   }
@@ -734,9 +1317,14 @@ class _$_LoadSuccess implements _LoadSuccess {
 }
 
 abstract class _LoadSuccess implements ModuleForumWatcherState {
-  const factory _LoadSuccess(List<ForumPost> forums) = _$_LoadSuccess;
+  const factory _LoadSuccess(List<ForumPost> forums, bool hasMore,
+      bool isRetrieving, String moduleCode, String sortedBy) = _$_LoadSuccess;
 
   List<ForumPost> get forums => throw _privateConstructorUsedError;
+  bool get hasMore => throw _privateConstructorUsedError;
+  bool get isRetrieving => throw _privateConstructorUsedError;
+  String get moduleCode => throw _privateConstructorUsedError;
+  String get sortedBy => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$LoadSuccessCopyWith<_LoadSuccess> get copyWith =>
       throw _privateConstructorUsedError;
@@ -819,7 +1407,9 @@ class _$_LoadFailure implements _LoadFailure {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<ForumPost> forums) loadSuccess,
+    required TResult Function(List<ForumPost> forums, bool hasMore,
+            bool isRetrieving, String moduleCode, String sortedBy)
+        loadSuccess,
     required TResult Function(DataFailure dataFailure) loadFailure,
   }) {
     return loadFailure(dataFailure);
@@ -830,7 +1420,9 @@ class _$_LoadFailure implements _LoadFailure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<ForumPost> forums)? loadSuccess,
+    TResult Function(List<ForumPost> forums, bool hasMore, bool isRetrieving,
+            String moduleCode, String sortedBy)?
+        loadSuccess,
     TResult Function(DataFailure dataFailure)? loadFailure,
     required TResult orElse(),
   }) {

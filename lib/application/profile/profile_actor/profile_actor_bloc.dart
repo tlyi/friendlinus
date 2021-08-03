@@ -97,6 +97,12 @@ class ProfileActorBloc extends Bloc<ProfileActorEvent, ProfileActorState> {
           failureOrFollowers: failureOrFollowers,
         );
       },
+      openStats: (e) async* {
+        yield state.copyWith(statsDisplay: 15);
+      },
+      moreStats: (e) async* {
+        yield state.copyWith(statsDisplay: state.statsDisplay + 10);
+      },
     );
   }
 }

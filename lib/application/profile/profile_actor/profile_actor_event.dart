@@ -7,4 +7,6 @@ class ProfileActorEvent with _$ProfileActorEvent {
   const factory ProfileActorEvent.loadingOwnProfile() = _LoadingOwnProfile;
   const factory ProfileActorEvent.addedFollower() = _AddedFollower;
   const factory ProfileActorEvent.removedFollower() = _RemovedFollower;
+  const factory ProfileActorEvent.openStats() = _OpenStats;
+  const factory ProfileActorEvent.moreStats() = _MoreStats;
 }

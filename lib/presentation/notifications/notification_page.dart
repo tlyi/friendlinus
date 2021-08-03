@@ -11,7 +11,7 @@ class NotificationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
         create: (context) => getIt<NotificationWatcherBloc>()
-          ..add(NotificationWatcherEvent.retrieveNotificationsStarted()),
+          ..add(const NotificationWatcherEvent.retrieveNotificationsStarted()),
         child: Scaffold(
             appBar: appBar(
                 context: context,

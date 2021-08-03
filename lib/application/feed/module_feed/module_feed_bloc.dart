@@ -22,34 +22,57 @@ class ModuleFeedBloc extends Bloc<ModuleFeedEvent, ModuleFeedState> {
   Stream<ModuleFeedState> mapEventToState(
     ModuleFeedEvent event,
   ) async* {
-    yield* event.map(loaded: (e) async* {
-      yield const ModuleFeedState.loadInProgress();
-    }, refreshFeed: (e) async* {
-      yield const ModuleFeedState.loadInProgress();
-      final userId = await _forumRepository.getOwnId();
-      print('at module feed');
-      final Either<DataFailure, List<ForumPost>> failureOrForums =
-          await _forumRepository.retrieveModuleFeed();
-      yield failureOrForums.fold((f) => ModuleFeedState.loadFailure(f),
-          (forums) => ModuleFeedState.loadSuccess(forums));
-    }, liked: (e) async* {
-      List<ForumPost> forums = e.forums;
-      ForumPost forumLiked = forums[e.index];
-      List<String> likedUserIds = forumLiked.likedUserIds;
-      likedUserIds.add(e.userId);
-      forums[e.index] = forumLiked.copyWith(
-          likes: forumLiked.likes + 1, likedUserIds: likedUserIds);
-      yield ModuleFeedState.loadLike(forums);
-    }, unliked: (e) async* {
-      List<ForumPost> forums = e.forums;
-      ForumPost forumLiked = forums[e.index];
-      List<String> likedUserIds = forumLiked.likedUserIds;
-      likedUserIds.remove(e.userId);
-      forums[e.index] = forumLiked.copyWith(
-          likes: forumLiked.likes - 1, likedUserIds: likedUserIds);
-      yield ModuleFeedState.loadLike(forums);
-    }, wipedOutFeed: (e) async* {
-      yield ModuleFeedState.clear();
-    });
+    yield* event.map(
+      refreshFeed: (e) async* {
+        yield const ModuleFeedState.loadInProgress();
+        print('at module feed');
+        final Either<DataFailure, List<ForumPost>> failureOrForums =
+            await _forumRepository.retrieveModuleFeedInitial();
+        yield failureOrForums.fold(
+            (f) => ModuleFeedState.loadFailure(f),
+            (forums) =>
+                ModuleFeedState.loadSuccess(forums, forums.length == 8, false));
+      },
+      retrieveMorePosts: (e) async* {
+        yield ModuleFeedState.loadSuccess(e.oldPosts, true, true);
+
+        String lastTimestamp = e.oldPosts.last.timestamp;
+        final Either<DataFailure, List<ForumPost>> failureOrForums =
+            await _forumRepository.retrieveModuleFeedInBatches(lastTimestamp);
+
+        DataFailure? failure;
+        List<ForumPost>? newPosts;
+
+        failureOrForums.fold((f) => failure = f, (p) => newPosts = p);
+        if (failure != null) {
+          yield ModuleFeedState.loadFailure(failure!);
+        } else {
+          List<ForumPost> posts = [];
+          posts.addAll(e.oldPosts);
+          posts.addAll(newPosts!);
+          yield ModuleFeedState.loadSuccess(posts, posts.length == 8, false);
+        }
+      },
+      liked: (e) async* {
+        List<ForumPost> forums = e.forums;
+        ForumPost forumLiked = forums[e.index];
+        List<String> likedUserIds = forumLiked.likedUserIds;
+        likedUserIds.add(e.userId);
+        forums[e.index] = forumLiked.copyWith(
+            likes: forumLiked.likes + 1, likedUserIds: likedUserIds);
+        yield ModuleFeedState.loadSuccess(
+            forums, forums.length % 8 == 0, false);
+      },
+      unliked: (e) async* {
+        List<ForumPost> forums = e.forums;
+        ForumPost forumLiked = forums[e.index];
+        List<String> likedUserIds = forumLiked.likedUserIds;
+        likedUserIds.remove(e.userId);
+        forums[e.index] = forumLiked.copyWith(
+            likes: forumLiked.likes - 1, likedUserIds: likedUserIds);
+        yield ModuleFeedState.loadSuccess(
+            forums, forums.length % 8 == 0, false);
+      },
+    );
   }
 }

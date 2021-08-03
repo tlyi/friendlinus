@@ -10,6 +10,7 @@ import 'package:friendlinus/domain/data/data_failure.dart';
 import 'package:friendlinus/domain/data/forum/i_forum_repository.dart';
 import 'package:friendlinus/domain/data/forum/poll/poll.dart';
 import 'package:friendlinus/domain/data/notifications/notification.dart';
+import 'package:friendlinus/domain/data/profile/profile.dart';
 import 'package:friendlinus/domain/mods/mod.dart';
 import 'package:friendlinus/infrastructure/data/forum/comment_dtos/comment_dtos.dart';
 import 'package:friendlinus/infrastructure/data/forum/following_feed_dtos/following_feed_dtos.dart';
@@ -40,6 +41,7 @@ class ForumPostRepository implements IForumRepository {
       ForumPost forumPost, String forumId) async {
     try {
       //Create forum
+      final time = DateTime.now().millisecondsSinceEpoch.toString();
       final forumsRef = await _firestore.forumsRef();
       final tag = forumPost.tag == '' ? 'General' : forumPost.tag;
       final forumPostDto =
@@ -51,14 +53,12 @@ class ForumPostRepository implements IForumRepository {
       await _firestore.runTransaction((transaction) async {
         //Update module last posted
         final tagDoc = modulesRef.doc(tag);
-        transaction.update(tagDoc,
-            {'lastPosted': DateTime.now().millisecondsSinceEpoch.toString()});
+        transaction.update(tagDoc, {'lastPosted': time});
 
         //Update anonymous last posted
         if (forumPost.isAnon) {
           final anonDoc = modulesRef.doc('Anonymous');
-          transaction.update(anonDoc,
-              {'lastPosted': DateTime.now().millisecondsSinceEpoch.toString()});
+          transaction.update(anonDoc, {'lastPosted': time});
         } else {
           //If not anon, add to followers' feed & own forumsPosted array
           final userDoc = await _firestore.userDocument();
@@ -72,7 +72,7 @@ class ForumPostRepository implements IForumRepository {
           FollowingFeed followingFeed = FollowingFeed.empty().copyWith(
               forumId: forumId,
               posterUserId: forumPost.posterUserId,
-              timestamp: DateTime.now().millisecondsSinceEpoch.toString());
+              timestamp: time);
           final followingFeedDto =
               FollowingFeedDto.fromDomain(followingFeed).toJson();
           for (final String follower in followers) {
@@ -133,29 +133,6 @@ class ForumPostRepository implements IForumRepository {
         return left(const DataFailure.unexpected());
       }
     }
-  }
-
-  @override
-  Stream<Either<DataFailure, List<ForumPost>>> retrieveForums() async* {
-    final forumsRef = await _firestore.forumsRef();
-    yield* forumsRef
-        .orderBy('timestamp', descending: true)
-        .snapshots()
-        .map(
-          (snapshot) => right<DataFailure, List<ForumPost>>(
-            snapshot.docs
-                .map((doc) => ForumPostDto.fromFirestore(doc).toDomain())
-                .toList(),
-          ),
-        )
-        .handleError((e) {
-      if (e is FirebaseException && e.message!.contains('PERMISSION_DENIED')) {
-        return left(const DataFailure.insufficientPermission());
-      } else {
-        print(e);
-        return left(const DataFailure.unexpected());
-      }
-    });
   }
 
   @override
@@ -399,14 +376,39 @@ class ForumPostRepository implements IForumRepository {
   }
 
   @override
-  Future<Either<DataFailure, Unit>> deleteForum(
-      String forumId, bool hasPhoto, bool isAnon) async {
+  Future<Either<DataFailure, Unit>> deleteForum(ForumPost forum) async {
     try {
-      final forumDoc = await _firestore.forumDocument(forumId);
+      final forumDoc = await _firestore.forumDocument(forum.forumId);
       await forumDoc.delete();
 
+      final modulesRef = await _firestore.modulesRef();
+      final moduleDoc = modulesRef.doc(forum.tag);
+      String modLastPosted = await moduleDoc
+          .get()
+          .then((doc) => ModDto.fromFirestore(doc).toDomain().lastPosted);
+      if (modLastPosted == forum.timestamp) {
+        final forumRef = await _firestore.forumsRef();
+        String newLastPosted = await forumRef
+            .where('tag', isEqualTo: forum.tag)
+            .orderBy('timestamp', descending: true)
+            .limit(1)
+            .get()
+            .then((doc) {
+          if (doc.docs.isEmpty) {
+            print("No other docs, setting timestamp to 0");
+            return '0';
+          } else {
+            print("Setting timestamp to next latest");
+            return ForumPostDto.fromFirestore(doc.docs[0]).toDomain().timestamp;
+          }
+        });
+        await _firestore.runTransaction((transaction) async {
+          transaction.update(moduleDoc, {'lastPosted': newLastPosted});
+        });
+      }
+
       //Recursively deletes each comment doc because of Firestore limitations
-      final commentsRef = await _firestore.commentsForumRef(forumId);
+      final commentsRef = await _firestore.commentsForumRef(forum.forumId);
       await commentsRef.get().then((snapshot) {
         for (DocumentSnapshot doc in snapshot.docs) {
           doc.reference.delete();
@@ -414,11 +416,11 @@ class ForumPostRepository implements IForumRepository {
       });
 
       //Deletes comments/forumId doc
-      final commentDoc = await _firestore.commentsDoc(forumId);
+      final commentDoc = await _firestore.commentsDoc(forum.forumId);
       await commentDoc.delete();
 
       //Deletes Poll if poll exists
-      final pollDoc = await _firestore.pollDocument(forumId);
+      final pollDoc = await _firestore.pollDocument(forum.forumId);
       await pollDoc.get().then((doc) {
         if (doc.exists) {
           pollDoc.delete();
@@ -426,19 +428,19 @@ class ForumPostRepository implements IForumRepository {
       });
 
       //Delete photo if exists
-      if (hasPhoto) {
+      if (forum.photoAdded) {
         _firebaseStorage
             .ref()
-            .child('forumPictures/$forumId/$forumId')
+            .child('forumPictures/${forum.forumId}/${forum.forumId}')
             .delete()
             .onError((error, stackTrace) => null);
       }
 
-      if (!isAnon) {
+      if (!forum.isAnon) {
         //Remove from their forumsPosted in profile
         final userDoc = await _firestore.userDocument();
         userDoc.update({
-          'forumsPosted': FieldValue.arrayRemove([forumId])
+          'forumsPosted': FieldValue.arrayRemove([forum.forumId])
         });
 
         //Remove from followers' feeds
@@ -448,7 +450,7 @@ class ForumPostRepository implements IForumRepository {
         for (final follower in followers) {
           final followingFeedRef =
               await _firestore.followingFeedUserRef(follower);
-          await followingFeedRef.doc(forumId).delete();
+          await followingFeedRef.doc(forum.forumId).delete();
         }
       }
 
@@ -524,120 +526,153 @@ class ForumPostRepository implements IForumRepository {
   }
 
   @override
-  Stream<Either<DataFailure, List<ForumPost>>> retrieveModuleForums(
-      String moduleCode, String sortedBy) async* {
+  Future<Either<DataFailure, List<ForumPost>>> retrieveModuleForumsInitial(
+      String moduleCode, String sortedBy) async {
     //['Recent', 'Oldest', 'Most Liked']
     bool descending = sortedBy == 'Oldest' ? false : true;
 
-    bool isOneWeekAgo(String timestamp) {
-      final DateTime dateTime =
-          DateTime.fromMillisecondsSinceEpoch(int.parse(timestamp));
-      final diff = DateTime.now().difference(dateTime);
-      return diff.inDays <= 7;
-    }
+    print("retrieving initial");
+    try {
+      List<ForumPost> forums = [];
+      final forumRef = await _firestore.forumsRef();
+      if (moduleCode == "Anonymous") {
+        if (sortedBy != 'Most Liked') {
+          QuerySnapshot query = await forumRef
+              .where('isAnon', isEqualTo: true)
+              .orderBy('timestamp', descending: descending)
+              .limit(8)
+              .get();
 
-    final forumRef = await _firestore.forumsRef();
-    if (moduleCode == "Anonymous") {
-      if (sortedBy != 'Most Liked') {
-        yield* forumRef
-            .where('isAnon', isEqualTo: true)
-            .orderBy('timestamp', descending: descending)
-            .snapshots()
-            .map(
-              (snapshot) => right<DataFailure, List<ForumPost>>(
-                snapshot.docs
-                    .map((doc) => ForumPostDto.fromFirestore(doc).toDomain())
-                    .toList(),
-              ),
-            )
-            .handleError((e) {
-          if (e is FirebaseException &&
-              e.message!.contains('PERMISSION_DENIED')) {
-            return left(const DataFailure.insufficientPermission());
-          } else {
-            print(e);
-            return left(const DataFailure.unexpected());
-          }
-        });
-      } else {
-        yield* forumRef
-            .where('isAnon', isEqualTo: true)
-            .orderBy('likes', descending: descending)
-            .snapshots()
-            .map(
-          (snapshot) {
-            List<ForumPost> forums = [];
-            for (final doc in snapshot.docs) {
-              final forumPost = ForumPostDto.fromFirestore(doc).toDomain();
-              if (isOneWeekAgo(forumPost.timestamp)) {
-                forums.add(forumPost);
-              }
+          if (query.docs.isNotEmpty) {
+            for (final doc in query.docs) {
+              print('ADDING');
+              forums.add(ForumPostDto.fromFirestore(doc).toDomain());
             }
-            return right<DataFailure, List<ForumPost>>(forums);
-          },
-        ).handleError((e) {
-          if (e is FirebaseException &&
-              e.message!.contains('PERMISSION_DENIED')) {
-            return left(const DataFailure.insufficientPermission());
-          } else {
-            print(e);
-            return left(const DataFailure.unexpected());
           }
-        });
+        } else {
+          QuerySnapshot query = await forumRef
+              .where('isAnon', isEqualTo: true)
+              .orderBy('likes', descending: descending)
+              .get();
+          if (query.docs.isNotEmpty) {
+            for (final doc in query.docs) {
+              print('ADDING');
+              forums.add(ForumPostDto.fromFirestore(doc).toDomain());
+            }
+          }
+        }
+      } else {
+        if (sortedBy != 'Most Liked') {
+          QuerySnapshot query = await forumRef
+              .where('tag', isEqualTo: moduleCode)
+              .orderBy('timestamp', descending: descending)
+              .limit(8)
+              .get();
+          if (query.docs.isNotEmpty) {
+            for (final doc in query.docs) {
+              print('ADDING');
+              forums.add(ForumPostDto.fromFirestore(doc).toDomain());
+            }
+          }
+        } else {
+          QuerySnapshot query = await forumRef
+              .where('tag', isEqualTo: moduleCode)
+              .orderBy('likes', descending: descending)
+              .get();
+
+          if (query.docs.isNotEmpty) {
+            for (final doc in query.docs) {
+              forums.add(ForumPostDto.fromFirestore(doc).toDomain());
+            }
+          }
+        }
       }
-    } else {
-      if (sortedBy != 'Most Liked') {
-        yield* forumRef
-            .where('tag', isEqualTo: moduleCode)
-            .orderBy('timestamp', descending: descending)
-            .snapshots()
-            .map(
-              (snapshot) => right<DataFailure, List<ForumPost>>(
-                snapshot.docs
-                    .map((doc) => ForumPostDto.fromFirestore(doc).toDomain())
-                    .toList(),
-              ),
-            )
-            .handleError((e) {
-          if (e is FirebaseException &&
-              e.message!.contains('PERMISSION_DENIED')) {
-            return left(const DataFailure.insufficientPermission());
-          } else {
-            print(e);
-            return left(const DataFailure.unexpected());
-          }
-        });
+      return right(forums);
+    } on FirebaseException catch (e) {
+      if (e.message!.contains('PERMISSION_DENIED')) {
+        return left(const DataFailure.insufficientPermission());
       } else {
-        yield* forumRef
-            .where('tag', isEqualTo: moduleCode)
-            .orderBy('likes', descending: descending)
-            .snapshots()
-            .map(
-          (snapshot) {
-            List<ForumPost> forums = [];
-            for (final doc in snapshot.docs) {
-              final forumPost = ForumPostDto.fromFirestore(doc).toDomain();
-              if (isOneWeekAgo(forumPost.timestamp)) {
-                forums.add(forumPost);
-              }
-            }
-            return right<DataFailure, List<ForumPost>>(forums);
-          },
-        ).handleError((e) {
-          if (e is FirebaseException &&
-              e.message!.contains('PERMISSION_DENIED')) {
-            return left(const DataFailure.insufficientPermission());
-          } else {
-            print(e);
-            return left(const DataFailure.unexpected());
-          }
-        });
+        print(e);
+        return left(const DataFailure.unexpected());
       }
     }
   }
 
   @override
-  Future<Either<DataFailure, List<ForumPost>>> retrieveModuleFeed() async {
+  Future<Either<DataFailure, List<ForumPost>>> retrieveModuleForumsInBatches(
+      String moduleCode,
+      String sortedBy,
+      String lastTimestamp,
+      int lastLikes) async {
+    //['Recent', 'Oldest', 'Most Liked']
+    bool descending = sortedBy == 'Oldest' ? false : true;
+
+    List<ForumPost> forums = [];
+    final forumRef = await _firestore.forumsRef();
+    try {
+      if (moduleCode == "Anonymous") {
+        if (sortedBy != 'Most Liked') {
+          QuerySnapshot query = await forumRef
+              .where('isAnon', isEqualTo: true)
+              .orderBy('timestamp', descending: descending)
+              .startAfter([lastTimestamp])
+              .limit(8)
+              .get();
+          if (query.docs.isNotEmpty) {
+            for (final doc in query.docs) {
+              forums.add(ForumPostDto.fromFirestore(doc).toDomain());
+            }
+          }
+        } else {
+          QuerySnapshot query = await forumRef
+              .where('isAnon', isEqualTo: true)
+              .orderBy('likes', descending: descending)
+              .get();
+          if (query.docs.isNotEmpty) {
+            for (final doc in query.docs) {
+              forums.add(ForumPostDto.fromFirestore(doc).toDomain());
+            }
+          }
+        }
+      } else {
+        if (sortedBy != 'Most Liked') {
+          QuerySnapshot query = await forumRef
+              .where('tag', isEqualTo: moduleCode)
+              .orderBy('timestamp', descending: descending)
+              .startAfter([lastTimestamp])
+              .limit(8)
+              .get();
+          if (query.docs.isNotEmpty) {
+            for (final doc in query.docs) {
+              forums.add(ForumPostDto.fromFirestore(doc).toDomain());
+            }
+          }
+        } else {
+          print("Loading more liked?!?!? NO");
+          QuerySnapshot query = await forumRef
+              .where('tag', isEqualTo: moduleCode)
+              .orderBy('likes', descending: descending)
+              .get();
+          if (query.docs.isNotEmpty) {
+            for (final doc in query.docs) {
+              forums.add(ForumPostDto.fromFirestore(doc).toDomain());
+            }
+          }
+        }
+      }
+      return right(forums);
+    } on FirebaseException catch (e) {
+      if (e.message!.contains('PERMISSION_DENIED')) {
+        return left(const DataFailure.insufficientPermission());
+      } else {
+        return left(const DataFailure.unexpected());
+      }
+    }
+  }
+
+  @override
+  Future<Either<DataFailure, List<ForumPost>>>
+      retrieveModuleFeedInitial() async {
     final userDoc = await _firestore.userDocument();
     final forumRef = await _firestore.forumsRef();
     List<String> modulesFollowed = [];
@@ -652,6 +687,7 @@ class ForumPostRepository implements IForumRepository {
         QuerySnapshot query = await forumRef
             .where('tag', whereIn: modulesFollowed)
             .orderBy('timestamp', descending: true)
+            .limit(8)
             .get();
         if (query.docs.isNotEmpty) {
           for (final doc in query.docs) {
@@ -670,7 +706,43 @@ class ForumPostRepository implements IForumRepository {
   }
 
   @override
-  Future<Either<DataFailure, List<ForumPost>>> retrieveFriendFeed(
+  Future<Either<DataFailure, List<ForumPost>>> retrieveModuleFeedInBatches(
+      String lastTimestamp) async {
+    final userDoc = await _firestore.userDocument();
+    final forumRef = await _firestore.forumsRef();
+    List<String> modulesFollowed = [];
+    List<ForumPost> forums = [];
+
+    await userDoc.get().then((DocumentSnapshot doc) {
+      modulesFollowed = ProfileDto.fromFirestore(doc).toDomain().modules;
+    });
+
+    try {
+      if (modulesFollowed.isNotEmpty) {
+        QuerySnapshot query = await forumRef
+            .where('tag', whereIn: modulesFollowed)
+            .orderBy('timestamp', descending: true)
+            .startAfter([lastTimestamp])
+            .limit(8)
+            .get();
+        if (query.docs.isNotEmpty) {
+          for (final doc in query.docs) {
+            forums.add(ForumPostDto.fromFirestore(doc).toDomain());
+          }
+        }
+      }
+      return right(forums);
+    } on FirebaseException catch (e) {
+      if (e.message!.contains('PERMISSION_DENIED')) {
+        return left(const DataFailure.insufficientPermission());
+      } else {
+        return left(const DataFailure.unexpected());
+      }
+    }
+  }
+
+  @override
+  Future<Either<DataFailure, List<ForumPost>>> retrieveFriendFeedInitial(
       String userId) async {
     List<String> forumIds = [];
     List<ForumPost> forums = [];
@@ -679,6 +751,39 @@ class ForumPostRepository implements IForumRepository {
     try {
       QuerySnapshot query = await followingFeedUserRef
           .orderBy('timestamp', descending: true)
+          .limit(8)
+          .get();
+      if (query.docs.isNotEmpty) {
+        for (final doc in query.docs) {
+          forumIds.add(FollowingFeedDto.fromFirestore(doc).toDomain().forumId);
+        }
+      }
+      for (final forumId in forumIds) {
+        final doc = await forumRef.doc(forumId).get();
+        forums.add(ForumPostDto.fromFirestore(doc).toDomain());
+      }
+      return right(forums);
+    } on FirebaseException catch (e) {
+      if (e.message!.contains('PERMISSION_DENIED')) {
+        return left(const DataFailure.insufficientPermission());
+      } else {
+        return left(const DataFailure.unexpected());
+      }
+    }
+  }
+
+  @override
+  Future<Either<DataFailure, List<ForumPost>>> retrieveFriendFeedInBatches(
+      String userId, String lastTimestamp) async {
+    List<String> forumIds = [];
+    List<ForumPost> forums = [];
+    final followingFeedUserRef = await _firestore.followingFeedUserRef(userId);
+    final forumRef = await _firestore.forumsRef();
+    try {
+      QuerySnapshot query = await followingFeedUserRef
+          .orderBy('timestamp', descending: true)
+          .startAfter([lastTimestamp])
+          .limit(8)
           .get();
       if (query.docs.isNotEmpty) {
         for (final doc in query.docs) {
@@ -716,6 +821,18 @@ class ForumPostRepository implements IForumRepository {
         }
         return right(searchResults);
       }
+    } on FirebaseException catch (e) {
+      print(e);
+      return left(const DataFailure.unexpected());
+    }
+  }
+
+  @override
+  Future<Either<DataFailure, Profile>> searchProfileByUuid(String uuid) async {
+    try {
+      final usersRef = await _firestore.usersRef();
+      return usersRef.doc(uuid).get().then((DocumentSnapshot doc) =>
+          right(ProfileDto.fromFirestore(doc).toDomain()));
     } on FirebaseException catch (e) {
       print(e);
       return left(const DataFailure.unexpected());

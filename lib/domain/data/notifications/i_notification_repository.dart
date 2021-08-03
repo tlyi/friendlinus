@@ -9,7 +9,9 @@ abstract class INotificationRepository {
       {required String userId});
   Stream<Either<DataFailure, int>> retrieveNumberUnreadNotifications(
       {required String userId});
-  Stream<Either<DataFailure, List<Notification>>> retrieveNotifications(
+  Stream<Either<DataFailure, List<Notification>>> retrieveNotificationsInitial(
       String userId);
+  Stream<Either<DataFailure, List<Notification>>>
+      retrieveNotificationsInBatches(String userId, String lastTimestamp);
   Future<Either<DataFailure, Profile>> searchProfileByUuid(String uuid);
 }

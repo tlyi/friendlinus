@@ -47,10 +47,9 @@ class ForumBody extends StatelessWidget {
           Profile posterProfile = state.posterProfile;
           String header;
           if (forum.isAnon) {
-            header = 'Posted by anonymous ${getTimeForum(forum.timestamp)}';
+            header = 'Posted by anonymous';
           } else {
-            header =
-                'Posted by ${posterProfile.username.getOrCrash()} ${getTimeForum(forum.timestamp)}';
+            header = 'Posted by ${posterProfile.username.getOrCrash()}';
           }
           return BlocBuilder<ForumActorBloc, ForumActorState>(
             builder: (context, state) {
@@ -76,12 +75,25 @@ class ForumBody extends StatelessWidget {
                                     userProfile: posterProfile));
                           }
                         },
-                        child: Text(
-                          header,
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 16.0,
-                          ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              header,
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 16.0,
+                              ),
+                            ),
+                            const SizedBox(height: 1),
+                            Text(
+                              getTimeForum(forum.timestamp),
+                              style: const TextStyle(
+                                color: Colors.grey,
+                                fontSize: 13.0,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       actions: [
@@ -172,7 +184,8 @@ class _BuildPost extends StatelessWidget {
                       Text(forum.title.getOrCrash(),
                           style: const TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 17)),
-                      if (forum.body.getOrCrash() != '') const SizedBox(height: 15),
+                      if (forum.body.getOrCrash() != '')
+                        const SizedBox(height: 15),
                       Text(forum.body.getOrCrash(),
                           style: const TextStyle(fontSize: 15)),
                     ],
@@ -412,9 +425,9 @@ class _BuildDeleteButton extends StatelessWidget {
                             child: const Text('Cancel')),
                         TextButton(
                             onPressed: () {
-                              context.read<ForumActorBloc>().add(
-                                  ForumActorEvent.forumDeleted(forum.forumId,
-                                      forum.photoAdded, forum.isAnon));
+                              context
+                                  .read<ForumActorBloc>()
+                                  .add(ForumActorEvent.forumDeleted(forum));
                               Navigator.pop(innerContext);
                               context.popRoute();
                             },

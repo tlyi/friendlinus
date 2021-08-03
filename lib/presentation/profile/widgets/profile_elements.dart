@@ -541,7 +541,6 @@ class WaveHeader extends StatelessWidget {
 class WaveClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
-    print(size.height);
     final path = Path();
     path.lineTo(0.0, size.height * 0.60);
 

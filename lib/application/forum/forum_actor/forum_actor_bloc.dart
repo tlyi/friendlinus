@@ -80,7 +80,7 @@ class ForumActorBloc extends Bloc<ForumActorEvent, ForumActorState> {
             e.forumId, e.commentId, state.userId);
       },
       forumDeleted: (e) async* {
-        await _forumRepository.deleteForum(e.forumId, e.hasPhoto, e.isAnon);
+        await _forumRepository.deleteForum(e.forum);
       },
     );
   }

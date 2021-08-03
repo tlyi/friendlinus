@@ -5,6 +5,7 @@ import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:friendlinus/domain/data/data_failure.dart';
 import 'package:friendlinus/domain/data/forum/forum_post/forum_post.dart';
+import 'package:friendlinus/domain/data/profile/profile.dart';
 import 'package:injectable/injectable.dart';
 import 'package:friendlinus/domain/data/forum/i_forum_repository.dart';
 
@@ -15,6 +16,7 @@ part 'friend_feed_bloc.freezed.dart';
 @injectable
 class FriendFeedBloc extends Bloc<FriendFeedEvent, FriendFeedState> {
   final IForumRepository _forumRepository;
+
   FriendFeedBloc(this._forumRepository)
       : super(const FriendFeedState.initial());
 
@@ -23,17 +25,41 @@ class FriendFeedBloc extends Bloc<FriendFeedEvent, FriendFeedState> {
     FriendFeedEvent event,
   ) async* {
     yield* event.map(
-      loaded: (e) async* {
-        yield const FriendFeedState.loadInProgress();
-      },
       refreshFeed: (e) async* {
         yield const FriendFeedState.loadInProgress();
         final userId = await _forumRepository.getOwnId();
         print('at friend feed');
         final Either<DataFailure, List<ForumPost>> failureOrForums =
-            await _forumRepository.retrieveFriendFeed(userId);
-        yield failureOrForums.fold((f) => FriendFeedState.loadFailure(f),
-            (forums) => FriendFeedState.loadSuccess(forums));
+            await _forumRepository.retrieveFriendFeedInitial(userId);
+
+        DataFailure? failure;
+        List<ForumPost>? posts;
+
+        failureOrForums.fold((f) => failure = f, (p) => posts = p);
+        if (failure != null) {
+          yield FriendFeedState.loadFailure(failure!);
+        } else {
+          add(FriendFeedEvent.getProfiles(posts!));
+        }
+      },
+      getProfiles: (e) async* {
+        final List<Profile> profileList = [];
+        for (final post in e.posts) {
+          final Either<DataFailure, Profile> failureOrProfile =
+              await _forumRepository.searchProfileByUuid(post.posterUserId);
+          DataFailure? failure;
+          Profile? profile;
+
+          failureOrProfile.fold((f) => failure = f, (p) => profile = p);
+
+          if (failure != null) {
+            yield FriendFeedState.loadFailure(failure!);
+          } else {
+            profileList.add(profile!);
+          }
+        }
+        yield FriendFeedState.loadSuccess(
+            e.posts, profileList, e.posts.length == 8, false);
       },
       liked: (e) async* {
         List<ForumPost> forums = e.forums;
@@ -42,7 +68,8 @@ class FriendFeedBloc extends Bloc<FriendFeedEvent, FriendFeedState> {
         likedUserIds.add(e.userId);
         forums[e.index] = forumLiked.copyWith(
             likes: forumLiked.likes + 1, likedUserIds: likedUserIds);
-        yield FriendFeedState.loadLike(forums);
+        yield FriendFeedState.loadSuccess(
+            forums, e.profiles, forums.length % 8 == 0, false);
       },
       unliked: (e) async* {
         List<ForumPost> forums = e.forums;
@@ -51,10 +78,50 @@ class FriendFeedBloc extends Bloc<FriendFeedEvent, FriendFeedState> {
         likedUserIds.remove(e.userId);
         forums[e.index] = forumLiked.copyWith(
             likes: forumLiked.likes - 1, likedUserIds: likedUserIds);
-        yield FriendFeedState.loadLike(forums);
+        yield FriendFeedState.loadSuccess(
+            forums, e.profiles, forums.length % 8 == 0, false);
       },
-      wipedOutFeed: (e) async* {
-        yield FriendFeedState.clear();
+      retrieveMorePosts: (e) async* {
+        yield FriendFeedState.loadSuccess(
+            e.oldPosts, e.oldProfiles, true, true);
+        final userId = await _forumRepository.getOwnId();
+        String lastTimestamp = e.oldPosts.last.timestamp;
+        final Either<DataFailure, List<ForumPost>> failureOrForums =
+            await _forumRepository.retrieveFriendFeedInBatches(
+                userId, lastTimestamp);
+
+        DataFailure? failure;
+        List<ForumPost>? newPosts;
+
+        failureOrForums.fold((f) => failure = f, (p) => newPosts = p);
+        if (failure != null) {
+          yield FriendFeedState.loadFailure(failure!);
+        } else {
+          List<ForumPost> posts = [];
+          posts.addAll(e.oldPosts);
+          posts.addAll(newPosts!);
+          add(FriendFeedEvent.retrieveMoreProfiles(
+              newPosts!, posts, e.oldProfiles));
+        }
+      },
+      retrieveMoreProfiles: (e) async* {
+        final List<Profile> profileList = e.oldProfiles;
+        for (final post in e.newPosts) {
+          final Either<DataFailure, Profile> failureOrProfile =
+              await _forumRepository.searchProfileByUuid(post.posterUserId);
+          DataFailure? failure;
+          Profile? profile;
+
+          failureOrProfile.fold((f) => failure = f, (p) => profile = p);
+
+          if (failure != null) {
+            yield FriendFeedState.loadFailure(failure!);
+          } else {
+            profileList.add(profile!);
+          }
+        }
+        yield FriendFeedState.loadSuccess(
+            e.updatedPosts, profileList, e.newPosts.length == 8, false);
       },
     );
   }

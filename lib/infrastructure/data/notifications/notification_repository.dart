@@ -62,11 +62,12 @@ class NotificationRepository implements INotificationRepository {
   }
 
   @override
-  Stream<Either<DataFailure, List<Notification>>> retrieveNotifications(
+  Stream<Either<DataFailure, List<Notification>>> retrieveNotificationsInitial(
       String userId) async* {
     final notificationsRef = await _firestore.notificationsUserRef(userId);
     yield* notificationsRef
         .orderBy('timestamp', descending: true)
+        .limit(10)
         .snapshots()
         .map(
       (snapshot) {
@@ -90,6 +91,41 @@ class NotificationRepository implements INotificationRepository {
         return left(const DataFailure.unexpected());
       }
     });
+  }
+
+  @override
+  Stream<Either<DataFailure, List<Notification>>>
+      retrieveNotificationsInBatches(
+          String userId, String lastTimeStamp) async* {
+    print("Loading more in progress");
+    final notificationsRef = await _firestore.notificationsUserRef(userId);
+    yield* notificationsRef
+        .orderBy('timestamp', descending: true)
+        .startAfter([lastTimeStamp])
+        .limit(10)
+        .snapshots()
+        .map((snapshot) {
+          if (snapshot.docs.isNotEmpty) {
+            for (final DocumentSnapshot doc in snapshot.docs) {
+              String notifId = doc.id;
+              notificationsRef.doc(notifId).update({'isRead': true});
+            }
+          }
+          return right<DataFailure, List<Notification>>(
+            snapshot.docs
+                .map((doc) => NotificationDto.fromFirestore(doc).toDomain())
+                .toList(),
+          );
+        })
+        .handleError((e) {
+          if (e is FirebaseException &&
+              e.message!.contains('PERMISSION_DENIED')) {
+            return left(const DataFailure.insufficientPermission());
+          } else {
+            print(e);
+            return left(const DataFailure.unexpected());
+          }
+        });
   }
 
   @override

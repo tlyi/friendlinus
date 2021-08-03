@@ -25,8 +25,7 @@ class ModuleForumPage extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => getIt<ModuleForumWatcherBloc>()
-            ..add(ModuleForumWatcherEvent.retrieveForumsStarted(
-                moduleCode, 'Recent')),
+            ..add(ModuleForumWatcherEvent.refreshFeed(moduleCode, 'Recent')),
         ),
         BlocProvider(
             create: (context) =>
@@ -48,7 +47,7 @@ class ModuleForumPage extends StatelessWidget {
           title: Row(
             children: <Widget>[
               Text(moduleCode,
-                  style: TextStyle(fontSize: 20, color: Colors.black)),
+                  style: const TextStyle(fontSize: 20, color: Colors.black)),
               if (moduleCode != "Anonymous" && moduleCode != "General")
                 BlocConsumer<ModuleActorBloc, ModuleActorState>(
                     listener: (context, state) {

@@ -67,7 +67,10 @@ class ChatWatcherBloc extends Bloc<ChatWatcherEvent, ChatWatcherState> {
             profileList.add(profile!);
           }
         }
-        yield ChatWatcherState.loadSuccess(e.chats, profileList);
+        yield ChatWatcherState.loadSuccess(
+          e.chats,
+          profileList,
+        );
       },
     );
   }

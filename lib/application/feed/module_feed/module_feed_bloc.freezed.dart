@@ -16,12 +16,14 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$ModuleFeedEventTearOff {
   const _$ModuleFeedEventTearOff();
 
-  _Loaded loaded() {
-    return const _Loaded();
-  }
-
   _RefreshFeed refreshFeed() {
     return const _RefreshFeed();
+  }
+
+  _RetrieveMorePosts retrieveMorePosts(List<ForumPost> oldPosts) {
+    return _RetrieveMorePosts(
+      oldPosts,
+    );
   }
 
   _Liked liked(List<ForumPost> forums, int index, String userId) {
@@ -39,10 +41,6 @@ class _$ModuleFeedEventTearOff {
       userId,
     );
   }
-
-  _WipedOutFeed wipedOutFeed() {
-    return const _WipedOutFeed();
-  }
 }
 
 /// @nodoc
@@ -52,41 +50,37 @@ const $ModuleFeedEvent = _$ModuleFeedEventTearOff();
 mixin _$ModuleFeedEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loaded,
     required TResult Function() refreshFeed,
+    required TResult Function(List<ForumPost> oldPosts) retrieveMorePosts,
     required TResult Function(List<ForumPost> forums, int index, String userId)
         liked,
     required TResult Function(List<ForumPost> forums, int index, String userId)
         unliked,
-    required TResult Function() wipedOutFeed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loaded,
     TResult Function()? refreshFeed,
+    TResult Function(List<ForumPost> oldPosts)? retrieveMorePosts,
     TResult Function(List<ForumPost> forums, int index, String userId)? liked,
     TResult Function(List<ForumPost> forums, int index, String userId)? unliked,
-    TResult Function()? wipedOutFeed,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Loaded value) loaded,
     required TResult Function(_RefreshFeed value) refreshFeed,
+    required TResult Function(_RetrieveMorePosts value) retrieveMorePosts,
     required TResult Function(_Liked value) liked,
     required TResult Function(_Unliked value) unliked,
-    required TResult Function(_WipedOutFeed value) wipedOutFeed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Loaded value)? loaded,
     TResult Function(_RefreshFeed value)? refreshFeed,
+    TResult Function(_RetrieveMorePosts value)? retrieveMorePosts,
     TResult Function(_Liked value)? liked,
     TResult Function(_Unliked value)? unliked,
-    TResult Function(_WipedOutFeed value)? wipedOutFeed,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -107,103 +101,6 @@ class _$ModuleFeedEventCopyWithImpl<$Res>
   final ModuleFeedEvent _value;
   // ignore: unused_field
   final $Res Function(ModuleFeedEvent) _then;
-}
-
-/// @nodoc
-abstract class _$LoadedCopyWith<$Res> {
-  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) then) =
-      __$LoadedCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$LoadedCopyWithImpl<$Res> extends _$ModuleFeedEventCopyWithImpl<$Res>
-    implements _$LoadedCopyWith<$Res> {
-  __$LoadedCopyWithImpl(_Loaded _value, $Res Function(_Loaded) _then)
-      : super(_value, (v) => _then(v as _Loaded));
-
-  @override
-  _Loaded get _value => super._value as _Loaded;
-}
-
-/// @nodoc
-
-class _$_Loaded implements _Loaded {
-  const _$_Loaded();
-
-  @override
-  String toString() {
-    return 'ModuleFeedEvent.loaded()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _Loaded);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() loaded,
-    required TResult Function() refreshFeed,
-    required TResult Function(List<ForumPost> forums, int index, String userId)
-        liked,
-    required TResult Function(List<ForumPost> forums, int index, String userId)
-        unliked,
-    required TResult Function() wipedOutFeed,
-  }) {
-    return loaded();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loaded,
-    TResult Function()? refreshFeed,
-    TResult Function(List<ForumPost> forums, int index, String userId)? liked,
-    TResult Function(List<ForumPost> forums, int index, String userId)? unliked,
-    TResult Function()? wipedOutFeed,
-    required TResult orElse(),
-  }) {
-    if (loaded != null) {
-      return loaded();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_RefreshFeed value) refreshFeed,
-    required TResult Function(_Liked value) liked,
-    required TResult Function(_Unliked value) unliked,
-    required TResult Function(_WipedOutFeed value) wipedOutFeed,
-  }) {
-    return loaded(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_RefreshFeed value)? refreshFeed,
-    TResult Function(_Liked value)? liked,
-    TResult Function(_Unliked value)? unliked,
-    TResult Function(_WipedOutFeed value)? wipedOutFeed,
-    required TResult orElse(),
-  }) {
-    if (loaded != null) {
-      return loaded(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Loaded implements ModuleFeedEvent {
-  const factory _Loaded() = _$_Loaded;
 }
 
 /// @nodoc
@@ -246,13 +143,12 @@ class _$_RefreshFeed implements _RefreshFeed {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loaded,
     required TResult Function() refreshFeed,
+    required TResult Function(List<ForumPost> oldPosts) retrieveMorePosts,
     required TResult Function(List<ForumPost> forums, int index, String userId)
         liked,
     required TResult Function(List<ForumPost> forums, int index, String userId)
         unliked,
-    required TResult Function() wipedOutFeed,
   }) {
     return refreshFeed();
   }
@@ -260,11 +156,10 @@ class _$_RefreshFeed implements _RefreshFeed {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loaded,
     TResult Function()? refreshFeed,
+    TResult Function(List<ForumPost> oldPosts)? retrieveMorePosts,
     TResult Function(List<ForumPost> forums, int index, String userId)? liked,
     TResult Function(List<ForumPost> forums, int index, String userId)? unliked,
-    TResult Function()? wipedOutFeed,
     required TResult orElse(),
   }) {
     if (refreshFeed != null) {
@@ -276,11 +171,10 @@ class _$_RefreshFeed implements _RefreshFeed {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Loaded value) loaded,
     required TResult Function(_RefreshFeed value) refreshFeed,
+    required TResult Function(_RetrieveMorePosts value) retrieveMorePosts,
     required TResult Function(_Liked value) liked,
     required TResult Function(_Unliked value) unliked,
-    required TResult Function(_WipedOutFeed value) wipedOutFeed,
   }) {
     return refreshFeed(this);
   }
@@ -288,11 +182,10 @@ class _$_RefreshFeed implements _RefreshFeed {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Loaded value)? loaded,
     TResult Function(_RefreshFeed value)? refreshFeed,
+    TResult Function(_RetrieveMorePosts value)? retrieveMorePosts,
     TResult Function(_Liked value)? liked,
     TResult Function(_Unliked value)? unliked,
-    TResult Function(_WipedOutFeed value)? wipedOutFeed,
     required TResult orElse(),
   }) {
     if (refreshFeed != null) {
@@ -304,6 +197,134 @@ class _$_RefreshFeed implements _RefreshFeed {
 
 abstract class _RefreshFeed implements ModuleFeedEvent {
   const factory _RefreshFeed() = _$_RefreshFeed;
+}
+
+/// @nodoc
+abstract class _$RetrieveMorePostsCopyWith<$Res> {
+  factory _$RetrieveMorePostsCopyWith(
+          _RetrieveMorePosts value, $Res Function(_RetrieveMorePosts) then) =
+      __$RetrieveMorePostsCopyWithImpl<$Res>;
+  $Res call({List<ForumPost> oldPosts});
+}
+
+/// @nodoc
+class __$RetrieveMorePostsCopyWithImpl<$Res>
+    extends _$ModuleFeedEventCopyWithImpl<$Res>
+    implements _$RetrieveMorePostsCopyWith<$Res> {
+  __$RetrieveMorePostsCopyWithImpl(
+      _RetrieveMorePosts _value, $Res Function(_RetrieveMorePosts) _then)
+      : super(_value, (v) => _then(v as _RetrieveMorePosts));
+
+  @override
+  _RetrieveMorePosts get _value => super._value as _RetrieveMorePosts;
+
+  @override
+  $Res call({
+    Object? oldPosts = freezed,
+  }) {
+    return _then(_RetrieveMorePosts(
+      oldPosts == freezed
+          ? _value.oldPosts
+          : oldPosts // ignore: cast_nullable_to_non_nullable
+              as List<ForumPost>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_RetrieveMorePosts implements _RetrieveMorePosts {
+  const _$_RetrieveMorePosts(this.oldPosts);
+
+  @override
+  final List<ForumPost> oldPosts;
+
+  @override
+  String toString() {
+    return 'ModuleFeedEvent.retrieveMorePosts(oldPosts: $oldPosts)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _RetrieveMorePosts &&
+            (identical(other.oldPosts, oldPosts) ||
+                const DeepCollectionEquality()
+                    .equals(other.oldPosts, oldPosts)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(oldPosts);
+
+  @JsonKey(ignore: true)
+  @override
+  _$RetrieveMorePostsCopyWith<_RetrieveMorePosts> get copyWith =>
+      __$RetrieveMorePostsCopyWithImpl<_RetrieveMorePosts>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() refreshFeed,
+    required TResult Function(List<ForumPost> oldPosts) retrieveMorePosts,
+    required TResult Function(List<ForumPost> forums, int index, String userId)
+        liked,
+    required TResult Function(List<ForumPost> forums, int index, String userId)
+        unliked,
+  }) {
+    return retrieveMorePosts(oldPosts);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? refreshFeed,
+    TResult Function(List<ForumPost> oldPosts)? retrieveMorePosts,
+    TResult Function(List<ForumPost> forums, int index, String userId)? liked,
+    TResult Function(List<ForumPost> forums, int index, String userId)? unliked,
+    required TResult orElse(),
+  }) {
+    if (retrieveMorePosts != null) {
+      return retrieveMorePosts(oldPosts);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_RefreshFeed value) refreshFeed,
+    required TResult Function(_RetrieveMorePosts value) retrieveMorePosts,
+    required TResult Function(_Liked value) liked,
+    required TResult Function(_Unliked value) unliked,
+  }) {
+    return retrieveMorePosts(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_RefreshFeed value)? refreshFeed,
+    TResult Function(_RetrieveMorePosts value)? retrieveMorePosts,
+    TResult Function(_Liked value)? liked,
+    TResult Function(_Unliked value)? unliked,
+    required TResult orElse(),
+  }) {
+    if (retrieveMorePosts != null) {
+      return retrieveMorePosts(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _RetrieveMorePosts implements ModuleFeedEvent {
+  const factory _RetrieveMorePosts(List<ForumPost> oldPosts) =
+      _$_RetrieveMorePosts;
+
+  List<ForumPost> get oldPosts => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$RetrieveMorePostsCopyWith<_RetrieveMorePosts> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -389,13 +410,12 @@ class _$_Liked implements _Liked {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loaded,
     required TResult Function() refreshFeed,
+    required TResult Function(List<ForumPost> oldPosts) retrieveMorePosts,
     required TResult Function(List<ForumPost> forums, int index, String userId)
         liked,
     required TResult Function(List<ForumPost> forums, int index, String userId)
         unliked,
-    required TResult Function() wipedOutFeed,
   }) {
     return liked(forums, index, userId);
   }
@@ -403,11 +423,10 @@ class _$_Liked implements _Liked {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loaded,
     TResult Function()? refreshFeed,
+    TResult Function(List<ForumPost> oldPosts)? retrieveMorePosts,
     TResult Function(List<ForumPost> forums, int index, String userId)? liked,
     TResult Function(List<ForumPost> forums, int index, String userId)? unliked,
-    TResult Function()? wipedOutFeed,
     required TResult orElse(),
   }) {
     if (liked != null) {
@@ -419,11 +438,10 @@ class _$_Liked implements _Liked {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Loaded value) loaded,
     required TResult Function(_RefreshFeed value) refreshFeed,
+    required TResult Function(_RetrieveMorePosts value) retrieveMorePosts,
     required TResult Function(_Liked value) liked,
     required TResult Function(_Unliked value) unliked,
-    required TResult Function(_WipedOutFeed value) wipedOutFeed,
   }) {
     return liked(this);
   }
@@ -431,11 +449,10 @@ class _$_Liked implements _Liked {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Loaded value)? loaded,
     TResult Function(_RefreshFeed value)? refreshFeed,
+    TResult Function(_RetrieveMorePosts value)? retrieveMorePosts,
     TResult Function(_Liked value)? liked,
     TResult Function(_Unliked value)? unliked,
-    TResult Function(_WipedOutFeed value)? wipedOutFeed,
     required TResult orElse(),
   }) {
     if (liked != null) {
@@ -539,13 +556,12 @@ class _$_Unliked implements _Unliked {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loaded,
     required TResult Function() refreshFeed,
+    required TResult Function(List<ForumPost> oldPosts) retrieveMorePosts,
     required TResult Function(List<ForumPost> forums, int index, String userId)
         liked,
     required TResult Function(List<ForumPost> forums, int index, String userId)
         unliked,
-    required TResult Function() wipedOutFeed,
   }) {
     return unliked(forums, index, userId);
   }
@@ -553,11 +569,10 @@ class _$_Unliked implements _Unliked {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loaded,
     TResult Function()? refreshFeed,
+    TResult Function(List<ForumPost> oldPosts)? retrieveMorePosts,
     TResult Function(List<ForumPost> forums, int index, String userId)? liked,
     TResult Function(List<ForumPost> forums, int index, String userId)? unliked,
-    TResult Function()? wipedOutFeed,
     required TResult orElse(),
   }) {
     if (unliked != null) {
@@ -569,11 +584,10 @@ class _$_Unliked implements _Unliked {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Loaded value) loaded,
     required TResult Function(_RefreshFeed value) refreshFeed,
+    required TResult Function(_RetrieveMorePosts value) retrieveMorePosts,
     required TResult Function(_Liked value) liked,
     required TResult Function(_Unliked value) unliked,
-    required TResult Function(_WipedOutFeed value) wipedOutFeed,
   }) {
     return unliked(this);
   }
@@ -581,11 +595,10 @@ class _$_Unliked implements _Unliked {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Loaded value)? loaded,
     TResult Function(_RefreshFeed value)? refreshFeed,
+    TResult Function(_RetrieveMorePosts value)? retrieveMorePosts,
     TResult Function(_Liked value)? liked,
     TResult Function(_Unliked value)? unliked,
-    TResult Function(_WipedOutFeed value)? wipedOutFeed,
     required TResult orElse(),
   }) {
     if (unliked != null) {
@@ -608,106 +621,6 @@ abstract class _Unliked implements ModuleFeedEvent {
 }
 
 /// @nodoc
-abstract class _$WipedOutFeedCopyWith<$Res> {
-  factory _$WipedOutFeedCopyWith(
-          _WipedOutFeed value, $Res Function(_WipedOutFeed) then) =
-      __$WipedOutFeedCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$WipedOutFeedCopyWithImpl<$Res>
-    extends _$ModuleFeedEventCopyWithImpl<$Res>
-    implements _$WipedOutFeedCopyWith<$Res> {
-  __$WipedOutFeedCopyWithImpl(
-      _WipedOutFeed _value, $Res Function(_WipedOutFeed) _then)
-      : super(_value, (v) => _then(v as _WipedOutFeed));
-
-  @override
-  _WipedOutFeed get _value => super._value as _WipedOutFeed;
-}
-
-/// @nodoc
-
-class _$_WipedOutFeed implements _WipedOutFeed {
-  const _$_WipedOutFeed();
-
-  @override
-  String toString() {
-    return 'ModuleFeedEvent.wipedOutFeed()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _WipedOutFeed);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() loaded,
-    required TResult Function() refreshFeed,
-    required TResult Function(List<ForumPost> forums, int index, String userId)
-        liked,
-    required TResult Function(List<ForumPost> forums, int index, String userId)
-        unliked,
-    required TResult Function() wipedOutFeed,
-  }) {
-    return wipedOutFeed();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loaded,
-    TResult Function()? refreshFeed,
-    TResult Function(List<ForumPost> forums, int index, String userId)? liked,
-    TResult Function(List<ForumPost> forums, int index, String userId)? unliked,
-    TResult Function()? wipedOutFeed,
-    required TResult orElse(),
-  }) {
-    if (wipedOutFeed != null) {
-      return wipedOutFeed();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_RefreshFeed value) refreshFeed,
-    required TResult Function(_Liked value) liked,
-    required TResult Function(_Unliked value) unliked,
-    required TResult Function(_WipedOutFeed value) wipedOutFeed,
-  }) {
-    return wipedOutFeed(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_RefreshFeed value)? refreshFeed,
-    TResult Function(_Liked value)? liked,
-    TResult Function(_Unliked value)? unliked,
-    TResult Function(_WipedOutFeed value)? wipedOutFeed,
-    required TResult orElse(),
-  }) {
-    if (wipedOutFeed != null) {
-      return wipedOutFeed(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _WipedOutFeed implements ModuleFeedEvent {
-  const factory _WipedOutFeed() = _$_WipedOutFeed;
-}
-
-/// @nodoc
 class _$ModuleFeedStateTearOff {
   const _$ModuleFeedStateTearOff();
 
@@ -719,15 +632,12 @@ class _$ModuleFeedStateTearOff {
     return const _LoadInProgress();
   }
 
-  _LoadSuccess loadSuccess(List<ForumPost> forums) {
+  _LoadSuccess loadSuccess(
+      List<ForumPost> forums, bool hasMore, bool isRetrieving) {
     return _LoadSuccess(
       forums,
-    );
-  }
-
-  _LoadLike loadLike(List<ForumPost> forums) {
-    return _LoadLike(
-      forums,
+      hasMore,
+      isRetrieving,
     );
   }
 
@@ -735,10 +645,6 @@ class _$ModuleFeedStateTearOff {
     return _LoadFailure(
       dataFailure,
     );
-  }
-
-  _Clear clear() {
-    return const _Clear();
   }
 }
 
@@ -751,20 +657,19 @@ mixin _$ModuleFeedState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<ForumPost> forums) loadSuccess,
-    required TResult Function(List<ForumPost> forums) loadLike,
+    required TResult Function(
+            List<ForumPost> forums, bool hasMore, bool isRetrieving)
+        loadSuccess,
     required TResult Function(DataFailure dataFailure) loadFailure,
-    required TResult Function() clear,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<ForumPost> forums)? loadSuccess,
-    TResult Function(List<ForumPost> forums)? loadLike,
+    TResult Function(List<ForumPost> forums, bool hasMore, bool isRetrieving)?
+        loadSuccess,
     TResult Function(DataFailure dataFailure)? loadFailure,
-    TResult Function()? clear,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -773,9 +678,7 @@ mixin _$ModuleFeedState {
     required TResult Function(_Initial value) initial,
     required TResult Function(_LoadInProgress value) loadInProgress,
     required TResult Function(_LoadSuccess value) loadSuccess,
-    required TResult Function(_LoadLike value) loadLike,
     required TResult Function(_LoadFailure value) loadFailure,
-    required TResult Function(_Clear value) clear,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -783,9 +686,7 @@ mixin _$ModuleFeedState {
     TResult Function(_Initial value)? initial,
     TResult Function(_LoadInProgress value)? loadInProgress,
     TResult Function(_LoadSuccess value)? loadSuccess,
-    TResult Function(_LoadLike value)? loadLike,
     TResult Function(_LoadFailure value)? loadFailure,
-    TResult Function(_Clear value)? clear,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -847,10 +748,10 @@ class _$_Initial implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<ForumPost> forums) loadSuccess,
-    required TResult Function(List<ForumPost> forums) loadLike,
+    required TResult Function(
+            List<ForumPost> forums, bool hasMore, bool isRetrieving)
+        loadSuccess,
     required TResult Function(DataFailure dataFailure) loadFailure,
-    required TResult Function() clear,
   }) {
     return initial();
   }
@@ -860,10 +761,9 @@ class _$_Initial implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<ForumPost> forums)? loadSuccess,
-    TResult Function(List<ForumPost> forums)? loadLike,
+    TResult Function(List<ForumPost> forums, bool hasMore, bool isRetrieving)?
+        loadSuccess,
     TResult Function(DataFailure dataFailure)? loadFailure,
-    TResult Function()? clear,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -878,9 +778,7 @@ class _$_Initial implements _Initial {
     required TResult Function(_Initial value) initial,
     required TResult Function(_LoadInProgress value) loadInProgress,
     required TResult Function(_LoadSuccess value) loadSuccess,
-    required TResult Function(_LoadLike value) loadLike,
     required TResult Function(_LoadFailure value) loadFailure,
-    required TResult Function(_Clear value) clear,
   }) {
     return initial(this);
   }
@@ -891,9 +789,7 @@ class _$_Initial implements _Initial {
     TResult Function(_Initial value)? initial,
     TResult Function(_LoadInProgress value)? loadInProgress,
     TResult Function(_LoadSuccess value)? loadSuccess,
-    TResult Function(_LoadLike value)? loadLike,
     TResult Function(_LoadFailure value)? loadFailure,
-    TResult Function(_Clear value)? clear,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -949,10 +845,10 @@ class _$_LoadInProgress implements _LoadInProgress {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<ForumPost> forums) loadSuccess,
-    required TResult Function(List<ForumPost> forums) loadLike,
+    required TResult Function(
+            List<ForumPost> forums, bool hasMore, bool isRetrieving)
+        loadSuccess,
     required TResult Function(DataFailure dataFailure) loadFailure,
-    required TResult Function() clear,
   }) {
     return loadInProgress();
   }
@@ -962,10 +858,9 @@ class _$_LoadInProgress implements _LoadInProgress {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<ForumPost> forums)? loadSuccess,
-    TResult Function(List<ForumPost> forums)? loadLike,
+    TResult Function(List<ForumPost> forums, bool hasMore, bool isRetrieving)?
+        loadSuccess,
     TResult Function(DataFailure dataFailure)? loadFailure,
-    TResult Function()? clear,
     required TResult orElse(),
   }) {
     if (loadInProgress != null) {
@@ -980,9 +875,7 @@ class _$_LoadInProgress implements _LoadInProgress {
     required TResult Function(_Initial value) initial,
     required TResult Function(_LoadInProgress value) loadInProgress,
     required TResult Function(_LoadSuccess value) loadSuccess,
-    required TResult Function(_LoadLike value) loadLike,
     required TResult Function(_LoadFailure value) loadFailure,
-    required TResult Function(_Clear value) clear,
   }) {
     return loadInProgress(this);
   }
@@ -993,9 +886,7 @@ class _$_LoadInProgress implements _LoadInProgress {
     TResult Function(_Initial value)? initial,
     TResult Function(_LoadInProgress value)? loadInProgress,
     TResult Function(_LoadSuccess value)? loadSuccess,
-    TResult Function(_LoadLike value)? loadLike,
     TResult Function(_LoadFailure value)? loadFailure,
-    TResult Function(_Clear value)? clear,
     required TResult orElse(),
   }) {
     if (loadInProgress != null) {
@@ -1014,7 +905,7 @@ abstract class _$LoadSuccessCopyWith<$Res> {
   factory _$LoadSuccessCopyWith(
           _LoadSuccess value, $Res Function(_LoadSuccess) then) =
       __$LoadSuccessCopyWithImpl<$Res>;
-  $Res call({List<ForumPost> forums});
+  $Res call({List<ForumPost> forums, bool hasMore, bool isRetrieving});
 }
 
 /// @nodoc
@@ -1031,12 +922,22 @@ class __$LoadSuccessCopyWithImpl<$Res>
   @override
   $Res call({
     Object? forums = freezed,
+    Object? hasMore = freezed,
+    Object? isRetrieving = freezed,
   }) {
     return _then(_LoadSuccess(
       forums == freezed
           ? _value.forums
           : forums // ignore: cast_nullable_to_non_nullable
               as List<ForumPost>,
+      hasMore == freezed
+          ? _value.hasMore
+          : hasMore // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isRetrieving == freezed
+          ? _value.isRetrieving
+          : isRetrieving // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -1044,14 +945,18 @@ class __$LoadSuccessCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_LoadSuccess implements _LoadSuccess {
-  const _$_LoadSuccess(this.forums);
+  const _$_LoadSuccess(this.forums, this.hasMore, this.isRetrieving);
 
   @override
   final List<ForumPost> forums;
+  @override
+  final bool hasMore;
+  @override
+  final bool isRetrieving;
 
   @override
   String toString() {
-    return 'ModuleFeedState.loadSuccess(forums: $forums)';
+    return 'ModuleFeedState.loadSuccess(forums: $forums, hasMore: $hasMore, isRetrieving: $isRetrieving)';
   }
 
   @override
@@ -1059,12 +964,21 @@ class _$_LoadSuccess implements _LoadSuccess {
     return identical(this, other) ||
         (other is _LoadSuccess &&
             (identical(other.forums, forums) ||
-                const DeepCollectionEquality().equals(other.forums, forums)));
+                const DeepCollectionEquality().equals(other.forums, forums)) &&
+            (identical(other.hasMore, hasMore) ||
+                const DeepCollectionEquality()
+                    .equals(other.hasMore, hasMore)) &&
+            (identical(other.isRetrieving, isRetrieving) ||
+                const DeepCollectionEquality()
+                    .equals(other.isRetrieving, isRetrieving)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(forums);
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(forums) ^
+      const DeepCollectionEquality().hash(hasMore) ^
+      const DeepCollectionEquality().hash(isRetrieving);
 
   @JsonKey(ignore: true)
   @override
@@ -1076,12 +990,12 @@ class _$_LoadSuccess implements _LoadSuccess {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<ForumPost> forums) loadSuccess,
-    required TResult Function(List<ForumPost> forums) loadLike,
+    required TResult Function(
+            List<ForumPost> forums, bool hasMore, bool isRetrieving)
+        loadSuccess,
     required TResult Function(DataFailure dataFailure) loadFailure,
-    required TResult Function() clear,
   }) {
-    return loadSuccess(forums);
+    return loadSuccess(forums, hasMore, isRetrieving);
   }
 
   @override
@@ -1089,14 +1003,13 @@ class _$_LoadSuccess implements _LoadSuccess {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<ForumPost> forums)? loadSuccess,
-    TResult Function(List<ForumPost> forums)? loadLike,
+    TResult Function(List<ForumPost> forums, bool hasMore, bool isRetrieving)?
+        loadSuccess,
     TResult Function(DataFailure dataFailure)? loadFailure,
-    TResult Function()? clear,
     required TResult orElse(),
   }) {
     if (loadSuccess != null) {
-      return loadSuccess(forums);
+      return loadSuccess(forums, hasMore, isRetrieving);
     }
     return orElse();
   }
@@ -1107,9 +1020,7 @@ class _$_LoadSuccess implements _LoadSuccess {
     required TResult Function(_Initial value) initial,
     required TResult Function(_LoadInProgress value) loadInProgress,
     required TResult Function(_LoadSuccess value) loadSuccess,
-    required TResult Function(_LoadLike value) loadLike,
     required TResult Function(_LoadFailure value) loadFailure,
-    required TResult Function(_Clear value) clear,
   }) {
     return loadSuccess(this);
   }
@@ -1120,9 +1031,7 @@ class _$_LoadSuccess implements _LoadSuccess {
     TResult Function(_Initial value)? initial,
     TResult Function(_LoadInProgress value)? loadInProgress,
     TResult Function(_LoadSuccess value)? loadSuccess,
-    TResult Function(_LoadLike value)? loadLike,
     TResult Function(_LoadFailure value)? loadFailure,
-    TResult Function(_Clear value)? clear,
     required TResult orElse(),
   }) {
     if (loadSuccess != null) {
@@ -1133,140 +1042,14 @@ class _$_LoadSuccess implements _LoadSuccess {
 }
 
 abstract class _LoadSuccess implements ModuleFeedState {
-  const factory _LoadSuccess(List<ForumPost> forums) = _$_LoadSuccess;
+  const factory _LoadSuccess(
+      List<ForumPost> forums, bool hasMore, bool isRetrieving) = _$_LoadSuccess;
 
   List<ForumPost> get forums => throw _privateConstructorUsedError;
+  bool get hasMore => throw _privateConstructorUsedError;
+  bool get isRetrieving => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$LoadSuccessCopyWith<_LoadSuccess> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$LoadLikeCopyWith<$Res> {
-  factory _$LoadLikeCopyWith(_LoadLike value, $Res Function(_LoadLike) then) =
-      __$LoadLikeCopyWithImpl<$Res>;
-  $Res call({List<ForumPost> forums});
-}
-
-/// @nodoc
-class __$LoadLikeCopyWithImpl<$Res> extends _$ModuleFeedStateCopyWithImpl<$Res>
-    implements _$LoadLikeCopyWith<$Res> {
-  __$LoadLikeCopyWithImpl(_LoadLike _value, $Res Function(_LoadLike) _then)
-      : super(_value, (v) => _then(v as _LoadLike));
-
-  @override
-  _LoadLike get _value => super._value as _LoadLike;
-
-  @override
-  $Res call({
-    Object? forums = freezed,
-  }) {
-    return _then(_LoadLike(
-      forums == freezed
-          ? _value.forums
-          : forums // ignore: cast_nullable_to_non_nullable
-              as List<ForumPost>,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$_LoadLike implements _LoadLike {
-  const _$_LoadLike(this.forums);
-
-  @override
-  final List<ForumPost> forums;
-
-  @override
-  String toString() {
-    return 'ModuleFeedState.loadLike(forums: $forums)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is _LoadLike &&
-            (identical(other.forums, forums) ||
-                const DeepCollectionEquality().equals(other.forums, forums)));
-  }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(forums);
-
-  @JsonKey(ignore: true)
-  @override
-  _$LoadLikeCopyWith<_LoadLike> get copyWith =>
-      __$LoadLikeCopyWithImpl<_LoadLike>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loadInProgress,
-    required TResult Function(List<ForumPost> forums) loadSuccess,
-    required TResult Function(List<ForumPost> forums) loadLike,
-    required TResult Function(DataFailure dataFailure) loadFailure,
-    required TResult Function() clear,
-  }) {
-    return loadLike(forums);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loadInProgress,
-    TResult Function(List<ForumPost> forums)? loadSuccess,
-    TResult Function(List<ForumPost> forums)? loadLike,
-    TResult Function(DataFailure dataFailure)? loadFailure,
-    TResult Function()? clear,
-    required TResult orElse(),
-  }) {
-    if (loadLike != null) {
-      return loadLike(forums);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_LoadInProgress value) loadInProgress,
-    required TResult Function(_LoadSuccess value) loadSuccess,
-    required TResult Function(_LoadLike value) loadLike,
-    required TResult Function(_LoadFailure value) loadFailure,
-    required TResult Function(_Clear value) clear,
-  }) {
-    return loadLike(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_LoadInProgress value)? loadInProgress,
-    TResult Function(_LoadSuccess value)? loadSuccess,
-    TResult Function(_LoadLike value)? loadLike,
-    TResult Function(_LoadFailure value)? loadFailure,
-    TResult Function(_Clear value)? clear,
-    required TResult orElse(),
-  }) {
-    if (loadLike != null) {
-      return loadLike(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _LoadLike implements ModuleFeedState {
-  const factory _LoadLike(List<ForumPost> forums) = _$_LoadLike;
-
-  List<ForumPost> get forums => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  _$LoadLikeCopyWith<_LoadLike> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1347,10 +1130,10 @@ class _$_LoadFailure implements _LoadFailure {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loadInProgress,
-    required TResult Function(List<ForumPost> forums) loadSuccess,
-    required TResult Function(List<ForumPost> forums) loadLike,
+    required TResult Function(
+            List<ForumPost> forums, bool hasMore, bool isRetrieving)
+        loadSuccess,
     required TResult Function(DataFailure dataFailure) loadFailure,
-    required TResult Function() clear,
   }) {
     return loadFailure(dataFailure);
   }
@@ -1360,10 +1143,9 @@ class _$_LoadFailure implements _LoadFailure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loadInProgress,
-    TResult Function(List<ForumPost> forums)? loadSuccess,
-    TResult Function(List<ForumPost> forums)? loadLike,
+    TResult Function(List<ForumPost> forums, bool hasMore, bool isRetrieving)?
+        loadSuccess,
     TResult Function(DataFailure dataFailure)? loadFailure,
-    TResult Function()? clear,
     required TResult orElse(),
   }) {
     if (loadFailure != null) {
@@ -1378,9 +1160,7 @@ class _$_LoadFailure implements _LoadFailure {
     required TResult Function(_Initial value) initial,
     required TResult Function(_LoadInProgress value) loadInProgress,
     required TResult Function(_LoadSuccess value) loadSuccess,
-    required TResult Function(_LoadLike value) loadLike,
     required TResult Function(_LoadFailure value) loadFailure,
-    required TResult Function(_Clear value) clear,
   }) {
     return loadFailure(this);
   }
@@ -1391,9 +1171,7 @@ class _$_LoadFailure implements _LoadFailure {
     TResult Function(_Initial value)? initial,
     TResult Function(_LoadInProgress value)? loadInProgress,
     TResult Function(_LoadSuccess value)? loadSuccess,
-    TResult Function(_LoadLike value)? loadLike,
     TResult Function(_LoadFailure value)? loadFailure,
-    TResult Function(_Clear value)? clear,
     required TResult orElse(),
   }) {
     if (loadFailure != null) {
@@ -1410,103 +1188,4 @@ abstract class _LoadFailure implements ModuleFeedState {
   @JsonKey(ignore: true)
   _$LoadFailureCopyWith<_LoadFailure> get copyWith =>
       throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$ClearCopyWith<$Res> {
-  factory _$ClearCopyWith(_Clear value, $Res Function(_Clear) then) =
-      __$ClearCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$ClearCopyWithImpl<$Res> extends _$ModuleFeedStateCopyWithImpl<$Res>
-    implements _$ClearCopyWith<$Res> {
-  __$ClearCopyWithImpl(_Clear _value, $Res Function(_Clear) _then)
-      : super(_value, (v) => _then(v as _Clear));
-
-  @override
-  _Clear get _value => super._value as _Clear;
-}
-
-/// @nodoc
-
-class _$_Clear implements _Clear {
-  const _$_Clear();
-
-  @override
-  String toString() {
-    return 'ModuleFeedState.clear()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _Clear);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loadInProgress,
-    required TResult Function(List<ForumPost> forums) loadSuccess,
-    required TResult Function(List<ForumPost> forums) loadLike,
-    required TResult Function(DataFailure dataFailure) loadFailure,
-    required TResult Function() clear,
-  }) {
-    return clear();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loadInProgress,
-    TResult Function(List<ForumPost> forums)? loadSuccess,
-    TResult Function(List<ForumPost> forums)? loadLike,
-    TResult Function(DataFailure dataFailure)? loadFailure,
-    TResult Function()? clear,
-    required TResult orElse(),
-  }) {
-    if (clear != null) {
-      return clear();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_LoadInProgress value) loadInProgress,
-    required TResult Function(_LoadSuccess value) loadSuccess,
-    required TResult Function(_LoadLike value) loadLike,
-    required TResult Function(_LoadFailure value) loadFailure,
-    required TResult Function(_Clear value) clear,
-  }) {
-    return clear(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_LoadInProgress value)? loadInProgress,
-    TResult Function(_LoadSuccess value)? loadSuccess,
-    TResult Function(_LoadLike value)? loadLike,
-    TResult Function(_LoadFailure value)? loadFailure,
-    TResult Function(_Clear value)? clear,
-    required TResult orElse(),
-  }) {
-    if (clear != null) {
-      return clear(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Clear implements ModuleFeedState {
-  const factory _Clear() = _$_Clear;
 }

@@ -15,6 +15,5 @@ class ForumActorEvent with _$ForumActorEvent {
       _CommentLiked;
   const factory ForumActorEvent.commentUnliked(
       String forumId, String commentId) = _CommentUnliked;
-  const factory ForumActorEvent.forumDeleted(
-      String forumId, bool hasPhoto, bool isAnon) = _ForumDeleted;
+  const factory ForumActorEvent.forumDeleted(ForumPost forum) = _ForumDeleted;
 }

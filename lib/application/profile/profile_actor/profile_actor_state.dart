@@ -11,6 +11,7 @@ class ProfileActorState with _$ProfileActorState {
     required Either<DataFailure, List<Profile>> failureOrFollowing,
     required Either<DataFailure, List<Profile>> failureOrFollowers,
     required Either<DataFailure, List<ForumPost>> failureOrForumsPosted,
+    required int statsDisplay,
   }) = _ProfileActorState;
 
   factory ProfileActorState.initial() => ProfileActorState(
@@ -22,5 +23,6 @@ class ProfileActorState with _$ProfileActorState {
         failureOrFollowing: right([]),
         failureOrFollowers: right([]),
         failureOrForumsPosted: right([]),
+        statsDisplay: 15,
       );
 }
