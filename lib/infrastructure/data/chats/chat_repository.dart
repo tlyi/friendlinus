@@ -1,26 +1,26 @@
-import 'dart:collection';
 import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:friendlinus/domain/core/value_objects.dart';
+import 'package:friendlinus/domain/data/chats/chat.dart';
 import 'package:friendlinus/domain/data/chats/chat_message/chat_message.dart';
+import 'package:friendlinus/domain/data/chats/i_chat_repository.dart';
 import 'package:friendlinus/domain/data/chats/location_chat.dart';
 import 'package:friendlinus/domain/data/chats/location_failure.dart';
 import 'package:friendlinus/domain/data/chats/value_objects.dart';
 import 'package:friendlinus/domain/data/data_failure.dart';
-import 'package:friendlinus/domain/data/chats/chat.dart';
 import 'package:friendlinus/domain/data/profile/profile.dart';
+import 'package:friendlinus/infrastructure/core/firestore_helpers.dart';
 import 'package:friendlinus/infrastructure/data/chats/chat_dtos.dart';
+import 'package:friendlinus/infrastructure/data/chats/chat_message/chat_message_dtos.dart';
 import 'package:friendlinus/infrastructure/data/chats/location_chat/location_chat_dtos.dart';
 import 'package:friendlinus/infrastructure/data/profile/profile_dtos.dart';
-import 'package:injectable/injectable.dart';
-import 'package:friendlinus/domain/data/chats/i_chat_repository.dart';
-import 'package:friendlinus/infrastructure/core/firestore_helpers.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:injectable/injectable.dart';
 import 'package:sortedmap/sortedmap.dart';
-import 'chat_message/chat_message_dtos.dart';
 import 'package:sortedmap/sortedmap.dart' as sortedMap;
 
 @LazySingleton(as: IChatRepository)
@@ -133,18 +133,6 @@ class ChatRepository implements IChatRepository {
   }
 
   @override
-  Future<Either<DataFailure, Unit>> deleteChat(Chat chat) {
-    // TODO: implement deleteChat
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<Either<DataFailure, Unit>> deleteMessage(ChatMessage chatMessage) {
-    // TODO: implement deleteMessage
-    throw UnimplementedError();
-  }
-
-  @override
   Future<Either<DataFailure, Unit>> updateMessageRead(
       {required String convoId, required String messageId}) async {
     try {
@@ -195,7 +183,6 @@ class ChatRepository implements IChatRepository {
   Stream<Either<DataFailure, List<ChatMessage>>> getConvo(
       String convoId) async* {
     final convoMessagesRef = await _firestore.convoMessagesRef(convoId);
-    print("retrieving messages");
     yield* convoMessagesRef
         .orderBy('timeSent', descending: true)
         .snapshots()
@@ -220,13 +207,12 @@ class ChatRepository implements IChatRepository {
   Future<Either<DataFailure, Unit>> createLocationChat(
       LocationChat locationChat) async {
     try {
-      print('trying to create chat');
       final timestamp = DateTime.now().millisecondsSinceEpoch.toString();
       final locationChatsRef = await _firestore.locationChatsRef();
       final locationChatDto = LocationChatDto.fromDomain(
           locationChat.copyWith(timestamp: timestamp));
 
-      final messageId = UniqueId('').getOrCrash();
+      final messageId = UniqueId().getOrCrash();
       final locationConvoMessagesRef =
           await _firestore.locationConvoMessagesRef(locationChatDto.chatId);
       final chatMessageDto =
@@ -239,11 +225,11 @@ class ChatRepository implements IChatRepository {
       await locationConvoMessagesRef
           .doc(messageId)
           .set(chatMessageDto.toJson());
-      print('first message sent');
+
       await locationChatsRef
           .doc(locationChatDto.chatId)
           .set(locationChatDto.toJson());
-      print('location chat created');
+
       return right(unit);
     } on FirebaseException catch (e) {
       if (e.message!.contains('PERMISSION_DENIED')) {
@@ -273,7 +259,6 @@ class ChatRepository implements IChatRepository {
     // Test if location services are enabled.
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      print('Service not enabled');
       return left(const LocationFailure.serviceNotEnabled());
     }
 
@@ -282,14 +267,12 @@ class ChatRepository implements IChatRepository {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        print('Insufficient permission');
         return left(const LocationFailure.insufficientPermission());
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
       // Permissions are denied forever, handle appropriately.
-      print('Permission denied');
       return left(const LocationFailure.permissionDeniedForever());
     }
 
@@ -413,7 +396,6 @@ class ChatRepository implements IChatRepository {
       String convoId) async* {
     final locationConvoMessagesRef =
         await _firestore.locationConvoMessagesRef(convoId);
-    print("retrieving messages");
     yield* locationConvoMessagesRef
         .orderBy('timeSent', descending: true)
         .snapshots()
@@ -446,11 +428,9 @@ class ChatRepository implements IChatRepository {
       {
         if (query.docs.isNotEmpty) {
           for (final doc in query.docs) {
-            print('here');
             searchResults.add(LocationChatDto.fromFirestore(doc).toDomain());
           }
         }
-        print(searchResults);
         return right(searchResults);
       }
     } on FirebaseException catch (e) {

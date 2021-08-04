@@ -30,6 +30,6 @@ class ForumPage extends StatelessWidget {
         BlocProvider(
             create: (context) => getIt<PollWatcherBloc>()
               ..add(PollWatcherEvent.retrievePollStarted(forumId))),
-    ], child: ForumBody());
+    ], child: const ForumBody());
   }
 }

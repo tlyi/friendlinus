@@ -10,8 +10,6 @@ import 'package:friendlinus/domain/data/forum/comment/comment.dart';
 import 'package:friendlinus/domain/data/forum/forum_post/forum_post.dart';
 import 'package:friendlinus/domain/data/forum/poll/poll.dart';
 import 'package:friendlinus/domain/data/profile/profile.dart';
-import 'package:friendlinus/injection.dart';
-import 'package:friendlinus/presentation/core/app_bar.dart';
 import 'package:friendlinus/presentation/core/get_time.dart';
 import 'package:friendlinus/presentation/core/nav_bar.dart';
 import 'package:polls/polls.dart';
@@ -54,7 +52,6 @@ class ForumBody extends StatelessWidget {
           return BlocBuilder<ForumActorBloc, ForumActorState>(
             builder: (context, state) {
               final ownId = context.read<ForumActorBloc>().state.userId;
-              print(ownId);
               return Scaffold(
                   appBar: AppBar(
                       centerTitle: true,
@@ -111,7 +108,7 @@ class ForumBody extends StatelessWidget {
                             alignment: Alignment.center,
                             width: 46,
                             height: 46,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 shape: BoxShape.circle, color: Colors.white),
                             child: ClipOval(
                               child: CachedNetworkImage(
@@ -119,7 +116,7 @@ class ForumBody extends StatelessWidget {
                                   height: 46,
                                   width: 46,
                                   imageUrl: posterProfile.photoUrl,
-                                  placeholder: (context, url) => Center(
+                                  placeholder: (context, url) => const Center(
                                       child: CircularProgressIndicator())),
                             ),
                           ),
@@ -164,7 +161,7 @@ class _BuildPost extends StatelessWidget {
     return Padding(
         padding: const EdgeInsets.only(top: 20.0, left: 8.0, right: 8),
         child: Container(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             border: Border.all(color: const Color(0xFF7BA5BB)),
             borderRadius: BorderRadius.circular(15.0),
@@ -457,7 +454,7 @@ class __BuildSortCommentsOptionState extends State<_BuildSortCommentsOption> {
   String selected = 'Recent';
   @override
   Widget build(BuildContext context) {
-    List<String> sortingOptions = ['Recent', 'Oldest', 'Most Liked'];
+    final List<String> sortingOptions = ['Recent', 'Oldest', 'Most Liked'];
     return Row(
       children: <Widget>[
         const Text('Sort Comments by'),

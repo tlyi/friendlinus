@@ -26,15 +26,16 @@ class ProfileActorBloc extends Bloc<ProfileActorEvent, ProfileActorState> {
     yield* event.map(
       loadingOtherProfile: (e) async* {
         yield state.copyWith(isLoading: true);
-        Either<DataFailure, Profile> failureOrUserProfile =
+        final Either<DataFailure, Profile> failureOrUserProfile =
             await _profileRepository.readOtherProfile(e.userId);
-        String ownId = await _profileRepository.getUserId();
-        bool isFollowing = await _profileRepository.checkIfFollowing(e.userId);
-        Either<DataFailure, List<Profile>> failureOrFollowing =
+        final String ownId = await _profileRepository.getUserId();
+        final bool isFollowing =
+            await _profileRepository.checkIfFollowing(e.userId);
+        final Either<DataFailure, List<Profile>> failureOrFollowing =
             await _profileRepository.retrieveFollowing(e.userId);
-        Either<DataFailure, List<Profile>> failureOrFollowers =
+        final Either<DataFailure, List<Profile>> failureOrFollowers =
             await _profileRepository.retrieveFollowers(e.userId);
-        Either<DataFailure, List<ForumPost>> failureOrForumsPosted =
+        final Either<DataFailure, List<ForumPost>> failureOrForumsPosted =
             await _profileRepository.retrieveMyForums(e.userId);
         yield state.copyWith(
             failureOrUserProfile: failureOrUserProfile,
@@ -48,15 +49,15 @@ class ProfileActorBloc extends Bloc<ProfileActorEvent, ProfileActorState> {
       },
       loadingOwnProfile: (e) async* {
         yield state.copyWith(isLoading: true);
-        String ownId = await _profileRepository.getUserId();
-        Either<DataFailure, Profile> failureOrUserProfile =
+        final String ownId = await _profileRepository.getUserId();
+        final Either<DataFailure, Profile> failureOrUserProfile =
             await _profileRepository.readOwnProfile();
 
-        Either<DataFailure, List<Profile>> failureOrFollowing =
+        final Either<DataFailure, List<Profile>> failureOrFollowing =
             await _profileRepository.retrieveFollowing(ownId);
-        Either<DataFailure, List<Profile>> failureOrFollowers =
+        final Either<DataFailure, List<Profile>> failureOrFollowers =
             await _profileRepository.retrieveFollowers(ownId);
-        Either<DataFailure, List<ForumPost>> failureOrForumsPosted =
+        final Either<DataFailure, List<ForumPost>> failureOrForumsPosted =
             await _profileRepository.retrieveMyForums(ownId);
         yield state.copyWith(
           failureOrUserProfile: failureOrUserProfile,
@@ -71,9 +72,9 @@ class ProfileActorBloc extends Bloc<ProfileActorEvent, ProfileActorState> {
       },
       addedFollower: (e) async* {
         await _profileRepository.addFollower(state.userId);
-        Either<DataFailure, List<Profile>> failureOrFollowing =
+        final Either<DataFailure, List<Profile>> failureOrFollowing =
             await _profileRepository.retrieveFollowing(state.userId);
-        Either<DataFailure, List<Profile>> failureOrFollowers =
+        final Either<DataFailure, List<Profile>> failureOrFollowers =
             await _profileRepository.retrieveFollowers(state.userId);
         yield state.copyWith(
           userId: state.userId,
@@ -85,9 +86,9 @@ class ProfileActorBloc extends Bloc<ProfileActorEvent, ProfileActorState> {
       },
       removedFollower: (e) async* {
         await _profileRepository.removeFollower(state.userId);
-        Either<DataFailure, List<Profile>> failureOrFollowing =
+        final Either<DataFailure, List<Profile>> failureOrFollowing =
             await _profileRepository.retrieveFollowing(state.userId);
-        Either<DataFailure, List<Profile>> failureOrFollowers =
+        final Either<DataFailure, List<Profile>> failureOrFollowers =
             await _profileRepository.retrieveFollowers(state.userId);
         yield state.copyWith(
           userId: state.userId,

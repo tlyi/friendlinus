@@ -22,7 +22,7 @@ class ForumPostWatcherBloc
   final IProfileRepository _profileRepository;
 
   ForumPostWatcherBloc(this._forumRepository, this._profileRepository)
-      : super(ForumPostWatcherState.initial());
+      : super(const ForumPostWatcherState.initial());
 
   StreamSubscription<Either<DataFailure, ForumPost>>?
       _forumPostStreamSubscription;
@@ -47,9 +47,9 @@ class ForumPostWatcherBloc
         yield ForumPostWatcherState.loadSuccess(
             e.forum, Profile.empty().copyWith(photoUrl: constants.LOGO));
       } else {
-        Either<DataFailure, Profile> posterProfileOrFailure =
+        final Either<DataFailure, Profile> posterProfileOrFailure =
             await _profileRepository.searchProfileByUuid(e.forum.posterUserId);
-        Profile posterProfile = posterProfileOrFailure.getOrElse(
+        final Profile posterProfile = posterProfileOrFailure.getOrElse(
             () => Profile.empty().copyWith(photoUrl: constants.ERROR_DP));
         yield ForumPostWatcherState.loadSuccess(e.forum, posterProfile);
       }

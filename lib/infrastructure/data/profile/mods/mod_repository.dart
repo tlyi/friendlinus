@@ -25,18 +25,11 @@ class ModRepository implements IModRepository {
     final response = await http.get(Uri.parse(apiUrl));
 
     if (response.statusCode == 200) {
-      //List<Mod> moduleList = List<Mod>.from(json.decode(response.body).map((x) =>ModDto.fromJson(i as Map<String, dynamic>).toDomain()));
       var jsonMods = json.decode(response.body) as List<dynamic>;
       List<Mod> moduleList;
       moduleList = jsonMods
           .map((i) => ModDto.fromJson(i as Map<String, dynamic>).toDomain())
           .toList();
-      print("wtf");
-      // for (Map<String, dynamic> mod in jsonMods) {}
-      // final mods = jsonMods
-      //     .map((Map<String, dynamic> json) => ModDto.fromJson(json).toDomain())
-      //     .toList();
-      // final mods = jsonMods.map.forEach((json) => moduleList.add(ModDto.fromJson(json).toDomain()));
 
       return right(moduleList);
     } else {
@@ -52,7 +45,7 @@ class ModRepository implements IModRepository {
 
       List<Mod> modList = failureorModList.getOrElse(() => []);
 
-      for (var mod in modList) {
+      for (final mod in modList) {
         final moduleDto = ModDto.fromDomain(mod);
         await moduleRef.doc(mod.moduleCode).set(moduleDto.toJson());
       }

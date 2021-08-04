@@ -1,9 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:friendlinus/domain/core/value_objects.dart';
 import 'package:friendlinus/domain/data/chats/chat.dart';
-import 'package:friendlinus/domain/data/chats/chat_message/chat_message.dart';
-import 'package:friendlinus/domain/data/chats/value_objects.dart';
 
 part 'chat_dtos.freezed.dart';
 part 'chat_dtos.g.dart';

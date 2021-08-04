@@ -9,7 +9,7 @@ import 'package:friendlinus/domain/data/chats/chat_message/chat_message.dart';
 import 'package:friendlinus/domain/data/profile/profile.dart';
 import 'package:friendlinus/domain/core/constants.dart' as constants;
 import 'package:friendlinus/presentation/core/get_time.dart';
-import 'package:intl/intl.dart';
+
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
@@ -93,7 +93,7 @@ class ConvoMessages extends StatelessWidget {
                               state.messages[index - 1].senderId !=
                                   message.senderId,
                           child: message.photoUrl != ''
-                              ? Container(
+                              ? SizedBox(
                                   width: 200,
                                   child: Column(
                                     crossAxisAlignment:

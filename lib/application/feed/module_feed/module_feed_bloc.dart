@@ -25,7 +25,7 @@ class ModuleFeedBloc extends Bloc<ModuleFeedEvent, ModuleFeedState> {
     yield* event.map(
       refreshFeed: (e) async* {
         yield const ModuleFeedState.loadInProgress();
-        print('at module feed');
+
         final Either<DataFailure, List<ForumPost>> failureOrForums =
             await _forumRepository.retrieveModuleFeedInitial();
         yield failureOrForums.fold(
@@ -36,7 +36,7 @@ class ModuleFeedBloc extends Bloc<ModuleFeedEvent, ModuleFeedState> {
       retrieveMorePosts: (e) async* {
         yield ModuleFeedState.loadSuccess(e.oldPosts, true, true);
 
-        String lastTimestamp = e.oldPosts.last.timestamp;
+        final String lastTimestamp = e.oldPosts.last.timestamp;
         final Either<DataFailure, List<ForumPost>> failureOrForums =
             await _forumRepository.retrieveModuleFeedInBatches(lastTimestamp);
 

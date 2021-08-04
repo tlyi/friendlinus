@@ -8,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:friendlinus/application/forum/forum_form/forum_form_bloc.dart';
 import 'package:friendlinus/presentation/core/image_picker.dart';
-import 'package:friendlinus/presentation/routes/router.gr.dart';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:friendlinus/domain/core/constants.dart' as constants;
@@ -44,9 +44,9 @@ class ForumForm extends StatelessWidget {
                 }, (_) {}));
       },
       builder: (context, state) {
-        bool photoAdded =
+        final bool photoAdded =
             context.read<ForumFormBloc>().state.forumPost.photoAdded;
-        bool pollAdded =
+        final bool pollAdded =
             context.read<ForumFormBloc>().state.forumPost.pollAdded;
         return Form(
           autovalidateMode: state.showErrorMessages
@@ -64,10 +64,10 @@ class ForumForm extends StatelessWidget {
                 const _BuildTag(),
                 const SizedBox(height: 15),
                 if (photoAdded) const _BuildImage(),
-                if (pollAdded) _BuildPoll(),
+                if (pollAdded) const _BuildPoll(),
                 Row(
                   children: <Widget>[
-                    _BuildAnonymousSwitch(),
+                    const _BuildAnonymousSwitch(),
                     const Text('Post Anonymously'),
                   ],
                 ),
@@ -130,7 +130,7 @@ class _BuildTag extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Tag your post to a module:'),
+              const Text('Tag your post to a module:'),
               TypeAheadField(suggestionsCallback: (value) async {
                 context
                     .read<ForumFormBloc>()
@@ -145,7 +145,6 @@ class _BuildTag extends StatelessWidget {
               }, itemBuilder: (context, suggestion) {
                 return ListTile(title: Text(suggestion.toString()));
               }, onSuggestionSelected: (String value) {
-                print("adding tag");
                 context
                     .read<ForumFormBloc>()
                     .add(ForumFormEvent.tagChanged(value));
@@ -157,7 +156,7 @@ class _BuildTag extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: Chip(
                 label: Text(context.read<ForumFormBloc>().state.forumPost.tag),
-                labelPadding: EdgeInsets.only(left: 4, right: 0),
+                labelPadding: const EdgeInsets.only(left: 4),
                 deleteIcon: Icon(
                   Icons.close_rounded,
                   color: Colors.grey[700],
@@ -165,7 +164,6 @@ class _BuildTag extends StatelessWidget {
                 ),
                 deleteIconColor: Colors.transparent,
                 onDeleted: () {
-                  print("removing");
                   context
                       .read<ForumFormBloc>()
                       .add(const ForumFormEvent.tagChanged(''));
@@ -230,11 +228,10 @@ class _BuildPoll extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<int> dropList = [0, 2, 3, 4]; //Poll must minimally have 2 options
-
-    List<int> intList = [0, 1, 2, 3, 4];
+    final List<int> dropList = [0, 2, 3, 4]; //Poll must minimally have 2 options
+    final List<int> intList = [0, 1, 2, 3, 4];
     int numOptions = context.read<ForumFormBloc>().state.poll.numOptions;
-    List<String> pollOptions = List.filled(numOptions, '');
+    
     return Column(
       children: [
         Row(

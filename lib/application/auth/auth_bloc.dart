@@ -4,7 +4,6 @@ import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:friendlinus/domain/auth/i_auth_facade.dart';
-import 'package:friendlinus/domain/core/errors.dart';
 import 'package:friendlinus/domain/data/data_failure.dart';
 import 'package:friendlinus/domain/data/profile/i_profile_repository.dart';
 import 'package:friendlinus/domain/mods/i_mod_repository.dart';
@@ -53,7 +52,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             () => isAuthenticated = false, (_) => isAuthenticated = true);
 
         if (isAuthenticated) {
-          print("is authenticated and checking verification");
           final userVerified = await _authFacade.isUserVerified();
           if (userVerified) {
             yield const AuthState.verified();
@@ -66,7 +64,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       },
       registeredCheckRequested: (e) async* {
         yield const AuthState.verifying();
-        Either<DataFailure, bool> verifyUserRegistered =
+        final Either<DataFailure, bool> verifyUserRegistered =
             await _profileRepository.verifyUserRegistered();
         final bool userRegistered = verifyUserRegistered.getOrElse(() => false);
         if (userRegistered) {

@@ -1,13 +1,9 @@
-import 'dart:async';
-
 import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:friendlinus/application/chats/chat_watcher/chat_watcher_bloc.dart';
-import 'package:friendlinus/presentation/chats/chat_list/chat_list_page.dart';
 import 'package:friendlinus/presentation/core/get_time.dart';
-import 'package:intl/intl.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';

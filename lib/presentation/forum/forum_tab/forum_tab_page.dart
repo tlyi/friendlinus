@@ -1,22 +1,15 @@
-import 'dart:math';
-
-import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:friendlinus/application/forum/module_watcher/module_watcher_bloc.dart';
 import 'package:friendlinus/application/forum/search_forum/search_forum_bloc.dart';
-import 'package:friendlinus/domain/data/forum/forum_post/forum_post.dart';
-import 'package:friendlinus/domain/mods/mod.dart';
 import 'package:friendlinus/injection.dart';
 import 'package:friendlinus/presentation/core/app_bar.dart';
-import 'package:friendlinus/presentation/core/get_time.dart';
 import 'package:friendlinus/presentation/core/nav_bar.dart';
 import 'package:friendlinus/presentation/forum/forum_tab/widgets/module_overview.dart';
 import 'package:friendlinus/presentation/forum/forum_tab/widgets/search_module.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:friendlinus/domain/core/constants.dart' as constants;
-import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 
 class ForumTabPage extends StatelessWidget {
   const ForumTabPage({Key? key}) : super(key: key);
@@ -47,12 +40,13 @@ class ForumTabPage extends StatelessWidget {
                 backgroundColor: constants.THEME_BLUE,
                 child: const Icon(Icons.create),
               );
-            } else
+            } else {
               return Container();
+            }
           },
         ),
         body: Stack(children: [
-          ModuleOverviewPage(),
+          const ModuleOverviewPage(),
           BuildFloatingSearchBar(),
         ]),
       ),

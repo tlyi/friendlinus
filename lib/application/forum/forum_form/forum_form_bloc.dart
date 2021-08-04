@@ -5,16 +5,14 @@ import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:friendlinus/domain/auth/i_auth_facade.dart';
-import 'package:friendlinus/domain/core/errors.dart';
-import 'package:friendlinus/domain/core/value_objects.dart';
+
 import 'package:friendlinus/domain/data/data_failure.dart';
 import 'package:friendlinus/domain/data/forum/forum_post/forum_post.dart';
 import 'package:friendlinus/domain/data/forum/i_forum_repository.dart';
 import 'package:friendlinus/domain/data/forum/poll/poll.dart';
 import 'package:friendlinus/domain/data/forum/value_objects.dart';
 import 'package:friendlinus/domain/data/profile/i_profile_repository.dart';
-import 'package:friendlinus/injection.dart';
+import 'package:friendlinus/domain/core/constants.dart' as constants;
 import 'package:injectable/injectable.dart';
 
 part 'forum_form_event.dart';
@@ -84,7 +82,10 @@ class ForumFormBloc extends Bloc<ForumFormEvent, ForumFormState> {
             state.photoFile, state.forumPost.forumId);
         String url = '';
         failureOrString.fold(
-          (f) => print(f),
+          (f) {
+            url = constants.ERROR_DP;
+            print(f);
+          },
           (s) {
             url = s;
           },
@@ -137,12 +138,12 @@ class ForumFormBloc extends Bloc<ForumFormEvent, ForumFormState> {
         Either<DataFailure, Unit>? failureOrSuccess;
         Either<DataFailure, Unit>? pollFailureOrSuccess;
 
-        bool isTitleValid = state.forumPost.title.isValid();
-        bool isBodyValid = state.forumPost.body.isValid();
-        bool isForumPostValid = isTitleValid && isBodyValid;
+        final bool isTitleValid = state.forumPost.title.isValid();
+        final bool isBodyValid = state.forumPost.body.isValid();
+        final bool isForumPostValid = isTitleValid && isBodyValid;
 
         if (isForumPostValid) {
-          String userId = await _forumRepository.getOwnId();
+          final String userId = await _forumRepository.getOwnId();
           if (state.forumPost.tag == '') {
             yield state.copyWith(
                 forumPost: state.forumPost.copyWith(tag: 'General'));
@@ -157,7 +158,7 @@ class ForumFormBloc extends Bloc<ForumFormEvent, ForumFormState> {
               poll: state.poll.copyWith(creatorUuid: userId));
 
           if (state.forumPost.pollAdded) {
-            bool arePollOptionsValid = state.poll.optionList
+            final bool arePollOptionsValid = state.poll.optionList
                 .map((pollOption) => pollOption.isValid())
                 .reduce((a, b) => a & b);
             if (arePollOptionsValid) {

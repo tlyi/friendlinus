@@ -5,8 +5,6 @@ import 'package:friendlinus/application/notifications/notification_watcher/notif
 import 'package:friendlinus/presentation/core/get_time.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:friendlinus/domain/core/constants.dart' as constants;
 
 class Notifications extends StatelessWidget {
   const Notifications({Key? key}) : super(key: key);
@@ -30,8 +28,7 @@ class Notifications extends StatelessWidget {
                 child: CircularProgressIndicator(),
               ),
           loadSuccess: (state) {
-            int length = state.notifications.length;
-            print("Notifications: $length");
+            final int length = state.notifications.length;
             return RefreshIndicator(
               onRefresh: () async {
                 context.read<NotificationWatcherBloc>().add(
@@ -46,14 +43,12 @@ class Notifications extends StatelessWidget {
                       context.read<NotificationWatcherBloc>().add(
                           NotificationWatcherEvent.retrieveMoreNotifications(
                               state.notifications, state.profiles));
-
-                      print("ADD MORE");
                     }
                     return Container(
-                      margin: EdgeInsets.only(top: 15, bottom: 15),
+                      margin: const EdgeInsets.only(top: 15, bottom: 15),
                       height: 30,
                       width: 30,
-                      child: Center(child: CircularProgressIndicator()),
+                      child: const Center(child: CircularProgressIndicator()),
                     );
                   } else {
                     final notification = state.notifications[index];

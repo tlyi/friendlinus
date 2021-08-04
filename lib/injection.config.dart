@@ -83,9 +83,8 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       get<_i4.FirebaseFirestore>(), get<_i5.FirebaseStorage>()));
   gh.lazySingleton<_i12.IModRepository>(
       () => _i13.ModRepository(get<_i4.FirebaseFirestore>()));
-  gh.lazySingleton<_i14.INotificationRepository>(() =>
-      _i15.NotificationRepository(
-          get<_i4.FirebaseFirestore>(), get<_i5.FirebaseStorage>()));
+  gh.lazySingleton<_i14.INotificationRepository>(
+      () => _i15.NotificationRepository(get<_i4.FirebaseFirestore>()));
   gh.lazySingleton<_i16.IProfileRepository>(() => _i17.ProfileRepository(
       get<_i4.FirebaseFirestore>(), get<_i5.FirebaseStorage>()));
   gh.factory<_i18.LocationChatFormBloc>(

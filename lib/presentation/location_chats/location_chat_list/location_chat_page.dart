@@ -4,7 +4,6 @@ import 'package:friendlinus/application/chats/location_chat_watcher/location_cha
 import 'package:friendlinus/application/chats/search_location_chats/search_location_chats_bloc.dart';
 import 'package:friendlinus/application/notifications/notif_counter_watcher/notif_counter_watcher_bloc.dart';
 import 'package:friendlinus/injection.dart';
-import 'package:friendlinus/presentation/core/app_bar.dart';
 import 'package:friendlinus/presentation/core/nav_bar.dart';
 import 'package:friendlinus/domain/core/constants.dart' as constants;
 import 'package:friendlinus/presentation/location_chats/location_chat_list/widgets/location_chat_list.dart';
@@ -37,7 +36,7 @@ class LocationChatPage extends StatelessWidget {
                 ),
                 leading: IconButton(
                     onPressed: () async {
-                      await context.pushRoute(LocationChatFormRoute());
+                      await context.pushRoute(const LocationChatFormRoute());
                       context.read<LocationChatWatcherBloc>().add(
                           const LocationChatWatcherEvent.refreshedLocation());
                     },
@@ -49,8 +48,7 @@ class LocationChatPage extends StatelessWidget {
                       icon: const Icon(Icons.notifications_none,
                           color: Colors.grey),
                       onPressed: () {
-                        print('opening notifs');
-                        context.pushRoute(NotificationRoute());
+                        context.pushRoute(const NotificationRoute());
                       },
                       padding: const EdgeInsets.only(right: 20),
                     ),
@@ -109,7 +107,7 @@ class LocationChatPage extends StatelessWidget {
                 backgroundColor: constants.THEME_BLUE,
                 child: const Icon(Icons.location_searching)),
             body: Stack(children: [
-              LocationChatList(),
+              const LocationChatList(),
               BuildFloatingSearchBar(),
             ]),
           );

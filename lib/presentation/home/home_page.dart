@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:auto_route/auto_route.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:friendlinus/application/auth/auth_bloc.dart';
+
 import 'package:friendlinus/application/feed/friend_feed/friend_feed_bloc.dart';
 import 'package:friendlinus/application/feed/module_feed/module_feed_bloc.dart';
 
@@ -12,9 +12,8 @@ import 'package:friendlinus/presentation/core/nav_bar.dart';
 import 'package:friendlinus/presentation/home/widgets/friend_feed.dart';
 import 'package:friendlinus/presentation/home/widgets/module_feed.dart';
 
-import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:friendlinus/domain/core/constants.dart' as constants;
-import 'package:intl/intl.dart';
+
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -55,7 +54,6 @@ class HomeFeedView extends StatefulWidget {
 class _HomeFeedViewState extends State<HomeFeedView>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  int _selectedIndex = 0;
 
   @override
   void initState() {
@@ -64,7 +62,6 @@ class _HomeFeedViewState extends State<HomeFeedView>
 
     _tabController.addListener(() {
       setState(() {
-        _selectedIndex = _tabController.index;
       });
     });
   }

@@ -1,12 +1,10 @@
 import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:friendlinus/application/forum/module_watcher/module_forum_watcher/module_forum_watcher_bloc.dart';
 import 'package:friendlinus/application/forum/module_watcher/module_watcher_bloc.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:friendlinus/domain/core/constants.dart' as constants;
-import 'package:friendlinus/injection.dart';
 import 'package:friendlinus/presentation/core/get_time.dart';
 
 class ModuleOverviewPage extends StatelessWidget {
@@ -67,7 +65,7 @@ class ModuleOverviewPage extends StatelessWidget {
                                 await context.pushRoute(ModuleForumRoute(
                                     moduleCode: module.moduleCode));
                                 context.read<ModuleWatcherBloc>().add(
-                                    ModuleWatcherEvent
+                                    const ModuleWatcherEvent
                                         .retrieveModulesStarted());
                               },
                             ),

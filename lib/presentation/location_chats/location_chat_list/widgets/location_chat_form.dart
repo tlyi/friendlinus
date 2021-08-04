@@ -2,7 +2,6 @@ import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:friendlinus/application/chats/location_chat_form/location_chat_form_bloc.dart';
-import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:friendlinus/domain/core/constants.dart' as constants;
 import 'package:geolocator/geolocator.dart';
@@ -24,7 +23,6 @@ class LocationChatForm extends StatelessWidget {
                               'Insufficient permission',
                           unableToUpdate: (_) => 'Unable to update'));
                 }, (_) {
-                  print('created chat');
                   return context.popRoute();
                 }));
         state.failureOrCurrentLocation.fold(
@@ -147,7 +145,7 @@ class _BuildIntroMessage extends StatelessWidget {
             .value
             .fold(
                 (f) => f.maybeMap(
-                  emptyString: (_) => 'Please type an intro message',
+                    emptyString: (_) => 'Please type an intro message',
                     exceedingLength: (_) =>
                         'Message too long, maximum of 1000 characters only',
                     orElse: () => null),
@@ -173,7 +171,7 @@ class _BuildLocationButton extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.all(12),
+              padding: const EdgeInsets.all(12),
               child: Text(
                 "Set Chat Location",
                 style: TextStyle(
@@ -215,8 +213,8 @@ class _BuildLocationButton extends StatelessWidget {
                           .read<LocationChatFormBloc>()
                           .add(const LocationChatFormEvent.locationSet());
                     },
-                    child:
-                        Icon(Icons.crop_square, size: 35, color: Colors.grey)),
+                    child: const Icon(Icons.crop_square,
+                        size: 35, color: Colors.grey)),
               ],
             ),
           ],
@@ -262,7 +260,6 @@ class _BuildSaveButton extends StatelessWidget {
                       ));
             }
 
-            print('click');
             context
                 .read<LocationChatFormBloc>()
                 .add(const LocationChatFormEvent.createdChat());

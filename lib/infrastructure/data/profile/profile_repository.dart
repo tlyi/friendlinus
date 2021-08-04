@@ -3,7 +3,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:friendlinus/domain/auth/i_auth_facade.dart';
 import 'package:friendlinus/domain/core/errors.dart';
-import 'package:friendlinus/domain/core/value_objects.dart';
 import 'package:friendlinus/domain/data/data_failure.dart';
 import 'package:dartz/dartz.dart';
 import 'package:friendlinus/domain/data/forum/following_feed/following_feed.dart';
@@ -18,9 +17,6 @@ import 'package:friendlinus/infrastructure/data/profile/profile_dtos.dart';
 import 'package:friendlinus/injection.dart';
 import 'package:injectable/injectable.dart';
 import 'package:friendlinus/infrastructure/core/firestore_helpers.dart';
-
-//This files contains all the actions that can be done to the data
-//The argument to all the functions here should be entities
 
 @LazySingleton(as: IProfileRepository)
 class ProfileRepository implements IProfileRepository {
@@ -42,7 +38,6 @@ class ProfileRepository implements IProfileRepository {
       final profileDto = ProfileDto.fromDomain(profile);
 
       await userDoc.set(profileDto.toJson());
-      //TODO: Update modules of interest with userId
       return right(unit);
     } on FirebaseException catch (e) {
       if (e.message!.contains('PERMISSION_DENIED')) {
@@ -56,7 +51,6 @@ class ProfileRepository implements IProfileRepository {
   @override
   Future<Either<DataFailure, Unit>> update(Profile profile) async {
     try {
-      final modRef = await _firestore.modulesRef();
       final userDoc = await _firestore.userDocument();
       final profileDto = ProfileDto.fromDomain(profile);
 
@@ -129,7 +123,7 @@ class ProfileRepository implements IProfileRepository {
     final searchResults = <Profile>[];
     final usersRef = await _firestore.usersRef();
     try {
-      QuerySnapshot query = await usersRef
+      final QuerySnapshot query = await usersRef
           .where('username', isGreaterThanOrEqualTo: username)
           .where('username', isLessThanOrEqualTo: '$username~')
           .where('username', isNotEqualTo: 'anonymous')
@@ -207,7 +201,7 @@ class ProfileRepository implements IProfileRepository {
   Future<bool> checkIfFollowing(String userId) async {
     final usersRef = await _firestore.usersRef();
     final ownId = await getUserId();
-    QuerySnapshot query = await usersRef
+    final QuerySnapshot query = await usersRef
         .where('uuid', isEqualTo: ownId)
         .where('following', arrayContains: userId)
         .get();
@@ -245,7 +239,6 @@ class ProfileRepository implements IProfileRepository {
         final followingFeedDto =
             FollowingFeedDto.fromDomain(followingFeed).toJson();
         await followingFeedRef.doc(forumId).set(followingFeedDto);
-        print('set');
       }
 
       WriteBatch batch = _firestore.batch();
@@ -303,7 +296,7 @@ class ProfileRepository implements IProfileRepository {
     final following = <Profile>[];
     final usersRef = await _firestore.usersRef();
     try {
-      QuerySnapshot query =
+      final QuerySnapshot query =
           await usersRef.where('followedBy', arrayContains: userId).get();
       {
         if (query.docs.isNotEmpty) {
@@ -328,7 +321,7 @@ class ProfileRepository implements IProfileRepository {
     final following = <Profile>[];
     final usersRef = await _firestore.usersRef();
     try {
-      QuerySnapshot query =
+      final QuerySnapshot query =
           await usersRef.where('following', arrayContains: userId).get();
       {
         if (query.docs.isNotEmpty) {
@@ -353,7 +346,7 @@ class ProfileRepository implements IProfileRepository {
     final forumPosts = <ForumPost>[];
     final forumsRef = await _firestore.forumsRef();
     try {
-      QuerySnapshot query = await forumsRef
+      final QuerySnapshot query = await forumsRef
           .where('posterUserId', isEqualTo: userId)
           .orderBy('timestamp', descending: true)
           .get();
@@ -377,11 +370,10 @@ class ProfileRepository implements IProfileRepository {
   @override
   Future<Either<DataFailure, List<String>>> searchModulesByModuleCode(
       String moduleCode) async {
-    print("Searching for ${moduleCode.toUpperCase()}");
     final List<String> searchResults = [];
     final modRef = await _firestore.modulesRef();
     try {
-      QuerySnapshot query = await modRef
+      final QuerySnapshot query = await modRef
           .where('moduleCode', isGreaterThanOrEqualTo: moduleCode.toUpperCase())
           .limit(15)
           .get();

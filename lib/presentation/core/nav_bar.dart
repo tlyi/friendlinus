@@ -25,11 +25,9 @@ class NavigationBar extends StatelessWidget {
           IconButton(
             icon: const Image(
               image: AssetImage('images/logo.png'),
-              color: null,
             ),
             tooltip: 'Home',
             onPressed: () {
-              print('Nav to home');
               context.replaceRoute(const HomeRoute());
             },
           ),
@@ -42,7 +40,6 @@ class NavigationBar extends StatelessWidget {
               tooltip: 'Chats',
               onPressed: () {
                 context.replaceRoute(const ChatListRoute());
-                print('Nav to chats');
               },
             ),
             Positioned(
@@ -106,7 +103,6 @@ class NavigationBar extends StatelessWidget {
             ),
             tooltip: 'Forums',
             onPressed: () {
-              print('Nav to forums');
               context.replaceRoute(const ForumTabRoute());
             },
           ),
@@ -117,7 +113,6 @@ class NavigationBar extends StatelessWidget {
             ),
             tooltip: 'Profile',
             onPressed: () {
-              print('Nav to profile');
               context.replaceRoute(ProfileRoute(canGoBack: false));
             },
           ),

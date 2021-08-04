@@ -14,7 +14,7 @@ part 'chat_counter_watcher_bloc.freezed.dart';
 @injectable
 class ChatCounterWatcherBloc
     extends Bloc<ChatCounterWatcherEvent, ChatCounterWatcherState> {
-  INotificationRepository _notificationRepository;
+  final INotificationRepository _notificationRepository;
   ChatCounterWatcherBloc(this._notificationRepository)
       : super(const ChatCounterWatcherState.initial());
 

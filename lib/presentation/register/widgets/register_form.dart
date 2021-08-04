@@ -32,7 +32,7 @@ class RegisterForm extends StatelessWidget {
             context
                 .read<AuthBloc>()
                 .add(const AuthEvent.verifiedCheckRequested());
-            print('First verification check');
+
             context.replaceRoute(const VerifyEmailRoute());
           },
         ),
@@ -66,8 +66,8 @@ class _BuildVerifyMessage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Column(
-        children: <Widget>[
-          const Padding(
+        children: const <Widget>[
+          Padding(
             padding: EdgeInsets.all(15.0),
             child: Text(
               "Sign up now with your NUSNET ID!",
@@ -77,7 +77,7 @@ class _BuildVerifyMessage extends StatelessWidget {
               ),
             ),
           ),
-          const Text("An authentication link will be sent to your NUS Email."),
+          Text("An authentication link will be sent to your NUS Email."),
         ],
       ),
     );
@@ -100,7 +100,6 @@ class _BuildIDField extends StatelessWidget {
         context
             .read<SignInFormBloc>()
             .add(SignInFormEvent.emailChanged(emailString));
-        print(emailString);
       },
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: (_) =>
@@ -193,17 +192,15 @@ class _BuildRegisterButton extends StatelessWidget {
           style: ButtonStyle(
               backgroundColor:
                   MaterialStateProperty.all(const Color(0xFF7BA5BB))),
-          child: const Text('Sign Up Now'),
           onPressed: () {
             if (context.read<SignInFormBloc>().state.password.value ==
                 context.read<SignInFormBloc>().state.passwordRe.value) {
               context.read<SignInFormBloc>().add(
                     const SignInFormEvent.registerWithEmailAndPasswordPressed(),
                   );
-            } else {
-              return null;
             }
-          }),
+          },
+          child: const Text('Sign Up Now')),
     );
   }
 }

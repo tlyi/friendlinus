@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:friendlinus/domain/data/data_failure.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:friendlinus/domain/data/profile/i_profile_repository.dart';

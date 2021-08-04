@@ -7,7 +7,6 @@ String anonUserId = 'FBpgDK41f6TvCv5moedz';
 ///generates random number from 0 to 3 inclusive
 int generateRandomNumber() {
   final randomNo = Random().nextInt(5);
-  print(randomNo);
   return randomNo;
 }
 

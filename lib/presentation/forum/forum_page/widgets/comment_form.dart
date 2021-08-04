@@ -1,10 +1,8 @@
 import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:friendlinus/application/forum/forum_actor/forum_actor_bloc.dart';
 import 'package:friendlinus/domain/data/forum/forum_post/forum_post.dart';
-import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 
 class CommentForm extends StatelessWidget {
@@ -39,7 +37,7 @@ class CommentForm extends StatelessWidget {
                   _BuildCommentField(),
                   Row(
                     children: <Widget>[
-                      _BuildAnonymousSwitch(),
+                      const _BuildAnonymousSwitch(),
                       const Text('Post Anonymously'),
                     ],
                   ),
@@ -91,7 +89,7 @@ class _BuildAnonymousSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isAnon = context.read<ForumActorBloc>().state.comment.isAnon;
+    final bool isAnon = context.read<ForumActorBloc>().state.comment.isAnon;
     return Switch(
         onChanged: (bool value) => context
             .read<ForumActorBloc>()
@@ -114,10 +112,10 @@ class _BuildPostCommentButton extends StatelessWidget {
         style: ButtonStyle(
             backgroundColor:
                 MaterialStateProperty.all(const Color(0xFF7BA5BB))),
-        child: const Text('Post Comment'),
         onPressed: () => context
             .read<ForumActorBloc>()
             .add(ForumActorEvent.commentCreated(forum)),
+        child: const Text('Post Comment'),
       ),
     );
   }

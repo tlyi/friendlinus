@@ -1,7 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:friendlinus/domain/core/value_objects.dart';
-import 'package:friendlinus/domain/data/chats/chat_message/chat_message.dart';
-import 'package:friendlinus/domain/data/chats/value_objects.dart';
 
 part 'chat.freezed.dart';
 
@@ -18,7 +15,7 @@ abstract class Chat implements _$Chat {
     required String timestamp,
   }) = _Chat;
 
-  factory Chat.empty() => Chat(
+  factory Chat.empty() => const Chat(
         lastMessage: '',
         lastSenderId: '',
         lastMessageRead: false,

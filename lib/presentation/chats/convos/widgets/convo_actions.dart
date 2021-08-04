@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:friendlinus/application/chats/convo_actor/convo_actor_bloc.dart';
 import 'package:friendlinus/domain/data/profile/profile.dart';
-import 'package:friendlinus/presentation/chats/convos/widgets/convo_messages.dart';
 import 'package:friendlinus/presentation/core/image_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -64,6 +63,7 @@ class _ConvoActionsState extends State<ConvoActions> {
                             builder: (BuildContext innerContext) {
                               return AlertDialog(
                                   content: SingleChildScrollView(
+                                padding: const EdgeInsets.only(bottom: 10),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [

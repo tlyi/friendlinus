@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:friendlinus/domain/data/chats/i_chat_repository.dart';
@@ -20,7 +19,7 @@ part 'location_chat_form_bloc.freezed.dart';
 @injectable
 class LocationChatFormBloc
     extends Bloc<LocationChatFormEvent, LocationChatFormState> {
-  IChatRepository _chatRepository;
+  final IChatRepository _chatRepository;
 
   LocationChatFormBloc(this._chatRepository)
       : super(LocationChatFormState.initial());
@@ -38,7 +37,7 @@ class LocationChatFormBloc
       yield state.copyWith(introMessage: IntroMessage(e.messageStr));
     }, locationSet: (e) async* {
       yield state.copyWith(isGettingLocation: true);
-      Either<LocationFailure, Position> failureOrCurrentLocation =
+      final Either<LocationFailure, Position> failureOrCurrentLocation =
           await _chatRepository.getCurrentLocation();
 
       yield failureOrCurrentLocation.fold((failure) {
@@ -55,27 +54,22 @@ class LocationChatFormBloc
               failureOrCurrentLocation: failureOrCurrentLocation,
               locationChat: state.locationChat.copyWith(
                   latitude: position.latitude, longitude: position.longitude)));
-      
-      print('after setting: ${state.locationSet}');
     }, createdChat: (e) async* {
       Either<DataFailure, Unit>? failureOrSuccess;
 
-      bool isTitleValid = state.locationChat.chatTitle.isValid();
-      bool isMessageValid = state.introMessage.isValid();
-      String userId = await _chatRepository.getOwnId();
-      print(state.locationSet);
-      print('title: $isTitleValid');
-      print('message: $isMessageValid');
+      final bool isTitleValid = state.locationChat.chatTitle.isValid();
+      final bool isMessageValid = state.introMessage.isValid();
+      final String userId = await _chatRepository.getOwnId();
+
       if (isTitleValid && isMessageValid && state.locationSet) {
         yield state.copyWith(
             isSaving: true,
             locationChat: state.locationChat.copyWith(
               lastMessage: state.introMessage.getOrCrash(),
               creatorUserId: userId,
-              
             ),
             createFailureOrSuccessOption: none());
-        print('uploading');
+
         failureOrSuccess = await _chatRepository
             .createLocationChat(state.locationChat.copyWith(
           lastSenderId: userId,

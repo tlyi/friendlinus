@@ -14,7 +14,7 @@ part 'module_actor_bloc.freezed.dart';
 
 @injectable
 class ModuleActorBloc extends Bloc<ModuleActorEvent, ModuleActorState> {
-  IProfileRepository _profileRepository;
+  final IProfileRepository _profileRepository;
   ModuleActorBloc(this._profileRepository) : super(ModuleActorState.initial());
 
   @override

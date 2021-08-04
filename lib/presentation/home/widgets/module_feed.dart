@@ -40,7 +40,7 @@ class ModuleFeed extends StatelessWidget {
               return const Center(
                   child: Text('No forums to view. Follow more modules!'));
             } else {
-              int length = state.forums.length;
+              final int length = state.forums.length;
               return RefreshIndicator(
                 onRefresh: () async {
                   context
@@ -49,7 +49,7 @@ class ModuleFeed extends StatelessWidget {
                 },
                 child: ListView.builder(
                     padding:
-                        const EdgeInsets.only(top: 15.0, left: 0, right: 0),
+                        const EdgeInsets.only(top: 15.0),
                     physics: const AlwaysScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: state.hasMore ? length + 1 : length,
@@ -58,8 +58,6 @@ class ModuleFeed extends StatelessWidget {
                         if (!state.isRetrieving) {
                           context.read<ModuleFeedBloc>().add(
                               ModuleFeedEvent.retrieveMorePosts(state.forums));
-
-                          print("ADD MORE");
                         }
                         return Container(
                           margin: const EdgeInsets.only(top: 15, bottom: 15),
@@ -154,7 +152,7 @@ class ModuleFeed extends StatelessWidget {
                                       style: const TextStyle(fontSize: 10),
                                     ),
                                     labelPadding: const EdgeInsets.only(
-                                        top: 0, bottom: 0, left: 4, right: 4),
+                                        left: 4, right: 4),
                                   )
                                 ]),
                             trailing: Column(

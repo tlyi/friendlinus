@@ -5,6 +5,7 @@ import 'package:friendlinus/application/notifications/chat_counter_watcher/chat_
 import 'package:friendlinus/application/notifications/notif_counter_watcher/notif_counter_watcher_bloc.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:friendlinus/domain/core/constants.dart' as constants;
 
 class SplashPage extends StatelessWidget {
   @override
@@ -16,27 +17,20 @@ class SplashPage extends StatelessWidget {
             context
                 .read<AuthBloc>()
                 .add(const AuthEvent.verifiedCheckRequested());
-            print('SPLASH: user is logged in but verifying');
           },
           unauthenticated: (_) {
-            print('SPLASH: hooboo');
             context.replaceRoute(const SignInRoute());
           },
           unverified: (_) {
-            print(
-                'SPLASH: user is logged in but unverified, gg to verify email page');
             context.replaceRoute(const VerifyEmailRoute());
           },
           verifying: (_) {},
           verified: (_) {
-            print(
-                'SPLASH: user is logged in and verified. Checking if registered');
             context
                 .read<AuthBloc>()
                 .add(const AuthEvent.registeredCheckRequested());
           },
           unregistered: (_) {
-            print('SPLASH: user has not registered profile.');
             context.replaceRoute(const RegisterProfileRoute());
           },
           registered: (state) {
@@ -46,18 +40,32 @@ class SplashPage extends StatelessWidget {
             context.read<ChatCounterWatcherBloc>().add(
                 ChatCounterWatcherEvent.retrieveUnreadChatsStarted(
                     userId: state.userId));
-            ;
-            print('SPLASH: user is registered. Gg home page.');
+
             context.replaceRoute(const HomeRoute());
           });
     }, builder: (context, state) {
       if (state is Authenticated) {
         context.read<AuthBloc>().add(const AuthEvent.verifiedCheckRequested());
-        print('SPLASH BUILD: user is logged in but verifying');
       }
-      return const Scaffold(
-        body: Center(
-          child: CircularProgressIndicator(),
+      return Scaffold(
+        backgroundColor: constants.THEME_BLUE,
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Image.asset('images/logo.png', height: 150),
+            const SizedBox(height: 30),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(
+                    width: 200,
+                    child: LinearProgressIndicator(
+                      color: constants.THEME_LIGHT_BLUE,
+                      backgroundColor: Colors.white,
+                    )),
+              ],
+            ),
+          ],
         ),
       );
     });

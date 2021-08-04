@@ -5,7 +5,7 @@ String getTime(String timestamp) {
       DateTime.fromMillisecondsSinceEpoch(int.parse(timestamp));
 
   String timeAgo(DateTime d) {
-    Duration diff = DateTime.now().difference(d);
+    final Duration diff = DateTime.now().difference(d);
     if (diff.inDays > 365) {
       return "${(diff.inDays / 365).floor()} ${(diff.inDays / 365).floor() == 1 ? "year" : "years"} ago";
     }
@@ -29,7 +29,7 @@ String getTimeForum(String timestamp) {
       DateTime.fromMillisecondsSinceEpoch(int.parse(timestamp));
 
   String timeAgo(DateTime d) {
-    Duration diff = DateTime.now().difference(d);
+    final Duration diff = DateTime.now().difference(d);
     if (diff.inDays > 365) {
       return "${(diff.inDays / 365).floor()} ${(diff.inDays / 365).floor() == 1 ? "year" : "years"} ago";
     }
@@ -77,7 +77,7 @@ String getTimeOrDate(String timestamp) {
   final DateTime dateTime =
       DateTime.fromMillisecondsSinceEpoch(int.parse(timestamp));
 
-  Duration diff = DateTime.now().difference(dateTime);
+  final Duration diff = DateTime.now().difference(dateTime);
 
   if (DateTime.now().year == dateTime.year &&
       DateTime.now().month == dateTime.month &&

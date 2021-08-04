@@ -5,7 +5,6 @@ import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:friendlinus/domain/data/chats/chat_message/chat_message.dart';
 import 'package:friendlinus/domain/data/chats/i_chat_repository.dart';
-import 'package:friendlinus/domain/data/chats/value_objects.dart';
 import 'package:friendlinus/domain/data/data_failure.dart';
 import 'package:injectable/injectable.dart';
 
@@ -43,7 +42,6 @@ class ConvoWatcherBloc extends Bloc<ConvoWatcherEvent, ConvoWatcherState> {
       },
       retrieveConvoEnded: (e) async* {
         await _convoStreamSubscription?.cancel();
-        print('stop reading');
       },
       convoReceived: (e) async* {
         yield e.failureOrMessages.fold(

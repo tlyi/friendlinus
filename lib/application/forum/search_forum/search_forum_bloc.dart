@@ -15,7 +15,7 @@ part 'search_forum_bloc.freezed.dart';
 
 @injectable
 class SearchForumBloc extends Bloc<SearchForumEvent, SearchForumState> {
-  IForumRepository _forumRepository;
+  final IForumRepository _forumRepository;
   SearchForumBloc(this._forumRepository) : super(SearchForumState.initial());
 
   @override

@@ -1,17 +1,11 @@
-import 'dart:async';
-import 'dart:math';
-
 import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:friendlinus/application/chats/location_chat_watcher/location_chat_watcher_bloc.dart';
-import 'package:friendlinus/presentation/chats/chat_list/chat_list_page.dart';
 import 'package:friendlinus/presentation/core/get_time.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:intl/intl.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:friendlinus/domain/core/constants.dart' as constants;
 
 class LocationChatList extends StatelessWidget {
@@ -83,7 +77,7 @@ class LocationChatList extends StatelessWidget {
                         final int distance = state.distances[index].toInt();
                         return Card(
                           child: ListTile(
-                            leading: Container(
+                            leading: SizedBox(
                               width: 50,
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
@@ -97,7 +91,7 @@ class LocationChatList extends StatelessWidget {
                                   ),
                                   Flexible(
                                     child: Text(distance > 1000
-                                        ? '${(distance / 1000).toInt()}km'
+                                        ? '${distance ~/ 1000}km'
                                         : '${distance}m'),
                                   ),
                                 ],

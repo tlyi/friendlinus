@@ -1,13 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
-import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 
 class FullScreenPhotoPage extends StatelessWidget {
   final String photoUrl;
   final String tag;
-  const FullScreenPhotoPage({Key? key, required this.photoUrl, required this.tag})
+  const FullScreenPhotoPage(
+      {Key? key, required this.photoUrl, required this.tag})
       : super(key: key);
 
   @override

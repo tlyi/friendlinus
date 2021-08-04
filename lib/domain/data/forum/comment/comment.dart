@@ -15,13 +15,13 @@ abstract class Comment implements _$Comment {
     required CommentText commentText,
     required bool isAnon,
     required int likes,
-      required List<String> likedUserIds,
+    required List<String> likedUserIds,
     required String timestamp,
   }) = _Comment;
 
   factory Comment.empty() => Comment(
         forumId: '',
-        commentId: UniqueId('').getOrCrash(),
+        commentId: UniqueId().getOrCrash(),
         userId: '',
         commentText: CommentText(''),
         isAnon: false,

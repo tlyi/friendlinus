@@ -3,14 +3,12 @@ import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_tags/flutter_tags.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:friendlinus/application/profile/profile_form/profile_form_bloc.dart';
 import 'package:friendlinus/presentation/core/image_picker.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:friendlinus/domain/core/constants.dart' as constants;
 
 class RegisterProfileForm extends StatelessWidget {
   @override
@@ -53,9 +51,9 @@ class RegisterProfileForm extends StatelessWidget {
               const SizedBox(height: 15),
               _BuildBio(),
               const SizedBox(height: 15),
-              _BuildModule(),
+              const _BuildModule(),
               const SizedBox(height: 15),
-              _BuildTags(),
+              const _BuildTags(),
               const SizedBox(height: 15),
               _BuildSaveButton(),
             ]),
@@ -248,7 +246,7 @@ class __BuildModuleState extends State<_BuildModule> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Select modules of interest'),
+        const Text('Select modules of interest'),
         TypeAheadField(
           textFieldConfiguration:
               TextFieldConfiguration(controller: textController),
@@ -281,12 +279,10 @@ class __BuildModuleState extends State<_BuildModule> {
                 .profile
                 .modules
                 .contains(value)) {
-              print("module alr selected");
               FlushbarHelper.createError(
                       message: 'Module has already been selected')
                   .show(context);
             } else {
-              print("adding to list");
               clearText();
               context
                   .read<ProfileFormBloc>()
@@ -307,13 +303,11 @@ class _BuildTags extends StatelessWidget {
     return BlocBuilder<ProfileFormBloc, ProfileFormState>(
         builder: (context, state) {
       if (context.read<ProfileFormBloc>().state.profile.modules.isEmpty) {
-        print("is empt");
         return Container();
       } else if (context.read<ProfileFormBloc>().state.refreshTags) {
         return Align(
           alignment: Alignment.topLeft,
           child: Wrap(
-              alignment: WrapAlignment.start,
               spacing: 6.0,
               runSpacing: -5,
               children: List<Widget>.generate(
@@ -327,7 +321,7 @@ class _BuildTags extends StatelessWidget {
                 return Chip(
                     key: Key(index.toString()),
                     label: Text(module),
-                    labelPadding: EdgeInsets.only(left: 4, right: 0),
+                    labelPadding: const EdgeInsets.only(left: 4),
                     deleteIcon: Icon(
                       Icons.close_rounded,
                       color: Colors.grey[700],
@@ -335,7 +329,6 @@ class _BuildTags extends StatelessWidget {
                     ),
                     deleteIconColor: Colors.transparent,
                     onDeleted: () {
-                      print("removing");
                       context
                           .read<ProfileFormBloc>()
                           .add(ProfileFormEvent.removedModule(index));

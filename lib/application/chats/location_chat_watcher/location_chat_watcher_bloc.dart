@@ -32,7 +32,7 @@ class LocationChatWatcherBloc
     yield* event.map(
       retrieveChatsStarted: (e) async* {
         yield const LocationChatWatcherState.loadInProgress();
-        Either<LocationFailure, Position> failureOrPosition =
+        final Either<LocationFailure, Position> failureOrPosition =
             await _chatRepository.getLastKnownLocation();
         LocationFailure? locationFailure;
         Position? lastKnownPosition;
@@ -45,17 +45,16 @@ class LocationChatWatcherBloc
           DataFailure? dataFailure;
           List<String>? chatIds = [];
           List<double> distances = [];
-          Either<DataFailure, Map<String, double>> failureOrChatIdMaps =
+          final Either<DataFailure, Map<String, double>> failureOrChatIdMaps =
               await _chatRepository.getNearestChatIds(lastKnownPosition!);
           failureOrChatIdMaps.fold((f) => dataFailure = f, (pairs) {
             chatIds = pairs.keys.toList();
             distances = pairs.values.toList();
           });
-          
+
           if (dataFailure != null) {
             yield LocationChatWatcherState.loadDataFailure(dataFailure!);
           } else {
-            
             await _chatStreamSubscription?.cancel();
             _chatStreamSubscription = _chatRepository
                 .retrieveLocationChats(chatIds!.take(10).toList())
@@ -68,7 +67,7 @@ class LocationChatWatcherBloc
       refreshedLocation: (e) async* {
         yield const LocationChatWatcherState.loadInProgress();
         await _chatStreamSubscription?.cancel();
-        Either<LocationFailure, Position> failureOrPosition =
+        final Either<LocationFailure, Position> failureOrPosition =
             await _chatRepository.getCurrentLocation();
         LocationFailure? failure;
         Position? newPosition;
@@ -85,7 +84,7 @@ class LocationChatWatcherBloc
         DataFailure? dataFailure;
         List<String>? chatIds = [];
         List<double> distances = [];
-        Either<DataFailure, Map<String, double>> failureOrChatIdMaps =
+        final Either<DataFailure, Map<String, double>> failureOrChatIdMaps =
             await _chatRepository.getNearestChatIds(e.position);
         failureOrChatIdMaps.fold((f) => dataFailure = f, (pairs) {
           chatIds = pairs.keys.toList();

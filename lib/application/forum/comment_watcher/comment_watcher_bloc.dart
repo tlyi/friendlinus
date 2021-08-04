@@ -22,7 +22,7 @@ class CommentWatcherBloc
   final IProfileRepository _profileRepository;
 
   CommentWatcherBloc(this._forumRepository, this._profileRepository)
-      : super(CommentWatcherState.initial());
+      : super(const CommentWatcherState.initial());
 
   StreamSubscription<Either<DataFailure, List<Comment>>>?
       _commentStreamSubscription;

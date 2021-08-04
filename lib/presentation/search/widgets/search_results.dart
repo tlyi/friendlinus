@@ -7,7 +7,7 @@ import 'package:friendlinus/domain/data/profile/profile.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
-import 'package:friendlinus/domain/core/constants.dart' as constants;
+
 
 class SearchResults extends StatelessWidget {
   final String ownId;
@@ -41,7 +41,7 @@ class SearchResults extends StatelessWidget {
                       alignment: Alignment.center,
                       width: 40,
                       height: 40,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           shape: BoxShape.circle, color: Colors.white),
                       child: ClipOval(
                         child: CachedNetworkImage(
@@ -50,7 +50,7 @@ class SearchResults extends StatelessWidget {
                             width: 40,
                             imageUrl: user.photoUrl,
                             placeholder: (context, url) =>
-                                Center(child: CircularProgressIndicator())),
+                               const Center(child: CircularProgressIndicator())),
                       ),
                     ),
                    

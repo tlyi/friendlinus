@@ -1,18 +1,14 @@
 import 'dart:math';
 
-import 'package:another_flushbar/flushbar_helper.dart';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_tags/flutter_tags.dart';
-import 'package:friendlinus/application/forum/forum_actor/forum_actor_bloc.dart';
 import 'package:friendlinus/application/profile/profile_actor/profile_actor_bloc.dart';
-import 'package:friendlinus/application/profile/profile_form/profile_form_bloc.dart';
 import 'package:friendlinus/domain/data/data_failure.dart';
 import 'package:friendlinus/domain/data/forum/forum_post/forum_post.dart';
 import 'package:friendlinus/domain/data/profile/profile.dart';
-import 'package:friendlinus/injection.dart';
 import 'package:friendlinus/presentation/core/get_time.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
@@ -81,7 +77,7 @@ class ProfileHeader extends StatelessWidget {
             width: 120,
             height: 120,
             decoration:
-                BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+                const BoxDecoration(shape: BoxShape.circle, color: Colors.white),
             child: ClipOval(
               child: Hero(
                 tag: "profilePhoto",
@@ -91,7 +87,7 @@ class ProfileHeader extends StatelessWidget {
                     width: 120,
                     imageUrl: userProfile.photoUrl,
                     placeholder: (context, url) =>
-                        Center(child: CircularProgressIndicator())),
+                        const Center(child: CircularProgressIndicator())),
               ),
             ),
           ),
@@ -251,7 +247,7 @@ class SearchUsersButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String ownId = context.read<ProfileActorBloc>().state.ownId;
+    final String ownId = context.read<ProfileActorBloc>().state.ownId;
     return TextButton(
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
@@ -379,7 +375,6 @@ class ModulesOfInterest extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(top: 5.0),
                 child: Wrap(
-                    alignment: WrapAlignment.start,
                     spacing: 6.0,
                     runSpacing: -5,
                     children: List<Widget>.generate(userProfile.modules.length,
@@ -444,7 +439,7 @@ class RecentPosts extends StatelessWidget {
             ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                padding: EdgeInsets.only(top: 13.0, left: 0, right: 0),
+                padding: const EdgeInsets.only(top: 13.0),
                 itemCount: forums.length,
                 itemBuilder: (context, index) {
                   final forum = forums[index];
@@ -456,9 +451,9 @@ class RecentPosts extends StatelessWidget {
                               color: Color(0xFF7BA5BB), width: 2.0),
                           borderRadius: BorderRadius.circular(15.0),
                         ),
-                        margin: EdgeInsets.only(bottom: 10),
+                        margin: const EdgeInsets.only(bottom: 10),
                         child: ListTile(
-                          contentPadding: EdgeInsets.only(
+                          contentPadding: const EdgeInsets.only(
                               left: 15, right: 15, top: 10, bottom: 10),
                           title: Text(forum.title.getOrCrash()),
                           subtitle: Text(
@@ -480,7 +475,7 @@ class RecentPosts extends StatelessWidget {
                                       padding: const EdgeInsets.only(top: 10.0),
                                       child: Transform.rotate(
                                         angle: 90 * pi / 180,
-                                        child: Icon(
+                                        child: const Icon(
                                           Icons.poll_outlined,
                                           color: constants.THEME_BLUE,
                                           size: 20,

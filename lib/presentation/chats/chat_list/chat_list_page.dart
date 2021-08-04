@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:friendlinus/application/chats/chat_watcher/chat_watcher_bloc.dart';
-import 'package:friendlinus/application/profile/profile_form/profile_form_bloc.dart';
 import 'package:friendlinus/injection.dart';
 import 'package:friendlinus/presentation/chats/chat_list/widgets/chat_list.dart';
 import 'package:friendlinus/presentation/core/app_bar.dart';
@@ -18,7 +17,7 @@ class ChatListPage extends StatelessWidget {
           child: BlocProvider(
             create: (context) => getIt<ChatWatcherBloc>()
               ..add(const ChatWatcherEvent.retrieveChatsStarted()),
-            child: ChatList(),
+            child: const ChatList(),
           ),
         ));
   }

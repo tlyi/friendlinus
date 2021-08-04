@@ -10,6 +10,7 @@ import 'package:friendlinus/domain/data/chats/i_chat_repository.dart';
 import 'package:friendlinus/domain/data/chats/value_objects.dart';
 import 'package:friendlinus/domain/data/data_failure.dart';
 import 'package:injectable/injectable.dart';
+import 'package:friendlinus/domain/core/constants.dart' as constants;
 
 part 'convo_actor_event.dart';
 part 'convo_actor_state.dart';
@@ -45,7 +46,10 @@ class ConvoActorBloc extends Bloc<ConvoActorEvent, ConvoActorState> {
           e.photo, state.convoId, state.messageId);
       String url = '';
       failureOrString.fold(
-        (f) => print(f),
+        (f) {
+          url = constants.ERROR_DP;
+          print(f);
+        },
         (s) {
           url = s;
         },
@@ -69,9 +73,7 @@ class ConvoActorBloc extends Bloc<ConvoActorEvent, ConvoActorState> {
             chatMessage: state.chatMessage
                 .copyWith(messageBody: MessageBody(''), photoUrl: ''),
             sentFailureOrSuccessOption: optionOf(failureOrSuccess),
-            messageId: UniqueId('').getOrCrash());
-      } else {
-        print('empty bro');
+            messageId: UniqueId().getOrCrash());
       }
     }, messageRead: (e) async* {
       await _chatRepository.updateMessageRead(

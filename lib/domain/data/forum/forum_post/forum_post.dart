@@ -26,7 +26,7 @@ abstract class ForumPost implements _$ForumPost {
   }) = _ForumPost;
 
   factory ForumPost.empty() => ForumPost(
-        forumId: UniqueId('').getOrCrash(),
+        forumId: UniqueId().getOrCrash(),
         title: Title(''),
         tag: '',
         body: Body(''),

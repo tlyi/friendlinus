@@ -4,7 +4,6 @@ import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:friendlinus/domain/data/chats/chat_message/chat_message.dart';
-import 'package:friendlinus/domain/data/chats/chat_message/chat_message.dart';
 import 'package:friendlinus/domain/data/chats/i_chat_repository.dart';
 import 'package:friendlinus/domain/data/data_failure.dart';
 import 'package:friendlinus/domain/data/profile/i_profile_repository.dart';
@@ -43,7 +42,7 @@ class LocationConvoWatcherBloc
       },
       retrieveConvoEnded: (e) async* {
         await _convoStreamSubscription?.cancel();
-        print('stop reading');
+        
       },
       convoReceived: (e) async* {
         DataFailure? failure;

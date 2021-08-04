@@ -1,9 +1,7 @@
-import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:friendlinus/domain/mods/mod.dart';
-import 'package:http/http.dart';
 
 part 'mod_dtos.freezed.dart';
 part 'mod_dtos.g.dart';

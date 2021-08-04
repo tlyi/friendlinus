@@ -6,9 +6,6 @@ import 'package:friendlinus/injection.dart';
 import 'package:friendlinus/presentation/core/app_bar.dart';
 import 'package:friendlinus/presentation/location_chats/location_convos/widgets/location_convo_actions.dart';
 import 'package:friendlinus/presentation/location_chats/location_convos/widgets/location_convo_messages.dart';
-import 'package:friendlinus/presentation/routes/router.gr.dart';
-import 'package:auto_route/auto_route.dart';
-import 'package:friendlinus/domain/core/constants.dart' as constants;
 
 class LocationConvoPage extends StatelessWidget {
   final String convoId;

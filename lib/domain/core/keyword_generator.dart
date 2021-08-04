@@ -18,6 +18,5 @@ List<String> generateKeywords(String title) {
   for (final component in components) {
     manyComponents.addAll(createKeywords(component));
   }
-  print(manyComponents);
   return manyComponents;
 }

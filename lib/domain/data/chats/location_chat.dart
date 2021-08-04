@@ -8,6 +8,7 @@ part 'location_chat.freezed.dart';
 abstract class LocationChat implements _$LocationChat {
   const LocationChat._();
 
+  // ignore: sort_unnamed_constructors_first
   const factory LocationChat(
       {required String chatId,
       required String creatorUserId,
@@ -20,7 +21,7 @@ abstract class LocationChat implements _$LocationChat {
       required double distance}) = _LocationChat;
 
   factory LocationChat.empty() => LocationChat(
-      chatId: UniqueId('').getOrCrash(),
+      chatId: UniqueId().getOrCrash(),
       creatorUserId: '',
       lastMessage: '',
       lastSenderId: '',

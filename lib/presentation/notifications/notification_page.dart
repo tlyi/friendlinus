@@ -18,7 +18,7 @@ class NotificationPage extends StatelessWidget {
                 header: 'Notifications',
                 canClose: true,
                 notifications: false),
-            bottomNavigationBar: NavigationBar(),
-            body: Notifications()));
+            bottomNavigationBar: const NavigationBar(),
+            body: const Notifications()));
   }
 }

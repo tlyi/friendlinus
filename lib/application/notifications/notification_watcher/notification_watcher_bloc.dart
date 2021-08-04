@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:friendlinus/domain/data/data_failure.dart';
@@ -17,7 +16,7 @@ part 'notification_watcher_bloc.freezed.dart';
 @injectable
 class NotificationWatcherBloc
     extends Bloc<NotificationWatcherEvent, NotificationWatcherState> {
-  INotificationRepository _notificationRepository;
+  final INotificationRepository _notificationRepository;
   NotificationWatcherBloc(this._notificationRepository)
       : super(const NotificationWatcherState.initial());
 
@@ -31,7 +30,7 @@ class NotificationWatcherBloc
     yield* event.map(
       retrieveNotificationsStarted: (e) async* {
         yield const NotificationWatcherState.loadInProgress();
-        String userId = await _notificationRepository.getOwnId();
+        final String userId = await _notificationRepository.getOwnId();
         await _notificationStreamSubscription?.cancel();
         _notificationStreamSubscription = _notificationRepository
             .retrieveNotificationsInitial(userId)
@@ -74,8 +73,8 @@ class NotificationWatcherBloc
       retrieveMoreNotifications: (e) async* {
         yield NotificationWatcherState.loadSuccess(
             e.oldNotifs, e.oldProfiles, true, true);
-        String userId = await _notificationRepository.getOwnId();
-        String lastTimestamp = e.oldNotifs.last.timestamp;
+        final String userId = await _notificationRepository.getOwnId();
+        final String lastTimestamp = e.oldNotifs.last.timestamp;
         await _notificationStreamSubscription?.cancel();
         _notificationStreamSubscription = _notificationRepository
             .retrieveNotificationsInBatches(userId, lastTimestamp)
@@ -115,7 +114,7 @@ class NotificationWatcherBloc
             profiles.add(profile!);
           }
         }
-        print('${e.updatedNotifs.length} +  ${profiles.length}');
+      
         yield NotificationWatcherState.loadSuccess(
             e.updatedNotifs, profiles, e.newNotifs.length == 10, false);
       },

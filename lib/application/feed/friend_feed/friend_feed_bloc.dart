@@ -28,7 +28,7 @@ class FriendFeedBloc extends Bloc<FriendFeedEvent, FriendFeedState> {
       refreshFeed: (e) async* {
         yield const FriendFeedState.loadInProgress();
         final userId = await _forumRepository.getOwnId();
-        print('at friend feed');
+
         final Either<DataFailure, List<ForumPost>> failureOrForums =
             await _forumRepository.retrieveFriendFeedInitial(userId);
 
@@ -85,7 +85,7 @@ class FriendFeedBloc extends Bloc<FriendFeedEvent, FriendFeedState> {
         yield FriendFeedState.loadSuccess(
             e.oldPosts, e.oldProfiles, true, true);
         final userId = await _forumRepository.getOwnId();
-        String lastTimestamp = e.oldPosts.last.timestamp;
+        final String lastTimestamp = e.oldPosts.last.timestamp;
         final Either<DataFailure, List<ForumPost>> failureOrForums =
             await _forumRepository.retrieveFriendFeedInBatches(
                 userId, lastTimestamp);

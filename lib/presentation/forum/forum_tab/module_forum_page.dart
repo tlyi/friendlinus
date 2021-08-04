@@ -5,14 +5,11 @@ import 'package:friendlinus/application/forum/forum_actor/forum_actor_bloc.dart'
 import 'package:friendlinus/application/forum/module_actor/module_actor_bloc.dart';
 import 'package:friendlinus/application/forum/module_watcher/module_forum_watcher/module_forum_watcher_bloc.dart';
 import 'package:friendlinus/application/notifications/notif_counter_watcher/notif_counter_watcher_bloc.dart';
-import 'package:friendlinus/application/profile/profile_form/profile_form_bloc.dart';
 import 'package:friendlinus/injection.dart';
-import 'package:friendlinus/presentation/core/app_bar.dart';
 import 'package:friendlinus/presentation/core/nav_bar.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:friendlinus/presentation/forum/forum_tab/widgets/module_forum_list.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
-import 'package:tap_debouncer/tap_debouncer.dart';
 import 'package:friendlinus/domain/core/constants.dart' as constants;
 
 class ModuleForumPage extends StatelessWidget {
@@ -70,7 +67,6 @@ class ModuleForumPage extends StatelessWidget {
                               .profile
                               .modules
                               .contains(moduleCode)) {
-                            print("unfollowing module");
                             context.read<ModuleActorBloc>().add(
                                 ModuleActorEvent.moduleRemoved(moduleCode));
                           } else if (context
@@ -85,7 +81,6 @@ class ModuleForumPage extends StatelessWidget {
                                         'Maximum number of modules that you can follow is 8')
                                 .show(context);
                           } else {
-                            print("adding to list");
                             context
                                 .read<ModuleActorBloc>()
                                 .add(ModuleActorEvent.moduleAdded(moduleCode));
@@ -112,8 +107,7 @@ class ModuleForumPage extends StatelessWidget {
               IconButton(
                 icon: const Icon(Icons.notifications_none, color: Colors.grey),
                 onPressed: () {
-                  print('opening notifs');
-                  context.pushRoute(NotificationRoute());
+                  context.pushRoute(const NotificationRoute());
                 },
                 padding: const EdgeInsets.only(right: 20),
               ),

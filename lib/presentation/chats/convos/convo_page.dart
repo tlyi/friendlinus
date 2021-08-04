@@ -7,7 +7,7 @@ import 'package:friendlinus/domain/data/profile/profile.dart';
 import 'package:friendlinus/injection.dart';
 import 'package:friendlinus/presentation/chats/convos/widgets/convo_actions.dart';
 import 'package:friendlinus/presentation/chats/convos/widgets/convo_messages.dart';
-import 'package:friendlinus/presentation/core/app_bar.dart';
+import 'package:friendlinus/presentation/core/dismiss_keyboard.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:friendlinus/domain/core/constants.dart' as constants;
@@ -127,16 +127,18 @@ class ConvoPage extends StatelessWidget {
                   ),
                   const SizedBox(width: 10),
                 ]),
-            body: Column(children: [
-              Expanded(
-                child: ClipRRect(
-                  child: ConvoMessages(
-                    otherProfile: otherProfile,
+            body: DismissKeyboard(
+              child: Column(children: [
+                Expanded(
+                  child: ClipRRect(
+                    child: ConvoMessages(
+                      otherProfile: otherProfile,
+                    ),
                   ),
                 ),
-              ),
-              ConvoActions(otherProfile: otherProfile),
-            ]),
+                ConvoActions(otherProfile: otherProfile),
+              ]),
+            ),
           );
         },
       ),

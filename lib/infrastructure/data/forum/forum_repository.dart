@@ -292,9 +292,8 @@ class ForumPostRepository implements IForumRepository {
   @override
   Stream<Either<DataFailure, List<Comment>>> retrieveComments(
       String sortedBy, String forumId) async* {
-    String orderBy = sortedBy == 'Most Liked' ? 'likes' : 'timestamp';
-    bool descending = sortedBy == 'Oldest' ? false : true;
-    print('orderedBy: $orderBy');
+    final String orderBy = sortedBy == 'Most Liked' ? 'likes' : 'timestamp';
+    final bool descending = sortedBy == 'Oldest' ? false : true;
     final commentsRef = await _firestore.commentsForumRef(forumId);
     yield* commentsRef
         .orderBy(orderBy, descending: descending)
@@ -383,22 +382,20 @@ class ForumPostRepository implements IForumRepository {
 
       final modulesRef = await _firestore.modulesRef();
       final moduleDoc = modulesRef.doc(forum.tag);
-      String modLastPosted = await moduleDoc
+      final String modLastPosted = await moduleDoc
           .get()
           .then((doc) => ModDto.fromFirestore(doc).toDomain().lastPosted);
       if (modLastPosted == forum.timestamp) {
         final forumRef = await _firestore.forumsRef();
-        String newLastPosted = await forumRef
+        final String newLastPosted = await forumRef
             .where('tag', isEqualTo: forum.tag)
             .orderBy('timestamp', descending: true)
             .limit(1)
             .get()
             .then((doc) {
           if (doc.docs.isEmpty) {
-            print("No other docs, setting timestamp to 0");
             return '0';
           } else {
-            print("Setting timestamp to next latest");
             return ForumPostDto.fromFirestore(doc.docs[0]).toDomain().timestamp;
           }
         });
@@ -410,7 +407,7 @@ class ForumPostRepository implements IForumRepository {
       //Recursively deletes each comment doc because of Firestore limitations
       final commentsRef = await _firestore.commentsForumRef(forum.forumId);
       await commentsRef.get().then((snapshot) {
-        for (DocumentSnapshot doc in snapshot.docs) {
+        for (final DocumentSnapshot doc in snapshot.docs) {
           doc.reference.delete();
         }
       });
@@ -467,11 +464,10 @@ class ForumPostRepository implements IForumRepository {
   @override
   Future<Either<DataFailure, List<String>>> searchModulesByModuleCode(
       String moduleCode) async {
-    print("Searching for ${moduleCode.toUpperCase()}");
     final List<String> searchResults = [];
     final modRef = await _firestore.modulesRef();
     try {
-      QuerySnapshot query = await modRef
+      final QuerySnapshot query = await modRef
           .where('moduleCode', isGreaterThanOrEqualTo: moduleCode.toUpperCase())
           .limit(15)
           .get();
@@ -502,7 +498,7 @@ class ForumPostRepository implements IForumRepository {
     });
 
     modulesFollowed.addAll(['Anonymous', 'General']);
-    //print(modulesFollowed);
+
     yield* modulesRef
         .where('moduleCode', whereIn: modulesFollowed)
         .orderBy('lastPosted', descending: true)
@@ -510,7 +506,6 @@ class ForumPostRepository implements IForumRepository {
         .map(
       (snapshot) {
         return right<DataFailure, List<Mod>>(snapshot.docs.map((doc) {
-          print("mod");
           return ModDto.fromFirestore(doc).toDomain();
         }).toList());
       },
@@ -518,7 +513,6 @@ class ForumPostRepository implements IForumRepository {
       if (e is FirebaseException && e.message!.contains('PERMISSION_DENIED')) {
         return left(const DataFailure.insufficientPermission());
       } else {
-        print('help');
         print(e);
         return left(const DataFailure.unexpected());
       }
@@ -529,9 +523,7 @@ class ForumPostRepository implements IForumRepository {
   Future<Either<DataFailure, List<ForumPost>>> retrieveModuleForumsInitial(
       String moduleCode, String sortedBy) async {
     //['Recent', 'Oldest', 'Most Liked']
-    bool descending = sortedBy == 'Oldest' ? false : true;
-
-    print("retrieving initial");
+    final bool descending = sortedBy == 'Oldest' ? false : true;
     try {
       List<ForumPost> forums = [];
       final forumRef = await _firestore.forumsRef();
@@ -545,7 +537,6 @@ class ForumPostRepository implements IForumRepository {
 
           if (query.docs.isNotEmpty) {
             for (final doc in query.docs) {
-              print('ADDING');
               forums.add(ForumPostDto.fromFirestore(doc).toDomain());
             }
           }
@@ -556,7 +547,6 @@ class ForumPostRepository implements IForumRepository {
               .get();
           if (query.docs.isNotEmpty) {
             for (final doc in query.docs) {
-              print('ADDING');
               forums.add(ForumPostDto.fromFirestore(doc).toDomain());
             }
           }
@@ -570,7 +560,6 @@ class ForumPostRepository implements IForumRepository {
               .get();
           if (query.docs.isNotEmpty) {
             for (final doc in query.docs) {
-              print('ADDING');
               forums.add(ForumPostDto.fromFirestore(doc).toDomain());
             }
           }

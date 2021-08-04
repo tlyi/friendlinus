@@ -26,7 +26,7 @@ class ModuleForumWatcherBloc
     yield* event.map(
       refreshFeed: (e) async* {
         yield const ModuleForumWatcherState.loadInProgress();
-        print('at module feed');
+
         final Either<DataFailure, List<ForumPost>> failureOrForums =
             await _forumRepository.retrieveModuleForumsInitial(
                 e.moduleCode, e.sortedBy);
@@ -58,14 +58,13 @@ class ModuleForumWatcherBloc
         }
       },
       liked: (e) async* {
-        print("yo");
         List<ForumPost> forums = e.forums;
         ForumPost forumLiked = forums[e.index];
         List<String> likedUserIds = forumLiked.likedUserIds;
         likedUserIds.add(e.userId);
         forums[e.index] = forumLiked.copyWith(
             likes: forumLiked.likes + 1, likedUserIds: likedUserIds);
-        print('bloc + ${forums[e.index].likes}');
+
         yield ModuleForumWatcherState.loadSuccess(
             forums, forums.length % 8 == 0, false, e.moduleCode, e.sortedBy);
       },

@@ -6,7 +6,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:friendlinus/domain/data/data_failure.dart';
 import 'package:friendlinus/domain/data/forum/i_forum_repository.dart';
 import 'package:friendlinus/domain/data/forum/poll/poll.dart';
-import 'package:friendlinus/domain/data/profile/i_profile_repository.dart';
 import 'package:injectable/injectable.dart';
 
 part 'poll_watcher_event.dart';
@@ -16,8 +15,9 @@ part 'poll_watcher_bloc.freezed.dart';
 @injectable
 class PollWatcherBloc extends Bloc<PollWatcherEvent, PollWatcherState> {
   final IForumRepository _forumRepository;
-  PollWatcherBloc(this._forumRepository,)
-      : super(const PollWatcherState.initial());
+  PollWatcherBloc(
+    this._forumRepository,
+  ) : super(const PollWatcherState.initial());
   StreamSubscription<Either<DataFailure, Poll>>? _pollStreamSubscription;
 
   @override

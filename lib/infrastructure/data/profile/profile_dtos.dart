@@ -1,9 +1,5 @@
-/* DTO(Data transfer objects): contains the conversion of the entity 'Profile' fromDomain and toDomain 
-*/
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:friendlinus/domain/core/value_objects.dart';
 import 'package:friendlinus/domain/data/profile/profile.dart';
 import 'package:friendlinus/domain/data/profile/value_objects.dart';
 

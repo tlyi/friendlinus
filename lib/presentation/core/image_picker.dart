@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -16,7 +14,7 @@ Future<PickedFile?> imagePicker(BuildContext context) async {
             alignment: Alignment.topRight,
             child: Row(
               children: [
-                Expanded(child: Text("Add picture from:")),
+                const Expanded(child: Text("Add picture from:")),
                 GestureDetector(
                   onTap: () {
                     Navigator.pop(innerContext);
@@ -53,7 +51,7 @@ Future<PickedFile?> imagePicker(BuildContext context) async {
                       onPressed: () async {
                         pickedFile = await picker.getImage(
                           source: ImageSource.gallery,
-                          imageQuality: 70,
+                          imageQuality: 50,
                         );
                         Navigator.pop(innerContext);
                       },

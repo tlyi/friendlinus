@@ -3,7 +3,6 @@ import 'package:bubble/bubble.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:friendlinus/application/chats/location_convo_actor/location_convo_actor_bloc.dart';
 import 'package:friendlinus/application/chats/location_convo_watcher/location_convo_watcher_bloc.dart';
 import 'package:friendlinus/domain/data/chats/chat_message/chat_message.dart';
 import 'package:friendlinus/domain/data/profile/profile.dart';
@@ -11,8 +10,7 @@ import 'package:friendlinus/domain/core/constants.dart' as constants;
 import 'package:friendlinus/presentation/core/get_time.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:intl/intl.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+
 
 class LocationConvoMessages extends StatelessWidget {
   final String convoId;
@@ -124,7 +122,7 @@ class LocationConvoMessages extends StatelessWidget {
                                     state.messages[index - 1].senderId !=
                                         message.senderId,
                                 child: message.photoUrl != ''
-                                    ? Container(
+                                    ? SizedBox(
                                         width: 200,
                                         child: Column(
                                           crossAxisAlignment:
@@ -134,7 +132,7 @@ class LocationConvoMessages extends StatelessWidget {
                                                 isOtherSender)
                                               GestureDetector(
                                                 onTap: () async {
-                                                  print('tap');
+
                                                   context
                                                       .read<
                                                           LocationConvoWatcherBloc>()
@@ -245,7 +243,7 @@ class _MessageBody extends StatelessWidget {
         if (isFirstFromThisSender && isOtherSender)
           GestureDetector(
             onTap: () async {
-              print('tap');
+
               context
                   .read<LocationConvoWatcherBloc>()
                   .add(const LocationConvoWatcherEvent.retrieveConvoEnded());

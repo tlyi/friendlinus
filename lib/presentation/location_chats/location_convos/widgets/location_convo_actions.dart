@@ -4,9 +4,6 @@ import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:friendlinus/application/chats/location_convo_actor/location_convo_actor_bloc.dart';
-
-import 'package:friendlinus/domain/data/profile/profile.dart';
-
 import 'package:friendlinus/presentation/core/image_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';

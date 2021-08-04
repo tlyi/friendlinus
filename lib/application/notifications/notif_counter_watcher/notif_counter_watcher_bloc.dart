@@ -5,7 +5,7 @@ import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:friendlinus/domain/data/data_failure.dart';
 import 'package:friendlinus/domain/data/notifications/i_notification_repository.dart';
-import 'package:friendlinus/domain/data/notifications/notification.dart';
+
 import 'package:injectable/injectable.dart';
 
 part 'notif_counter_watcher_event.dart';
@@ -15,7 +15,7 @@ part 'notif_counter_watcher_bloc.freezed.dart';
 @injectable
 class NotifCounterWatcherBloc
     extends Bloc<NotifCounterWatcherEvent, NotifCounterWatcherState> {
-  INotificationRepository _notificationRepository;
+  final INotificationRepository _notificationRepository;
   NotifCounterWatcherBloc(this._notificationRepository)
       : super(const NotifCounterWatcherState.initial());
 

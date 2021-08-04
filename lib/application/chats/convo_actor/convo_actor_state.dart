@@ -19,5 +19,5 @@ class ConvoActorState with _$ConvoActorState {
       ownId: '',
       otherId: '',
       convoId: '',
-      messageId: UniqueId('').getOrCrash());
+      messageId: UniqueId().getOrCrash());
 }

@@ -13,9 +13,7 @@ import 'package:friendlinus/infrastructure/core/firestore_helpers.dart';
 @LazySingleton(as: INotificationRepository)
 class NotificationRepository implements INotificationRepository {
   final FirebaseFirestore _firestore;
-  final FirebaseStorage _firebaseStorage;
-
-  NotificationRepository(this._firestore, this._firebaseStorage);
+  NotificationRepository(this._firestore);
 
   @override
   Future<String> getOwnId() async {
@@ -73,7 +71,7 @@ class NotificationRepository implements INotificationRepository {
       (snapshot) {
         if (snapshot.docs.isNotEmpty) {
           for (final DocumentSnapshot doc in snapshot.docs) {
-            String notifId = doc.id;
+            final String notifId = doc.id;
             notificationsRef.doc(notifId).update({'isRead': true});
           }
         }
@@ -97,7 +95,6 @@ class NotificationRepository implements INotificationRepository {
   Stream<Either<DataFailure, List<Notification>>>
       retrieveNotificationsInBatches(
           String userId, String lastTimeStamp) async* {
-    print("Loading more in progress");
     final notificationsRef = await _firestore.notificationsUserRef(userId);
     yield* notificationsRef
         .orderBy('timestamp', descending: true)
@@ -107,7 +104,7 @@ class NotificationRepository implements INotificationRepository {
         .map((snapshot) {
           if (snapshot.docs.isNotEmpty) {
             for (final DocumentSnapshot doc in snapshot.docs) {
-              String notifId = doc.id;
+              final String notifId = doc.id;
               notificationsRef.doc(notifId).update({'isRead': true});
             }
           }

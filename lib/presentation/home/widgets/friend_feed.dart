@@ -36,7 +36,7 @@ class FriendFeed extends StatelessWidget {
             child: CircularProgressIndicator(),
           ),
           loadSuccess: (state) {
-            int length = state.forums.length;
+            final int length = state.forums.length;
             if (length == 0) {
               return const Center(
                   child: Text('No forums to view. Follow more friends!'));
@@ -49,7 +49,7 @@ class FriendFeed extends StatelessWidget {
                 },
                 child: ListView.builder(
                     padding:
-                        const EdgeInsets.only(top: 15.0, left: 0, right: 0),
+                        const EdgeInsets.only(top: 15.0),
                     physics: const AlwaysScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: state.hasMore ? length + 1 : length,
@@ -59,8 +59,6 @@ class FriendFeed extends StatelessWidget {
                           context.read<FriendFeedBloc>().add(
                               FriendFeedEvent.retrieveMorePosts(
                                   state.forums, state.profiles));
-
-                          print("ADD MORE");
                         }
                         return Container(
                           margin: const EdgeInsets.only(top: 15, bottom: 15),
@@ -162,8 +160,6 @@ class FriendFeed extends StatelessWidget {
                                           style: const TextStyle(fontSize: 10),
                                         ),
                                         labelPadding: const EdgeInsets.only(
-                                            top: 0,
-                                            bottom: 0,
                                             left: 4,
                                             right: 4),
                                       ),

@@ -6,7 +6,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:friendlinus/domain/data/chats/chat.dart';
 import 'package:friendlinus/domain/data/chats/i_chat_repository.dart';
 import 'package:friendlinus/domain/data/data_failure.dart';
-import 'package:friendlinus/domain/data/profile/i_profile_repository.dart';
 import 'package:friendlinus/domain/data/profile/profile.dart';
 import 'package:injectable/injectable.dart';
 

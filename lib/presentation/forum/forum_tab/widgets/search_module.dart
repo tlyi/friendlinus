@@ -28,7 +28,6 @@ class BuildFloatingSearchBar extends StatelessWidget {
       transition: CircularFloatingSearchBarTransition(),
       actions: [
         FloatingSearchBarAction(
-          showIfOpened: false,
           child: CircularButton(
             icon: const Icon(Icons.search),
             onPressed: () {},
@@ -95,10 +94,10 @@ class _BuildSearchResults extends StatelessWidget {
                           Chip(
                             label: Text(
                               forum.tag,
-                              style: TextStyle(fontSize: 10),
+                              style: const TextStyle(fontSize: 10),
                             ),
-                            labelPadding: EdgeInsets.only(
-                                top: 0, bottom: 0, left: 4, right: 4),
+                            labelPadding: const EdgeInsets.only(
+                                left: 4, right: 4),
                           )
                         ]),
                     trailing: Column(

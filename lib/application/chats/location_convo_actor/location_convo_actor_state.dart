@@ -17,5 +17,5 @@ class LocationConvoActorState with _$LocationConvoActorState {
       sentFailureOrSuccessOption: none(),
       ownId: '',
       convoId: '',
-      messageId: UniqueId('').getOrCrash());
+      messageId: UniqueId().getOrCrash());
 }

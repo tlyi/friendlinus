@@ -40,7 +40,7 @@ class __BuildSortForumsOptionState extends State<_BuildSortForumsOption> {
   String selected = 'Recent';
   @override
   Widget build(BuildContext context) {
-    List<String> sortingOptions = ['Recent', 'Oldest', 'Most Liked'];
+    final List<String> sortingOptions = ['Recent', 'Oldest', 'Most Liked'];
     return Row(
       children: <Widget>[
         const Text('Sort forums by'),
@@ -89,7 +89,7 @@ class _BuildForumList extends StatelessWidget {
               if (state.forums.isEmpty) {
                 return const Center(child: Text('No posts yet :('));
               } else {
-                int length = state.forums.length;
+                final int length = state.forums.length;
                 return RefreshIndicator(
                     onRefresh: () async {
                       context.read<ModuleForumWatcherBloc>().add(
@@ -97,8 +97,7 @@ class _BuildForumList extends StatelessWidget {
                               state.moduleCode, state.sortedBy));
                     },
                     child: ListView.builder(
-                        padding:
-                            const EdgeInsets.only(top: 15.0, left: 0, right: 0),
+                        padding: const EdgeInsets.only(top: 15.0),
                         physics: const ScrollPhysics(),
                         shrinkWrap: true,
                         itemCount:
@@ -113,7 +112,6 @@ class _BuildForumList extends StatelessWidget {
                                       state.moduleCode,
                                       state.sortedBy,
                                       state.forums));
-                              print("ADD MORE");
                             }
                             return Container(
                               margin:
@@ -128,7 +126,7 @@ class _BuildForumList extends StatelessWidget {
                             bool isLiked = forum.likedUserIds.contains(userId);
                             int likes = forum.likes;
                             return Card(
-                              margin: EdgeInsets.only(
+                              margin: const EdgeInsets.only(
                                   bottom: 5, top: 5, left: 8, right: 8),
                               shape: RoundedRectangleBorder(
                                 side: const BorderSide(
@@ -136,7 +134,7 @@ class _BuildForumList extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(15.0),
                               ),
                               child: ListTile(
-                                contentPadding: EdgeInsets.only(
+                                contentPadding: const EdgeInsets.only(
                                     left: 15, right: 15, top: 10, bottom: 10),
                                 leading: Column(
                                   mainAxisSize: MainAxisSize.min,
@@ -146,11 +144,7 @@ class _BuildForumList extends StatelessWidget {
                                             const Duration(milliseconds: 400),
                                         onTap: () async {
                                           if (isLiked) {
-                                            print(likes);
-
                                             likes = likes - 1;
-                                            print(likes);
-
                                             isLiked = false;
                                             context
                                                 .read<ModuleForumWatcherBloc>()
@@ -165,10 +159,7 @@ class _BuildForumList extends StatelessWidget {
                                                 ForumActorEvent.forumUnliked(
                                                     forum.forumId));
                                           } else {
-                                            print(likes);
                                             likes = likes + 1;
-                                            print(likes);
-
                                             isLiked = true;
                                             context
                                                 .read<ModuleForumWatcherBloc>()
@@ -232,13 +223,10 @@ class _BuildForumList extends StatelessWidget {
                                       Chip(
                                         label: Text(
                                           forum.tag,
-                                          style: TextStyle(fontSize: 10),
+                                          style: const TextStyle(fontSize: 10),
                                         ),
                                         labelPadding: const EdgeInsets.only(
-                                            top: 0,
-                                            bottom: 0,
-                                            left: 4,
-                                            right: 4),
+                                            left: 4, right: 4),
                                       )
                                     ]),
                                 trailing: Column(

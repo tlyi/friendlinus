@@ -2,11 +2,9 @@ import 'dart:io';
 import 'package:friendlinus/domain/data/chats/location_failure.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:dartz/dartz.dart';
-import 'package:friendlinus/domain/core/value_objects.dart';
 import 'package:friendlinus/domain/data/chats/chat.dart';
 import 'package:friendlinus/domain/data/chats/chat_message/chat_message.dart';
 import 'package:friendlinus/domain/data/chats/location_chat.dart';
-import 'package:friendlinus/domain/data/chats/value_objects.dart';
 import 'package:friendlinus/domain/data/data_failure.dart';
 import 'package:friendlinus/domain/data/profile/profile.dart';
 
@@ -16,8 +14,6 @@ abstract class IChatRepository {
   Stream<Either<DataFailure, List<Chat>>> retrieveUserChats(String userId);
 
   Future<Either<DataFailure, Profile>> searchProfileByUuid(String uuid);
-
-  Future<Either<DataFailure, Unit>> deleteChat(Chat chat); //to be implemented
 
   Stream<Either<DataFailure, List<ChatMessage>>> getConvo(String convoId);
 
@@ -35,9 +31,6 @@ abstract class IChatRepository {
 
   Future<Either<DataFailure, Unit>> updateLastMessageRead(
       {required String convoId});
-
-  Future<Either<DataFailure, Unit>> deleteMessage(
-      ChatMessage chatMessage); //to be implemented
 
   Future<Either<LocationFailure, Position>> getLastKnownLocation();
 

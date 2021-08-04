@@ -26,7 +26,7 @@ class FollowersandFollowingPage extends StatelessWidget {
     return BlocProvider(
       create: (context) => getIt<ProfileActorBloc>()
         ..add(isOwnProfile
-            ? ProfileActorEvent.loadingOwnProfile()
+            ? const ProfileActorEvent.loadingOwnProfile()
             : ProfileActorEvent.loadingOtherProfile(userProfile.uuid)),
       child: Scaffold(
         appBar: appBar(
@@ -63,7 +63,6 @@ class FollowersAndFollowingView extends StatefulWidget {
 class _FollowersAndFollowingViewState extends State<FollowersAndFollowingView>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  int _selectedIndex = 0;
 
   @override
   void initState() {
@@ -73,7 +72,6 @@ class _FollowersAndFollowingViewState extends State<FollowersAndFollowingView>
 
     _tabController.addListener(() {
       setState(() {
-        _selectedIndex = _tabController.index;
       });
 
       context.read<ProfileActorBloc>().add(const ProfileActorEvent.openStats());
@@ -131,7 +129,7 @@ class FollowersList extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileActorBloc, ProfileActorState>(
         builder: (context, state) {
-      String ownId = context.read<ProfileActorBloc>().state.ownId;
+      final String ownId = context.read<ProfileActorBloc>().state.ownId;
       List<Profile> followers = [];
       DataFailure? failure;
       context.read<ProfileActorBloc>().state.failureOrFollowers.fold(
@@ -171,7 +169,6 @@ class FollowersList extends StatelessWidget {
                       context
                           .read<ProfileActorBloc>()
                           .add(const ProfileActorEvent.moreStats());
-                      print("LOAD MORE");
                       return Container(
                         margin: const EdgeInsets.only(top: 15, bottom: 15),
                         height: 30,
@@ -232,7 +229,7 @@ class FollowingList extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileActorBloc, ProfileActorState>(
         builder: (context, state) {
-      String ownId = context.read<ProfileActorBloc>().state.ownId;
+      final String ownId = context.read<ProfileActorBloc>().state.ownId;
       List<Profile> following = [];
       DataFailure? failure;
       context.read<ProfileActorBloc>().state.failureOrFollowing.fold(
@@ -275,11 +272,10 @@ class FollowingList extends StatelessWidget {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: Container(
-                            padding: EdgeInsets.only(),
                             height: 40,
                             width: 40,
-                            child: Icon(Icons.person_add_rounded),
                             color: Colors.grey[400],
+                            child: const Icon(Icons.person_add_rounded),
                           ),
                         ),
                       ),
@@ -299,7 +295,6 @@ class FollowingList extends StatelessWidget {
                       context
                           .read<ProfileActorBloc>()
                           .add(const ProfileActorEvent.moreStats());
-                      print("LOAD MORE");
                       return Container(
                         margin: const EdgeInsets.only(top: 15, bottom: 15),
                         height: 30,

@@ -5,7 +5,6 @@ import 'package:friendlinus/application/notifications/chat_counter_watcher/chat_
 import 'package:friendlinus/application/notifications/notif_counter_watcher/notif_counter_watcher_bloc.dart';
 import 'package:friendlinus/injection.dart';
 import 'package:friendlinus/presentation/routes/router.gr.dart';
-import 'package:friendlinus/presentation/sign_in/sign_in_page.dart';
 
 class AppWidget extends StatelessWidget {
   final _appRouter = AppRouter();
@@ -23,7 +22,7 @@ class AppWidget extends StatelessWidget {
         ],
         child: GestureDetector(
           onTap: () {
-            FocusScopeNode currentFocus = FocusScope.of(context);
+            final FocusScopeNode currentFocus = FocusScope.of(context);
             if (!currentFocus.hasPrimaryFocus) {
               currentFocus.unfocus();
             }

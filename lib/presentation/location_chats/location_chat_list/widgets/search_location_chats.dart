@@ -25,7 +25,6 @@ class BuildFloatingSearchBar extends StatelessWidget {
       transition: CircularFloatingSearchBarTransition(),
       actions: [
         FloatingSearchBarAction(
-          showIfOpened: false,
           child: CircularButton(
             icon: const Icon(Icons.search),
             onPressed: () {},

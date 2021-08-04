@@ -76,7 +76,6 @@ class _BuildID extends StatelessWidget {
               context
                   .read<SignInFormBloc>()
                   .add(SignInFormEvent.emailChanged(emailString));
-              print(context.read<SignInFormBloc>().state.emailAddress.value);
             },
             validator: (_) =>
                 context.read<SignInFormBloc>().state.emailAddress.value.fold(

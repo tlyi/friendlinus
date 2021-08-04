@@ -68,13 +68,13 @@ class _BuildIDField extends StatelessWidget {
         context
             .read<SignInFormBloc>()
             .add(SignInFormEvent.emailChanged(emailString));
-        print(emailString);
       },
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: (_) =>
           context.read<SignInFormBloc>().state.emailAddress.value.fold(
                 (f) => f.maybeMap(
-                  invalidEmail: (_) => 'Invalid NUSNET ID, please use format eXXXXXXX',
+                  invalidEmail: (_) =>
+                      'Invalid NUSNET ID, please use format eXXXXXXX',
                   orElse: () => null,
                 ),
                 (_) => null,
@@ -95,15 +95,16 @@ class _BuildResetPasswordButton extends StatelessWidget {
         return Container(
           margin: const EdgeInsets.only(top: 10.0),
           child: ElevatedButton(
-              style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all(Color(0xFF7BA5BB))),
-              child: const Text('Reset Password'),
-              onPressed: () {
-                context
-                    .read<SignInFormBloc>()
-                    .add(const SignInFormEvent.resetPasswordPressed());
-              }),
+            style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all(const Color(0xFF7BA5BB))),
+            onPressed: () {
+              context
+                  .read<SignInFormBloc>()
+                  .add(const SignInFormEvent.resetPasswordPressed());
+            },
+            child: const Text('Reset Password'),
+          ),
         );
       },
     );

@@ -5,8 +5,6 @@ import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:friendlinus/domain/core/failures.dart';
-import 'package:friendlinus/domain/core/value_objects.dart';
 import 'package:friendlinus/domain/data/data_failure.dart';
 import 'package:friendlinus/domain/data/profile/i_profile_repository.dart';
 import 'package:friendlinus/domain/data/profile/profile.dart';
@@ -32,7 +30,10 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
       final failureOrString = await _profileRepository.uploadPhoto(e.photo);
       String url = state.photoUrl.getOrElse(() => constants.ERROR_DP);
       failureOrString.fold(
-        (f) => print(f),
+        (f) {
+          url = constants.ERROR_DP;
+          print(f);
+        },
         (s) {
           url = s;
         },
@@ -85,10 +86,11 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
         );
       } else {
         Either<DataFailure, Unit>? failureOrSuccess;
-        bool isUsernameValid = state.profile.username.isValid();
-        bool isCourseValid = state.profile.course.isValid();
-        bool isBioValid = state.profile.bio.isValid();
-        bool isProfileValid = isUsernameValid && isCourseValid && isBioValid;
+        final bool isUsernameValid = state.profile.username.isValid();
+        final bool isCourseValid = state.profile.course.isValid();
+        final bool isBioValid = state.profile.bio.isValid();
+        final bool isProfileValid =
+            isUsernameValid && isCourseValid && isBioValid;
 
         if (isProfileValid) {
           final uuid = await _profileRepository.getUserId();
@@ -134,9 +136,8 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
     }, addedModule: (e) async* {
       yield state.copyWith(refreshTags: false);
       List<String> moduleList = state.profile.modules;
-
       moduleList.add(e.moduleStr);
-      print(moduleList);
+      
       yield state.copyWith(
         profile: state.profile.copyWith(modules: moduleList),
         refreshTags: true,

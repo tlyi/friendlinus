@@ -10,17 +10,14 @@ class VerifyEmail extends StatelessWidget {
     return BlocConsumer<AuthBloc, AuthState>(listener: (context, state) {
       if (state is Verified) {
         context.replaceRoute(const RegisterProfileRoute());
-        print('VERIFY: GG to register profile');
-      } else if (state is Unverified) {
+
         context.read<AuthBloc>().add(const AuthEvent.verifiedCheckRequested());
-        print('VERIFY: Rechecking verification');
       } else if (state is Unauthenticated) {
         context.replaceRoute(const SignInRoute());
       }
     }, builder: (context, state) {
       if (state is Unverified) {
         context.read<AuthBloc>().add(const AuthEvent.verifiedCheckRequested());
-        print('VERIFY BUILD: Rechecking verification from unverified acct');
       }
       return Container(
         margin: const EdgeInsets.all(30.0),
@@ -52,7 +49,7 @@ class _BuildResendEmailButton extends StatelessWidget {
           child: ElevatedButton(
               style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all(Color(0xFF7BA5BB))),
+                      MaterialStateProperty.all(const Color(0xFF7BA5BB))),
               onPressed: () {
                 context
                     .read<AuthBloc>()

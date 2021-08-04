@@ -81,8 +81,7 @@ AppBar appBar({
           IconButton(
             icon: const Icon(Icons.notifications_none, color: Colors.grey),
             onPressed: () {
-              print('opening notifs');
-              context.pushRoute(NotificationRoute());
+              context.pushRoute(const NotificationRoute());
             },
             padding: const EdgeInsets.only(right: 20),
           ),
