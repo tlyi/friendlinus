@@ -48,9 +48,7 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
       failureOrUnique.fold(
           (f) => print('Error with server, uhm not sure how to handle this'),
           (unique) {
-        if (unique) {
-          username = e.usernameStr;
-        } else if (state.currentUsername == e.usernameStr) {
+        if (unique || state.currentUsername == e.usernameStr) {
           username = e.usernameStr;
         } else {
           username = ' not unique ';
