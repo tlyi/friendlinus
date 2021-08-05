@@ -87,37 +87,36 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
             profile: state.profile.copyWith(username: Username(' not unique ')),
           );
         }
-      } else {
-        Either<DataFailure, Unit>? failureOrSuccess;
-        final bool isUsernameValid = state.profile.username.isValid();
-        final bool isCourseValid = state.profile.course.isValid();
-        final bool isBioValid = state.profile.bio.isValid();
-        final bool isProfileValid =
-            isUsernameValid && isCourseValid && isBioValid;
+      }
 
-        if (isProfileValid) {
-          final uuid = await _profileRepository.getUserId();
+      Either<DataFailure, Unit>? failureOrSuccess;
+      final bool isUsernameValid = state.profile.username.isValid();
+      final bool isCourseValid = state.profile.course.isValid();
+      final bool isBioValid = state.profile.bio.isValid();
+      final bool isProfileValid =
+          isUsernameValid && isCourseValid && isBioValid;
 
-          yield state.copyWith(
-            profile: state.profile.copyWith(
-                photoUrl: state.photoUrl.getOrElse(() => constants.ERROR_DP)),
-            isSaving: true,
-            saveFailureOrSuccessOption: none(),
-          );
-
-          failureOrSuccess = await _profileRepository.create(state.profile
-              .copyWith(
-                  uuid: uuid,
-                  photoUrl:
-                      state.photoUrl.getOrElse(() => constants.ERROR_DP)));
-        }
+      if (isProfileValid) {
+        final uuid = await _profileRepository.getUserId();
 
         yield state.copyWith(
-          isSaving: false,
-          showErrorMessages: true,
-          saveFailureOrSuccessOption: optionOf(failureOrSuccess),
+          profile: state.profile.copyWith(
+              photoUrl: state.photoUrl.getOrElse(() => constants.ERROR_DP)),
+          isSaving: true,
+          saveFailureOrSuccessOption: none(),
         );
+
+        failureOrSuccess = await _profileRepository.create(state.profile
+            .copyWith(
+                uuid: uuid,
+                photoUrl: state.photoUrl.getOrElse(() => constants.ERROR_DP)));
       }
+
+      yield state.copyWith(
+        isSaving: false,
+        showErrorMessages: true,
+        saveFailureOrSuccessOption: optionOf(failureOrSuccess),
+      );
     }, getProfile: (e) async* {
       Either<DataFailure, Profile> failureOrSuccess;
       failureOrSuccess = await _profileRepository.readOwnProfile();
