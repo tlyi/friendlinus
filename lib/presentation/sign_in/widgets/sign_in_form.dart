@@ -112,14 +112,7 @@ class _BuildPassword extends StatelessWidget {
             onChanged: (value) => context
                 .read<SignInFormBloc>()
                 .add(SignInFormEvent.passwordChanged(value)),
-            validator: (_) =>
-                context.read<SignInFormBloc>().state.password.value.fold(
-                      (f) => f.maybeMap(
-                        shortPassword: (_) => 'Short Password',
-                        orElse: () => null,
-                      ),
-                      (_) => null,
-                    ),
+            
             inputFormatters: [
               FilteringTextInputFormatter.deny(
                   RegExp(r"\s\b|\b\s")) //Prevents whitespace

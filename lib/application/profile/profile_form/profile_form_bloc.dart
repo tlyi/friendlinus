@@ -57,6 +57,7 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
         }
       });
       yield state.copyWith(
+        usernameChanged: true,
         profile: state.profile.copyWith(username: Username(username)),
       );
     }, courseChanged: (e) async* {
@@ -68,22 +69,24 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
         profile: state.profile.copyWith(bio: Bio(e.bioStr)),
       );
     }, saved: (e) async* {
-      String username = '';
-      final failureOrUnique = await _profileRepository
-          .verifyUsernameUnique(state.profile.username.getOrCrash());
-      failureOrUnique.fold(
-          (f) => print('Error with server, uhm not sure how to handle this'),
-          (unique) {
-        if (!unique) {
-          username = ' not unique ';
+      if (state.usernameChanged) {
+        String username = '';
+        final failureOrUnique = await _profileRepository
+            .verifyUsernameUnique(state.profile.username.getOrCrash());
+        failureOrUnique.fold(
+            (f) => print('Error with server, uhm not sure how to handle this'),
+            (unique) {
+          if (!unique) {
+            username = ' not unique ';
+          }
+        });
+        if (username != '') {
+          yield state.copyWith(
+            isSaving: false,
+            showErrorMessages: true,
+            profile: state.profile.copyWith(username: Username(' not unique ')),
+          );
         }
-      });
-      if (username != '') {
-        yield state.copyWith(
-          isSaving: false,
-          showErrorMessages: true,
-          profile: state.profile.copyWith(username: Username(' not unique ')),
-        );
       } else {
         Either<DataFailure, Unit>? failureOrSuccess;
         final bool isUsernameValid = state.profile.username.isValid();
@@ -137,7 +140,7 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
       yield state.copyWith(refreshTags: false);
       List<String> moduleList = state.profile.modules;
       moduleList.add(e.moduleStr);
-      
+
       yield state.copyWith(
         profile: state.profile.copyWith(modules: moduleList),
         refreshTags: true,

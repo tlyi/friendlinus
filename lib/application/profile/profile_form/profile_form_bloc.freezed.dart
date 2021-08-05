@@ -1468,7 +1468,8 @@ class _$ProfileFormStateTearOff {
       required String currentUsername,
       required bool showErrorMessages,
       required Either<DataFailure, List<String>> moduleSuggestions,
-      required bool refreshTags}) {
+      required bool refreshTags,
+      required bool usernameChanged}) {
     return _ProfileFormState(
       photoUrl: photoUrl,
       profile: profile,
@@ -1480,6 +1481,7 @@ class _$ProfileFormStateTearOff {
       showErrorMessages: showErrorMessages,
       moduleSuggestions: moduleSuggestions,
       refreshTags: refreshTags,
+      usernameChanged: usernameChanged,
     );
   }
 }
@@ -1503,6 +1505,7 @@ mixin _$ProfileFormState {
   Either<DataFailure, List<String>> get moduleSuggestions =>
       throw _privateConstructorUsedError;
   bool get refreshTags => throw _privateConstructorUsedError;
+  bool get usernameChanged => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ProfileFormStateCopyWith<ProfileFormState> get copyWith =>
@@ -1524,7 +1527,8 @@ abstract class $ProfileFormStateCopyWith<$Res> {
       String currentUsername,
       bool showErrorMessages,
       Either<DataFailure, List<String>> moduleSuggestions,
-      bool refreshTags});
+      bool refreshTags,
+      bool usernameChanged});
 
   $ProfileCopyWith<$Res> get profile;
 }
@@ -1550,6 +1554,7 @@ class _$ProfileFormStateCopyWithImpl<$Res>
     Object? showErrorMessages = freezed,
     Object? moduleSuggestions = freezed,
     Object? refreshTags = freezed,
+    Object? usernameChanged = freezed,
   }) {
     return _then(_value.copyWith(
       photoUrl: photoUrl == freezed
@@ -1592,6 +1597,10 @@ class _$ProfileFormStateCopyWithImpl<$Res>
           ? _value.refreshTags
           : refreshTags // ignore: cast_nullable_to_non_nullable
               as bool,
+      usernameChanged: usernameChanged == freezed
+          ? _value.usernameChanged
+          : usernameChanged // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 
@@ -1620,7 +1629,8 @@ abstract class _$ProfileFormStateCopyWith<$Res>
       String currentUsername,
       bool showErrorMessages,
       Either<DataFailure, List<String>> moduleSuggestions,
-      bool refreshTags});
+      bool refreshTags,
+      bool usernameChanged});
 
   @override
   $ProfileCopyWith<$Res> get profile;
@@ -1649,6 +1659,7 @@ class __$ProfileFormStateCopyWithImpl<$Res>
     Object? showErrorMessages = freezed,
     Object? moduleSuggestions = freezed,
     Object? refreshTags = freezed,
+    Object? usernameChanged = freezed,
   }) {
     return _then(_ProfileFormState(
       photoUrl: photoUrl == freezed
@@ -1691,6 +1702,10 @@ class __$ProfileFormStateCopyWithImpl<$Res>
           ? _value.refreshTags
           : refreshTags // ignore: cast_nullable_to_non_nullable
               as bool,
+      usernameChanged: usernameChanged == freezed
+          ? _value.usernameChanged
+          : usernameChanged // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -1710,7 +1725,8 @@ class _$_ProfileFormState
       required this.currentUsername,
       required this.showErrorMessages,
       required this.moduleSuggestions,
-      required this.refreshTags});
+      required this.refreshTags,
+      required this.usernameChanged});
 
   @override
   final Either<DataFailure, String> photoUrl;
@@ -1732,10 +1748,12 @@ class _$_ProfileFormState
   final Either<DataFailure, List<String>> moduleSuggestions;
   @override
   final bool refreshTags;
+  @override
+  final bool usernameChanged;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ProfileFormState(photoUrl: $photoUrl, profile: $profile, isSaving: $isSaving, saveFailureOrSuccessOption: $saveFailureOrSuccessOption, isLoading: $isLoading, currentProfile: $currentProfile, currentUsername: $currentUsername, showErrorMessages: $showErrorMessages, moduleSuggestions: $moduleSuggestions, refreshTags: $refreshTags)';
+    return 'ProfileFormState(photoUrl: $photoUrl, profile: $profile, isSaving: $isSaving, saveFailureOrSuccessOption: $saveFailureOrSuccessOption, isLoading: $isLoading, currentProfile: $currentProfile, currentUsername: $currentUsername, showErrorMessages: $showErrorMessages, moduleSuggestions: $moduleSuggestions, refreshTags: $refreshTags, usernameChanged: $usernameChanged)';
   }
 
   @override
@@ -1753,7 +1771,8 @@ class _$_ProfileFormState
       ..add(DiagnosticsProperty('currentUsername', currentUsername))
       ..add(DiagnosticsProperty('showErrorMessages', showErrorMessages))
       ..add(DiagnosticsProperty('moduleSuggestions', moduleSuggestions))
-      ..add(DiagnosticsProperty('refreshTags', refreshTags));
+      ..add(DiagnosticsProperty('refreshTags', refreshTags))
+      ..add(DiagnosticsProperty('usernameChanged', usernameChanged));
   }
 
   @override
@@ -1791,7 +1810,10 @@ class _$_ProfileFormState
                     .equals(other.moduleSuggestions, moduleSuggestions)) &&
             (identical(other.refreshTags, refreshTags) ||
                 const DeepCollectionEquality()
-                    .equals(other.refreshTags, refreshTags)));
+                    .equals(other.refreshTags, refreshTags)) &&
+            (identical(other.usernameChanged, usernameChanged) ||
+                const DeepCollectionEquality()
+                    .equals(other.usernameChanged, usernameChanged)));
   }
 
   @override
@@ -1806,7 +1828,8 @@ class _$_ProfileFormState
       const DeepCollectionEquality().hash(currentUsername) ^
       const DeepCollectionEquality().hash(showErrorMessages) ^
       const DeepCollectionEquality().hash(moduleSuggestions) ^
-      const DeepCollectionEquality().hash(refreshTags);
+      const DeepCollectionEquality().hash(refreshTags) ^
+      const DeepCollectionEquality().hash(usernameChanged);
 
   @JsonKey(ignore: true)
   @override
@@ -1825,7 +1848,8 @@ abstract class _ProfileFormState implements ProfileFormState {
       required String currentUsername,
       required bool showErrorMessages,
       required Either<DataFailure, List<String>> moduleSuggestions,
-      required bool refreshTags}) = _$_ProfileFormState;
+      required bool refreshTags,
+      required bool usernameChanged}) = _$_ProfileFormState;
 
   @override
   Either<DataFailure, String> get photoUrl =>
@@ -1851,6 +1875,8 @@ abstract class _ProfileFormState implements ProfileFormState {
       throw _privateConstructorUsedError;
   @override
   bool get refreshTags => throw _privateConstructorUsedError;
+  @override
+  bool get usernameChanged => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$ProfileFormStateCopyWith<_ProfileFormState> get copyWith =>

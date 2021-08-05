@@ -60,7 +60,6 @@ class ForumFormBloc extends Bloc<ForumFormEvent, ForumFormState> {
       },
       anonStateChanged: (e) async* {
         if (state.forumPost.isAnon) {
-          //Reverses state for the UI switch widget
           yield state.copyWith(
               forumPost: state.forumPost.copyWith(isAnon: false));
         } else {

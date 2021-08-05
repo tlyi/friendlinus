@@ -92,6 +92,7 @@ class _BuildIDField extends StatelessWidget {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
+        hintText: 'e.g. e1234567',
         labelText: 'NUSNET ID',
       ),
       autocorrect: false,
@@ -101,7 +102,9 @@ class _BuildIDField extends StatelessWidget {
             .read<SignInFormBloc>()
             .add(SignInFormEvent.emailChanged(emailString));
       },
-      autovalidateMode: AutovalidateMode.onUserInteraction,
+      autovalidateMode: context.read<SignInFormBloc>().state.showErrorMessages
+          ? AutovalidateMode.always
+          : AutovalidateMode.disabled,
       validator: (_) =>
           context.read<SignInFormBloc>().state.emailAddress.value.fold(
                 (f) => f.maybeMap(

@@ -64,7 +64,7 @@ class ForumForm extends StatelessWidget {
                 const _BuildTag(),
                 const SizedBox(height: 15),
                 if (photoAdded) const _BuildImage(),
-                if (pollAdded) const _BuildPoll(),
+                if (pollAdded) _BuildPoll(),
                 Row(
                   children: <Widget>[
                     const _BuildAnonymousSwitch(),
@@ -269,9 +269,9 @@ class _BuildPoll extends StatelessWidget {
             validator: (_) {
               return context.read<ForumFormBloc>().state.poll.title.value.fold(
                   (f) => f.maybeMap(
-                      emptyString: (_) => 'Poll title cannot be empty',
+                      emptyString: (_) => 'Poll question cannot be empty',
                       exceedingLength: (_) =>
-                          'Title too long, maximum of 50 characters only',
+                          'Question too long, maximum of 50 characters only',
                       orElse: () => null),
                   (_) => null);
             },
@@ -291,7 +291,9 @@ class _BuildPoll extends StatelessWidget {
               onChanged: (value) => context
                   .read<ForumFormBloc>()
                   .add(ForumFormEvent.pollOptionChanged(i, value)),
-              autovalidateMode: AutovalidateMode.onUserInteraction,
+              autovalidateMode: context.read<ForumFormBloc>().state.showErrorMessages
+                      ? AutovalidateMode.always
+                      : AutovalidateMode.disabled,
               validator: (_) {
                 return context
                     .read<ForumFormBloc>()
