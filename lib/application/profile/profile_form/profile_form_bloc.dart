@@ -70,27 +70,33 @@ class ProfileFormBloc extends Bloc<ProfileFormEvent, ProfileFormState> {
       );
     }, saved: (e) async* {
       if (state.usernameChanged) {
-        String username = '';
-        final failureOrUnique = await _profileRepository
-            .verifyUsernameUnique(state.profile.username.getOrCrash());
-        failureOrUnique.fold(
-            (f) => print('Error with server, uhm not sure how to handle this'),
-            (unique) {
-          if (!unique) {
-            username = ' not unique ';
+        if (state.profile.username.isValid()) {
+          String username = '';
+          final failureOrUnique = await _profileRepository
+              .verifyUsernameUnique(state.profile.username.getOrCrash());
+          failureOrUnique.fold(
+              (f) =>
+                  print('Error with server, uhm not sure how to handle this'),
+              (unique) {
+            if (!unique) {
+              username = ' not unique ';
+            }
+          });
+          print(username);
+          if (username != '') {
+            yield state.copyWith(
+              isSaving: false,
+              showErrorMessages: true,
+              profile:
+                  state.profile.copyWith(username: Username(' not unique ')),
+            );
           }
-        });
-        if (username != '') {
-          yield state.copyWith(
-            isSaving: false,
-            showErrorMessages: true,
-            profile: state.profile.copyWith(username: Username(' not unique ')),
-          );
         }
       }
 
       Either<DataFailure, Unit>? failureOrSuccess;
       final bool isUsernameValid = state.profile.username.isValid();
+      print(isUsernameValid);
       final bool isCourseValid = state.profile.course.isValid();
       final bool isBioValid = state.profile.bio.isValid();
       final bool isProfileValid =

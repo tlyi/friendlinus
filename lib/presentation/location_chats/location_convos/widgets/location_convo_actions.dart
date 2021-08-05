@@ -63,6 +63,7 @@ class _LocationConvoActionsState extends State<LocationConvoActions> {
                             builder: (BuildContext innerContext) {
                               return AlertDialog(
                                   content: SingleChildScrollView(
+                                    padding: const EdgeInsets.only(bottom: 10),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [

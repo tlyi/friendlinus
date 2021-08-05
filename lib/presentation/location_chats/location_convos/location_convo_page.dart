@@ -4,6 +4,7 @@ import 'package:friendlinus/application/chats/location_convo_actor/location_conv
 import 'package:friendlinus/application/chats/location_convo_watcher/location_convo_watcher_bloc.dart';
 import 'package:friendlinus/injection.dart';
 import 'package:friendlinus/presentation/core/app_bar.dart';
+import 'package:friendlinus/presentation/core/dismiss_keyboard.dart';
 import 'package:friendlinus/presentation/location_chats/location_convos/widgets/location_convo_actions.dart';
 import 'package:friendlinus/presentation/location_chats/location_convos/widgets/location_convo_messages.dart';
 
@@ -29,22 +30,24 @@ class LocationConvoPage extends StatelessWidget {
       ],
       child: Scaffold(
         appBar: appBar(context: context, header: title, canGoBack: true),
-        body: Column(children: [
-          Expanded(
-            child: ClipRRect(
-              child:
-                  BlocBuilder<LocationConvoActorBloc, LocationConvoActorState>(
-                builder: (context, state) {
-                  return LocationConvoMessages(
-                      convoId: convoId,
-                      ownId:
-                          context.read<LocationConvoActorBloc>().state.ownId);
-                },
+        body: DismissKeyboard(
+          child: Column(children: [
+            Expanded(
+              child: ClipRRect(
+                child:
+                    BlocBuilder<LocationConvoActorBloc, LocationConvoActorState>(
+                  builder: (context, state) {
+                    return LocationConvoMessages(
+                        convoId: convoId,
+                        ownId:
+                            context.read<LocationConvoActorBloc>().state.ownId);
+                  },
+                ),
               ),
             ),
-          ),
-          LocationConvoActions(convoId: convoId),
-        ]),
+            LocationConvoActions(convoId: convoId),
+          ]),
+        ),
       ),
     );
   }

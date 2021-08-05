@@ -37,7 +37,7 @@ class CommentForm extends StatelessWidget {
                   _BuildCommentField(),
                   Row(
                     children: <Widget>[
-                      const _BuildAnonymousSwitch(),
+                      _BuildAnonymousSwitch(),
                       const Text('Post Anonymously'),
                     ],
                   ),

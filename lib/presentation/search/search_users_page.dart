@@ -18,7 +18,7 @@ class SearchUsersPage extends StatelessWidget {
       child: DismissKeyboard(
         child: Scaffold(
           appBar:
-              appBar(context: context, header: 'Search Users', canGoBack: true),
+              appBar(context: context, header: 'Search Users', canGoBack: true, notifications: false),
           bottomNavigationBar: const NavigationBar(),
           body: SearchBar(ownId: ownId),
         ),

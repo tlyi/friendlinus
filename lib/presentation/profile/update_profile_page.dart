@@ -16,7 +16,7 @@ class UpdateProfilePage extends StatelessWidget {
         child: Scaffold(
           resizeToAvoidBottomInset: true,
           appBar: appBar(
-              context: context, header: 'Update Profile', canGoBack: true),
+              context: context, header: 'Update Profile', canGoBack: true, notifications: false),
           body: SingleChildScrollView(
             child: UpdateProfileForm(),
           ),

@@ -37,7 +37,7 @@ Future<PickedFile?> imagePicker(BuildContext context) async {
                       onPressed: () async {
                         pickedFile = await picker.getImage(
                           source: ImageSource.camera,
-                          imageQuality: 70,
+                          imageQuality: 50,
                         );
                         Navigator.pop(innerContext);
                       },

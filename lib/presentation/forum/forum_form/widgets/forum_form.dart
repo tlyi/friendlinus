@@ -67,7 +67,7 @@ class ForumForm extends StatelessWidget {
                 if (pollAdded) _BuildPoll(),
                 Row(
                   children: <Widget>[
-                    const _BuildAnonymousSwitch(),
+                     _BuildAnonymousSwitch(),
                     const Text('Post Anonymously'),
                   ],
                 ),
