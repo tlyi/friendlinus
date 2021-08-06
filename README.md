@@ -18,6 +18,7 @@ https://drive.google.com/file/d/1m_T1YloigI2QIjYb60e9zkcQHk_xnhDh/view?usp=shari
 
 ## Other Information
 Watch our promotional video: https://drive.google.com/file/d/1MoVQhu3j5zRJnFdBZQUAmg_qbZKaKdJ7/view?usp=sharing
+
 Read our documentation in detail: https://docs.google.com/document/d/1RM6OhDr-IFNN3d1kYhecRze4hMsDMZLutn4l8LdboZU/edit?usp=sharing
 
 ![Milestone 3 Poster](https://user-images.githubusercontent.com/69505852/127009816-3435e7a5-3dda-463b-930c-7e9e3a7196dd.png)
